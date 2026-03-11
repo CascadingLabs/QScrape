@@ -1,0 +1,168 @@
+---
+const postData = Astro.url.searchParams.get('postData') || '';
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Deed Viewer - Eldoria Arcane Registry of Deeds</title>
+    <link rel="stylesheet" href="/global.css">
+</head>
+<body>
+    <div id="container">
+        <div class="headerBar">Grand Duchy of Eldoria - Arcane Registry of Deeds</div>
+        
+        <div class="navBar">
+            <a href="/l1/taxes/">Home</a>
+            <a href="/l1/taxes/tax-search">Tax Search</a>
+            <a href="#">Deed Records</a>
+            <a href="#">Maps & GIS</a>
+        </div>
+        
+        <div class="breadcrumbs">
+            <a href="/l1/taxes/">Home</a> &gt; 
+            <a href="/l1/taxes/tax-search">Tax Search</a> &gt; 
+            Tax Deed Viewer
+        </div>
+        
+        <div class="pageTitle">Property Tax Deed</div>
+        
+        <div class="formSection">
+            <table class="aspNetTable" style="width: 100%;">
+                <tr>
+                    <td colspan="2" class="headerRow">Property Information</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;"><span class="aspNetLabelBold">Claim / Parcel ID:</span></td>
+                    <td id="lblClaim">-</td>
+                </tr>
+                <tr class="alternatingRow">
+                    <td style="width: 180px;"><span class="aspNetLabelBold">Entity / Clan Name:</span></td>
+                    <td id="lblEntity">-</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;"><span class="aspNetLabelBold">Z-Level / Address:</span></td>
+                    <td id="lblZLevel">-</td>
+                </tr>
+                <tr class="alternatingRow">
+                    <td style="width: 180px;"><span class="aspNetLabelBold">File Year:</span></td>
+                    <td id="lblYear">2026</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;"><span class="aspNetLabelBold">File Number:</span></td>
+                    <td id="lblFile">-</td>
+                </tr>
+                <tr class="alternatingRow">
+                    <td style="width: 180px;"><span class="aspNetLabelBold">Index Type:</span></td>
+                    <td id="lblIndex">-</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;"><span class="aspNetLabelBold">Record Date:</span></td>
+                    <td id="lblRecord">-</td>
+                </tr>
+                <tr class="alternatingRow">
+                    <td style="width: 180px;"><span class="aspNetLabelBold">Amount Due:</span></td>
+                    <td><span style="color: #cc0000; font-weight: bold;">1,847.52 Gold Sovereigns</span></td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;"><span class="aspNetLabelBold">Status:</span></td>
+                    <td><span class="statusApproved">PAID</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="formSection">
+            <strong>Document Options</strong>
+            <table style="margin: 10px 0;">
+                <tr>
+                    <td style="padding: 5px;">
+                        <a id="ctl00_MainContent_lnkDownload" href="#" class="aspNetButton">Download Deed (PDF)</a>
+                    </td>
+                    <td style="padding: 5px;">
+                        <a id="ctl00_MainContent_lnkPrint" href="javascript:window.print();" class="aspNetButton">Print</a>
+                    </td>
+                    <td style="padding: 5px;">
+                        <a href="/l1/taxes/tax-search" class="aspNetButton">New Search</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="formSection">
+            <strong>Document Preview</strong>
+            <div style="margin-top: 10px; border: 1px solid #999999; height: 600px;">
+                <iframe id="ctl00_MainContent_iframeViewer" 
+                    width="100%" 
+                    height="600px" 
+                    title="Tax Deed Document">
+                </iframe>
+            </div>
+        </div>
+        
+        <div class="footerBar">
+            &copy; 2026 Grand Duchy of Eldoria. All rights reserved.<br>
+            Eldoria ROD v2.0.2004
+        </div>
+        
+        <script is:inline>
+        var pdfBase64 = 'JVBERi0xLjQKMSAwIG9iago8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFI+PgplbmRvYmoKMiAwIG9iago8PC9UeXBlL1BhZ2VzL0tpZHMgWzMgMCBSXS9Db3VudCAxPj4KZW5kb2JqCjMgMCBvYmoKPDwvVHlwZS9QYWdlL1BhcmVudCAyIDAgUi9NZWRpYUJveFswIDAgNjEyIDc5Ml0vQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PC9Gb250IDw8L0YxIDUgMCBSID4+ID4+ID4+CmVuZG9iago0IDAgb2JqCjw8L0xlbmd0aCA2MCA+PgpzdHJlYW0KQlQKL0YxIDE0IFRmCjgwIDcwMCBUZAooQ0xBSU0gUkVHSVNUUFJBVElPTiAgLSAgU1VCTUlUVEVEIFJFQ09SRCkgVGoKMAogMjAyNiAtIExFRkQgQ0xBSU0gQlkgRUxPUklOIERFVkVMT1BNRU5UIFRSSVNUCgplbmRzdHJlYW0KZW5kb2JqCjUgMCBvYmoKPDwvVHlwZS9Gb250L1N1YnR5cGUvVHlwZTEvQmFzZUZvbnQgL0hlbHZldGljYSA+PgplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAowMDAwMDAwMjY2IDAwMDAwIG4gCjAwMDAwMDAzNzkgMDAwMDAgbiAKdHJhaWxlcgo8PC9TaXplIDYgL1Jvb3QgMSAwIFIgPj4Kc3RhcnRyejC0NzgKJSVFT0YK';
+        
+        var fullPdf = 'data:application/pdf;base64,' + pdfBase64;
+        
+        document.getElementById('ctl00_MainContent_lnkDownload').href = fullPdf;
+        document.getElementById('ctl00_MainContent_lnkDownload').setAttribute('download', 'ClaimRegistration_2026.pdf');
+        document.getElementById('ctl00_MainContent_iframeViewer').src = fullPdf;
+        
+        var postData = '';
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('postData')) {
+            postData = decodeURIComponent(urlParams.get('postData'));
+        }
+        
+        var claim = '-';
+        var entity = '-';
+        var zLevel = '-';
+        var year = '2026';
+        var fileNum = '-';
+        var indexType = '-';
+        var recordDate = '-';
+        
+        if (postData.indexOf('CLAIM=') !== -1) {
+            var parts = postData.split('XXXBBBXXX');
+            for (var i = 0; i < parts.length; i++) {
+                if (parts[i].indexOf('CLAIM=') !== -1) {
+                    claim = parts[i].split('CLAIM=')[1].split('&')[0];
+                }
+                if (parts[i].indexOf('ENTITY=') !== -1) {
+                    entity = parts[i].split('ENTITY=')[1].split('&')[0];
+                }
+                if (parts[i].indexOf('ZLEVEL=') !== -1) {
+                    zLevel = parts[i].split('ZLEVEL=')[1].split('&')[0];
+                }
+                if (parts[i].indexOf('YEAR=') !== -1) {
+                    year = parts[i].split('YEAR=')[1].split('&')[0];
+                }
+                if (parts[i].indexOf('FILE=') !== -1) {
+                    fileNum = parts[i].split('FILE=')[1].split('&')[0];
+                }
+                if (parts[i].indexOf('INDEX=') !== -1) {
+                    indexType = parts[i].split('INDEX=')[1].split('&')[0];
+                }
+                if (parts[i].indexOf('RECORD=') !== -1) {
+                    recordDate = parts[i].split('RECORD=')[1].split('&')[0];
+                }
+            }
+        }
+        
+        document.getElementById('lblClaim').innerHTML = claim;
+        document.getElementById('lblEntity').innerHTML = entity;
+        document.getElementById('lblZLevel').innerHTML = zLevel;
+        document.getElementById('lblYear').innerHTML = year;
+        document.getElementById('lblFile').innerHTML = fileNum;
+        document.getElementById('lblIndex').innerHTML = indexType;
+        document.getElementById('lblRecord').innerHTML = recordDate;
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Tax Search - Eldoria Arcane Registry of Deeds</title>
+    <link rel="stylesheet" href="/global.css">
+</head>
+<body>
+    <div id="container">
+        <div class="headerBar">Grand Duchy of Eldoria - Arcane Registry of Deeds</div>
+        
+        <div class="navBar">
+            <a href="/l1/taxes/">Home</a>
+            <a href="/l1/taxes/tax-search">Tax Search</a>
+            <a href="#">Deed Records</a>
+            <a href="#">Maps & GIS</a>
+        </div>
+        
+        <div class="breadcrumbs">
+            <a href="/l1/taxes/">Home</a> &gt; Property Tax Search
+        </div>
+        
+        <div class="pageTitle">Property Tax Search</div>
+        
+        <form method="post" action="/l1/taxes/tax-search" id="aspnetForm">
+            <div class="aspNetHidden">
+                <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+                <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+                <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTQzNDM5MTMzMWRkZBYCAgMPZBYCAgeeD2QeBRPd25lck5hbWVYp5EwoYKY7J3C1zXN4OGk7I0S5r6vB1N9xHq5uQ==" />
+                <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+            </div>
+            
+            <div class="searchBox">
+                <table border="0" cellpadding="3" cellspacing="0" style="width: 100%;">
+                    <tr>
+                        <td align="right" style="width: 25%;">
+                            <strong>Claim / Parcel ID:</strong>
+                        </td>
+                        <td>
+                            <input name="ctl00$MainContent$txtClaimNumber" type="text" id="MainContent_txtClaimNumber" class="aspNetDisabled" style="width:200px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>Entity / Clan Name:</strong>
+                        </td>
+                        <td>
+                            <input name="ctl00$MainContent$txtEntityName" type="text" id="MainContent_txtEntityName" style="width:200px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>Z-Level / Address:</strong>
+                        </td>
+                        <td>
+                            <input name="ctl00$MainContent$txtZLevel" type="text" id="MainContent_txtZLevel" style="width:200px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <input type="submit" name="ctl00$MainContent$btnSearch" value="Search Records" id="MainContent_btnSearch" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="resultsInfo">
+                Showing 3 record(s) found
+            </div>
+            
+            <table class="grid-view" cellspacing="0" rules="all" border="1" id="MainContent_gridResults" style="border-collapse:collapse;">
+                <tr>
+                    <th scope="col">File Year</th>
+                    <th scope="col">File Number</th>
+                    <th scope="col">Index</th>
+                    <th scope="col">Record Date</th>
+                    <th scope="col">SAT / Etc</th>
+                    <th scope="col">Last Name / Firm Name</th>
+                    <th scope="col">First Name / Firm Name</th>
+                    <th scope="col">Navigation</th>
+                </tr>
+                <tr>
+                    <td>2026</td>
+                    <td>26-008492</td>
+                    <td>DEED</td>
+                    <td>10/15/2026</td>
+                    <td>&nbsp;</td>
+                    <td>ARMOK HOLDINGS LLC</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$0')">View</a>
+                    </td>
+                </tr>
+                <tr style="background-color:#E3EAEB;">
+                    <td>2026</td>
+                    <td>26-009104</td>
+                    <td>MTG</td>
+                    <td>11/02/2026</td>
+                    <td>SAT</td>
+                    <td>MCMINER</td>
+                    <td>URIST</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$1')">View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2026</td>
+                    <td>26-010033</td>
+                    <td>LIEN</td>
+                    <td>12/01/2026</td>
+                    <td>&nbsp;</td>
+                    <td>BOATMURDERED TRUST</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$2')">View</a>
+                    </td>
+                </tr>
+            </table>
+            
+            <table style="margin: 15px;">
+                <tr>
+                    <td>
+                        <span class="aspNetLabel">Page 1 of 1</span>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        
+        <div class="footerBar">
+            &copy; 2026 Grand Duchy of Eldoria. All rights reserved.<br>
+            Eldoria ROD v2.0.2004
+        </div>
+        
+        <script is:inline>
+        var theForm = document.forms['aspnetForm'];
+        if (!theForm) {
+            theForm = document.aspnetForm;
+        }
+
+        function __doPostBack(eventTarget, eventArgument) {
+            if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+                document.getElementById('__EVENTTARGET').value = eventTarget;
+                document.getElementById('__EVENTARGUMENT').value = eventArgument;
+                
+                var claimNumber = '';
+                var entityName = '';
+                var zLevel = '';
+                var fileYear = '2026';
+                var fileNumber = '';
+                var indexType = '';
+                var recordDate = '';
+                var satEtc = '';
+                var lastName = '';
+                var firstName = '';
+                
+                if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$0') {
+                    claimNumber = '26-008492';
+                    entityName = 'ARMOK HOLDINGS LLC';
+                    zLevel = 'Level 42, Armok Sector';
+                    fileYear = '2026';
+                    fileNumber = '26-008492';
+                    indexType = 'DEED';
+                    recordDate = '10/15/2026';
+                    satEtc = '';
+                    lastName = 'ARMOK HOLDINGS LLC';
+                    firstName = '';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$1') {
+                    claimNumber = '26-009104';
+                    entityName = 'MCMINER, URIST';
+                    zLevel = 'Level -12, Deep Mine Complex';
+                    fileYear = '2026';
+                    fileNumber = '26-009104';
+                    indexType = 'MTG';
+                    recordDate = '11/02/2026';
+                    satEtc = 'SAT';
+                    lastName = 'MCMINER';
+                    firstName = 'URIST';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$2') {
+                    claimNumber = '26-010033';
+                    entityName = 'BOATMURDERED TRUST';
+                    zLevel = 'Level 05, Surface Claims Office';
+                    fileYear = '2026';
+                    fileNumber = '26-010033';
+                    indexType = 'LIEN';
+                    recordDate = '12/01/2026';
+                    satEtc = '';
+                    lastName = 'BOATMURDERED TRUST';
+                    firstName = '';
+                }
+                else if (eventTarget === 'ctl00$MainContent$btnSearch') {
+                    claimNumber = document.getElementById('MainContent_txtClaimNumber').value;
+                    entityName = document.getElementById('MainContent_txtEntityName').value;
+                    zLevel = document.getElementById('MainContent_txtZLevel').value;
+                }
+                
+                var payload = '7BQa0btstnHdh16zsg' + 
+                              'XXXBBBXXX' +
+                              'vzm6OY8hb1' +
+                              'CLAIM=' + encodeURIComponent(claimNumber) +
+                              '&ENTITY=' + encodeURIComponent(entityName) +
+                              '&ZLEVEL=' + encodeURIComponent(zLevel) +
+                              '&YEAR=' + fileYear +
+                              '&FILE=' + encodeURIComponent(fileNumber) +
+                              '&INDEX=' + encodeURIComponent(indexType) +
+                              '&RECORD=' + encodeURIComponent(recordDate) +
+                              '&SAT=' + encodeURIComponent(satEtc) +
+                              '&LAST=' + encodeURIComponent(lastName) +
+                              '&FIRST=' + encodeURIComponent(firstName) +
+                              '&HASH=' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) +
+                              'XXXBBBXXX' +
+                              'xK9pLm2nQ4rT8vY7w' +
+                              'XXXBBBXXX' +
+                              'Zp5Rj1hF3dG9sU6cA' +
+                              'XXXBBBXXX';
+                
+                window.location.href = '/l1/taxes/viewer?postData=' + encodeURIComponent(payload);
+            }
+        }
+        </script>
+    </div>
+</body>
+</html>
