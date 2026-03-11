@@ -1,0 +1,318 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Board - Latest Openings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+            background: #f3f4f6;
+            min-height: 100vh;
+        }
+        
+        .layout {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: #fff;
+            padding: 24px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            border-right: 1px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+        
+        .sidebar h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+        
+        .filter-section {
+            margin-bottom: 24px;
+        }
+        
+        .filter-group {
+            margin-bottom: 16px;
+        }
+        
+        .filter-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #fff;
+        }
+        
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 32px 40px;
+        }
+        
+        .main-content h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        
+        .results-count {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        
+        .job-listings {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .job-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .job-card:hover {
+            border-color: #6366f1;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .job-card h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        
+        .job-card .company {
+            font-size: 14px;
+            color: #6366f1;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .job-card .location {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .job-card .salary {
+            display: inline-block;
+            background: #ecfdf5;
+            color: #059669;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .job-card .description {
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+        
+        .apply-button {
+            margin-top: 16px;
+            display: inline-block;
+            background: #6366f1;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .apply-button:hover {
+            background: #4f46e5;
+        }
+        
+        .tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: #f3f4f6;
+            color: #4b5563;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="filter-section">
+                <h3>Filters</h3>
+                
+                <div class="filter-group">
+                    <label>Job Type</label>
+                    <select>
+                        <option>All Types</option>
+                        <option>Full-time</option>
+                        <option>Part-time</option>
+                        <option>Contract</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Location</label>
+                    <select>
+                        <option>All Locations</option>
+                        <option>Remote</option>
+                        <option>San Francisco, CA</option>
+                        <option>New York, NY</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Experience Level</label>
+                    <select>
+                        <option>All Levels</option>
+                        <option>Entry Level</option>
+                        <option>Mid Level</option>
+                        <option>Senior</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Salary Range</label>
+                    <input type="text" placeholder="Min salary">
+                </div>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <h1>Current Open Positions</h1>
+            <p class="results-count">Showing 6 jobs</p>
+            
+            <div class="job-listings">
+                <div class="job-card">
+                    <h2>Senior Software Engineer</h2>
+                    <p class="company">TechCorp Inc.</p>
+                    <p class="location">📍 San Francisco, CA</p>
+                    <p class="salary">$100k - 120k</p>
+                    <p class="description">Looking for experienced engineers to join our platform team.</p>
+                    <div class="tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">AWS</span>
+                    </div>
+                </div>
+                
+                <div class="job-card">
+                    <h2>Product Manager</h2>
+                    <p class="company">StartupXYZ</p>
+                    <p class="location">📍 Austin, TX</p>
+                    <p class="salary">110,000 USD</p>
+                    <p class="description">Lead product strategy for our mobile applications.</p>
+                    <div class="tags">
+                        <span class="tag">Product</span>
+                        <span class="tag">Agile</span>
+                    </div>
+                </div>
+                
+                <div class="job-card">
+                    <h2>Data Scientist</h2>
+                    <p class="company">DataDriven Co.</p>
+                    <p class="location">📍 Remote</p>
+                    <p class="salary">$95,000 - 130000</p>
+                    <p class="description">Build ML models for predictive analytics.</p>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">ML</span>
+                        <span class="tag">TensorFlow</span>
+                    </div>
+                </div>
+                
+                <div class="job-card">
+                    <h2>Marketing Director</h2>
+                    <p class="company">BrandBuilders LLC</p>
+                    <p class="location">📍 New York, NY</p>
+                    <p class="salary">$150k-180k</p>
+                    <p class="description">Oversee marketing strategy and team.</p>
+                    <div class="tags">
+                        <span class="tag">Marketing</span>
+                        <span class="tag">Leadership</span>
+                    </div>
+                </div>
+                
+                <div class="job-card">
+                    <h2>UX Designer</h2>
+                    <p class="company">DesignHub</p>
+                    <p class="location">📍 Seattle, WA</p>
+                    <p class="salary">85,000 - 105,000 USD</p>
+                    <p class="description">Create intuitive user experiences.</p>
+                    <div class="tags">
+                        <span class="tag">Figma</span>
+                        <span class="tag">UI/UX</span>
+                    </div>
+                </div>
+                
+                <div class="job-card">
+                    <h2>DevOps Engineer</h2>
+                    <p class="company">CloudNine Systems</p>
+                    <p class="location">📍 Denver, CO</p>
+                    <p class="salary">$120k to $145k</p>
+                    <p class="description">Manage cloud infrastructure and CI/CD pipelines.</p>
+                    <div class="tags">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">Terraform</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

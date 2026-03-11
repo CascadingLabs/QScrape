@@ -1,0 +1,303 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Building Permit Applications</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            background: #eeeeee;
+            padding: 15px;
+        }
+        
+        a {
+            color: #0000ff;
+            text-decoration: underline;
+        }
+        
+        a:visited {
+            color: #551a8b;
+        }
+        
+        a:hover {
+            color: #ff0000;
+        }
+        
+        .permit-system {
+            background: #ffffff;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .permit-system h1 {
+            font-size: 18px;
+            color: #003366;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #003366;
+        }
+        
+        .aspnet_table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px inset #cccccc;
+            background: #ffffff;
+            margin-bottom: 15px;
+        }
+        
+        .aspnet_table td {
+            padding: 6px 10px;
+            border: 1px inset #dddddd;
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 11px;
+            color: #000000;
+        }
+        
+        .aspnet_table tr:first-child td {
+            background: #336699;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+            border: 1px outset #6699cc;
+        }
+        
+        .aspnet_table tr:nth-child(2) td {
+            background: #f0f0f0;
+            font-weight: bold;
+            border: 1px inset #cccccc;
+        }
+        
+        .aspnet_table tr:hover td {
+            background: #ffffcc;
+        }
+        
+        .aspnet_table td[colspan="3"]:first-child {
+            background: #003366;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .aspnet_table td[colspan="2"] {
+            background: #ffffcc;
+            font-style: italic;
+        }
+        
+        .aspnet_table td[rowspan] {
+            background: #f5f5f5;
+            font-weight: bold;
+            color: #333333;
+        }
+        
+        .status-approved {
+            background: #d4edda !important;
+            color: #155724;
+            font-weight: bold;
+        }
+        
+        .status-pending {
+            background: #fff3cd !important;
+            color: #856404;
+        }
+        
+        .nav-bar {
+            background: #003366;
+            padding: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .nav-bar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        
+        .nav-bar a:hover {
+            color: #ffff00;
+        }
+        
+        .breadcrumbs {
+            font-size: 10px;
+            color: #666666;
+            margin-bottom: 10px;
+        }
+        
+        .breadcrumbs a {
+            color: #0000ff;
+            font-size: 10px;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #cccccc;
+            text-align: center;
+            color: #666666;
+            font-size: 10px;
+        }
+        
+        .print-button {
+            background: #cccccc;
+            border: 1px outset #999999;
+            padding: 5px 15px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        
+        .print-button:hover {
+            background: #aaaaaa;
+        }
+        
+        .search-box {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f5f5f5;
+            border: 1px inset #cccccc;
+        }
+        
+        .search-box input {
+            border: 1px solid #999999;
+            padding: 3px;
+            font-size: 11px;
+        }
+        
+        .search-box button {
+            background: #003366;
+            color: #ffffff;
+            border: 1px outset #004080;
+            padding: 3px 10px;
+            cursor: pointer;
+        }
+        
+        .page-numbers {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 10px;
+        }
+        
+        .page-numbers a {
+            margin: 0 3px;
+        }
+        
+        .page-numbers span {
+            font-weight: bold;
+            color: #003366;
+        }
+    </style>
+</head>
+<body>
+    <div class="permit-system">
+        <div class="breadcrumbs">
+            <a href="/">Home</a> &gt; <a href="/permits">Permits</a> &gt; Building Permits
+        </div>
+        
+        <div class="nav-bar">
+            <a href="/">Home</a>
+            <a href="/permits">Permits</a>
+            <a href="/inspections">Inspections</a>
+            <a href="/forms">Forms</a>
+            <a href="/contact">Contact</a>
+        </div>
+        
+        <h1>City of Springfield - Permit Applications</h1>
+        
+        <div class="search-box">
+            <strong>Search Permits:</strong>
+            <input type="text" name="search" placeholder="Enter Application ID">
+            <button>Search</button>
+        </div>
+        
+        <table class="aspnet_table" cellspacing="0" border="1">
+            <tr>
+                <td colspan="3">PERMIT APPLICATIONS - 2024</td>
+            </tr>
+            <tr>
+                <td>Application ID</td>
+                <td>Property Address</td>
+                <td>Permit Type</td>
+            </tr>
+            <tr>
+                <td>BLD-2024-001</td>
+                <td>123 Main Street</td>
+                <td>Residential Addition</td>
+            </tr>
+            <tr>
+                <td rowspan="2">BLD-2024-002</td>
+                <td>456 Oak Avenue</td>
+                <td>Commercial Renovation</td>
+            </tr>
+            <tr>
+                <td colspan="2">Status: Under Review</td>
+            </tr>
+            <tr>
+                <td>BLD-2024-003</td>
+                <td>789 Elm Street</td>
+                <td>Deck Construction</td>
+            </tr>
+            <tr>
+                <td colspan="2">BLD-2024-004</td>
+                <td>Swimming Pool</td>
+            </tr>
+            <tr>
+                <td>BLD-2024-005</td>
+                <td>321 Pine Road</td>
+                <td>Roof Replacement</td>
+                <td class="status-approved">Approved</td>
+            </tr>
+            <tr>
+                <td>BLD-2024-006</td>
+                <td>654 Maple Drive</td>
+                <td>Garage Build</td>
+            </tr>
+            <tr>
+                <td>BLD-2024-007</td>
+                <td>987 Cedar Lane</td>
+                <td>Fence Installation</td>
+            </tr>
+            <tr>
+                <td rowspan="3">BLD-2024-008</td>
+                <td>147 Birch Court</td>
+                <td>Major Renovation</td>
+            </tr>
+            <tr>
+                <td colspan="3">Estimated Cost: $250,000</td>
+            </tr>
+            <tr>
+                <td>Contractor: ABC Builders Inc.</td>
+            </tr>
+            <tr>
+                <td>BLD-2024-009
+                <td>258 Walnut Street</td>
+                <td>HVAC Replacement</td>
+            </tr>
+            <tr>
+                <td>BLD-2024-010</td>
+                <td>369 Spruce Avenue</td>
+                <td>Window Replacement</td>
+            </tr>
+        </table>
+        
+        <div class="page-numbers">
+            <a href="?page=1">1</a> | <a href="?page=2">2</a> | <a href="?page=3">3</a> | <span>4</span> | <a href="?page=5">5</a>
+        </div>
+        
+        <p>For questions about permits, contact the Building Department at (555) 123-4567.</p>
+        
+        <div class="footer">
+            <p>&copy; 2004 City of Springfield. All rights reserved.</p>
+            <p>Last Updated: 03/10/2004</p>
+        </div>
+    </div>
+</body>
+</html>

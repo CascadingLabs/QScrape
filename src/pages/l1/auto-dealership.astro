@@ -1,0 +1,401 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Premium Auto - Inventory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial Narrow', Arial, sans-serif;
+            background: #e8e8e8;
+        }
+        
+        .site-header {
+            background: linear-gradient(180deg, #1e3a5f 0%, #0d1f33 100%);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .site-header h1 {
+            color: #fff;
+            font-size: 28px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        
+        .site-header .tagline {
+            color: #ccc;
+            text-align: center;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .dealership-container {
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .dealership-container .outermost_wrapper {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        .dealership-container .second_layer {
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            margin: 2px;
+        }
+        
+        .dealership-container .third_level {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 3px;
+        }
+        
+        .dealership-container .fourth_tier {
+            border: 1px solid #ccc;
+            margin: 2px;
+        }
+        
+        .dealership-container .fifth_div {
+            background: #fff;
+            padding: 4px;
+        }
+        
+        .dealership-container .sixth_container {
+            border-radius: 5px;
+            background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
+            padding: 3px;
+        }
+        
+        .dealership-container .seventh_box {
+            border: 1px solid #bbb;
+            margin: 2px;
+        }
+        
+        .dealership-container .eighth_wrapper {
+            background: #fafafa;
+            padding: 4px;
+        }
+        
+        .dealership-container .ninth_container {
+            border-radius: 4px;
+            border: 1px solid #aaa;
+        }
+        
+        .dealership-container .tenth_box {
+            background: #fff;
+            margin: 3px;
+        }
+        
+        .dealership-container .eleventh_wrapper {
+            border: 1px solid #999;
+            padding: 3px;
+            background: #f5f5f5;
+        }
+        
+        .dealership-container .twelfth_container {
+            border-radius: 3px;
+            margin: 2px;
+            background: linear-gradient(90deg, #ddd 0%, #fff 50%, #ddd 100%);
+        }
+        
+        .dealership-container .thirteenth_div {
+            border: 1px solid #888;
+            padding: 4px;
+        }
+        
+        .dealership-container .fourteenth_box {
+            background: #fcfcfc;
+            margin: 2px;
+            border-radius: 2px;
+        }
+        
+        .dealership-container .fifteenth_wrapper {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .dealership-container h1 {
+            font-size: 18px;
+            color: #1e3a5f;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        
+        .vehicle-card {
+            position: relative;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        
+        .vehicle-image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #ccc 0%, #999 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 48px;
+            border-radius: 8px;
+        }
+        
+        .vehicle-price {
+            position: absolute;
+            bottom: 40px;
+            right: 20px;
+            background: #d32f2f;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 28px;
+            font-weight: 700;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .vehicle-details {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-top: 3px solid #1e3a5f;
+        }
+        
+        .detail-item {
+            text-align: center;
+        }
+        
+        .detail-item .label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        
+        .detail-item .value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e3a5f;
+        }
+        
+        .cta-button {
+            display: block;
+            width: 200px;
+            margin: 0 auto 20px;
+            padding: 15px;
+            background: linear-gradient(180deg, #4CAF50 0%, #388E3C 100%);
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .cta-button:hover {
+            background: linear-gradient(180deg, #388E3C 0%, #2E7D32 100%);
+        }
+        
+        .financing-note {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            padding: 10px;
+        }
+        
+        .financing-note strong {
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="site-header">
+        <h1>🚗 Premium Auto Sales</h1>
+        <p class="tagline">Quality Pre-Owned Vehicles at Unbeatable Prices!</p>
+    </div>
+    
+    <div class="dealership-container">
+        <div class="dealership-container">
+            <div class=" outermost_wrapper">
+                <div class="second_layer">
+                    <div class="third_level">
+                        <div class="fourth_tier">
+                            <div class="fifth_div">
+                                <div class="sixth_container">
+                                    <div class="seventh_box">
+                                        <div class="eighth_wrapper">
+                                            <div class="ninth_container">
+                                                <div class="tenth_box">
+                                                    <div class="eleventh_wrapper">
+                                                        <div class="twelfth_container">
+                                                            <div class="thirteenth_div">
+                                                                <div class="fourteenth_box">
+                                                                    <div class="fifteenth_wrapper">
+                                                                        <h1>2024 BMW M3 Competition xDrive | Premium Package | Carbon Fiber Trim | Executive Package</h1>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="vehicle-card">
+                <div class="vehicle-image-placeholder">🚙</div>
+                <div class="vehicle-price">$89,990</div>
+                <div class="vehicle-details">
+                    <div class="detail-item">
+                        <div class="label">Mileage</div>
+                        <div class="value">12,450 mi</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Transmission</div>
+                        <div class="value">Automatic</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Engine</div>
+                        <div class="value">3.0L I6</div>
+                    </div>
+                </div>
+                <a href="#" class="cta-button">Schedule Test Drive</a>
+                <p class="financing-note"><strong>Financing Available!</strong> As low as $650/mo with approved credit</p>
+            </div>
+        </div>
+        
+        <div class="dealership-container">
+            <div class=" outermost_wrapper">
+                <div class="second_layer">
+                    <div class="third_level">
+                        <div class="fourth_tier">
+                            <div class="fifth_div">
+                                <div class="sixth_container">
+                                    <div class="seventh_box">
+                                        <div class="eighth_wrapper">
+                                            <div class="ninth_container">
+                                                <div class="tenth_box">
+                                                    <div class="eleventh_wrapper">
+                                                        <div class="twelfth_container">
+                                                            <div class="thirteenth_div">
+                                                                <div class="fourteenth_box">
+                                                                    <div class="fifteenth_wrapper">
+                                                                        <h1>2023 Mercedes-AMG GT 63 S | 4MATIC+ | Night Package | Driving Assistance</h1>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="vehicle-card">
+                <div class="vehicle-image-placeholder">🚙</div>
+                <div class="vehicle-price">$124,990</div>
+                <div class="vehicle-details">
+                    <div class="detail-item">
+                        <div class="label">Mileage</div>
+                        <div class="value">8,230 mi</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Transmission</div>
+                        <div class="value">Dual-Clutch</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Engine</div>
+                        <div class="value">4.0L V8</div>
+                    </div>
+                </div>
+                <a href="#" class="cta-button">Schedule Test Drive</a>
+                <p class="financing-note"><strong>Financing Available!</strong> As low as $890/mo with approved credit</p>
+            </div>
+        </div>
+        
+        <div class="dealership-container">
+            <div class=" outermost_wrapper">
+                <div class="second_layer">
+                    <div class="third_level">
+                        <div class="fourth_tier">
+                            <div class="fifth_div">
+                                <div class="sixth_container">
+                                    <div class="seventh_box">
+                                        <div class="eighth_wrapper">
+                                            <div class="ninth_container">
+                                                <div class="tenth_box">
+                                                    <div class="eleventh_wrapper">
+                                                        <div class="twelfth_container">
+                                                            <div class="thirteenth_div">
+                                                                <div class="fourteenth_box">
+                                                                    <div class="fifteenth_wrapper">
+                                                                        <h1>2025 Porsche 911 Turbo S | Sport Chrono | Ceramic Brakes | Burmester Audio</h1>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="vehicle-card">
+                <div class="vehicle-image-placeholder">🚙</div>
+                <div class="vehicle-price">$198,990</div>
+                <div class="vehicle-details">
+                    <div class="detail-item">
+                        <div class="label">Mileage</div>
+                        <div class="value">3,120 mi</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Transmission</div>
+                        <div class="value">PDK</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Engine</div>
+                        <div class="value">3.8L H6</div>
+                    </div>
+                </div>
+                <a href="#" class="cta-button">Schedule Test Drive</a>
+                <p class="financing-note"><strong>Financing Available!</strong> As low as $1,450/mo with approved credit</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,277 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Real Estate Listings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+        
+        .property-listings h1 {
+            text-align: center;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+        
+        .property-listings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            justify-content: center;
+        }
+        
+        .property {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 350px;
+            list-style: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .property:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+        
+        .property-image {
+            background-color: #ccc;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .property-image::before {
+            content: '📷';
+            font-size: 48px;
+            opacity: 0.5;
+        }
+        
+        .property-image .status-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #10b981;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .property-image .status-badge.sold {
+            background: #ef4444;
+        }
+        
+        .property-details {
+            padding: 20px;
+        }
+        
+        .property li {
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        
+        .property li:nth-child(odd) {
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            padding-bottom: 4px;
+        }
+        
+        .property li:nth-child(even) {
+            color: #1a1a1a;
+            font-size: 15px;
+            font-weight: 500;
+            padding-top: 0;
+        }
+        
+        .property li:first-child {
+            display: none;
+        }
+        
+        .property li:nth-child(2) {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+        
+        .property li:nth-child(4) {
+            font-size: 24px;
+            color: #059669;
+            font-weight: 700;
+        }
+        
+        .property-cta {
+            margin-top: 16px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .property-cta button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .property-cta .primary {
+            background: #2563eb;
+            color: #fff;
+        }
+        
+        .property-cta .primary:hover {
+            background: #1d4ed8;
+        }
+        
+        .property-cta .secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .property-cta .secondary:hover {
+            background: #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="property-listings">
+        <h1>Featured Properties</h1>
+        
+        <ul class="property">
+            <li>Address</li>
+            <li>123 Oak Street, Boston, MA 02101</li>
+            <li>Price</li>
+            <li>$750,000</li>
+            <li>Bedrooms</li>
+            <li>3</li>
+            <li>Bathrooms</li>
+            <li>2.5</li>
+            <li>Sq Ft</li>
+            <li>1,850</li>
+            <div class="property-image">
+                <span class="status-badge">For Sale</span>
+            </div>
+            <div class="property-details">
+                <div class="property-cta">
+                    <button class="primary">View Details</button>
+                    <button class="secondary">Contact</button>
+                </div>
+            </div>
+        </ul>
+        
+        <ul class="property">
+            <li>Address</li>
+            <li>456 Maple Avenue, Seattle, WA 98101</li>
+            <li>Price</li>
+            <li>$1,250,000</li>
+            <li>Bedrooms</li>
+            <li>4</li>
+            <li>Bathrooms</li>
+            <li>3</li>
+            <li>Sq Ft</li>
+            <li>2,400</li>
+            <div class="property-image">
+                <span class="status-badge">For Sale</span>
+            </div>
+            <div class="property-details">
+                <div class="property-cta">
+                    <button class="primary">View Details</button>
+                    <button class="secondary">Contact</button>
+                </div>
+            </div>
+        </ul>
+        
+        <ul class="property">
+            <li>Address</li>
+            <li>789 Pine Road, Austin, TX 78701</li>
+            <li>Price</li>
+            <li>$525,000</li>
+            <li>Bedrooms</li>
+            <li>2</li>
+            <li>Bathrooms</li>
+            <li>2</li>
+            <li>Sq Ft</li>
+            <li>1,200</li>
+            <div class="property-image">
+                <span class="status-badge">For Sale</span>
+            </div>
+            <div class="property-details">
+                <div class="property-cta">
+                    <button class="primary">View Details</button>
+                    <button class="secondary">Contact</button>
+                </div>
+            </div>
+        </ul>
+        
+        <ul class="property">
+            <li>Address</li>
+            <li>321 Elm Court, Denver, CO 80201</li>
+            <li>Price</li>
+            <li>$890,000</li>
+            <li>Bedrooms</li>
+            <li>5</li>
+            <li>Bathrooms</li>
+            <li>4</li>
+            <li>Sq Ft</li>
+            <li>3,100</li>
+            <div class="property-image">
+                <span class="status-badge sold">Pending</span>
+            </div>
+            <div class="property-details">
+                <div class="property-cta">
+                    <button class="primary">View Details</button>
+                    <button class="secondary">Contact</button>
+                </div>
+            </div>
+        </ul>
+        
+        <ul class="property">
+            <li>Address</li>
+            <li>555 Birch Lane, Portland, OR 97201</li>
+            <li>Price</li>
+            <li>$675,000</li>
+            <li>Bedrooms</li>
+            <li>3</li>
+            <li>Bathrooms</li>
+            <li>2</li>
+            <li>Sq Ft</li>
+            <li>1,650</li>
+            <div class="property-image">
+                <span class="status-badge">For Sale</span>
+            </div>
+            <div class="property-details">
+                <div class="property-cta">
+                    <button class="primary">View Details</button>
+                    <button class="secondary">Contact</button>
+                </div>
+            </div>
+        </ul>
+    </div>
+</body>
+</html>
