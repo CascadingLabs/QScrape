@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fence Repair Permit Application - Springfield Municipal Permit Portal</title>
+    <style>
+        body {
+            font-family: Tahoma, Verdana, Arial, sans-serif;
+            font-size: 11px;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .headerBar {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .navBar {
+            background-color: #ece9d8;
+            padding: 5px 15px;
+            border-bottom: 1px solid #999999;
+        }
+        
+        .navBar a {
+            color: #003366;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        
+        .navBar a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumbs {
+            padding: 5px 15px;
+            background-color: #ffffcc;
+            border-bottom: 1px solid #cccccc;
+            color: #666666;
+        }
+        
+        .breadcrumbs a {
+            color: #003366;
+        }
+        
+        .pageTitle {
+            font-size: 16px;
+            font-weight: bold;
+            color: #003366;
+            margin: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #cccccc;
+        }
+        
+        .formInstructions {
+            font-size: 11px;
+            color: #666666;
+            margin: 10px 15px;
+        }
+        
+        table.aspNetTable {
+            border-collapse: collapse;
+            border: 1px solid #999999;
+            background-color: #F0F0F0;
+            width: 95%;
+            margin: 15px;
+        }
+        
+        table.aspNetTable td {
+            padding: 6px 10px;
+            border: 1px solid #cccccc;
+            background-color: #ffffff;
+        }
+        
+        table.innerTable td {
+            border: none;
+            background-color: transparent;
+            padding: 3px 5px;
+        }
+        
+        .headerRow {
+            background-color: #003366;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        .aspNetLabel {
+            font-family: Tahoma, Verdana, sans-serif;
+            font-size: 11px;
+            color: #000000;
+        }
+        
+        .aspNetLabelBold {
+            font-family: Tahoma, Verdana, sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            color: #000000;
+        }
+        
+        .aspNetTextBox {
+            border: 1px solid #7f9db9;
+            font-family: Tahoma, Verdana, sans-serif;
+            font-size: 11px;
+            padding: 3px;
+            width: 250px;
+        }
+        
+        .aspNetButton {
+            background-color: #ece9d8;
+            border: 1px solid #003c74;
+            padding: 3px 15px;
+            font-family: Tahoma, Verdana, sans-serif;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        
+        .aspNetButton:hover {
+            background-color: #d4d0c0;
+        }
+        
+        .requiredStar {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        
+        .checkboxCell {
+            background-color: #ffffff !important;
+        }
+        
+        .footerBar {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 10px 15px;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 10px;
+        }
+        
+        a {
+            color: #0000FF;
+            text-decoration: underline;
+        }
+        
+        a:visited {
+            color: #800080;
+        }
+    </style>
+</head>
+<body>
+    <div class="headerBar">Springfield Municipal Permit Portal</div>
+    
+    <div class="navBar">
+        <a href="/l1/springfield/">Home</a>
+        <a href="/l1/springfield/apply">Apply Online</a>
+        <a href="/l1/springfield/search?id=12345">Permit Search</a>
+        <a href="/l1/springfield/guides">Guides & Resources</a>
+    </div>
+    
+    <div class="breadcrumbs">
+        <a href="/l1/springfield/">Home</a> &gt; 
+        <a href="/l1/springfield/apply">Apply</a> &gt; 
+        Fence Repair
+    </div>
+    
+    <div class="pageTitle">Fence Repair Permit Application</div>
+    <div class="formInstructions">For repair of existing fences that do not require full replacement</div>
+    
+    <form method="post" action="/l1/springfield/apply/fence-repair" id="aspnetForm">
+        <div class="aspNetHidden">
+            <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+            <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+            <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTQzNDM5MTMzMWRkZBYCAgMPZBYCAhT2Qw YeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0J1dHRvbl8PSZ4YyZ1c2VyJGFwcGx5aW5nJGN0bDAwJE1haW5Db250ZW50JHR4dENvbnRyYWN0b3JOb21l" />
+            <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+        </div>
+        
+        <table class="aspNetTable" cellspacing="0" cellpadding="0">
+            <tr>
+                <td colspan="2" class="headerRow">Repair Details</td>
+            </tr>
+            <tr>
+                <td style="width: 200px;">
+                    <span class="aspNetLabelBold">Property Address <span class="requiredStar">*</span></span>
+                </td>
+                <td>
+                    <input type="text" id="ctl00_MainContent_txtPropertyAddress" name="ctl00$MainContent$txtPropertyAddress" class="aspNetTextBox" style="width: 350px;" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 200px;">
+                    <span class="aspNetLabelBold">Repair Type <span class="requiredStar">*</span></span>
+                </td>
+                <td>
+                    <select id="ctl00_MainContent_ddlRepairType" name="ctl00$MainContent$ddlRepairType" class="aspNetTextBox" style="width: 250px;">
+                        <option value="">-- Select --</option>
+                        <option value="post">Post Replacement</option>
+                        <option value="panel">Panel/Section Repair</option>
+                        <option value="gate">Gate Repair</option>
+                        <option value="hardware">Hardware Replacement</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 200px;">
+                    <span class="aspNetLabel">Fence Length (Linear Feet)</span>
+                </td>
+                <td>
+                    <input type="text" id="ctl00_MainContent_txtFenceLength" name="ctl00$MainContent$txtFenceLength" class="aspNetTextBox" style="width: 100px;" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 200px; vertical-align: top;">
+                    <span class="aspNetLabel">Description of Work</span>
+                </td>
+                <td>
+                    <textarea id="ctl00_MainContent_txtDescription" name="ctl00$MainContent$txtDescription" class="aspNetTextBox" rows="3" style="width: 350px;"></textarea>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="aspNetTable" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+            <tr>
+                <td colspan="2" class="headerRow">Contractor Information</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="checkboxCell">
+                    <input type="checkbox" id="ctl00_MainContent_chkSelfWork" name="ctl00$MainContent$chkSelfWork" value="true" 
+                        onchange="var row = document.getElementById('ctl00_MainContent_trContractorInfo'); if(this.checked) { row.style.display = 'none'; } else { row.style.display = 'block'; }" />
+                    <span class="aspNetLabel">I will be doing the work myself (no contractor)</span>
+                </td>
+            </tr>
+            <tr id="ctl00_MainContent_trContractorInfo">
+                <td colspan="2">
+                    <table class="innerTable" cellspacing="0" cellpadding="0" style="width: 100%;">
+                        <tr>
+                            <td style="width: 200px;">
+                                <span class="aspNetLabelBold">Contractor Company Name <span class="requiredStar">*</span></span>
+                            </td>
+                            <td>
+                                <input type="text" id="ctl00_MainContent_txtContractorName" name="ctl00$MainContent$txtContractorName" class="aspNetTextBox" style="width: 300px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 200px;">
+                                <span class="aspNetLabelBold">Contractor License # <span class="requiredStar">*</span></span>
+                            </td>
+                            <td>
+                                <input type="text" id="ctl00_MainContent_txtContractorLicense" name="ctl00$MainContent$txtContractorLicense" class="aspNetTextBox" style="width: 200px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 200px;">
+                                <span class="aspNetLabel">Contact Phone</span>
+                            </td>
+                            <td>
+                                <input type="text" id="ctl00_MainContent_txtContractorPhone" name="ctl00$MainContent$txtContractorPhone" class="aspNetTextBox" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 200px;">
+                                <span class="aspNetLabel">Email</span>
+                            </td>
+                            <td>
+                                <input type="text" id="ctl00_MainContent_txtContractorEmail" name="ctl00$MainContent$txtContractorEmail" class="aspNetTextBox" style="width: 250px;" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="aspNetTable" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+            <tr>
+                <td colspan="2" class="headerRow">Applicant Contact Information</td>
+            </tr>
+            <tr>
+                <td style="width: 200px;">
+                    <span class="aspNetLabelBold">Full Name <span class="requiredStar">*</span></span>
+                </td>
+                <td>
+                    <input type="text" id="ctl00_MainContent_txtFullName" name="ctl00$MainContent$txtFullName" class="aspNetTextBox" style="width: 250px;" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 200px;">
+                    <span class="aspNetLabelBold">Phone Number <span class="requiredStar">*</span></span>
+                </td>
+                <td>
+                    <input type="text" id="ctl00_MainContent_txtPhone" name="ctl00$MainContent$txtPhone" class="aspNetTextBox" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 200px;">
+                    <span class="aspNetLabel">Email</span>
+                </td>
+                <td>
+                    <input type="text" id="ctl00_MainContent_txtEmail" name="ctl00$MainContent$txtEmail" class="aspNetTextBox" style="width: 250px;" />
+                </td>
+            </tr>
+        </table>
+        
+        <table style="margin: 15px;">
+            <tr>
+                <td>
+                    <input type="submit" id="ctl00_MainContent_btnSubmit" name="ctl00$MainContent$btnSubmit" value="Submit Application" class="aspNetButton" />
+                </td>
+                <td style="padding-left: 10px;">
+                    <input type="reset" id="ctl00_MainContent_btnReset" name="ctl00$MainContent$btnReset" value="Reset Form" class="aspNetButton" 
+                        onclick="var row = document.getElementById('ctl00_MainContent_trContractorInfo'); row.style.display = 'block';" />
+                </td>
+            </tr>
+        </table>
+        
+        <div style="margin: 15px; color: #666666; font-size: 10px;">
+            <span class="requiredStar">*</span> Required fields must be completed before submission
+        </div>
+    </form>
+    
+    <div class="footerBar">
+        &copy; 2024 City of Springfield. All rights reserved.<br />
+        Springfield Municipal Permit Portal v2.0.5027
+    </div>
+</body>
+</html>

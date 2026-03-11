@@ -1,0 +1,156 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Springfield Municipal Permit Portal</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background: #1a365d;
+            color: white;
+            padding: 1rem 2rem;
+        }
+        header h1 { margin: 0; font-size: 1.5rem; }
+        header .subtitle { opacity: 0.8; font-size: 0.875rem; }
+        
+        nav {
+            background: #2c5282;
+            padding: 0.75rem 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        nav a:hover { text-decoration: underline; }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .hero h2 { margin-top: 0; font-size: 2rem; }
+        .hero p { font-size: 1.1rem; opacity: 0.9; }
+        
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .action-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .action-card h3 { color: #1a365d; margin-top: 0; }
+        .action-card a {
+            display: inline-block;
+            background: #2c5282;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+        .action-card a:hover { background: #1a365d; }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .info-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #2c5282;
+        }
+        .info-box h3 { margin-top: 0; color: #1a365d; }
+        
+        footer {
+            background: #1a365d;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Springfield Municipal Permit Portal</h1>
+        <div class="subtitle">Building & Safety Department | 100 City Hall, Springfield, ST 12345</div>
+    </header>
+    
+    <nav>
+        <a href="/l1/springfield/">Home</a>
+        <a href="/l1/springfield/apply">Apply Online</a>
+        <a href="/l1/springfield/search?id=12345">Permit Search</a>
+        <a href="/l1/springfield/guides">Guides & Resources</a>
+    </nav>
+    
+    <main>
+        <div class="hero">
+            <h2>Welcome to the Springfield Permit Portal</h2>
+            <p>Apply for building permits, track application status, and access resources for your construction projects.</p>
+        </div>
+        
+        <div class="actions">
+            <div class="action-card">
+                <h3>Permit Search</h3>
+                <p>Search for existing permits by ID or address</p>
+                <a href="/l1/springfield/search?id=12345">Search Permits</a>
+            </div>
+            <div class="action-card">
+                <h3>Apply Online</h3>
+                <p>Submit a new permit application</p>
+                <a href="/l1/springfield/apply">Start Application</a>
+            </div>
+            <div class="action-card">
+                <h3>Guides & Resources</h3>
+                <p>Helpful articles and forms</p>
+                <a href="/l1/springfield/guides">View Guides</a>
+            </div>
+        </div>
+        
+        <div class="info-grid">
+            <div class="info-box">
+                <h3>Processing Times</h3>
+                <p>Standard permits: 10-15 business days<br>Expedited: 3-5 business days (additional fee)</p>
+            </div>
+            <div class="info-box">
+                <h3>Contact Us</h3>
+                <p>Phone: (555) 123-4567<br>Email: permits@springfield.gov<br>Hours: M-F 8AM-5PM</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 City of Springfield. All rights reserved.</p>
+    </footer>
+</body>
+</html>

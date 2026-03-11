@@ -1,0 +1,380 @@
+---
+export function getStaticPaths() {
+    return [
+        { params: { id: '12345' } },
+        { params: { id: 'BLD-2024-001' } },
+        { params: { id: 'BLD-2024-002' } },
+        { params: { id: 'BLD-2024-003' } },
+    ];
+}
+
+const { id } = Astro.params;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permit Search Results - Springfield Municipal Permit Portal</title>
+    <style>
+        body {
+            font-family: Tahoma, Verdana, Arial, sans-serif;
+            font-size: 11px;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .headerBar {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .navBar {
+            background-color: #ece9d8;
+            padding: 5px 15px;
+            border-bottom: 1px solid #999999;
+        }
+        
+        .navBar a {
+            color: #003366;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        
+        .navBar a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumbs {
+            padding: 5px 15px;
+            background-color: #ffffcc;
+            border-bottom: 1px solid #cccccc;
+            color: #666666;
+        }
+        
+        .breadcrumbs a {
+            color: #003366;
+        }
+        
+        .pageTitle {
+            font-size: 16px;
+            font-weight: bold;
+            color: #003366;
+            margin: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #cccccc;
+        }
+        
+        .searchBox {
+            background-color: #F0F0F0;
+            border: 1px solid #999999;
+            padding: 15px;
+            margin: 15px;
+            width: 95%;
+        }
+        
+        .searchBox table td {
+            padding: 3px;
+        }
+        
+        table.aspNetTable {
+            border-collapse: collapse;
+            border: 1px solid #999999;
+            background-color: #F0F0F0;
+            width: 95%;
+            margin: 15px;
+        }
+        
+        table.aspNetTable td {
+            padding: 5px 8px;
+            border: 1px solid #cccccc;
+            background-color: #ffffff;
+        }
+        
+        table.aspNetTable th {
+            padding: 5px 8px;
+            border: 1px solid #cccccc;
+            background-color: #003366;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: left;
+        }
+        
+        .headerRow {
+            background-color: #003366;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        .alternatingRow {
+            background-color: #f5f5f5;
+        }
+        
+        .aspNetLabel {
+            font-family: Tahoma, Verdana, sans-serif;
+            font-size: 11px;
+            color: #000000;
+        }
+        
+        .aspNetLabelBold {
+            font-family: Tahoma, Verdana, sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            color: #000000;
+        }
+        
+        .aspNetTextBox {
+            border: 1px solid #7f9db9;
+            font-family: Tahoma, Verdana, sans-serif;
+            font-size: 11px;
+            padding: 3px;
+            width: 200px;
+        }
+        
+        .aspNetButton {
+            background-color: #ece9d8;
+            border: 1px solid #003c74;
+            padding: 3px 12px;
+            font-family: Tahoma, Verdana, sans-serif;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        
+        .aspNetButton:hover {
+            background-color: #d4d0c0;
+        }
+        
+        .statusApproved {
+            background-color: #c6f6d5;
+            color: #22543d;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .statusPending {
+            background-color: #feebc8;
+            color: #744210;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .statusReview {
+            background-color: #bee3f8;
+            color: #2a4365;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .actionLink {
+            color: #0000FF;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        
+        .footerBar {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 10px 15px;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 10px;
+        }
+        
+        a {
+            color: #0000FF;
+            text-decoration: underline;
+        }
+        
+        a:visited {
+            color: #800080;
+        }
+        
+        .resultsInfo {
+            margin: 15px;
+            color: #666666;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="headerBar">Springfield Municipal Permit Portal</div>
+    
+    <div class="navBar">
+        <a href="/l1/springfield/">Home</a>
+        <a href="/l1/springfield/apply">Apply Online</a>
+        <a href="/l1/springfield/search?id=12345">Permit Search</a>
+        <a href="/l1/springfield/guides">Guides & Resources</a>
+    </div>
+    
+    <div class="breadcrumbs">
+        <a href="/l1/springfield/">Home</a> &gt; Permit Search
+    </div>
+    
+    <div class="pageTitle">Permit Search</div>
+    
+    <form method="post" action="/l1/springfield/search" id="aspnetForm">
+        <div class="aspNetHidden">
+            <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+            <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+            <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTQzNDM5MTMzMWRkZBYCAgMPZBYCAggeD2QeBFRleHQFFFNob3cgcmVzdWx0cyBmb3IgcGVybWl0IGlkZW50aWZpZXI=" />
+            <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+        </div>
+        
+        <div class="searchBox">
+            <table cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <span class="aspNetLabelBold">Application ID:</span>
+                    </td>
+                    <td>
+                        <input type="text" id="ctl00_MainContent_txtSearchId" name="ctl00$MainContent$txtSearchId" class="aspNetTextBox" value={id || ''} />
+                    </td>
+                    <td>
+                        <span class="aspNetLabelBold">Property Address:</span>
+                    </td>
+                    <td>
+                        <input type="text" id="ctl00_MainContent_txtSearchAddress" name="ctl00$MainContent$txtSearchAddress" class="aspNetTextBox" />
+                    </td>
+                    <td>
+                        <input type="submit" id="ctl00_MainContent_btnSearch" name="ctl00$MainContent$btnSearch" value="Search" class="aspNetButton" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="resultsInfo">
+            Showing all permits in system
+        </div>
+        
+        <table class="aspNetTable" id="ctl00_MainContent_gvResults" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th scope="col">Application ID</th>
+                    <th scope="col">Property Address</th>
+                    <th scope="col">Permit Type</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>BLD-2024-001</td>
+                    <td>123 Main Street</td>
+                    <td>Residential Addition</td>
+                    <td><span class="statusApproved">Approved</span></td>
+                    <td>
+                        <a id="ctl00_MainContent_gvResults_ctl02_lnkView" href="javascript:__doPostBack('ctl00$MainContent$gvResults$ctl02$lnkView','')">View Permit</a>
+                    </td>
+                </tr>
+                <tr class="alternatingRow">
+                    <td>BLD-2024-002</td>
+                    <td>456 Oak Avenue</td>
+                    <td>Commercial Renovation</td>
+                    <td><span class="statusReview">Under Review</span></td>
+                    <td>
+                        <a id="ctl00_MainContent_gvResults_ctl03_lnkView" href="javascript:__doPostBack('ctl00$MainContent$gvResults$ctl03$lnkView','')">View Permit</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>BLD-2024-003</td>
+                    <td>789 Elm Street</td>
+                    <td>Deck Construction</td>
+                    <td><span class="statusPending">Pending</span></td>
+                    <td>
+                        <a id="ctl00_MainContent_gvResults_ctl04_lnkView" href="javascript:__doPostBack('ctl00$MainContent$gvResults$ctl04$lnkView','')">View Permit</a>
+                    </td>
+                </tr>
+                <tr class="alternatingRow">
+                    <td>BLD-2024-004</td>
+                    <td>321 Pine Road</td>
+                    <td>Roof Replacement</td>
+                    <td><span class="statusApproved">Approved</span></td>
+                    <td>
+                        <a id="ctl00_MainContent_gvResults_ctl05_lnkView" href="javascript:__doPostBack('ctl00$MainContent$gvResults$ctl05$lnkView','')">View Permit</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>BLD-2024-005</td>
+                    <td>654 Maple Drive</td>
+                    <td>Garage Build</td>
+                    <td><span class="statusApproved">Approved</span></td>
+                    <td>
+                        <a id="ctl00_MainContent_gvResults_ctl06_lnkView" href="javascript:__doPostBack('ctl00$MainContent$gvResults$ctl06$lnkView','')">View Permit</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table style="margin: 15px;">
+            <tr>
+                <td>
+                    <span class="aspNetLabel">Page 1 of 1</span>
+                </td>
+                <td style="padding-left: 10px;">
+                    <a id="ctl00_MainContent_gvResults_lnkPrev" href="#">Previous</a>
+                </td>
+                <td style="padding-left: 5px;">
+                    <a id="ctl00_MainContent_gvResults_lnkNext" href="#">Next</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+    
+    <div class="footerBar">
+        &copy; 2024 City of Springfield. All rights reserved.<br />
+        Springfield Municipal Permit Portal v2.0.5027
+    </div>
+    
+    <script is:inline>
+    var theForm = document.forms['aspnetForm'];
+    if (!theForm) {
+        theForm = document.aspnetForm;
+    }
+
+    function __doPostBack(eventTarget, eventArgument) {
+        if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+            document.getElementById('__EVENTTARGET').value = eventTarget;
+            document.getElementById('__EVENTARGUMENT').value = eventArgument;
+            
+            if (eventTarget === 'ctl00$MainContent$gvResults$ctl02$lnkView') {
+                window.location.href = '/l1/springfield/search/permit/BLD-2024-001';
+                return;
+            }
+            if (eventTarget === 'ctl00$MainContent$gvResults$ctl03$lnkView') {
+                window.location.href = '/l1/springfield/search/permit/BLD-2024-002';
+                return;
+            }
+            if (eventTarget === 'ctl00$MainContent$gvResults$ctl04$lnkView') {
+                window.location.href = '/l1/springfield/search/permit/BLD-2024-003';
+                return;
+            }
+            if (eventTarget === 'ctl00$MainContent$gvResults$ctl05$lnkView') {
+                window.location.href = '/l1/springfield/search/permit/BLD-2024-004';
+                return;
+            }
+            if (eventTarget === 'ctl00$MainContent$gvResults$ctl06$lnkView') {
+                window.location.href = '/l1/springfield/search/permit/BLD-2024-005';
+                return;
+            }
+            if (eventTarget === 'ctl00$MainContent$btnSearch') {
+                var searchId = document.getElementById('ctl00_MainContent_txtSearchId').value;
+                if (searchId) {
+                    window.location.href = '/l1/springfield/search/' + searchId;
+                    return;
+                }
+            }
+            
+            console.log("Mock server received postback from: " + eventTarget);
+        }
+    }
+    </script>
+</body>
+</html>
