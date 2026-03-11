@@ -4,13 +4,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Changelog - Version 3.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevDocs - Release Notes</title>
+    <meta name="description" content="DevTools SDK release notes and documentation.">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -52,9 +50,7 @@
             margin-top: 8px;
         }
         
-        .nav-section {
-            margin-bottom: 20px;
-        }
+        .nav-section { margin-bottom: 20px; }
         
         .nav-section h3 {
             font-size: 11px;
@@ -74,15 +70,8 @@
             transition: all 0.2s;
         }
         
-        .nav-section a:hover {
-            background: #2d2d44;
-            color: #fff;
-        }
-        
-        .nav-section a.active {
-            background: #6366f1;
-            color: #fff;
-        }
+        .nav-section a:hover { background: #2d2d44; color: #fff; }
+        .nav-section a.active { background: #6366f1; color: #fff; }
         
         .main-content {
             margin-left: 260px;
@@ -91,17 +80,9 @@
             max-width: 1000px;
         }
         
-        .changelog h1 {
-            font-size: 36px;
-            color: #fff;
-            margin-bottom: 10px;
-        }
+        .changelog h1 { font-size: 36px; color: #fff; margin-bottom: 10px; }
         
-        .changelog .release-date {
-            color: #71717a;
-            font-size: 14px;
-            margin-bottom: 40px;
-        }
+        .changelog .release-date { color: #71717a; font-size: 14px; margin-bottom: 40px; }
         
         .changelog h2 {
             font-size: 24px;
@@ -111,10 +92,7 @@
             border-bottom: 1px solid #2d2d44;
         }
         
-        .changelog ul {
-            list-style: none;
-            margin-bottom: 40px;
-        }
+        .changelog ul { list-style: none; margin-bottom: 40px; }
         
         .changelog ul li {
             padding: 12px 0;
@@ -141,26 +119,11 @@
             font-size: 13px;
         }
         
-        .changelog ul li code {
-            background: #6366f120;
-            color: #a5b4fc;
-        }
-        
-        .changelog h2:first-of-type {
-            color: #10b981;
-        }
-        
-        .changelog h2:nth-of-type(2) {
-            color: #f59e0b;
-        }
-        
-        .changelog h2:nth-of-type(3) {
-            color: #ef4444;
-        }
-        
-        .changelog h2:nth-of-type(4) {
-            color: #6366f1;
-        }
+        .changelog ul li code { background: #6366f120; color: #a5b4fc; }
+        .changelog h2:first-of-type { color: #10b981; }
+        .changelog h2:nth-of-type(2) { color: #f59e0b; }
+        .changelog h2:nth-of-type(3) { color: #ef4444; }
+        .changelog h2:nth-of-type(4) { color: #6366f1; }
         
         .breaking-badge {
             background: #ef4444;
@@ -180,9 +143,24 @@
             border-radius: 0 8px 8px 0;
         }
         
-        .deprecation-notice code {
-            color: #fbbf24;
+        .deprecation-notice code { color: #fbbf24; }
+        
+        .version-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
         }
+        
+        .version-selector a {
+            padding: 8px 16px;
+            background: #2d2d44;
+            color: #a1a1aa;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .version-selector a.active { background: #6366f1; color: #fff; }
         
         .contributors {
             margin-top: 60px;
@@ -192,14 +170,8 @@
             font-size: 14px;
         }
         
-        .contributors a {
-            color: #6366f1;
-            text-decoration: none;
-        }
-        
-        .contributors a:hover {
-            text-decoration: underline;
-        }
+        .contributors a { color: #6366f1; text-decoration: none; }
+        .contributors a:hover { text-decoration: underline; }
         
         .full-changelog-link {
             display: inline-block;
@@ -208,15 +180,35 @@
             text-decoration: none;
         }
         
-        .full-changelog-link:hover {
-            text-decoration: underline;
+        .full-changelog-link:hover { text-decoration: underline; }
+        
+        .install-command {
+            background: #0d0d1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Fira Code', monospace;
+            color: #4ade80;
         }
+        
+        .install-command .prompt { color: #6366f1; }
+        
+        footer {
+            margin-left: 260px;
+            padding: 40px;
+            border-top: 1px solid #2d2d44;
+            text-align: center;
+            color: #71717a;
+            font-size: 13px;
+        }
+        
+        footer a { color: #6366f1; text-decoration: none; }
     </style>
 </head>
 <body>
     <aside class="sidebar">
         <div class="sidebar-header">
-            <h2>Docs</h2>
+            <h2>DevDocs</h2>
             <span class="version">v3.0.0</span>
         </div>
         
@@ -246,9 +238,21 @@
     </aside>
     
     <main class="main-content">
+        <div class="version-selector">
+            <a href="#" class="active">v3.0</a>
+            <a href="#">v2.5</a>
+            <a href="#">v2.0</a>
+            <a href="#">v1.5</a>
+            <a href="#">v1.0</a>
+        </div>
+        
         <div class="changelog">
             <h1>Release Notes - Version 3.0</h1>
             <p class="release-date">Released on March 10, 2026</p>
+            
+            <div class="install-command">
+                <span class="prompt">$</span> npm install @devtools/sdk@3.0.0
+            </div>
             
             <h2>What's New</h2>
             
@@ -258,6 +262,8 @@
                 <li>Performance improvements: <code>query optimization</code> reduced load times by 40%</li>
                 <li>New dashboard widgets for analytics</li>
                 <li>Custom webhook support with <code>payload.signature</code> validation</li>
+                <li>Added support for GraphQL subscriptions</li>
+                <li>New CLI commands for automated deployments</li>
             </ul>
             
             <h2>Bug Fixes</h2>
@@ -267,18 +273,22 @@
                 <li>Resolved memory leak in the notification system</li>
                 <li>Fixed cross-browser compatibility issues with Safari</li>
                 <li>Addressed <code>undefined</code> error when accessing user preferences</li>
+                <li>Fixed WebSocket disconnection on mobile devices</li>
+                <li>Resolved race condition in the caching layer</li>
             </ul>
             
             <h2>Breaking Changes <span class="breaking-badge">BREAKING</span></h2>
             
             <div class="deprecation-notice">
-                <strong>Migration Required:</strong> The following changes require updates to your codebase.
+                <strong>Migration Required:</strong> The following changes require updates to your codebase. Please see the <a href="#" style="color:#a5b4fc">Migration Guide</a> for detailed instructions.
             </div>
             
             <ul>
                 <li>API endpoint <code>/v2/users/profile</code> now requires authentication header</li>
                 <li>Deprecated <code>legacyExport()</code> - use <code>newExport()</code> instead</li>
                 <li>Minimum Node.js version increased to 18.x</li>
+                <li>Configuration file format changed from YAML to JSON</li>
+                <li>Removed deprecated <code>connect()</code> method - use <code>connectAsync()</code></li>
             </ul>
             
             <h2>Under the Hood</h2>
@@ -287,14 +297,20 @@
                 <li>Upgraded database driver to <code>pg@14.0.0</code></li>
                 <li>Refactored authentication module for better security</li>
                 <li>Added comprehensive logging with <code>structuredLogger</code> for debugging</li>
+                <li>Migrated from REST to gRPC for internal services</li>
+                <li>Improved type definitions for TypeScript users</li>
             </ul>
             
             <a href="#" class="full-changelog-link">View full changelog →</a>
             
             <div class="contributors">
-                <p>Thanks to our contributors: <a href="#">@johndoe</a>, <a href="#">@jane smith</a>, <a href="#">@devteam</a></p>
+                <p>Thanks to our contributors: <a href="#">@johndoe</a>, <a href="#">@jane smith</a>, <a href="#">@devteam</a>, <a href="#">@alexchen</a>, <a href="#">@sarahk</a></p>
             </div>
         </div>
     </main>
+    
+    <footer>
+        <p>&copy; 2026 DevTools Inc. <a href="#">Documentation</a> | <a href="#">Support</a> | <a href="#">Status</a></p>
+    </footer>
 </body>
 </html>

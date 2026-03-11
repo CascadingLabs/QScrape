@@ -4,32 +4,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Building Permit Applications</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City of Springfield - Building Permits</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
+        * { margin: 0; padding: 0; }
         
         body {
             font-family: Verdana, Arial, Helvetica, sans-serif;
             font-size: 11px;
             background: #eeeeee;
-            padding: 15px;
         }
         
-        a {
-            color: #0000ff;
-            text-decoration: underline;
+        a { color: #0000ff; text-decoration: underline; }
+        a:visited { color: #551a8b; }
+        a:hover { color: #ff0000; }
+        
+        .header {
+            background: #003366;
+            color: #ffffff;
+            padding: 15px 20px;
         }
         
-        a:visited {
-            color: #551a8b;
+        .header h1 {
+            font-size: 18px;
+            margin-bottom: 5px;
         }
         
-        a:hover {
-            color: #ff0000;
+        .header .subtitle {
+            font-size: 11px;
+            opacity: 0.9;
         }
+        
+        .nav-bar {
+            background: #003366;
+            padding: 8px 20px;
+        }
+        
+        .nav-bar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        
+        .nav-bar a:hover { color: #ffff00; }
+        
+        .breadcrumbs {
+            font-size: 10px;
+            color: #666666;
+            padding: 10px 20px;
+            background: #f5f5f5;
+        }
+        
+        .breadcrumbs a { font-size: 10px; }
         
         .permit-system {
             background: #ffffff;
@@ -44,6 +72,26 @@
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 2px solid #003366;
+        }
+        
+        .permit-system h2 {
+            font-size: 14px;
+            color: #003366;
+            margin: 20px 0 10px;
+        }
+        
+        .quick-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-links a {
+            padding: 8px 15px;
+            background: #f0f0f0;
+            border: 1px solid #cccccc;
+            font-size: 10px;
         }
         
         .aspnet_table {
@@ -76,9 +124,7 @@
             border: 1px inset #cccccc;
         }
         
-        .aspnet_table tr:hover td {
-            background: #ffffcc;
-        }
+        .aspnet_table tr:hover td { background: #ffffcc; }
         
         .aspnet_table td[colspan="3"]:first-child {
             background: #003366;
@@ -98,66 +144,8 @@
             color: #333333;
         }
         
-        .status-approved {
-            background: #d4edda !important;
-            color: #155724;
-            font-weight: bold;
-        }
-        
-        .status-pending {
-            background: #fff3cd !important;
-            color: #856404;
-        }
-        
-        .nav-bar {
-            background: #003366;
-            padding: 8px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .nav-bar a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
-        }
-        
-        .nav-bar a:hover {
-            color: #ffff00;
-        }
-        
-        .breadcrumbs {
-            font-size: 10px;
-            color: #666666;
-            margin-bottom: 10px;
-        }
-        
-        .breadcrumbs a {
-            color: #0000ff;
-            font-size: 10px;
-        }
-        
-        .footer {
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #cccccc;
-            text-align: center;
-            color: #666666;
-            font-size: 10px;
-        }
-        
-        .print-button {
-            background: #cccccc;
-            border: 1px outset #999999;
-            padding: 5px 15px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-        
-        .print-button:hover {
-            background: #aaaaaa;
-        }
+        .status-approved { background: #d4edda !important; color: #155724; font-weight: bold; }
+        .status-pending { background: #fff3cd !important; color: #856404; }
         
         .search-box {
             margin-bottom: 15px;
@@ -177,7 +165,8 @@
             color: #ffffff;
             border: 1px outset #004080;
             padding: 3px 10px;
-            cursor: pointer;
+;
+                       cursor: pointer font-size: 11px;
         }
         
         .page-numbers {
@@ -186,68 +175,145 @@
             font-size: 10px;
         }
         
-        .page-numbers a {
-            margin: 0 3px;
+        .page-numbers a { margin: 0 3px; }
+        .page-numbers span { font-weight: bold; color: #003366; }
+        
+        .print-button {
+            background: #cccccc;
+            border: 1px outset #999999;
+            padding: 5px 15px;
+            cursor: pointer;
+            font-size: 11px;
         }
         
-        .page-numbers span {
-            font-weight: bold;
+        .footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #cccccc;
+            text-align: center;
+            color: #666666;
+            font-size: 10px;
+            background: #f5f5f5;
+            padding: 15px;
+        }
+        
+        .contact-info {
+            background: #f0f8ff;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid #cccccc;
+        }
+        
+        .contact-info strong {
             color: #003366;
+        }
+        
+        .forms-section {
+            margin-top: 25px;
+        }
+        
+        .forms-section ul {
+            list-style: none;
+        }
+        
+        .forms-section li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .forms-section a {
+            font-size: 11px;
+        }
+        
+        .info-box {
+            background: #fffbe6;
+            border: 1px solid #ffe58f;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 10px;
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>City of Springfield - Building & Safety Department</h1>
+        <div class="subtitle">100 Main Street, Springfield, ST 12345 | Phone: (555) 123-4567</div>
+    </div>
+    
+    <div class="nav-bar">
+        <a href="/">Home</a>
+        <a href="/permits">Permits</a>
+        <a href="/inspections">Inspections</a>
+        <a href="/forms">Forms</a>
+        <a href="/codes">Building Codes</a>
+        <a href="/contact">Contact</a>
+    </div>
+    
+    <div class="breadcrumbs">
+        <a href="/">Home</a> &gt; <a href="/permits">Permits</a> &gt; Building Permits
+    </div>
+    
     <div class="permit-system">
-        <div class="breadcrumbs">
-            <a href="/">Home</a> &gt; <a href="/permits">Permits</a> &gt; Building Permits
-        </div>
+        <h1>Building Permit Applications</h1>
         
-        <div class="nav-bar">
-            <a href="/">Home</a>
-            <a href="/permits">Permits</a>
-            <a href="/inspections">Inspections</a>
-            <a href="/forms">Forms</a>
-            <a href="/contact">Contact</a>
+        <div class="quick-links">
+            <a href="#">Apply for Permit</a>
+            <a href="#">Track Application</a>
+            <a href="#">View Inspections</a>
+            <a href="#">Fee Schedule</a>
+            <a href="#">Contractor Registration</a>
         </div>
-        
-        <h1>City of Springfield - Permit Applications</h1>
         
         <div class="search-box">
             <strong>Search Permits:</strong>
             <input type="text" name="search" placeholder="Enter Application ID">
+            <input type="text" name="address" placeholder="Property Address">
             <button>Search</button>
+            <button class="print-button">Print</button>
         </div>
+        
+        <div class="info-box">
+            <strong>Notice:</strong> Permit applications are processed within 10-15 business days. For expedited service, please call (555) 123-4567.
+        </div>
+        
+        <h2>Permit Applications - 2024</h2>
         
         <table class="aspnet_table" cellspacing="0" border="1">
             <tr>
-                <td colspan="3">PERMIT APPLICATIONS - 2024</td>
+                <td colspan="4">PERMIT APPLICATIONS - 2024</td>
             </tr>
             <tr>
                 <td>Application ID</td>
                 <td>Property Address</td>
                 <td>Permit Type</td>
+                <td>Status</td>
             </tr>
             <tr>
                 <td>BLD-2024-001</td>
                 <td>123 Main Street</td>
                 <td>Residential Addition</td>
+                <td>Approved</td>
             </tr>
             <tr>
                 <td rowspan="2">BLD-2024-002</td>
                 <td>456 Oak Avenue</td>
                 <td>Commercial Renovation</td>
+                <td></td>
             </tr>
             <tr>
                 <td colspan="2">Status: Under Review</td>
+                <td></td>
             </tr>
             <tr>
                 <td>BLD-2024-003</td>
                 <td>789 Elm Street</td>
                 <td>Deck Construction</td>
+                <td>Pending</td>
             </tr>
             <tr>
                 <td colspan="2">BLD-2024-004</td>
                 <td>Swimming Pool</td>
+                <td></td>
             </tr>
             <tr>
                 <td>BLD-2024-005</td>
@@ -259,45 +325,69 @@
                 <td>BLD-2024-006</td>
                 <td>654 Maple Drive</td>
                 <td>Garage Build</td>
+                <td>Approved</td>
             </tr>
             <tr>
                 <td>BLD-2024-007</td>
                 <td>987 Cedar Lane</td>
                 <td>Fence Installation</td>
+                <td>Pending</td>
             </tr>
             <tr>
                 <td rowspan="3">BLD-2024-008</td>
                 <td>147 Birch Court</td>
                 <td>Major Renovation</td>
+                <td></td>
             </tr>
             <tr>
                 <td colspan="3">Estimated Cost: $250,000</td>
             </tr>
             <tr>
                 <td>Contractor: ABC Builders Inc.</td>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td>BLD-2024-009
                 <td>258 Walnut Street</td>
                 <td>HVAC Replacement</td>
+                <td>Under Review</td>
             </tr>
             <tr>
                 <td>BLD-2024-010</td>
                 <td>369 Spruce Avenue</td>
                 <td>Window Replacement</td>
+                <td>Pending</td>
             </tr>
         </table>
         
         <div class="page-numbers">
-            <a href="?page=1">1</a> | <a href="?page=2">2</a> | <a href="?page=3">3</a> | <span>4</span> | <a href="?page=5">5</a>
+            <a href="?page=1">1</a> | <a href="?page=2">2</a> | <a href="?page=3">3</a> | <span>4</span> | <a href="?page=5">5</a> | <a href="?page=6">6</a>
         </div>
         
-        <p>For questions about permits, contact the Building Department at (555) 123-4567.</p>
-        
-        <div class="footer">
-            <p>&copy; 2004 City of Springfield. All rights reserved.</p>
-            <p>Last Updated: 03/10/2004</p>
+        <div class="contact-info">
+            <strong>Building Department Contact:</strong><br>
+            Phone: (555) 123-4567 | Fax: (555) 123-4568<br>
+            Email: building@springfield.gov<br>
+            Hours: Monday - Friday, 8:00 AM - 5:00 PM
         </div>
+        
+        <div class="forms-section">
+            <h2>Popular Forms</h2>
+            <ul>
+                <li><a href="#">Building Permit Application (PDF)</a></li>
+                <li><a href="#">Electrical Permit Application (PDF)</a></li>
+                <li><a href="#">Plumbing Permit Application (PDF)</a></li>
+                <li><a href="#">HVAC Permit Application (PDF)</a></li>
+                <li><a href="#">Contractor License Application (PDF)</a></li>
+                <li><a href="#">Inspection Request Form (PDF)</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; 2004-2024 City of Springfield. All rights reserved.</p>
+        <p>Last Updated: 03/10/2004 | <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
     </div>
 </body>
 </html>
