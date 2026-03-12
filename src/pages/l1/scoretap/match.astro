@@ -23,8 +23,8 @@ import SiteShell from './_components/SiteShell.astro';
     var matchData = {
       'match-001': {
         id: 'match-001',
-        team1: { name: 'NAVI', full: 'Natus Vincere', abbr: 'NV', region: 'Europe' },
-        team2: { name: 'G2',   full: 'G2 Esports',   abbr: 'G2', region: 'Europe' },
+        team1: { name: 'NAVI', full: 'Natus Vincere', abbr: 'NV', region: 'Europe', teamId: 'navi' },
+        team2: { name: 'G2',   full: 'G2 Esports',   abbr: 'G2', region: 'Europe', teamId: 'g2' },
         score1: 11,
         score2: 8,
         status: 'LIVE',
@@ -55,7 +55,7 @@ import SiteShell from './_components/SiteShell.astro';
       },
       'match-002': {
         id: 'match-002',
-        team1: { name: 'Sentinels', full: 'Sentinels', abbr: 'SEN',  region: 'North America' },
+        team1: { name: 'Sentinels', full: 'Sentinels', abbr: 'SEN',  region: 'North America', teamId: 'sentinels' },
         team2: { name: 'LOUD',      full: 'LOUD',      abbr: 'LOUD', region: 'Brazil' },
         score1: 9,
         score2: 7,
@@ -87,8 +87,8 @@ import SiteShell from './_components/SiteShell.astro';
       },
       'match-003': {
         id: 'match-003',
-        team1: { name: 'Team Liquid', full: 'Team Liquid', abbr: 'TL', region: 'North America' },
-        team2: { name: 'Cloud9',      full: 'Cloud9',      abbr: 'C9', region: 'North America' },
+        team1: { name: 'Team Liquid', full: 'Team Liquid', abbr: 'TL', region: 'North America', teamId: 'liquid' },
+        team2: { name: 'Cloud9',      full: 'Cloud9',      abbr: 'C9', region: 'North America', teamId: 'cloud9' },
         score1: 2,
         score2: 1,
         status: 'LIVE',
@@ -166,6 +166,9 @@ import SiteShell from './_components/SiteShell.astro';
         return '<li><a href="' + (n.href || '#') + '">' + n.headline + '</a><div class="news-meta-small">' + n.time + '</div></li>';
       }).join('');
 
+      var team1Href = m.team1.teamId ? '/l1/scoretap/team?id=' + m.team1.teamId : '/l1/scoretap/teams';
+      var team2Href = m.team2.teamId ? '/l1/scoretap/team?id=' + m.team2.teamId : '/l1/scoretap/teams';
+
       var html =
         '<div class="match-header-card">' +
           '<div class="match-event-info">' +
@@ -173,8 +176,8 @@ import SiteShell from './_components/SiteShell.astro';
           '</div>' +
           '<div class="teams-row">' +
             '<div class="team-block">' +
-              '<a href="/l1/scoretap/teams" style="text-decoration:none;"><div class="team-logo-placeholder">' + m.team1.abbr + '</div></a>' +
-              '<div class="team-full-name"><a href="/l1/scoretap/teams" style="color:inherit;">' + m.team1.full + '</a></div>' +
+              '<a href="' + team1Href + '" style="text-decoration:none;"><div class="team-logo-placeholder">' + m.team1.abbr + '</div></a>' +
+              '<div class="team-full-name"><a href="' + team1Href + '" style="color:inherit;">' + m.team1.full + '</a></div>' +
               '<div class="team-region">' + m.team1.region + '</div>' +
             '</div>' +
             '<div class="score-center">' +
@@ -182,8 +185,8 @@ import SiteShell from './_components/SiteShell.astro';
               '<div class="score-status">' + statusHtml + '</div>' +
             '</div>' +
             '<div class="team-block">' +
-              '<a href="/l1/scoretap/teams" style="text-decoration:none;"><div class="team-logo-placeholder">' + m.team2.abbr + '</div></a>' +
-              '<div class="team-full-name"><a href="/l1/scoretap/teams" style="color:inherit;">' + m.team2.full + '</a></div>' +
+              '<a href="' + team2Href + '" style="text-decoration:none;"><div class="team-logo-placeholder">' + m.team2.abbr + '</div></a>' +
+              '<div class="team-full-name"><a href="' + team2Href + '" style="color:inherit;">' + m.team2.full + '</a></div>' +
               '<div class="team-region">' + m.team2.region + '</div>' +
             '</div>' +
           '</div>' +

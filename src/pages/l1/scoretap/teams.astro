@@ -16,6 +16,8 @@ import GameTag from './_components/GameTag.astro';
       padding: 16px 12px;
       border-right: 1px solid var(--border);
       text-align: center;
+      display: block;
+      color: inherit;
     }
     .featured-team-card:last-child { border-right: none; }
     .featured-team-card:hover { background: #131320; }
@@ -50,7 +52,8 @@ import GameTag from './_components/GameTag.astro';
     .teams-table-wrap { overflow-x: auto; }
     .teams-table th:first-child,
     .teams-table td:first-child { width: 36px; text-align: center; }
-    .teams-table .team-cell { font-weight: 700; color: var(--text-bright); text-transform: uppercase; letter-spacing: 0.3px; }
+    .teams-table .team-cell { font-weight: 700; color: var(--text-bright); text-transform: uppercase; letter-spacing: 0.3px; cursor: pointer; }
+    .teams-table tbody tr[data-team-id] { cursor: pointer; }
     .teams-table .num-cell { text-align: center; color: var(--text-dim); }
     .teams-table .pct-cell { text-align: center; font-weight: 700; }
     .pct-high { color: var(--green); }
@@ -75,34 +78,34 @@ import GameTag from './_components/GameTag.astro';
     <div class="main-col">
 
       <!-- Featured Teams -->
-      <WidgetPanel title="Featured Teams" linkText="All Teams" linkHref="#">
+      <WidgetPanel title="Featured Teams" linkText="All Teams" linkHref="/l1/scoretap/teams">
         <div class="featured-teams-grid">
-          <div class="featured-team-card" data-game="cs2">
+          <a href="/l1/scoretap/team?id=vitality" class="featured-team-card" data-game="cs2">
             <div class="featured-team-logo">VIT</div>
             <div class="featured-team-name">Team Vitality</div>
             <div style="margin:4px 0;"><GameTag game="cs2" /></div>
             <div style="font-size:10px;color:var(--text-dim);">EU &middot; Ranked #1</div>
             <div class="featured-team-record"><span class="wins">W 34</span> &nbsp;/&nbsp; <span class="losses">L 8</span></div>
-          </div>
-          <div class="featured-team-card" data-game="valorant">
+          </a>
+          <a href="/l1/scoretap/team?id=sentinels" class="featured-team-card" data-game="valorant">
             <div class="featured-team-logo">SEN</div>
             <div class="featured-team-name">Sentinels</div>
             <div style="margin:4px 0;"><GameTag game="valorant" /></div>
             <div style="font-size:10px;color:var(--text-dim);">NA &middot; Americas #1</div>
             <div class="featured-team-record"><span class="wins">W 21</span> &nbsp;/&nbsp; <span class="losses">L 4</span></div>
-          </div>
-          <div class="featured-team-card" data-game="lol">
+          </a>
+          <a href="/l1/scoretap/team?id=t1" class="featured-team-card" data-game="lol">
             <div class="featured-team-logo">T1</div>
             <div class="featured-team-name">T1</div>
             <div style="margin:4px 0;"><GameTag game="lol" /></div>
             <div style="font-size:10px;color:var(--text-dim);">KR &middot; LCK #1</div>
             <div class="featured-team-record"><span class="wins">W 16</span> &nbsp;/&nbsp; <span class="losses">L 2</span></div>
-          </div>
+          </a>
         </div>
       </WidgetPanel>
 
       <!-- All Teams table -->
-      <WidgetPanel title="All Teams" linkText="Rankings" linkHref="#">
+      <WidgetPanel title="All Teams" linkText="Rankings" linkHref="/l1/scoretap/teams">
         <div class="teams-table-wrap">
           <table class="teams-table">
             <thead>
@@ -117,7 +120,7 @@ import GameTag from './_components/GameTag.astro';
               </tr>
             </thead>
             <tbody>
-              <tr data-game="cs2">
+              <tr data-game="cs2" data-team-id="vitality">
                 <td class="num-cell">#1</td>
                 <td class="team-cell">Team Vitality</td>
                 <td><GameTag game="cs2" /></td>
@@ -126,7 +129,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">8</td>
                 <td class="pct-cell pct-high">81%</td>
               </tr>
-              <tr data-game="cs2">
+              <tr data-game="cs2" data-team-id="navi">
                 <td class="num-cell">#2</td>
                 <td class="team-cell">NAVI</td>
                 <td><GameTag game="cs2" /></td>
@@ -135,7 +138,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">10</td>
                 <td class="pct-cell pct-high">75%</td>
               </tr>
-              <tr data-game="cs2">
+              <tr data-game="cs2" data-team-id="g2">
                 <td class="num-cell">#3</td>
                 <td class="team-cell">G2 Esports</td>
                 <td><GameTag game="cs2" /></td>
@@ -144,7 +147,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">11</td>
                 <td class="pct-cell pct-high">72%</td>
               </tr>
-              <tr data-game="cs2">
+              <tr data-game="cs2" data-team-id="mouz">
                 <td class="num-cell">#4</td>
                 <td class="team-cell">MOUZ</td>
                 <td><GameTag game="cs2" /></td>
@@ -153,7 +156,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">12</td>
                 <td class="pct-cell pct-mid">68%</td>
               </tr>
-              <tr data-game="valorant">
+              <tr data-game="valorant" data-team-id="sentinels">
                 <td class="num-cell">#1</td>
                 <td class="team-cell">Sentinels</td>
                 <td><GameTag game="valorant" /></td>
@@ -162,7 +165,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">4</td>
                 <td class="pct-cell pct-high">84%</td>
               </tr>
-              <tr data-game="valorant">
+              <tr data-game="valorant" data-team-id="paper-rex">
                 <td class="num-cell">#2</td>
                 <td class="team-cell">Paper Rex</td>
                 <td><GameTag game="valorant" /></td>
@@ -171,7 +174,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">6</td>
                 <td class="pct-cell pct-high">76%</td>
               </tr>
-              <tr data-game="valorant">
+              <tr data-game="valorant" data-team-id="nrg">
                 <td class="num-cell">#3</td>
                 <td class="team-cell">NRG Esports</td>
                 <td><GameTag game="valorant" /></td>
@@ -180,7 +183,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">8</td>
                 <td class="pct-cell pct-mid">68%</td>
               </tr>
-              <tr data-game="lol">
+              <tr data-game="lol" data-team-id="t1">
                 <td class="num-cell">#1</td>
                 <td class="team-cell">T1</td>
                 <td><GameTag game="lol" /></td>
@@ -189,7 +192,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">2</td>
                 <td class="pct-cell pct-high">89%</td>
               </tr>
-              <tr data-game="lol">
+              <tr data-game="lol" data-team-id="gen-g">
                 <td class="num-cell">#2</td>
                 <td class="team-cell">Gen.G</td>
                 <td><GameTag game="lol" /></td>
@@ -198,7 +201,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">4</td>
                 <td class="pct-cell pct-high">78%</td>
               </tr>
-              <tr data-game="lol">
+              <tr data-game="lol" data-team-id="g2-lol">
                 <td class="num-cell">#3</td>
                 <td class="team-cell">G2 Esports</td>
                 <td><GameTag game="lol" /></td>
@@ -207,7 +210,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">5</td>
                 <td class="pct-cell pct-mid">69%</td>
               </tr>
-              <tr data-game="dota2">
+              <tr data-game="dota2" data-team-id="spirit">
                 <td class="num-cell">#1</td>
                 <td class="team-cell">Team Spirit</td>
                 <td><GameTag game="dota2" /></td>
@@ -216,7 +219,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">7</td>
                 <td class="pct-cell pct-high">76%</td>
               </tr>
-              <tr data-game="dota2">
+              <tr data-game="dota2" data-team-id="og">
                 <td class="num-cell">#2</td>
                 <td class="team-cell">OG</td>
                 <td><GameTag game="dota2" /></td>
@@ -225,7 +228,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">10</td>
                 <td class="pct-cell pct-mid">64%</td>
               </tr>
-              <tr data-game="rl">
+              <tr data-game="rl" data-team-id="bds">
                 <td class="num-cell">#1</td>
                 <td class="team-cell">Team BDS</td>
                 <td><GameTag game="rl" /></td>
@@ -234,7 +237,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">5</td>
                 <td class="pct-cell pct-high">80%</td>
               </tr>
-              <tr data-game="rl">
+              <tr data-game="rl" data-team-id="liquid">
                 <td class="num-cell">#2</td>
                 <td class="team-cell">Team Liquid</td>
                 <td><GameTag game="rl" /></td>
@@ -243,7 +246,7 @@ import GameTag from './_components/GameTag.astro';
                 <td class="num-cell">8</td>
                 <td class="pct-cell pct-mid">68%</td>
               </tr>
-              <tr data-game="rl">
+              <tr data-game="rl" data-team-id="cloud9">
                 <td class="num-cell">#3</td>
                 <td class="team-cell">Cloud9</td>
                 <td><GameTag game="rl" /></td>
@@ -318,11 +321,11 @@ import GameTag from './_components/GameTag.astro';
 
       <!-- CS2 World Rankings -->
       <WidgetPanel title="CS2 World Rankings" linkText="Full Table" linkHref="#">
-        <div class="rank-row"><div class="rank-num">#1</div><div class="rank-team">Vitality</div><div class="rank-points">1,842 pts</div><div class="rank-change same">&mdash;</div></div>
-        <div class="rank-row"><div class="rank-num">#2</div><div class="rank-team">NAVI</div><div class="rank-points">1,710 pts</div><div class="rank-change up">&#9650;2</div></div>
-        <div class="rank-row"><div class="rank-num">#3</div><div class="rank-team">G2 Esports</div><div class="rank-points">1,655 pts</div><div class="rank-change down">&#9660;1</div></div>
+        <a href="/l1/scoretap/team?id=vitality" class="rank-row"><div class="rank-num">#1</div><div class="rank-team">Vitality</div><div class="rank-points">1,842 pts</div><div class="rank-change same">&mdash;</div></a>
+        <a href="/l1/scoretap/team?id=navi" class="rank-row"><div class="rank-num">#2</div><div class="rank-team">NAVI</div><div class="rank-points">1,710 pts</div><div class="rank-change up">&#9650;2</div></a>
+        <a href="/l1/scoretap/team?id=g2" class="rank-row"><div class="rank-num">#3</div><div class="rank-team">G2 Esports</div><div class="rank-points">1,655 pts</div><div class="rank-change down">&#9660;1</div></a>
         <div class="rank-row"><div class="rank-num">#4</div><div class="rank-team">FaZe Clan</div><div class="rank-points">1,580 pts</div><div class="rank-change down">&#9660;1</div></div>
-        <div class="rank-row"><div class="rank-num">#5</div><div class="rank-team">MOUZ</div><div class="rank-points">1,490 pts</div><div class="rank-change up">&#9650;1</div></div>
+        <a href="/l1/scoretap/team?id=mouz" class="rank-row"><div class="rank-num">#5</div><div class="rank-team">MOUZ</div><div class="rank-points">1,490 pts</div><div class="rank-change up">&#9650;1</div></a>
         <div class="rank-row"><div class="rank-num">#6</div><div class="rank-team">Heroic</div><div class="rank-points">1,320 pts</div><div class="rank-change same">&mdash;</div></div>
         <div class="rank-row"><div class="rank-num">#7</div><div class="rank-team">Virtus.pro</div><div class="rank-points">1,210 pts</div><div class="rank-change up">&#9650;3</div></div>
         <div class="rank-row"><div class="rank-num">#8</div><div class="rank-team">Cloud9</div><div class="rank-points">1,150 pts</div><div class="rank-change down">&#9660;2</div></div>
@@ -331,53 +334,61 @@ import GameTag from './_components/GameTag.astro';
       </WidgetPanel>
 
       <!-- Top Events -->
-      <WidgetPanel title="Top Events" linkText="All Events" linkHref="#">
-        <div class="event-row" data-game="cs2">
+      <WidgetPanel title="Top Events" linkText="All Events" linkHref="/l1/scoretap/events">
+        <a href="/l1/scoretap/event?id=iem-katowice-2026" class="event-row" data-game="cs2">
           <div class="event-name">IEM Katowice 2026</div>
           <div style="text-align:right;">
             <div><GameTag game="cs2" /></div>
             <div class="event-dates">Mar 5&ndash;15</div>
           </div>
           <div><EventBadge status="live" /></div>
-        </div>
-        <div class="event-row" data-game="valorant">
+        </a>
+        <a href="/l1/scoretap/event?id=vct-americas-2026" class="event-row" data-game="valorant">
           <div class="event-name">VCT Americas 2026</div>
           <div style="text-align:right;">
             <div><GameTag game="valorant" /></div>
             <div class="event-dates">Mar 1&ndash;20</div>
           </div>
           <div><EventBadge status="live" /></div>
-        </div>
-        <div class="event-row" data-game="rl">
+        </a>
+        <a href="/l1/scoretap/event?id=rlcs-spring-2026" class="event-row" data-game="rl">
           <div class="event-name">RLCS 2026 Spring</div>
           <div style="text-align:right;">
             <div><GameTag game="rl" /></div>
             <div class="event-dates">Mar 8&ndash;22</div>
           </div>
           <div><EventBadge status="live" /></div>
-        </div>
-        <div class="event-row" data-game="lol">
+        </a>
+        <a href="/l1/scoretap/event?id=lck-spring-2026" class="event-row" data-game="lol">
           <div class="event-name">LCK Spring 2026</div>
           <div style="text-align:right;">
             <div><GameTag game="lol" /></div>
             <div class="event-dates">Feb 15&ndash;Apr 5</div>
           </div>
           <div><EventBadge status="live" /></div>
-        </div>
-        <div class="event-row" data-game="dota2">
+        </a>
+        <a href="/l1/scoretap/event?id=esl-one-stockholm-2026" class="event-row" data-game="dota2">
           <div class="event-name">ESL One Stockholm 2026</div>
           <div style="text-align:right;">
             <div><GameTag game="dota2" /></div>
             <div class="event-dates">Mar 20&ndash;30</div>
           </div>
           <div><EventBadge status="upcoming" /></div>
-        </div>
+        </a>
       </WidgetPanel>
 
     </div><!-- /sidebar -->
   </div><!-- /page-layout -->
 
   <script is:inline>
+    // Team table row navigation
+    document.querySelectorAll('tr[data-team-id]').forEach(function(row) {
+      row.addEventListener('click', function() {
+        window.location.href = '/l1/scoretap/team?id=' + row.getAttribute('data-team-id');
+      });
+    });
+
+    // Game filter
     var tabs = document.querySelectorAll('.game-tab');
     var filterables = document.querySelectorAll('[data-game]');
     tabs.forEach(function(tab) {

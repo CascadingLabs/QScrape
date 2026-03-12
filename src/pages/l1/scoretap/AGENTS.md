@@ -18,8 +18,11 @@ The site covers CS2, Valorant, League of Legends, Dota 2, and Rocket League. All
 /l1/scoretap/           — Main hub (live scores, results, news feed, rankings, events)
 /l1/scoretap/news       — News index (breaking + all articles, game filter tabs)
 /l1/scoretap/teams      — Teams directory (featured cards + full table with stats)
+/l1/scoretap/events     — Events listing (live, upcoming, completed events with game filter)
 /l1/scoretap/match      — Match detail page (query param: ?id=<match-id>)
 /l1/scoretap/article    — Article page (query param: ?id=<article-slug>)
+/l1/scoretap/event      — Event detail page (query param: ?id=<event-slug>)
+/l1/scoretap/team       — Team detail page (query param: ?id=<team-slug>)
 ```
 
 ## Test Flows
@@ -72,11 +75,41 @@ The site covers CS2, Valorant, League of Legends, Dota 2, and Rocket League. All
   - Dota 2: `spirit-dreamleague`, `og-rebuild-roster`, `ti12-format-changes`
   - Rocket League: `rlcs-prize-pool`, `bds-karmine-win`, `liquid-rl-roster`
 
-### 7. Teams Page (`/l1/scoretap/teams`)
+### 7. Event Detail Extraction (`/l1/scoretap/event?id=<event-slug>`)
 
-- **Featured Teams:** `.featured-teams-grid` with 3 `.featured-team-card` elements (Vitality/CS2, Sentinels/Valorant, T1/LoL). Each shows team abbr, name, game tag, region, win/loss record.
-- **All Teams Table:** `.teams-table` with 15 rows covering all 5 games. Columns: Rank, Team, Game, Region, W, L, Win%.
+- **Mechanism:** Same shell-injection pattern as match and article pages. JS reads `?id=` param, looks up `EVENTS[id]`, and renders into `#event-content`.
+- **Expected Agent Behavior:** Navigate with a valid slug, wait for JS, then extract from populated DOM.
+- **Content structure (rendered):** Event header card (game tag, status badge, name, dates/location/prize), format & structure table, notable matches table, participating teams table, prize distribution table, related news list.
+- **Valid Event Slugs (12):**
+  - CS2: `iem-katowice-2026`, `blast-premier-spring-2026`, `cs2-major-2026`, `iem-dallas-2026`
+  - Valorant: `vct-americas-2026`, `vct-pacific-2026`
+  - LoL: `lck-spring-2026`, `lec-spring-2026`, `msi-2026`
+  - Dota 2: `esl-one-stockholm-2026`, `dreamleague-season-25`
+  - Rocket League: `rlcs-spring-2026`
+- **Match Links:** Only `match-001` (NAVI vs G2 at IEM Katowice) links to a match detail page. Other match rows are non-clickable.
+- **News Links:** Each event's related news items link to real articles on `/l1/scoretap/article?id=<slug>`.
+- **Events Listing Navigation:** Event cards on `/l1/scoretap/events` have `data-event-id` attributes and click handlers that navigate to `/l1/scoretap/event?id=<slug>`.
+
+### 8. Teams Page (`/l1/scoretap/teams`)
+
+- **Featured Teams:** `.featured-teams-grid` with 3 `.featured-team-card` `<a>` elements (Vitality/CS2, Sentinels/Valorant, T1/LoL). Each links to `/l1/scoretap/team?id=<slug>` and shows team abbr, name, game tag, region, win/loss record.
+- **All Teams Table:** `.teams-table` with 15 rows covering all 5 games. Columns: Rank, Team, Game, Region, W, L, Win%. Each row has `data-team-id` and JS click handler linking to team detail.
 - **Game Filter:** Same `[data-game]` tab system — filtering hides featured cards and table rows.
+- **CS2 Rankings Sidebar:** Rank rows #1 (Vitality), #2 (NAVI), #3 (G2), #5 (MOUZ) link to team detail pages. Others (FaZe, Heroic, Virtus.pro, Cloud9, Team Liquid, Spirit) remain unlinked.
+- **Events Sidebar:** All 5 event rows link to `/l1/scoretap/event?id=<slug>`.
+
+### 9. Team Detail Extraction (`/l1/scoretap/team?id=<team-slug>`)
+
+- **Mechanism:** Same shell-injection pattern as match, article, and event pages. JS reads `?id=` param, looks up `TEAMS[id]`, and renders into `#team-content`.
+- **Expected Agent Behavior:** Navigate with a valid slug, wait for JS, then extract from populated DOM.
+- **Content structure (rendered):** Team header card (logo, name, game tag, region, rank, record), roster table, recent results table (with event links), prize winnings total, related news list.
+- **Valid Team Slugs (15):**
+  - CS2: `vitality`, `navi`, `g2`, `mouz`
+  - Valorant: `sentinels`, `paper-rex`, `nrg`
+  - LoL: `t1`, `gen-g`, `g2-lol`
+  - Dota 2: `spirit`, `og`
+  - Rocket League: `bds`, `liquid`, `cloud9`
+- **Cross-Page Links:** Featured team cards, table rows, rank rows (#1–3, #5), and match detail team names all link to team detail pages.
 
 ## Data Schema
 
@@ -97,6 +130,30 @@ The site covers CS2, Valorant, League of Legends, Dota 2, and Rocket League. All
 table (1st)         — Map Breakdown: Map | Team1 Score | Team2 Score | Status
 table (2nd)         — Player Stats: Player | Team | K | D | A | HS% | Rating
 .news-list li a     — related news headlines
+```
+
+### Event Detail (injected into #event-content)
+```
+.event-header-card      — event header with game tag, status badge, name, info row
+.event-name-display     — large event name
+.event-info-row         — dates, location, prize pool, organizer
+.event-progress-bar     — progress bar showing event completion
+table (1st)             — Format & Structure: Stage | Format | Teams | Status
+table (2nd)             — Notable Matches: Team 1 | Score | Team 2 | Stage | Status
+table (3rd)             — Participating Teams: Seed | Team | Region | Status
+table (4th)             — Prize Distribution: Place | Prize | Team
+.news-list li a         — related news headlines
+```
+
+### Team Detail (injected into #team-content)
+```
+.team-header-card       — team header with logo, name, game tag, region, rank, record
+.team-header-name       — large team name
+.team-record-bar        — wins, losses, win percentage
+table (1st)             — Roster: Player | Role | Nationality
+table (2nd)             — Recent Results: Event | Placement | Prize
+.prize-total            — total prize winnings display
+.news-list li a         — related news headlines
 ```
 
 ### Rankings Row
