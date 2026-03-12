@@ -3,15 +3,325 @@
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>QScrape - Web Scraper Test Suite</title>
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background: #0d0d14;
+                color: #c9c9d8;
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    sans-serif;
+                font-size: 16px;
+                line-height: 1.6;
+                padding: 3rem 1.5rem;
+            }
+
+            .container {
+                max-width: 720px;
+                margin: 0 auto;
+            }
+
+            header {
+                margin-bottom: 3rem;
+                border-bottom: 1px solid #1e1e2e;
+                padding-bottom: 2rem;
+            }
+
+            .logo {
+                font-family: "Courier New", Courier, monospace;
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #e2e2f0;
+                letter-spacing: -0.5px;
+            }
+
+            .tagline {
+                color: #6e6e8a;
+                margin-top: 0.4rem;
+                font-size: 0.95rem;
+            }
+
+            section {
+                margin-bottom: 2.5rem;
+            }
+
+            h2 {
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                color: #5a5a78;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                color: #a0a0b8;
+                max-width: 60ch;
+            }
+
+            a {
+                color: #7c9fe6;
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            .levels {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .level-item {
+                display: block;
+                padding: 0.9rem 1rem;
+                color: inherit;
+                border-radius: 6px;
+                border: 1px solid transparent;
+                transition:
+                    background-color 0.2s,
+                    border-color 0.2s;
+            }
+
+            .level-item:hover {
+                background-color: #111120;
+                border-color: #1a1a2e;
+            }
+
+            .level-header {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .level-link {
+                margin-left: auto;
+                color: #3a3a56;
+                text-decoration: none;
+                font-size: 0.85rem;
+                line-height: 1;
+                transition: color 0.15s;
+            }
+
+            .level-item:hover .level-link {
+                color: #7c9fe6;
+            }
+
+            .level-label {
+                font-family: "Courier New", Courier, monospace;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: #e2e2f0;
+                white-space: nowrap;
+            }
+
+            .level-desc {
+                color: #7a7a96;
+                font-size: 0.9rem;
+            }
+
+            .level-desc strong {
+                color: #b0b0cc;
+                font-weight: 500;
+            }
+
+            .badge-live {
+                font-size: 0.65rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                background: #1a3a1a;
+                color: #4caf76;
+                border: 1px solid #2a5a2a;
+                padding: 0.15em 0.5em;
+                border-radius: 3px;
+                white-space: nowrap;
+            }
+
+            .badge-soon {
+                font-size: 0.65rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: #3a3a56;
+                white-space: nowrap;
+            }
+
+            .nav-links {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .nav-links li {
+                display: flex;
+                align-items: baseline;
+                gap: 0.75rem;
+            }
+
+            .nav-path {
+                font-family: "Courier New", Courier, monospace;
+                font-size: 0.85rem;
+                color: #7c9fe6;
+                min-width: 14ch;
+            }
+
+            .nav-path:hover {
+                text-decoration: underline;
+            }
+
+            .nav-name {
+                color: #6e6e8a;
+                font-size: 0.9rem;
+            }
+
+            .resources {
+                display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+
+            .resource-row {
+                font-size: 0.85rem;
+                color: #4a4a66;
+            }
+
+            .resource-row span {
+                font-family: "Courier New", Courier, monospace;
+                color: #3a3a56;
+                margin-right: 0.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="logo">QScrape</div>
+                <div class="tagline">Web scraper evaluation suite</div>
+            </header>
+
+            <section>
+                <h2>About</h2>
+                <p>
+                    Test sites for web scrapers. Three difficulty levels target
+                    different scraper capabilities. Made by <a
+                        href="https://cascadinglabs.com"
+                        target="_blank"
+                        rel="noopener">Cascading Labs</a
+                    >
+                    , used for <a
+                        href="https://github.com/CascadingLabs/Yosoi"
+                        target="_blank"
+                        rel="noopener">Yosoi</a
+                    >.
+                </p>
+            </section>
+
+            <section>
+                <h2>Levels</h2>
+                <ul class="levels">
+                    <li>
+                        <div class="level-item">
+                            <div class="level-header">
+                                <span class="level-label">L1</span>
+                                <span class="badge-live">LIVE</span>
+                                <a class="level-link" href="/l1/" title="Go to L1">↗</a>
+                            </div>
+                            <span class="level-desc">
+                                <strong>Standard HTML/CSS/JS.</strong> No dynamic data, no web frameworks. Built with <a href="https://astro.build/" target="_blank" rel="noopener">Astro</a> for multi-site management.
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="level-item">
+                            <div class="level-header">
+                                <span class="level-label">L2</span>
+                                <span class="badge-soon">soon</span>
+                                <a class="level-link" href="/l2/" title="Go to L2">↗</a>
+                            </div>
+                            <span class="level-desc">
+                                <strong>Modern Web Frameworks.</strong> <a href="https://lit.dev/" target="_blank" rel="noopener">Lit</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>. Covers typical DOM-level changes in the wild.
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="level-item">
+                            <div class="level-header">
+                                <span class="level-label">L3</span>
+                                <span class="badge-soon">soon</span>
+                                <a class="level-link" href="/l3/" title="Go to L3">↗</a>
+                            </div>
+                            <span class="level-desc">
+                                <strong>Anti-Bot Sites.</strong> No recaptchas or challenge puzzles (defined as unattainable without anti-captcha APIs).
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Sites</h2>
+                <ul class="nav-links">
+                    <li>
+                        <a class="nav-path" href="/l1/news/">/ l1 / news</a>
+                        <span class="nav-name"
+                            >Mountainhome Herald (news portal)</span
+                        >
+                    </li>
+                    <li>
+                        <a class="nav-path" href="/l1/scoretap/"
+                            >/ l1 / scoretap</a
+                        >
+                        <span class="nav-name">ScoreTap (esports scores)</span>
+                    </li>
+                    <li>
+                        <a class="nav-path" href="/l1/taxes/">/ l1 / taxes</a>
+                        <span class="nav-name"
+                            >Eldoria Registry of Deeds (tax records)</span
+                        >
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Resources</h2>
+                <div class="resources">
+                    <div class="resource-row">
+                        <span>sitemap</span>
+                        <a
+                            href="https://qscrape.dev/sitemap-0.xml"
+                            target="_blank"
+                            rel="noopener">qscrape.dev/sitemap-0.xml</a
+                        >
+                    </div>
+                    <div class="resource-row">
+                        <span>github</span>
+                        <a
+                            href="https://github.com/CascadingLabs/QScrape"
+                            target="_blank"
+                            rel="noopener">github.com/CascadingLabs/QScrape</a
+                        >
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
 </html>

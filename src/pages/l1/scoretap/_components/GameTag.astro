@@ -1,14 +1,14 @@
 ---
 interface Props {
-  game: 'cs2' | 'valorant' | 'lol' | 'dota2' | 'rl';
+	game: 'cs2' | 'valorant' | 'lol' | 'dota2' | 'rl';
 }
 const { game } = Astro.props;
 const labels: Record<string, string> = {
-  cs2: 'CS2',
-  valorant: 'Valorant',
-  lol: 'LoL',
-  dota2: 'Dota 2',
-  rl: 'Rocket League',
+	cs2: 'CS2',
+	valorant: 'Valorant',
+	lol: 'LoL',
+	dota2: 'Dota 2',
+	rl: 'Rocket League',
 };
 ---
 <span class={`game-tag ${game}`}>{labels[game]}</span>
