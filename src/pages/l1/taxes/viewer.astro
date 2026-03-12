@@ -85,6 +85,12 @@ const postData = Astro.url.searchParams.get('postData') || '';
                     <td style="padding: 5px;">
                         <a href="/l1/taxes/tax-search" class="aspNetButton">New Search</a>
                     </td>
+                    <td style="padding: 5px;">
+                        <a id="ctl00_MainContent_lnkHowTo" href="/l1/taxes/how-to" class="aspNetButton">Filing Guide</a>
+                    </td>
+                    <td style="padding: 5px;">
+                        <a href="/l1/taxes/recording-fees" class="aspNetButton">Recording Fees</a>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -175,6 +181,23 @@ const postData = Astro.url.searchParams.get('postData') || '';
             document.getElementById('ctl00_MainContent_lnkDownload').href = pdfUrl;
             document.getElementById('ctl00_MainContent_lnkDownload').setAttribute('download', 'ClaimRegistration_' + fileNum + '.pdf');
             document.getElementById('ctl00_MainContent_iframeViewer').src = pdfUrl;
+        }
+
+        var howToMap = {
+            'DEED': '/how-to/how-to-deed.pdf',
+            'MTG':  '/how-to/how-to-mtg.pdf',
+            'LIEN': '/how-to/how-to-lien.pdf',
+            'ESMT': '/how-to/how-to-esmt.pdf',
+            'ASGN': '/how-to/how-to-asgn.pdf',
+            'REL':  '/how-to/how-to-rel.pdf',
+            'NTC':  '/how-to/how-to-ntc.pdf',
+            'AFF':  '/how-to/how-to-aff.pdf'
+        };
+        var howToLink = document.getElementById('ctl00_MainContent_lnkHowTo');
+        if (indexType && howToMap[indexType]) {
+            howToLink.href = howToMap[indexType];
+            howToLink.setAttribute('target', '_blank');
+            howToLink.textContent = 'Filing Guide (' + indexType + ')';
         }
         </script>
     </div>
