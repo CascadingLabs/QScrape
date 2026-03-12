@@ -1,0 +1,151 @@
+---
+import HeraldShell from './_components/HeraldShell.astro';
+import AdUnit from './_components/AdUnit.astro';
+import { reporters } from './_data/articles';
+---
+
+<HeraldShell
+  title="Editorial Staff"
+  activePage="staff"
+  breadcrumbs={[{ label: 'Home', href: '/l1/news/' }, { label: 'About', href: '/l1/news/about' }, { label: 'Editorial Staff' }]}
+>
+  <div class="pageTitle">Editorial Staff</div>
+
+  <div class="formSection">
+    <p style="margin:0 0 10px 0; font-size:11px; line-height:1.5;">
+      The Mountainhome Herald employs six full-time editorial staff covering politics, crime, economics,
+      culture, sports, and science across all fortress z-levels. All reporters adhere to the Herald's
+      <a href="/l1/news/about">Editorial Policy</a> and report to Editor-in-Chief Morul Chiselmark.
+    </p>
+  </div>
+
+  <div class="twoCol clearfix">
+    <div class="mainCol">
+      {reporters.map((r, i) => (
+        <div class="formSection" style="margin-bottom:0;">
+          <table class="aspNetTable" style="width:100%;">
+            <tr>
+              <td colspan="2" class="headerRow">{r.name}</td>
+            </tr>
+            <tr>
+              <td style="width:160px;"><span class="aspNetLabelBold">Name:</span></td>
+              <td><strong>{r.name}</strong></td>
+            </tr>
+            <tr class="alternatingRow">
+              <td><span class="aspNetLabelBold">Title:</span></td>
+              <td>{r.title}</td>
+            </tr>
+            <tr>
+              <td><span class="aspNetLabelBold">Beat:</span></td>
+              <td>{r.beat}</td>
+            </tr>
+            <tr class="alternatingRow">
+              <td><span class="aspNetLabelBold">Contact:</span></td>
+              <td><a href={`mailto:${r.email}`}>{r.email}</a></td>
+            </tr>
+            <tr>
+              <td><span class="aspNetLabelBold">Photo:</span></td>
+              <td>
+                <img src={`https://picsum.photos/seed/staff${i}/100/120`} alt={r.name}
+                  style="border:1px solid #999; display:block;" width="100" height="120" />
+              </td>
+            </tr>
+          </table>
+          {r.name === 'Urist McReporter' && (
+            <p style="font-size:11px; line-height:1.5; margin:8px 0;">
+              Urist McReporter has covered Arcane Council proceedings and Grand Duchy politics for
+              the Herald since Year 304. A former guild apprentice in the Stonemasons' Ward, McReporter
+              brings deep familiarity with both the legislative process and the working-class concerns
+              that shape fortress policy. He broke the story on the Goblin Confederation truce talks
+              and has provided ongoing coverage of the Surface Relations Act.
+            </p>
+          )}
+          {r.name === 'Bomrek Hammerfall' && (
+            <p style="font-size:11px; line-height:1.5; margin:8px 0;">
+              Bomrek Hammerfall covers crime and sports for the Herald, a dual beat that keeps him
+              moving between the Guard Station press room and the Grand Arena ringside. A former
+              Fortress Guard auxiliary, Hammerfall's crime reporting draws on deep law enforcement
+              contacts. His coverage of Operation Hollow Stone was cited by the Guard Captain as
+              "responsible and accurate." On the sports side, he has covered every Z-Level Games
+              since Year 306.
+            </p>
+          )}
+          {r.name === 'Rigoth Gemcutter' && (
+            <p style="font-size:11px; line-height:1.5; margin:8px 0;">
+              Rigoth Gemcutter is the Herald's Economics Correspondent, specialising in commodity
+              markets, property transactions, and industrial development. A licensed gem appraiser
+              by training, Gemcutter pivoted to journalism in Year 307 after covering the Magma Sea
+              Sector rezoning hearings for the now-defunct Koganusan Quarterly. She maintains
+              extensive sources within the Registry of Deeds, the Iron Guild, and the Merchant's Assembly.
+            </p>
+          )}
+          {r.name === 'Fikod Silentstone' && (
+            <p style="font-size:11px; line-height:1.5; margin:8px 0;">
+              Fikod Silentstone covers arts, culture, and community events for the Herald. A trained
+              lithographer and amateur sculptor, Silentstone brings an artist's perspective to his
+              reporting. His review of the Bard's Troupe production of "The Ballad of Boatmurdered"
+              drew the largest reader response of any Herald article in Year 312. He also covers
+              the Grand Duchy Museum and the annual Arts Recognition Ceremony.
+            </p>
+          )}
+          {r.name === 'Zulban Tunnelworks' && (
+            <p style="font-size:11px; line-height:1.5; margin:8px 0;">
+              Zulban Tunnelworks serves as Science Correspondent, covering geomantic reports, weather
+              advisories, surface conditions, and infrastructure safety. Tunnelworks holds a journeyman
+              certification in structural geomancy from the Bureau of Deep Works, giving her technical
+              credibility unique among fortress journalists. Her coverage of the Z-Level 45 seismic
+              advisory was praised for balancing public safety information with measured context.
+            </p>
+          )}
+          {r.name === 'Morul Chiselmark' && (
+            <p style="font-size:11px; line-height:1.5; margin:8px 0;">
+              Morul Chiselmark has served as Editor-in-Chief of the Mountainhome Herald since Year 301,
+              succeeding the retiring Kogan Inkwell. Under Chiselmark's leadership, the Herald expanded
+              from a thrice-weekly tablet publication to a daily rune-wire service. Chiselmark previously
+              served as Senior Correspondent covering the Grand Duke's Office and is a Fellow of the
+              Grand Duchy Press Guild. All editorial decisions, corrections, and publication standards
+              are under his authority.
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <div class="sidebarCol">
+      <div class="sidebarBox">
+        <h4>QUICK LINKS</h4>
+        <div class="sidebarContent">
+          <a href="/l1/news/about">Herald History &raquo;</a><br/><br/>
+          <a href="/l1/news/contact">Contact Us &raquo;</a><br/><br/>
+          <a href="/l1/news/articles">Article Archive &raquo;</a>
+        </div>
+      </div>
+
+      <div class="adSlot--inline">
+        <AdUnit size="rectangle" adId="DSN-REC-006" text="Mountainhome Press Guild &mdash; Protecting Editorial Independence Since Year 112" cta="Join Today" placement="staff_sidebar" />
+      </div>
+
+      <div class="sidebarBox">
+        <h4>CORRECTIONS POLICY</h4>
+        <div class="sidebarContent">
+          The Herald publishes corrections in the following edition.
+          Factual errors should be reported to
+          <a href="mailto:corrections@herald.mh">corrections@herald.mh</a>
+          or via the <a href="/l1/news/contact">Contact</a> page.
+        </div>
+      </div>
+
+      <div class="sidebarBox">
+        <h4>PRESS CREDENTIALS</h4>
+        <div class="sidebarContent">
+          Freelance contributors and visiting journalists may apply for
+          temporary press credentials at the Herald offices, Z-Level 2,
+          Room 301. Applications require a valid Guild membership or
+          equivalent press affiliation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="clear:both;"></div>
+</HeraldShell>

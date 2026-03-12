@@ -1,0 +1,263 @@
+---
+import HeraldShell from './_components/HeraldShell.astro';
+import AdUnit from './_components/AdUnit.astro';
+---
+
+<HeraldShell
+  title="Contact"
+  activePage="contact"
+  breadcrumbs={[{ label: 'Home', href: '/l1/news/' }, { label: 'About', href: '/l1/news/about' }, { label: 'Contact' }]}
+>
+  <div class="pageTitle">Contact the Herald</div>
+
+  <div class="twoCol clearfix">
+    <div class="mainCol">
+      <div class="formSection">
+        <strong>Herald Offices</strong>
+        <table class="aspNetTable" style="width:100%; margin-top:10px;">
+          <tr>
+            <td colspan="2" class="headerRow">General Contact</td>
+          </tr>
+          <tr>
+            <td style="width:180px;"><span class="aspNetLabelBold">Address:</span></td>
+            <td>Z-Level 2, Room 301, Press Quarter, Mountainhome</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td><span class="aspNetLabelBold">Rune-Wire:</span></td>
+            <td>(555) 847-0001</td>
+          </tr>
+          <tr>
+            <td><span class="aspNetLabelBold">Sending Stone:</span></td>
+            <td><a href="mailto:newsdesk@herald.mh">newsdesk@herald.mh</a></td>
+          </tr>
+          <tr class="alternatingRow">
+            <td><span class="aspNetLabelBold">Counter Hours:</span></td>
+            <td>M-F 7:00 AM &ndash; 6:00 PM (surface time)</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="formSection">
+        <strong>Department Contacts</strong>
+        <table class="aspNetTable" style="width:100%; margin-top:10px;">
+          <tr>
+            <th style="width:180px;">Department</th>
+            <th style="width:200px;">Contact</th>
+            <th>Rune-Wire</th>
+          </tr>
+          <tr>
+            <td>News Desk (General)</td>
+            <td><a href="mailto:newsdesk@herald.mh">newsdesk@herald.mh</a></td>
+            <td>(555) 847-0001</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td>Editor-in-Chief</td>
+            <td><a href="mailto:editor@herald.mh">editor@herald.mh</a></td>
+            <td>(555) 847-0002</td>
+          </tr>
+          <tr>
+            <td>Politics Desk</td>
+            <td><a href="mailto:politics@herald.mh">politics@herald.mh</a></td>
+            <td>(555) 847-0010</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td>Crime Desk</td>
+            <td><a href="mailto:crime@herald.mh">crime@herald.mh</a></td>
+            <td>(555) 847-0011</td>
+          </tr>
+          <tr>
+            <td>Economy Desk</td>
+            <td><a href="mailto:economy@herald.mh">economy@herald.mh</a></td>
+            <td>(555) 847-0012</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td>Culture &amp; Arts Desk</td>
+            <td><a href="mailto:culture@herald.mh">culture@herald.mh</a></td>
+            <td>(555) 847-0013</td>
+          </tr>
+          <tr>
+            <td>Sports Desk</td>
+            <td><a href="mailto:sports@herald.mh">sports@herald.mh</a></td>
+            <td>(555) 847-0014</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td>Science / Weather Desk</td>
+            <td><a href="mailto:science@herald.mh">science@herald.mh</a></td>
+            <td>(555) 847-0015</td>
+          </tr>
+          <tr>
+            <td>Corrections</td>
+            <td><a href="mailto:corrections@herald.mh">corrections@herald.mh</a></td>
+            <td>(555) 847-0099</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td>Advertising Sales</td>
+            <td><a href="mailto:ads@herald.mh">ads@herald.mh</a></td>
+            <td>(555) 847-0050</td>
+          </tr>
+          <tr>
+            <td>Subscriptions</td>
+            <td><a href="mailto:subscriptions@herald.mh">subscriptions@herald.mh</a></td>
+            <td>(555) 847-0060</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="formSection">
+        <strong>Subscriptions</strong>
+        <table class="aspNetTable" style="width:100%; margin-top:10px;">
+          <tr>
+            <td colspan="2" class="headerRow">Subscription Options</td>
+          </tr>
+          <tr>
+            <td style="width:200px;"><span class="aspNetLabelBold">Carved Stone Edition:</span></td>
+            <td>15 GP / year &mdash; delivered to your door by Z-Level courier</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td><span class="aspNetLabelBold">Rune-Wire Edition:</span></td>
+            <td>8 GP / year &mdash; same-day delivery to any z-level</td>
+          </tr>
+          <tr>
+            <td><span class="aspNetLabelBold">Student / Apprentice:</span></td>
+            <td>5 GP / year (rune-wire only, guild apprenticeship ID required)</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td><span class="aspNetLabelBold">Institutional:</span></td>
+            <td>40 GP / year (up to 10 rune-wire terminals per licence)</td>
+          </tr>
+        </table>
+        <p style="font-size:10px; color:#666; margin-top:8px;">
+          Contact <a href="mailto:subscriptions@herald.mh">subscriptions@herald.mh</a> or visit
+          Z-Level 2, Room 301 during counter hours.
+        </p>
+      </div>
+
+      <div class="formSection">
+        <strong>Submit a News Tip</strong>
+        <p style="font-size:11px; line-height:1.5;">
+          The Herald welcomes news tips from citizens of the Grand Duchy. Tips may be submitted
+          anonymously via sealed stone tablet deposited at the Herald office lobby (Z-Level 2, Room 301)
+          or via sending stone to <a href="mailto:tips@herald.mh">tips@herald.mh</a>. The Herald
+          does not publish anonymous submissions from goblin sources.
+        </p>
+        <table border="0" cellpadding="3" cellspacing="0" style="width:100%; margin-top:10px;">
+          <tr>
+            <td align="right" style="width:25%;"><strong>Your Name:</strong></td>
+            <td><input type="text" id="txtName" style="width:250px;" placeholder="(optional)" /></td>
+          </tr>
+          <tr>
+            <td align="right"><strong>Contact:</strong></td>
+            <td><input type="text" id="txtContact" style="width:250px;" placeholder="Sending stone or rune-wire" /></td>
+          </tr>
+          <tr>
+            <td align="right" style="vertical-align:top;"><strong>Tip Details:</strong></td>
+            <td><textarea id="txtTip" rows="5" style="width:250px;" placeholder="Describe what you observed..."></textarea></td>
+          </tr>
+          <tr>
+            <td align="right"><strong>Location:</strong></td>
+            <td><input type="text" id="txtLocation" style="width:250px;" placeholder="Z-Level and area" /></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+              <input type="submit" value="Submit Tip" class="aspNetButton"
+                onclick="alert('Thank you. Your tip has been received by the Herald newsdesk. Ref: TIP-' + Math.random().toString(36).substring(2,8).toUpperCase()); return false;" />
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="formSection">
+        <strong>Letters to the Editor</strong>
+        <p style="font-size:11px; line-height:1.5;">
+          Letters must be submitted in Dwarven Standard Script and are subject to a maximum length of
+          200 runes. Letters must include the author's full name, z-level of residence, and guild
+          affiliation (if any). The Herald reserves the right to edit for length and clarity. Submit
+          letters to <a href="mailto:letters@herald.mh">letters@herald.mh</a> or deliver in person
+          to Room 301.
+        </p>
+      </div>
+
+      <div class="formSection">
+        <strong>Advertising Inquiries</strong>
+        <p style="font-size:11px; line-height:1.5;">
+          The Herald accepts display advertising from registered Grand Duchy businesses. Rate cards
+          and placement options are available from the Advertising Department. The Herald does not
+          accept advertising from entities currently under indictment by the Fortress Guard, nor from
+          known associates of the Undead Commerce League. Sponsored content ("PAID STONE") must be
+          clearly designated. Contact <a href="mailto:ads@herald.mh">ads@herald.mh</a> or
+          (555) 847-0050 for current rates.
+        </p>
+        <table class="aspNetTable" style="width:100%; margin-top:10px;">
+          <tr>
+            <td colspan="2" class="headerRow">Standard Advertising Rates (per edition)</td>
+          </tr>
+          <tr>
+            <td style="width:200px;"><span class="aspNetLabelBold">Full Page (Stone):</span></td>
+            <td>120 GP</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td><span class="aspNetLabelBold">Half Page (Stone):</span></td>
+            <td>70 GP</td>
+          </tr>
+          <tr>
+            <td><span class="aspNetLabelBold">Quarter Page (Stone):</span></td>
+            <td>40 GP</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td><span class="aspNetLabelBold">Rune-Wire Banner:</span></td>
+            <td>25 GP</td>
+          </tr>
+          <tr>
+            <td><span class="aspNetLabelBold">Rune-Wire Rectangle:</span></td>
+            <td>18 GP</td>
+          </tr>
+          <tr class="alternatingRow">
+            <td><span class="aspNetLabelBold">Classified (per 20 runes):</span></td>
+            <td>3 GP</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="sidebarCol">
+      <div class="sidebarBox">
+        <h4>FIND US</h4>
+        <div class="sidebarContent">
+          <img src="https://picsum.photos/seed/heraldmap/170/120" alt="Map to Herald offices"
+            style="width:100%; border-bottom:1px solid #ccc; display:block; margin-bottom:6px;" />
+          <strong>Z-Level 2, Room 301</strong><br/>
+          Press Quarter, Mountainhome<br/><br/>
+          Counter hours:<br/>
+          M-F 7:00 AM &ndash; 6:00 PM
+        </div>
+      </div>
+
+      <div class="adSlot--inline">
+        <AdUnit size="rectangle" adId="DSN-REC-007" text="Grand Duchy Postal Service &mdash; Reliable Stone Tablet Delivery" cta="Track Package" placement="contact_sidebar" />
+      </div>
+
+      <div class="sidebarBox">
+        <h4>EMERGENCY CONTACTS</h4>
+        <div class="sidebarContent">
+          <strong>Fortress Guard:</strong> (555) 111-0000<br/><br/>
+          <strong>Fortress Infirmary:</strong> (555) 111-0001<br/><br/>
+          <strong>Geomancer (Emergency):</strong> (555) 111-0005<br/><br/>
+          <strong>Fire Brigade:</strong> (555) 111-0010
+        </div>
+      </div>
+
+      <div class="sidebarBox">
+        <h4>QUICK LINKS</h4>
+        <div class="sidebarContent">
+          <a href="/l1/news/staff">Editorial Staff &raquo;</a><br/><br/>
+          <a href="/l1/news/about">About the Herald &raquo;</a><br/><br/>
+          <a href="/l1/taxes/">ROD Records &raquo;</a><br/><br/>
+          <a href="/l1/scoretap/">ScoreTap &raquo;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="clear:both;"></div>
+</HeraldShell>
