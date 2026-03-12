@@ -63,6 +63,40 @@ const postData = Astro.url.searchParams.get('postData') || '';
     <div class="relatedLinks" id="relatedLinks"></div>
   </div>
 
+  <!-- Comments Section -->
+  <div class="formSection" id="commentsSection">
+    <strong>Reader Comments</strong>
+    <p style="font-size:10px; color:#666; margin:4px 0 8px 0;">
+      Comments are moderated by Herald editorial staff. Anonymous submissions from goblin sources are not published.
+    </p>
+    <div id="commentsList"></div>
+
+    <div style="margin-top:12px; border-top:1px solid #ccc; padding-top:10px;">
+      <strong style="font-size:11px;">Post a Comment</strong>
+      <table class="aspNetTable" style="width:100%; margin-top:6px;">
+        <tr>
+          <td style="width:120px;"><span class="aspNetLabelBold">Name:</span></td>
+          <td><input type="text" id="commentName" style="width:250px; font-family:Verdana,sans-serif; font-size:11px; border:1px solid #999; padding:2px;" /></td>
+        </tr>
+        <tr class="alternatingRow">
+          <td><span class="aspNetLabelBold">Guild Affiliation:</span></td>
+          <td><input type="text" id="commentGuild" style="width:250px; font-family:Verdana,sans-serif; font-size:11px; border:1px solid #999; padding:2px;" placeholder="Optional" /></td>
+        </tr>
+        <tr>
+          <td style="vertical-align:top;"><span class="aspNetLabelBold">Comment:</span></td>
+          <td><textarea id="commentText" rows="4" style="width:400px; font-family:Verdana,sans-serif; font-size:11px; border:1px solid #999; padding:2px;"></textarea></td>
+        </tr>
+        <tr class="alternatingRow">
+          <td></td>
+          <td>
+            <button class="aspNetButton" onclick="alert('Thank you for your comment. All submissions are reviewed by Herald editorial staff before publication. Expect moderation within 1-2 business days.');">Submit Comment</button>
+            <span style="font-size:9px; color:#999; margin-left:8px;">Max 200 runes. Dwarven Standard Script only.</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
   <div class="formSection">
     <strong>Article Options</strong>
     <table style="margin:10px 0;">
@@ -73,6 +107,9 @@ const postData = Astro.url.searchParams.get('postData') || '';
       </tr>
     </table>
   </div>
+
+  <!-- JSON-LD Structured Data (populated client-side) -->
+  <script type="application/ld+json" id="jsonLd">{}</script>
 
   <script is:inline>
   var ARTICLES = {
@@ -499,6 +536,148 @@ const postData = Astro.url.searchParams.get('postData') || '';
     } else {
       document.getElementById('relatedSection').style.display = 'none';
     }
+
+    // ── Comments ──
+    var COMMENTS = {
+      'MHH-001': [
+        { name: 'Dumed Copperbeard', guild: 'Stonemasons\' Ward', time: '2026-01-01T12:30:00', text: 'About time the Council invested in eastern infrastructure. Those of us in the Granite Flats have been petitioning for magma access since Year 305.', replies: [
+          { name: 'Fikod Ironbrow', guild: '', time: '2026-01-01T14:15:00', text: 'Easy to say when you aren\'t footing the 14,000 GP bill. Where is the funding analysis?' }
+        ]},
+        { name: 'Ingiz Quartzgaze', guild: 'Bureau of Deep Works', time: '2026-01-02T08:00:00', text: 'The Bureau welcomes the Council\'s decision. We have already begun preliminary survey work in the target corridor.', replies: [] },
+        { name: 'Thob Tunnelvein', guild: '', time: '2026-01-02T14:22:00', text: 'My workshop is on Z-Level 38 and we\'ve needed better magma routing for years. The current east-side pipe is corroded and only runs half capacity.', replies: [] },
+      ],
+      'MHH-002': [
+        { name: 'Zuglar Gemwatch', guild: 'Jewellers\' Guild', time: '2026-01-09T10:00:00', text: 'This is exactly why we need independent gemstone auditing. The Trophy Hall has relied on self-reporting for too long.', replies: [] },
+        { name: 'Cilob Shieldanvil', guild: '', time: '2026-01-09T11:45:00', text: 'I work near the Hall and I\'m not surprised. Security has been lax since they cut the overnight watch last year.', replies: [
+          { name: 'Ral Steelgranite', guild: 'Fortress Guard Auxiliary', time: '2026-01-09T15:20:00', text: 'The Guard takes all security concerns seriously. If you have information, please contact the Z-Level 14 precinct directly.' }
+        ]},
+      ],
+      'MHH-004': [
+        { name: 'Olon Theatrestone', guild: 'Bard\'s Troupe', time: '2026-01-21T08:00:00', text: 'What an honour to be part of this production. The research team spent two years with the declassified records. Every detail is authentic.', replies: [] },
+        { name: 'Endok Hallwatcher', guild: '', time: '2026-01-21T14:30:00', text: 'Took the whole family. Even the children were captivated. Best thing on the Grand Amphitheatre stage in a decade.', replies: [] },
+        { name: 'Melbil Gemshine', guild: '', time: '2026-01-22T10:15:00', text: 'Wonderful show but three hours is quite long. The intermission ale was overpriced too — 3 GP for a half-pint?', replies: [] },
+        { name: 'Kadol Stoneear', guild: 'Grand Amphitheatre Staff', time: '2026-01-22T16:40:00', text: 'Concession pricing is set by the venue, not the Troupe. Feedback noted and forwarded to management.', replies: [] },
+      ],
+      'MHH-005': [
+        { name: 'Zefon Deepwatch', guild: 'Z-Level 45 Residents\' Council', time: '2026-01-24T06:30:00', text: 'We felt the tremors on Tuesday evening. Glad the Geomancer\'s Office is taking this seriously. Would appreciate more frequent updates.', replies: [] },
+        { name: 'Rovod Crackstone', guild: '', time: '2026-01-24T11:00:00', text: 'My ale mugs rattled off the shelf at 45-C. That never happens. Something is shifting down there.', replies: [
+          { name: 'Ast Geomind', guild: 'Geomancer\'s Office', time: '2026-01-24T14:45:00', text: 'We are aware of the elevated readings at 45-C and 45-D. Monitoring frequency has been doubled. There is no cause for alarm at this time.' }
+        ]},
+      ],
+      'MHH-006': [
+        { name: 'Stinthad Gateguard', guild: 'Fortress Guard', time: '2026-02-02T15:00:00', text: 'Good riddance. The inspection protocols at the Upper Gate caught what diplomacy missed.', replies: [
+          { name: 'Mosus Peacestone', guild: 'Diplomatic Corps', time: '2026-02-02T17:30:00', text: 'Let\'s not forget that six months of productive negotiations preceded this incident. One bad actor shouldn\'t define the entire process.' }
+        ]},
+        { name: 'Udib Wardenseal', guild: '', time: '2026-02-03T08:45:00', text: 'I wonder how many previous pouches got through without inspection. This isn\'t the first time goblin envoys have been caught with contraband.', replies: [] },
+        { name: 'Rigoth Claspchain', guild: '', time: '2026-02-03T12:10:00', text: 'Truce negotiations suspended indefinitely? That\'s bad for surface trade. We need those routes open.', replies: [] },
+      ],
+      'MHH-007': [
+        { name: 'Olin Fistforge', guild: '', time: '2026-02-05T20:00:00', text: 'IRONHAND! IRONHAND! Twelve titles and still going strong. What a legend.', replies: [] },
+        { name: 'Aban Stoneback Sr.', guild: 'Mountainhome Wrestling Academy', time: '2026-02-06T07:00:00', text: 'So proud of Dumed. Youngest Middleweight champion since Year 298. The Academy has been training him since he was 14.', replies: [] },
+        { name: 'Sakzul Ringpost', guild: '', time: '2026-02-06T09:15:00', text: 'Was at the Arena for the whole event. Dumed Stoneback is the real story here — that kid has a future. Ironhand won\'t hold the belt forever.', replies: [
+          { name: 'Olin Fistforge', guild: '', time: '2026-02-06T11:30:00', text: 'Won\'t hold it forever? He\'s been champion for TWELVE consecutive years. Show some respect.' }
+        ]},
+      ],
+      'MHH-009': [
+        { name: 'Tekkud Deeplease', guild: 'Registry of Deeds', time: '2026-02-17T14:00:00', text: 'All three transactions have been recorded and are searchable in the Registry. Parcel transfer documentation is available for public inspection.', replies: [] },
+        { name: 'Obok Claybrick', guild: '', time: '2026-02-18T08:20:00', text: '48,000 Gold Sovereigns for three parcels at Z-Level 114? Armok Holdings is paying a premium. They must know something about the magma expansion plans.', replies: [] },
+      ],
+      'MHH-013': [
+        { name: 'Ilral Runewise', guild: 'Merchants\' Assembly', time: '2026-03-07T10:00:00', text: 'Our guild lost three members to this fraud ring. 6,200 GP in total damages is likely an undercount. Thank the Guard for Operation Hollow Stone.', replies: [] },
+        { name: 'Edem Copperclerk', guild: '', time: '2026-03-07T14:20:00', text: 'Two former Bureau technicians? That\'s deeply concerning. What kind of vetting is the Bureau doing on its rune-wire staff?', replies: [
+          { name: 'Dodok Cipherstone', guild: 'Bureau of Deep Works', time: '2026-03-08T09:00:00', text: 'The Bureau has initiated an internal review of all rune-wire credentialing procedures. We take this matter extremely seriously.' }
+        ]},
+        { name: 'Vucar Sharpledger', guild: '', time: '2026-03-08T16:45:00', text: 'I was one of the 47 victims. Lost 340 GP before I even realized the transfer was fraudulent. The rune-wire confirmation looked completely legitimate.', replies: [] },
+      ],
+      'MHH-014': [
+        { name: 'Kol Helmetharvest', guild: 'Farmers\' Union', time: '2026-03-09T18:00:00', text: 'Growing Sectors 7-11 have been reporting mold issues since last season. We warned the Bureau of Subterranean Agriculture but the response was too slow.', replies: [] },
+        { name: 'Libash Brewstone', guild: 'Ale Guild', time: '2026-03-10T08:30:00', text: 'We are already reformulating. Plump Helmet Stout may switch to a partial cave wheat base for the interim. Quality won\'t suffer.', replies: [
+          { name: 'Bembul Mugfroth', guild: '', time: '2026-03-10T12:00:00', text: 'Cave wheat ale? That\'s not Plump Helmet Stout anymore. Just call it what it is — a different drink.' }
+        ]},
+        { name: 'Doren Rootwatcher', guild: 'Bureau of Subterranean Agriculture', time: '2026-03-10T15:20:00', text: 'The Bureau is deploying fungicide treatment to affected sectors this week. We expect containment within 10 days. Strategic reserves remain adequate.', replies: [] },
+      ],
+      'MHH-016': [
+        { name: 'Erith Dawnwatch', guild: '', time: '2026-03-11T14:00:00', text: 'This is historic. Four decades without a real surface relations framework. Regardless of your politics, the Surface Relations Act is overdue.', replies: [
+          { name: 'Ral Deepguard', guild: '', time: '2026-03-11T16:30:00', text: 'Overdue? Or premature? We barely survived the last round of surface engagement. The Upper Gate exists for a reason.' },
+          { name: 'Erith Dawnwatch', guild: '', time: '2026-03-11T18:00:00', text: 'The Upper Gate will still exist. The Act creates diplomatic structure — it doesn\'t remove fortifications.' }
+        ]},
+        { name: 'Tosid Surfaceborn', guild: '', time: '2026-03-11T19:15:00', text: 'My grandfather traded with elves before the isolation policy. It was profitable and peaceful. We should have done this years ago.', replies: [] },
+        { name: 'Kivish Wallkeeper', guild: 'Fortress Guard', time: '2026-03-11T20:00:00', text: 'The Guard supports any Act that clarifies Upper Gate inspection protocols. Ambiguity in the current rules makes enforcement difficult.', replies: [] },
+      ],
+      'MHH-019': [
+        { name: 'Adil Stoneclaim', guild: 'Steelthunder Clan', time: '2026-03-11T12:00:00', text: 'The mineral rights are clearly documented in the Registry of Deeds. Claim ST-189-EAST has been held by our clan for 137 years. This excavation must stop.', replies: [
+          { name: 'Mafol Dirtdigger', guild: '', time: '2026-03-11T15:45:00', text: 'Didn\'t the Year 302 amendments change the expiration rules for deep-level claims? Might want to check with a property lawyer on that.' }
+        ]},
+        { name: 'Etur Cavernlaw', guild: 'Stonecleave & Gemcutter LLP', time: '2026-03-11T17:30:00', text: 'Without commenting on this specific case, the Year 302 amendments only apply to claims filed after that date. Pre-existing ancestral claims were grandfathered.', replies: [] },
+      ],
+      'MHH-020': [
+        { name: 'Ast Geomind', guild: 'Geomancer\'s Office', time: '2026-03-11T16:00:00', text: 'Thank you for the fair coverage. Exceptionally Stable ratings reflect genuine geological conditions, not optimism. We remain vigilant on all watchlist items.', replies: [] },
+        { name: 'Bomrek Delvesafe', guild: '', time: '2026-03-11T18:30:00', text: 'Stable is good but the Z-Level 45 advisory has been active for weeks now. When can we expect a resolution or downgrade?', replies: [] },
+      ],
+    };
+
+    var comments = COMMENTS[articleId] || [];
+    var commentsEl = document.getElementById('commentsList');
+    if (comments.length > 0) {
+      commentsEl.innerHTML = comments.map(function(c) {
+        var guildStr = c.guild ? ' <span style="color:#666; font-size:9px;">(' + c.guild + ')</span>' : '';
+        var cDate = new Date(c.time);
+        var dateStr = (cDate.getMonth()+1) + '/' + cDate.getDate() + '/' + cDate.getFullYear() + ' ' + (cDate.getHours() % 12 || 12) + ':' + String(cDate.getMinutes()).padStart(2,'0') + (cDate.getHours() >= 12 ? ' PM' : ' AM');
+        var html = '<div class="commentItem">' +
+          '<div class="commentHeader"><strong>' + c.name + '</strong>' + guildStr + ' <span class="commentDate">' + dateStr + '</span></div>' +
+          '<div class="commentBody">' + c.text + '</div>';
+        if (c.replies && c.replies.length > 0) {
+          html += c.replies.map(function(r) {
+            var rGuild = r.guild ? ' <span style="color:#666; font-size:9px;">(' + r.guild + ')</span>' : '';
+            var rDate = new Date(r.time);
+            var rDateStr = (rDate.getMonth()+1) + '/' + rDate.getDate() + '/' + rDate.getFullYear() + ' ' + (rDate.getHours() % 12 || 12) + ':' + String(rDate.getMinutes()).padStart(2,'0') + (rDate.getHours() >= 12 ? ' PM' : ' AM');
+            return '<div class="commentReply">' +
+              '<div class="commentHeader"><strong>' + r.name + '</strong>' + rGuild + ' <span class="commentDate">' + rDateStr + '</span></div>' +
+              '<div class="commentBody">' + r.text + '</div>' +
+            '</div>';
+          }).join('');
+        }
+        html += '</div>';
+        return html;
+      }).join('');
+    } else {
+      commentsEl.innerHTML = '<p style="font-size:11px; color:#999; font-style:italic;">No comments have been posted for this article.</p>';
+    }
+
+    // ── JSON-LD Structured Data ──
+    var jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": article.headline,
+      "description": article.excerpt || '',
+      "image": article.image,
+      "datePublished": article.published,
+      "dateModified": article.updated || article.published,
+      "author": {
+        "@type": "Person",
+        "name": article.author,
+        "jobTitle": article.byline
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Mountainhome Herald",
+        "url": "http://localhost:4321/l1/news/"
+      },
+      "mainEntityOfPage": window.location.href,
+      "articleSection": article.category,
+      "keywords": article.tags ? article.tags.join(', ') : '',
+      "commentCount": comments.length,
+      "comment": comments.map(function(c) {
+        return {
+          "@type": "Comment",
+          "author": { "@type": "Person", "name": c.name },
+          "dateCreated": c.time,
+          "text": c.text
+        };
+      })
+    };
+    document.getElementById('jsonLd').textContent = JSON.stringify(jsonLd);
+
   } else {
     document.getElementById('articleTitle').textContent = 'Article Not Found';
     document.getElementById('articleBody').innerHTML = '<p>The requested article could not be found. Please <a href="/l1/news/articles">return to the article listing</a>.</p>';

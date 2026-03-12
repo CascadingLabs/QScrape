@@ -1,0 +1,137 @@
+---
+import HeraldShell from '../_components/HeraldShell.astro';
+import { categories, getByCategory, getLatest } from '../_data/articles';
+
+const allCount = getLatest().length;
+
+const descriptions: Record<string, string> = {
+  Politics: 'Arcane Council proceedings, legislation, diplomatic relations, and Grand Duchy governance',
+  Crime: 'Fortress Guard reports, criminal cases, civil suits, and public safety incidents',
+  Economy: 'Commodity markets, property transactions, guild reports, and commercial development',
+  Culture: 'Arts, theatre, museum exhibitions, awards, and cultural events across the fortress',
+  Sports: 'Wrestling league coverage, Z-Level Games results, and athletic competition',
+  Weather: 'Geomantic reports, seismic advisories, surface conditions, and subterranean stability',
+};
+---
+
+<HeraldShell
+  title="RSS Feeds"
+  breadcrumbs={[{ label: 'Home', href: '/l1/news/' }, { label: 'RSS Feeds' }]}
+>
+  <div class="pageTitle">Mountainhome Herald &mdash; RSS Feeds</div>
+
+  <div class="formSection">
+    <p style="font-size:11px; line-height:1.6;">
+      The Mountainhome Herald offers RSS 2.0 feeds for all published articles and for each
+      individual category. Use the feeds below to stay up to date with Herald coverage via
+      your preferred rune-wire reader or aggregation service. All feeds are publicly available
+      and updated as new articles are published.
+    </p>
+  </div>
+
+  <div class="formSection">
+    <strong>Master Feed</strong>
+    <table class="aspNetTable" style="width:100%; margin-top:10px;">
+      <tr>
+        <th style="width:30px;"></th>
+        <th style="width:220px;">Feed</th>
+        <th>Description</th>
+        <th style="width:80px;">Articles</th>
+        <th style="width:160px;">URL</th>
+      </tr>
+      <tr>
+        <td style="text-align:center;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/16px-Feed-icon.svg.png" alt="RSS" width="16" height="16" />
+        </td>
+        <td><strong><a href="/l1/news/rss/all.xml">All Stories</a></strong></td>
+        <td>Complete feed of all Mountainhome Herald articles across all categories</td>
+        <td style="text-align:center;">{allCount}</td>
+        <td><code style="font-size:9px;">/l1/news/rss/all.xml</code></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="formSection">
+    <strong>Category Feeds</strong>
+    <p style="font-size:10px; color:#666; margin:4px 0 8px 0;">
+      Subscribe to individual category feeds to receive only the stories that interest you.
+    </p>
+    <table class="aspNetTable" style="width:100%; margin-top:4px;">
+      <tr>
+        <th style="width:30px;"></th>
+        <th style="width:220px;">Feed</th>
+        <th>Description</th>
+        <th style="width:80px;">Articles</th>
+        <th style="width:160px;">URL</th>
+      </tr>
+      {categories.map((cat) => {
+        const slug = cat.toLowerCase();
+        const count = getByCategory(cat).length;
+        return (
+          <tr class={categories.indexOf(cat) % 2 === 1 ? 'alternatingRow' : ''}>
+            <td style="text-align:center;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/16px-Feed-icon.svg.png" alt="RSS" width="16" height="16" />
+            </td>
+            <td>
+              <strong><a href={`/l1/news/rss/${slug}.xml`}>{cat}</a></strong>
+            </td>
+            <td style="font-size:10px;">{descriptions[cat]}</td>
+            <td style="text-align:center;">{count}</td>
+            <td><code style="font-size:9px;">/l1/news/rss/{slug}.xml</code></td>
+          </tr>
+        );
+      })}
+    </table>
+  </div>
+
+  <div class="formSection">
+    <strong>How to Subscribe</strong>
+    <table class="aspNetTable" style="width:100%; margin-top:10px;">
+      <tr>
+        <td colspan="2" class="headerRow">Using RSS Feeds</td>
+      </tr>
+      <tr>
+        <td style="width:180px;"><span class="aspNetLabelBold">Format:</span></td>
+        <td>RSS 2.0 (XML)</td>
+      </tr>
+      <tr class="alternatingRow">
+        <td><span class="aspNetLabelBold">Encoding:</span></td>
+        <td>UTF-8</td>
+      </tr>
+      <tr>
+        <td><span class="aspNetLabelBold">Update Frequency:</span></td>
+        <td>As articles are published (TTL: 15 minutes)</td>
+      </tr>
+      <tr class="alternatingRow">
+        <td><span class="aspNetLabelBold">Content:</span></td>
+        <td>Headlines, excerpts, publication dates, author, category, and article links</td>
+      </tr>
+      <tr>
+        <td><span class="aspNetLabelBold">Namespaces:</span></td>
+        <td>
+          <code style="font-size:10px;">dc:</code> (Dublin Core),
+          <code style="font-size:10px;">content:</code> (Content Module),
+          <code style="font-size:10px;">atom:</code> (Atom Syndication),
+          <code style="font-size:10px;">media:</code> (Media RSS)
+        </td>
+      </tr>
+    </table>
+    <p style="font-size:11px; line-height:1.5; margin-top:10px;">
+      Copy any feed URL above and paste it into your preferred RSS reader or aggregator.
+      Most modern rune-wire terminals support RSS natively. For assistance with RSS configuration,
+      contact the Herald's technical support desk at
+      <a href="mailto:tech@herald.mh">tech@herald.mh</a> or visit the
+      <a href="/l1/news/contact">Contact</a> page.
+    </p>
+  </div>
+
+  <div class="formSection">
+    <strong>Terms of Use</strong>
+    <p style="font-size:10px; color:#666; line-height:1.5;">
+      Herald RSS feeds are provided for personal, non-commercial use. Automated aggregation
+      for republication requires a syndication licence. Feed content remains the property of
+      the Mountainhome Herald. The Herald reserves the right to modify feed structure or
+      availability without notice. Goblin-operated aggregation services are expressly prohibited.
+    </p>
+  </div>
+</HeraldShell>

@@ -15,6 +15,9 @@ Dwarf Fortress-themed content. Located at `/l1/news/`. Alias `/news/` redirects 
 | `about.astro` | `/l1/news/about` | Herald history, editorial policy, quick links |
 | `staff.astro` | `/l1/news/staff` | Editorial staff bios, photos, contact info |
 | `contact.astro` | `/l1/news/contact` | Contact info, subscriptions, news tips, advertising rates |
+| `rss/index.astro` | `/l1/news/rss/` | RSS feed directory listing all available feeds |
+| `rss/all.xml.ts` | `/l1/news/rss/all.xml` | RSS 2.0 feed — all articles |
+| `rss/{category}.xml.ts` | `/l1/news/rss/{slug}.xml` | RSS 2.0 feeds per category (politics, crime, economy, culture, sports, weather) |
 
 ## Components (`_components/`)
 
@@ -22,12 +25,14 @@ Dwarf Fortress-themed content. Located at `/l1/news/`. Alias `/news/` redirects 
 |------|-------------|
 | `HeraldShell.astro` | Layout template: header, breaking ticker, nav, ad slots, footer |
 | `AdUnit.astro` | Mock ad component with iframe srcdoc, tracking pixels, click URLs |
+| `WeatherWidget.astro` | Dwarf-themed geomantic conditions sidebar widget |
 
 ## Data (`_data/`)
 
 | File | Description |
 |------|-------------|
 | `articles.ts` | Article metadata (id, category, published timestamp, headline, author, excerpt, image). Shared by index, articles, and shell. |
+| `rss.ts` | RSS 2.0 XML feed generator. Shared helper for all.xml and per-category endpoints. |
 
 ## Article Data
 20 articles hard-coded in `article.astro` (full body) and `_data/articles.ts` (metadata).
@@ -89,6 +94,18 @@ for (var i = 0; i < parts.length; i++) {
 - Nav: Home, Articles, About, Staff, Contact | ROD Records → `/l1/taxes/`, ScoreTap → `/l1/scoretap/`
 - Article bodies link to Registry of Deeds (`/l1/taxes/`) and ScoreTap (`/l1/scoretap/`) where contextually relevant
 - Articles cross-reference each other (e.g. seismic advisory ↔ magma expansion, Steelthunder sale ↔ injunction)
+
+## RSS Feeds
+RSS 2.0 XML feeds with namespaces: `dc:` (Dublin Core), `content:` (Content Module), `atom:` (Atom Syndication), `media:` (Media RSS). Directory page at `/l1/news/rss/` lists all feeds. Master feed at `all.xml`, category feeds at `{slug}.xml`. Generated via Astro static endpoints.
+
+## Comments System
+Client-side rendered comments on article detail pages. Pre-populated fake reader comments with dwarf-themed usernames, guild affiliations, timestamps, and nested reply threads. Comment submission form (non-functional, shows moderation alert). Comments included in JSON-LD structured data.
+
+## JSON-LD Structured Data
+`NewsArticle` schema.org markup injected client-side into article detail pages. Includes headline, description, author, publisher, dates, keywords, category, image, and comment data.
+
+## Weather Widget
+Geomantic conditions sidebar widget on homepage. Shows zone-by-zone status (Surface through Z-Level 101+ Magma), temperatures in Subterranean degrees (°S), seismic index, magma pressure, aquifer level, surface wind. Active advisories highlighted. Themed around in-universe Geomancer's Office reports.
 
 ## Design Pattern
 Uses `HeraldShell.astro` template component (similar to ScoreTap's `SiteShell.astro`).

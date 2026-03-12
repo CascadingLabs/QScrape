@@ -1,6 +1,7 @@
 ---
 import HeraldShell from './_components/HeraldShell.astro';
 import AdUnit from './_components/AdUnit.astro';
+import WeatherWidget from './_components/WeatherWidget.astro';
 import { getLatest, getByCategory, getBreaking, categories, formatDateTime, formatTime } from './_data/articles';
 
 const latest = getLatest(20);
@@ -103,6 +104,8 @@ const categoryCounts = Object.fromEntries(categories.map(c => [c, getByCategory(
           ))}
         </div>
       </div>
+
+      <WeatherWidget />
 
       <div class="adSlot--inline" style="margin:10px 15px 10px 5px;">
         <AdUnit size="rectangle" adId="DSN-REC-001" text="Armok Holdings LLC &mdash; Industrial Parcels Now Available at Z-Level 114" cta="View Listings" placement="home_sidebar_1" />

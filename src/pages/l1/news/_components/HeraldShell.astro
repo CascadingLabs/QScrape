@@ -40,6 +40,7 @@ const footerAd = footerAds[Math.floor(Math.random() * footerAds.length)];
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title} - Mountainhome Herald</title>
   <link rel="stylesheet" href="/global.css">
+  <link rel="alternate" type="application/rss+xml" title="Mountainhome Herald — All Stories" href="/l1/news/rss/all.xml">
 </head>
 <body>
   <div id="container">
@@ -78,6 +79,7 @@ const footerAd = footerAds[Math.floor(Math.random() * footerAds.length)];
       <a href="/l1/news/about" class={activePage === 'about' ? 'active' : ''}>About</a>
       <a href="/l1/news/staff" class={activePage === 'staff' ? 'active' : ''}>Staff</a>
       <a href="/l1/news/contact" class={activePage === 'contact' ? 'active' : ''}>Contact</a>
+      <a href="/l1/news/rss/" class="rssLink" style="color:#ff6600;">RSS</a>
       <span class="navSep">|</span>
       <a href="/l1/taxes/">ROD Records</a>
       <a href="/l1/scoretap/">ScoreTap</a>
@@ -118,7 +120,8 @@ const footerAd = footerAds[Math.floor(Math.random() * footerAds.length)];
       <a href="/l1/news/about" style="color:#99bbdd;">About</a> |
       <a href="/l1/news/staff" style="color:#99bbdd;">Staff</a> |
       <a href="/l1/news/contact" style="color:#99bbdd;">Contact</a> |
-      <a href="/l1/taxes/" style="color:#99bbdd;">ROD Records</a>
+      <a href="/l1/taxes/" style="color:#99bbdd;">ROD Records</a> |
+      <a href="/l1/news/rss/" style="color:#ff6600;">RSS Feeds</a>
     </div>
   </div>
 
@@ -182,11 +185,13 @@ const footerAd = footerAds[Math.floor(Math.random() * footerAds.length)];
     background: #1a1a2e;
     color: #ffffff;
     font-size: 11px;
-    display: flex;
-    align-items: center;
+    display: block;
     overflow: hidden;
     height: 24px;
+    max-height: 24px;
     position: relative;
+    white-space: nowrap;
+    line-height: 24px;
   }
   .tickerLabel {
     background: #cc0000;
@@ -195,17 +200,20 @@ const footerAd = footerAds[Math.floor(Math.random() * footerAds.length)];
     font-size: 10px;
     padding: 4px 8px;
     letter-spacing: 1px;
-    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 16px;
     z-index: 1;
+    position: relative;
   }
   .tickerTrack {
-    display: flex;
+    display: inline-block;
     white-space: nowrap;
     animation: tickerScroll 30s linear infinite;
     padding-left: 12px;
   }
-  .tickerItem { margin-right: 8px; }
-  .tickerLink { color: #ffdd44; text-decoration: none; }
+  .tickerItem { margin-right: 8px; white-space: nowrap; }
+  .tickerLink { color: #ffdd44; text-decoration: none; white-space: nowrap; }
   .tickerLink:hover { text-decoration: underline; }
   .tickerSep { color: #666; margin: 0 8px; }
   @keyframes tickerScroll {
@@ -357,4 +365,36 @@ const footerAd = footerAds[Math.floor(Math.random() * footerAds.length)];
 
   /* ─── Inline Ad ─── */
   .adSlot--inline { margin: 12px 15px; text-align: center; background: #f8f8f8; padding: 6px 0; border: 1px solid #eee; }
+
+  /* ─── Comments ─── */
+  .commentItem {
+    border-bottom: 1px solid #ddd; padding: 8px 0; font-size: 11px;
+  }
+  .commentItem:last-child { border-bottom: none; }
+  .commentHeader { margin-bottom: 3px; }
+  .commentDate { color: #999; font-size: 9px; margin-left: 6px; }
+  .commentBody { line-height: 1.5; color: #333; }
+  .commentReply {
+    margin: 6px 0 4px 20px; padding: 6px 8px;
+    border-left: 2px solid #cc0000; background: #f9f9f9;
+    font-size: 11px;
+  }
+
+  /* ─── Weather Widget ─── */
+  .weatherWidget { font-size: 10px; line-height: 1.6; }
+  .weatherWidget table { width: 100%; border-collapse: collapse; }
+  .weatherWidget th {
+    background: #1a1a2e; color: #ffdd44; font-size: 9px;
+    padding: 2px 4px; text-align: left;
+  }
+  .weatherWidget td {
+    padding: 2px 4px; border-bottom: 1px solid #eee; font-size: 10px;
+  }
+  .weatherWidget .wxStable { color: #228B22; font-weight: bold; }
+  .weatherWidget .wxCaution { color: #CC8800; font-weight: bold; }
+  .weatherWidget .wxAlert { color: #CC0000; font-weight: bold; }
+  .weatherWidget .wxUpdate {
+    font-size: 8px; color: #999; font-style: italic;
+    margin-top: 4px; text-align: right;
+  }
 </style>
