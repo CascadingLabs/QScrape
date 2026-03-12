@@ -1,0 +1,359 @@
+---
+import SiteShell from './_components/SiteShell.astro';
+import WidgetPanel from './_components/WidgetPanel.astro';
+import GameTag from './_components/GameTag.astro';
+import EventBadge from './_components/EventBadge.astro';
+---
+<SiteShell title="ScoreTap — Esports Scores, News & Standings" activePage="scores">
+
+  <!-- Game filter tabs -->
+  <div id="game-filter">
+    <button class="game-tab active" data-filter="all">All Games</button>
+    <button class="game-tab" data-filter="cs2">CS2</button>
+    <button class="game-tab" data-filter="valorant">Valorant</button>
+    <button class="game-tab" data-filter="lol">LoL</button>
+    <button class="game-tab" data-filter="dota2">Dota 2</button>
+    <button class="game-tab" data-filter="rl">Rocket League</button>
+  </div>
+
+  <!-- Page layout -->
+  <div class="page-layout">
+
+    <!-- Main column -->
+    <div class="main-col">
+
+      <!-- Live Scores -->
+      <WidgetPanel title="Live Scores" linkText="All Live" linkHref="#">
+        <a href="/l1/scoretap/match?id=match-001" class="match-card live" data-game="cs2">
+          <div class="team-side">
+            <div class="team-name">NAVI</div>
+            <div class="team-abbr">Natus Vincere</div>
+          </div>
+          <div class="score-block">
+            <div class="score-numbers live-score" id="score-match-001">11&nbsp;:&nbsp;8</div>
+            <div class="match-meta">Map 2 &middot; <EventBadge status="live" /></div>
+            <div class="match-event">IEM Katowice 2026</div>
+            <div style="margin-top:3px;"><GameTag game="cs2" /></div>
+          </div>
+          <div class="team-side right">
+            <div class="team-name">G2</div>
+            <div class="team-abbr">G2 Esports</div>
+          </div>
+        </a>
+
+        <a href="/l1/scoretap/match?id=match-002" class="match-card live" data-game="valorant">
+          <div class="team-side">
+            <div class="team-name">Sentinels</div>
+            <div class="team-abbr">SEN</div>
+          </div>
+          <div class="score-block">
+            <div class="score-numbers live-score" id="score-match-002">9&nbsp;:&nbsp;7</div>
+            <div class="match-meta">Map 1 &middot; <EventBadge status="live" /></div>
+            <div class="match-event">VCT Americas 2026</div>
+            <div style="margin-top:3px;"><GameTag game="valorant" /></div>
+          </div>
+          <div class="team-side right">
+            <div class="team-name">LOUD</div>
+            <div class="team-abbr">LOUD</div>
+          </div>
+        </a>
+
+        <a href="/l1/scoretap/match?id=match-003" class="match-card live" data-game="rl">
+          <div class="team-side">
+            <div class="team-name">Team Liquid</div>
+            <div class="team-abbr">TL</div>
+          </div>
+          <div class="score-block">
+            <div class="score-numbers live-score" id="score-match-003">2&nbsp;:&nbsp;1</div>
+            <div class="match-meta">Game 4 &middot; <EventBadge status="live" /></div>
+            <div class="match-event">RLCS 2026 &mdash; Spring</div>
+            <div style="margin-top:3px;"><GameTag game="rl" /></div>
+          </div>
+          <div class="team-side right">
+            <div class="team-name">Cloud9</div>
+            <div class="team-abbr">C9</div>
+          </div>
+        </a>
+      </WidgetPanel>
+
+      <!-- Recent Results -->
+      <WidgetPanel title="Recent Results" linkText="Full Results" linkHref="#">
+        <div class="match-card" data-game="cs2">
+          <div class="team-side">
+            <div class="team-name result-winner">Vitality</div>
+            <div class="team-abbr">Team Vitality</div>
+          </div>
+          <div class="score-block">
+            <div class="score-numbers">16&nbsp;:&nbsp;12</div>
+            <div class="match-meta"><EventBadge status="final" /></div>
+            <div class="match-event">IEM Katowice 2026</div>
+            <div style="margin-top:3px;"><GameTag game="cs2" /></div>
+          </div>
+          <div class="team-side right">
+            <div class="team-name result-loser">FaZe</div>
+            <div class="team-abbr">FaZe Clan</div>
+          </div>
+        </div>
+
+        <div class="match-card" data-game="valorant">
+          <div class="team-side">
+            <div class="team-name result-winner">NRG</div>
+            <div class="team-abbr">NRG Esports</div>
+          </div>
+          <div class="score-block">
+            <div class="score-numbers">13&nbsp;:&nbsp;9</div>
+            <div class="match-meta"><EventBadge status="final" /></div>
+            <div class="match-event">VCT Americas 2026</div>
+            <div style="margin-top:3px;"><GameTag game="valorant" /></div>
+          </div>
+          <div class="team-side right">
+            <div class="team-name result-loser">100T</div>
+            <div class="team-abbr">100 Thieves</div>
+          </div>
+        </div>
+
+        <div class="match-card" data-game="cs2">
+          <div class="team-side">
+            <div class="team-name result-winner">MOUZ</div>
+            <div class="team-abbr">MOUZ</div>
+          </div>
+          <div class="score-block">
+            <div class="score-numbers">2&nbsp;:&nbsp;0</div>
+            <div class="match-meta"><EventBadge status="final" /></div>
+            <div class="match-event">IEM Katowice 2026</div>
+            <div style="margin-top:3px;"><GameTag game="cs2" /></div>
+          </div>
+          <div class="team-side right">
+            <div class="team-name result-loser">Heroic</div>
+            <div class="team-abbr">Heroic</div>
+          </div>
+        </div>
+
+        <div class="match-card" data-game="valorant">
+          <div class="team-side">
+            <div class="team-name result-winner">Paper Rex</div>
+            <div class="team-abbr">PRX</div>
+          </div>
+          <div class="score-block">
+            <div class="score-numbers">13&nbsp;:&nbsp;10</div>
+            <div class="match-meta"><EventBadge status="final" /></div>
+            <div class="match-event">VCT Pacific 2026</div>
+            <div style="margin-top:3px;"><GameTag game="valorant" /></div>
+          </div>
+          <div class="team-side right">
+            <div class="team-name result-loser">Secret</div>
+            <div class="team-abbr">Team Secret</div>
+          </div>
+        </div>
+
+        <div class="match-card" data-game="cs2">
+          <div class="team-side">
+            <div class="team-name result-winner">Virtus.pro</div>
+            <div class="team-abbr">VP</div>
+          </div>
+          <div class="score-block">
+            <div class="score-numbers">16&nbsp;:&nbsp;14</div>
+            <div class="match-meta"><EventBadge status="final" /></div>
+            <div class="match-event">BLAST Premier 2026</div>
+            <div style="margin-top:3px;"><GameTag game="cs2" /></div>
+          </div>
+          <div class="team-side right">
+            <div class="team-name result-loser">Cloud9</div>
+            <div class="team-abbr">C9</div>
+          </div>
+        </div>
+      </WidgetPanel>
+
+      <!-- News Feed -->
+      <WidgetPanel title="Latest News" linkText="All News" linkHref="/l1/scoretap/news">
+        <div class="news-grid">
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=zywoo-katowice-record">ZywOo sets new career-high rating record at IEM Katowice 2026</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>2h ago</span></div>
+          </div>
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=navi-blamef-signing">NAVI confirm signing of rifler blameF ahead of Major qualifier</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>4h ago</span></div>
+          </div>
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=cs2-major-copenhagen">CS2 Major 2026 location officially announced &mdash; Copenhagen confirmed</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>6h ago</span></div>
+          </div>
+          <div class="news-card" data-game="valorant">
+            <a class="news-headline" href="/l1/scoretap/article?id=sentinels-group-stage">Sentinels sweep VCT Americas group stage with perfect 5-0 record</a>
+            <div class="news-meta"><GameTag game="valorant" /><span>8h ago</span></div>
+          </div>
+          <div class="news-card" data-game="lol">
+            <a class="news-headline" href="/l1/scoretap/article?id=faker-contract-2028">T1 Faker extends contract through 2028 in landmark deal</a>
+            <div class="news-meta"><GameTag game="lol" /><span>10h ago</span></div>
+          </div>
+          <div class="news-card" data-game="rl">
+            <a class="news-headline" href="/l1/scoretap/article?id=rlcs-prize-pool">RLCS 2026 Spring Split prize pool revealed at $2.5 million</a>
+            <div class="news-meta"><GameTag game="rl" /><span>12h ago</span></div>
+          </div>
+          <div class="news-card" data-game="dota2">
+            <a class="news-headline" href="/l1/scoretap/article?id=spirit-dreamleague">Team Spirit win DreamLeague Season 25 after stunning Grand Final comeback</a>
+            <div class="news-meta"><GameTag game="dota2" /><span>14h ago</span></div>
+          </div>
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=g2-niko-interview">G2 NiKo: "We came to Katowice to win everything, not just qualify"</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>16h ago</span></div>
+          </div>
+        </div>
+      </WidgetPanel>
+
+    </div><!-- /main-col -->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <!-- Upcoming -->
+      <WidgetPanel title="Upcoming" linkText="Schedule" linkHref="#">
+        <div class="upcoming-card" data-game="cs2">
+          <div>
+            <div class="upcoming-teams">Vitality vs MOUZ</div>
+            <div style="margin-top:3px;"><GameTag game="cs2" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Today 18:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="valorant">
+          <div>
+            <div class="upcoming-teams">100T vs NRG</div>
+            <div style="margin-top:3px;"><GameTag game="valorant" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Today 20:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="lol">
+          <div>
+            <div class="upcoming-teams">T1 vs Gen.G</div>
+            <div style="margin-top:3px;"><GameTag game="lol" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Tomorrow 14:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="dota2">
+          <div>
+            <div class="upcoming-teams">Spirit vs OG</div>
+            <div style="margin-top:3px;"><GameTag game="dota2" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Tomorrow 16:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="rl">
+          <div>
+            <div class="upcoming-teams">BDS vs G2</div>
+            <div style="margin-top:3px;"><GameTag game="rl" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Mar 12 15:00</div>
+          </div>
+        </div>
+      </WidgetPanel>
+
+      <!-- CS2 World Rankings -->
+      <WidgetPanel title="CS2 World Rankings" linkText="Full Table" linkHref="#">
+        <div class="rank-row"><div class="rank-num">#1</div><div class="rank-team">Vitality</div><div class="rank-points">1,842 pts</div><div class="rank-change same">&mdash;</div></div>
+        <div class="rank-row"><div class="rank-num">#2</div><div class="rank-team">NAVI</div><div class="rank-points">1,710 pts</div><div class="rank-change up">&#9650;2</div></div>
+        <div class="rank-row"><div class="rank-num">#3</div><div class="rank-team">G2 Esports</div><div class="rank-points">1,655 pts</div><div class="rank-change down">&#9660;1</div></div>
+        <div class="rank-row"><div class="rank-num">#4</div><div class="rank-team">FaZe Clan</div><div class="rank-points">1,580 pts</div><div class="rank-change down">&#9660;1</div></div>
+        <div class="rank-row"><div class="rank-num">#5</div><div class="rank-team">MOUZ</div><div class="rank-points">1,490 pts</div><div class="rank-change up">&#9650;1</div></div>
+        <div class="rank-row"><div class="rank-num">#6</div><div class="rank-team">Heroic</div><div class="rank-points">1,320 pts</div><div class="rank-change same">&mdash;</div></div>
+        <div class="rank-row"><div class="rank-num">#7</div><div class="rank-team">Virtus.pro</div><div class="rank-points">1,210 pts</div><div class="rank-change up">&#9650;3</div></div>
+        <div class="rank-row"><div class="rank-num">#8</div><div class="rank-team">Cloud9</div><div class="rank-points">1,150 pts</div><div class="rank-change down">&#9660;2</div></div>
+        <div class="rank-row"><div class="rank-num">#9</div><div class="rank-team">Team Liquid</div><div class="rank-points">1,080 pts</div><div class="rank-change same">&mdash;</div></div>
+        <div class="rank-row"><div class="rank-num">#10</div><div class="rank-team">Spirit</div><div class="rank-points">1,020 pts</div><div class="rank-change up">&#9650;1</div></div>
+      </WidgetPanel>
+
+      <!-- Top Events -->
+      <WidgetPanel title="Top Events" linkText="All Events" linkHref="#">
+        <div class="event-row" data-game="cs2">
+          <div class="event-name">IEM Katowice 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="cs2" /></div>
+            <div class="event-dates">Mar 5&ndash;15</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="valorant">
+          <div class="event-name">VCT Americas 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="valorant" /></div>
+            <div class="event-dates">Mar 1&ndash;20</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="rl">
+          <div class="event-name">RLCS 2026 Spring</div>
+          <div style="text-align:right;">
+            <div><GameTag game="rl" /></div>
+            <div class="event-dates">Mar 8&ndash;22</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="lol">
+          <div class="event-name">LCK Spring 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="lol" /></div>
+            <div class="event-dates">Feb 15&ndash;Apr 5</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="dota2">
+          <div class="event-name">ESL One Stockholm 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="dota2" /></div>
+            <div class="event-dates">Mar 20&ndash;30</div>
+          </div>
+          <div><EventBadge status="upcoming" /></div>
+        </div>
+      </WidgetPanel>
+
+    </div><!-- /sidebar -->
+  </div><!-- /page-layout -->
+
+  <script is:inline>
+    // Game tab filter
+    var tabs = document.querySelectorAll('.game-tab');
+    var filterables = document.querySelectorAll('[data-game]');
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        var filter = tab.dataset.filter;
+        filterables.forEach(function(el) {
+          el.style.display = (filter === 'all' || el.dataset.game === filter) ? '' : 'none';
+        });
+      });
+    });
+
+    // Live score ticker
+    var liveScores = {
+      'match-001': { left: 11, right: 8,  cap: 30, elId: 'score-match-001' },
+      'match-002': { left: 9,  right: 7,  cap: 30, elId: 'score-match-002' },
+      'match-003': { left: 2,  right: 1,  cap: 5,  elId: 'score-match-003' }
+    };
+
+    setInterval(function() {
+      var keys = Object.keys(liveScores);
+      var key = keys[Math.floor(Math.random() * keys.length)];
+      var match = liveScores[key];
+      var side = Math.random() < 0.5 ? 'left' : 'right';
+      if (match[side] < match.cap) match[side]++;
+      var el = document.getElementById(match.elId);
+      if (el) el.textContent = match.left + '\u00a0:\u00a0' + match.right;
+    }, 8000);
+  </script>
+
+</SiteShell>

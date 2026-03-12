@@ -1,0 +1,540 @@
+---
+import SiteShell from './_components/SiteShell.astro';
+---
+<SiteShell title="Events — ScoreTap" activePage="events">
+
+  <style>
+    .events-container {
+      max-width: 1280px;
+      margin: 10px auto;
+      padding: 0 10px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 10px;
+    }
+    .events-main { min-width: 0; }
+    .events-sidebar { min-width: 0; }
+
+    /* section headers */
+    .section-header {
+      background: var(--bg-header);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 6px 12px;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .section-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+    .section-count {
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+
+    /* event card grid */
+    .event-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border: 1px solid var(--border);
+      border-top: none;
+      margin-bottom: 10px;
+    }
+    .event-card {
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .event-card:nth-child(even) { border-right: none; }
+    .event-card:hover { background: #131320; }
+    .event-card[data-game] { display: block; }
+
+    .event-card-top {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 7px;
+    }
+    .event-card-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .event-card-meta {
+      font-size: 10px;
+      color: var(--text-dim);
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .event-card-meta span { display: flex; align-items: center; gap: 3px; }
+
+    .event-prize {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--green);
+      font-family: 'Courier New', monospace;
+    }
+
+    .event-progress {
+      height: 3px;
+      background: #1c1c2c;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .event-progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    .event-progress-fill.upcoming { background: #404058; }
+    .event-progress-fill.done { background: #303044; }
+
+    .event-teams-row {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-top: 7px;
+    }
+    .event-team-chip {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-dim);
+      background: #12121e;
+      border: 1px solid #252535;
+      padding: 1px 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .event-team-chip.highlight { color: var(--accent); border-color: #ff6b0030; }
+
+    /* sidebar */
+    .sidebar-section { margin-bottom: 10px; }
+    .sidebar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+    }
+    .sidebar-row:last-child { border-bottom: none; }
+    .sidebar-row:nth-child(odd)  { background: var(--bg-panel); }
+    .sidebar-row:nth-child(even) { background: var(--bg-row-alt); }
+    .sidebar-row:hover { background: #131320; cursor: pointer; }
+    .sidebar-event-name { color: var(--text); font-weight: 600; flex: 1; line-height: 1.3; }
+    .sidebar-event-date { font-size: 10px; color: var(--text-dim); text-align: right; white-space: nowrap; margin-left: 8px; }
+  </style>
+
+  <!-- Game filter -->
+  <div id="game-filter">
+    <button class="game-tab active" data-filter="all">All Games</button>
+    <button class="game-tab" data-filter="cs2">CS2</button>
+    <button class="game-tab" data-filter="valorant">Valorant</button>
+    <button class="game-tab" data-filter="lol">LoL</button>
+    <button class="game-tab" data-filter="dota2">Dota 2</button>
+    <button class="game-tab" data-filter="rl">Rocket League</button>
+  </div>
+
+  <div class="events-container">
+    <div class="events-main">
+
+      <!-- LIVE NOW -->
+      <div class="section-header">
+        <span class="section-title"><span class="live-dot"></span> Live Now</span>
+        <span class="section-count" id="live-count-label">5 events</span>
+      </div>
+      <div class="event-cards" id="live-events">
+
+        <div class="event-card" data-game="cs2">
+          <div class="event-card-top">
+            <span class="game-tag cs2">CS2</span>
+            <span class="event-badge live">Live</span>
+          </div>
+          <div class="event-card-name">IEM Katowice 2026</div>
+          <div class="event-card-meta">
+            <span>Mar 6&ndash;12, 2026</span>
+            <span>Katowice, Poland</span>
+            <span class="event-prize">$250,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip highlight">Vitality</span>
+            <span class="event-team-chip highlight">G2</span>
+            <span class="event-team-chip highlight">NAVI</span>
+            <span class="event-team-chip highlight">MOUZ</span>
+            <span class="event-team-chip">FaZe</span>
+            <span class="event-team-chip">Heroic</span>
+            <span class="event-team-chip">+10</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill" style="width:85%"></div></div>
+        </div>
+
+        <div class="event-card" data-game="valorant">
+          <div class="event-card-top">
+            <span class="game-tag valorant">Valorant</span>
+            <span class="event-badge live">Live</span>
+          </div>
+          <div class="event-card-name">VCT Americas 2026</div>
+          <div class="event-card-meta">
+            <span>Feb 28&ndash;Mar 22, 2026</span>
+            <span>Online / LAN</span>
+            <span class="event-prize">$500,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip highlight">Sentinels</span>
+            <span class="event-team-chip highlight">NRG</span>
+            <span class="event-team-chip">LOUD</span>
+            <span class="event-team-chip">100 Thieves</span>
+            <span class="event-team-chip">FURIA</span>
+            <span class="event-team-chip">+7</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill" style="width:70%"></div></div>
+        </div>
+
+        <div class="event-card" data-game="valorant">
+          <div class="event-card-top">
+            <span class="game-tag valorant">Valorant</span>
+            <span class="event-badge live">Live</span>
+          </div>
+          <div class="event-card-name">VCT Pacific 2026</div>
+          <div class="event-card-meta">
+            <span>Feb 20&ndash;Apr 5, 2026</span>
+            <span>Online / LAN</span>
+            <span class="event-prize">$500,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip highlight">Paper Rex</span>
+            <span class="event-team-chip highlight">DRX</span>
+            <span class="event-team-chip">T1</span>
+            <span class="event-team-chip">Gen.G</span>
+            <span class="event-team-chip">Fnatic</span>
+            <span class="event-team-chip">+5</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill" style="width:55%"></div></div>
+        </div>
+
+        <div class="event-card" data-game="lol">
+          <div class="event-card-top">
+            <span class="game-tag lol">LoL</span>
+            <span class="event-badge live">Live</span>
+          </div>
+          <div class="event-card-name">LCK Spring 2026</div>
+          <div class="event-card-meta">
+            <span>Jan 15&ndash;Apr 12, 2026</span>
+            <span>Seoul, South Korea</span>
+            <span class="event-prize">$1,000,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip highlight">T1</span>
+            <span class="event-team-chip highlight">Gen.G</span>
+            <span class="event-team-chip">DRX</span>
+            <span class="event-team-chip">KT Rolster</span>
+            <span class="event-team-chip">+6</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill" style="width:78%"></div></div>
+        </div>
+
+        <div class="event-card" data-game="lol">
+          <div class="event-card-top">
+            <span class="game-tag lol">LoL</span>
+            <span class="event-badge live">Live</span>
+          </div>
+          <div class="event-card-name">LEC Spring 2026</div>
+          <div class="event-card-meta">
+            <span>Jan 18&ndash;Apr 5, 2026</span>
+            <span>Berlin, Germany</span>
+            <span class="event-prize">$500,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip highlight">G2 Esports</span>
+            <span class="event-team-chip">Fnatic</span>
+            <span class="event-team-chip">Team BDS</span>
+            <span class="event-team-chip">Karmine Corp</span>
+            <span class="event-team-chip">+6</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill" style="width:82%"></div></div>
+        </div>
+
+        <div class="event-card" data-game="rl">
+          <div class="event-card-top">
+            <span class="game-tag rl">Rocket League</span>
+            <span class="event-badge live">Live</span>
+          </div>
+          <div class="event-card-name">RLCS 2026 Spring Split</div>
+          <div class="event-card-meta">
+            <span>Feb 1&ndash;Mar 20, 2026</span>
+            <span>Regional + LAN</span>
+            <span class="event-prize">$2,500,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip highlight">Team BDS</span>
+            <span class="event-team-chip highlight">Team Liquid</span>
+            <span class="event-team-chip">Karmine Corp</span>
+            <span class="event-team-chip">Cloud9</span>
+            <span class="event-team-chip">+76</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill" style="width:60%"></div></div>
+        </div>
+
+      </div>
+
+      <!-- UPCOMING -->
+      <div class="section-header">
+        <span class="section-title">Upcoming</span>
+        <span class="section-count" id="upcoming-count-label">4 events</span>
+      </div>
+      <div class="event-cards" id="upcoming-events">
+
+        <div class="event-card" data-game="cs2">
+          <div class="event-card-top">
+            <span class="game-tag cs2">CS2</span>
+            <span class="event-badge upcoming">Upcoming</span>
+          </div>
+          <div class="event-card-name">BLAST Premier Spring 2026</div>
+          <div class="event-card-meta">
+            <span>Apr 3&ndash;27, 2026</span>
+            <span>OVO Arena Wembley, London</span>
+            <span class="event-prize">$425,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip">Vitality</span>
+            <span class="event-team-chip">G2</span>
+            <span class="event-team-chip">NAVI</span>
+            <span class="event-team-chip">MOUZ</span>
+            <span class="event-team-chip">FaZe</span>
+            <span class="event-team-chip">+7</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill upcoming" style="width:0%"></div></div>
+        </div>
+
+        <div class="event-card" data-game="lol">
+          <div class="event-card-top">
+            <span class="game-tag lol">LoL</span>
+            <span class="event-badge upcoming">Upcoming</span>
+          </div>
+          <div class="event-card-name">MSI 2026</div>
+          <div class="event-card-meta">
+            <span>May 1&ndash;18, 2026</span>
+            <span>KSPO Dome, Seoul</span>
+            <span class="event-prize">$2,250,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip">T1</span>
+            <span class="event-team-chip">Gen.G</span>
+            <span class="event-team-chip">G2 / Fnatic</span>
+            <span class="event-team-chip">Cloud9 / Liquid</span>
+            <span class="event-team-chip">+8</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill upcoming" style="width:0%"></div></div>
+        </div>
+
+        <div class="event-card" data-game="cs2">
+          <div class="event-card-top">
+            <span class="game-tag cs2">CS2</span>
+            <span class="event-badge upcoming">Upcoming</span>
+          </div>
+          <div class="event-card-name">CS2 Major 2026</div>
+          <div class="event-card-meta">
+            <span>Jun 14&ndash;28, 2026</span>
+            <span>Royal Arena, Copenhagen</span>
+            <span class="event-prize">$1,250,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip">24 teams</span>
+            <span class="event-team-chip">Qualifiers TBD</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill upcoming" style="width:0%"></div></div>
+        </div>
+
+        <div class="event-card" data-game="dota2">
+          <div class="event-card-top">
+            <span class="game-tag dota2">Dota 2</span>
+            <span class="event-badge upcoming">Upcoming</span>
+          </div>
+          <div class="event-card-name">ESL One Stockholm 2026</div>
+          <div class="event-card-meta">
+            <span>Apr 10&ndash;20, 2026</span>
+            <span>Stockholm, Sweden</span>
+            <span class="event-prize">$500,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip">Team Spirit</span>
+            <span class="event-team-chip">Tundra</span>
+            <span class="event-team-chip">OG</span>
+            <span class="event-team-chip">+13</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill upcoming" style="width:0%"></div></div>
+        </div>
+
+      </div>
+
+      <!-- COMPLETED -->
+      <div class="section-header">
+        <span class="section-title">Completed</span>
+        <span class="section-count" id="done-count-label">2 events</span>
+      </div>
+      <div class="event-cards" id="done-events">
+
+        <div class="event-card" data-game="dota2">
+          <div class="event-card-top">
+            <span class="game-tag dota2">Dota 2</span>
+            <span class="event-badge final">Final</span>
+          </div>
+          <div class="event-card-name">DreamLeague Season 25</div>
+          <div class="event-card-meta">
+            <span>Feb 15&ndash;Mar 9, 2026</span>
+            <span>Online</span>
+            <span class="event-prize">$500,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip highlight">Winner: Team Spirit</span>
+            <span class="event-team-chip">Runner-up: Tundra</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill done" style="width:100%"></div></div>
+        </div>
+
+        <div class="event-card" data-game="cs2">
+          <div class="event-card-top">
+            <span class="game-tag cs2">CS2</span>
+            <span class="event-badge final">Final</span>
+          </div>
+          <div class="event-card-name">IEM Dallas 2026</div>
+          <div class="event-card-meta">
+            <span>Jan 28&ndash;Feb 9, 2026</span>
+            <span>Dallas, TX, USA</span>
+            <span class="event-prize">$250,000</span>
+          </div>
+          <div class="event-teams-row">
+            <span class="event-team-chip highlight">Winner: MOUZ</span>
+            <span class="event-team-chip">Runner-up: G2</span>
+          </div>
+          <div class="event-progress"><div class="event-progress-fill done" style="width:100%"></div></div>
+        </div>
+
+      </div>
+
+    </div><!-- /events-main -->
+
+    <!-- SIDEBAR -->
+    <div class="events-sidebar">
+
+      <!-- prize money leaderboard -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-title">Largest Prize Pools</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">The International 2026</span>
+          <span class="sidebar-event-date" style="color:var(--green);">$20M+</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">MSI 2026</span>
+          <span class="sidebar-event-date" style="color:var(--green);">$2,250,000</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">RLCS Spring 2026</span>
+          <span class="sidebar-event-date" style="color:var(--green);">$2,500,000</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">LCK Spring 2026</span>
+          <span class="sidebar-event-date" style="color:var(--green);">$1,000,000</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">CS2 Major 2026</span>
+          <span class="sidebar-event-date" style="color:var(--green);">$1,250,000</span>
+        </div>
+      </div>
+
+      <!-- upcoming dates -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-title">Coming Up</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">BLAST Premier Spring<br><span class="game-tag cs2" style="margin-top:2px;">CS2</span></span>
+          <span class="sidebar-event-date">Apr 3</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">ESL One Stockholm<br><span class="game-tag dota2" style="margin-top:2px;">Dota 2</span></span>
+          <span class="sidebar-event-date">Apr 10</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">MSI 2026<br><span class="game-tag lol" style="margin-top:2px;">LoL</span></span>
+          <span class="sidebar-event-date">May 1</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">CS2 Major Copenhagen<br><span class="game-tag cs2" style="margin-top:2px;">CS2</span></span>
+          <span class="sidebar-event-date">Jun 14</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">The International 2026<br><span class="game-tag dota2" style="margin-top:2px;">Dota 2</span></span>
+          <span class="sidebar-event-date">TBA</span>
+        </div>
+      </div>
+
+      <!-- recent winners -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-title">Recent Champions</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">DreamLeague S25<br><span style="font-size:10px;color:var(--accent);font-weight:700;">Team Spirit</span></span>
+          <span class="sidebar-event-date game-tag dota2">Dota 2</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">IEM Dallas 2026<br><span style="font-size:10px;color:var(--accent);font-weight:700;">MOUZ</span></span>
+          <span class="sidebar-event-date game-tag cs2">CS2</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-event-name">RLCS Fall Regional EU<br><span style="font-size:10px;color:var(--accent);font-weight:700;">Team BDS</span></span>
+          <span class="sidebar-event-date game-tag rl">RL</span>
+        </div>
+      </div>
+
+    </div><!-- /sidebar -->
+  </div><!-- /events-container -->
+
+  <script is:inline>
+    // Game filter
+    var tabs = document.querySelectorAll('.game-tab');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        var filter = tab.getAttribute('data-filter');
+        var cards = document.querySelectorAll('.event-card[data-game]');
+        cards.forEach(function(card) {
+          if (filter === 'all' || card.getAttribute('data-game') === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        // update section counts
+        ['live-events', 'upcoming-events', 'done-events'].forEach(function(sectionId) {
+          var section = document.getElementById(sectionId);
+          if (!section) return;
+          var visible = section.querySelectorAll('.event-card:not([style*="display: none"]):not([style*="display:none"])').length;
+          var label = document.getElementById(sectionId.replace('-events', '-count-label'));
+          if (label) label.textContent = visible + (visible === 1 ? ' event' : ' events');
+        });
+      });
+    });
+  </script>
+
+</SiteShell>

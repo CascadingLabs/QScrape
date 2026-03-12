@@ -1,0 +1,507 @@
+---
+const postData = Astro.url.searchParams.get('postData') || '';
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article - Mountainhome Herald</title>
+    <link rel="stylesheet" href="/global.css">
+    <style>
+        .articleMeta td { padding: 5px 10px; border: 1px solid #cccccc; }
+        .articleMeta tr:nth-child(even) { background-color: #f9f9f9; }
+        .articleBody { margin: 15px; line-height: 1.6; font-size: 12px; }
+        .articleBody p { margin: 10px 0; }
+        .relatedLinks { margin: 15px; }
+        .relatedLinks a { display: block; margin: 4px 0; }
+        .tagList span { background: #ece9d8; border: 1px solid #999; padding: 1px 6px; margin-right: 4px; font-size: 10px; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="headerBar">
+            MOUNTAINHOME HERALD
+            <span style="float:right; font-size:11px; font-weight:normal;">Edition No. 847 | March 11, 2026</span>
+        </div>
+
+        <div class="navBar">
+            <a href="/l1/news/">Home</a>
+            <a href="/l1/news/articles">Articles</a>
+            <a href="/l1/news/about">About</a>
+            <a href="/l1/taxes/">ROD Records</a>
+        </div>
+
+        <div class="breadcrumbs" id="breadcrumbs">
+            <a href="/l1/news/">Home</a> &gt;
+            <a href="/l1/news/articles">Articles</a> &gt;
+            <span id="breadHeadline">Loading...</span>
+        </div>
+
+        <div class="pageTitle" id="articleTitle">Loading article...</div>
+
+        <div class="formSection">
+            <table class="aspNetTable articleMeta" style="width: 100%;">
+                <tr>
+                    <td colspan="2" class="headerRow">Article Information</td>
+                </tr>
+                <tr>
+                    <td style="width: 120px;"><span class="aspNetLabelBold">Category:</span></td>
+                    <td><span id="lblCategory">-</span></td>
+                </tr>
+                <tr class="alternatingRow">
+                    <td><span class="aspNetLabelBold">Date:</span></td>
+                    <td id="lblDate">-</td>
+                </tr>
+                <tr>
+                    <td><span class="aspNetLabelBold">Author:</span></td>
+                    <td id="lblAuthor">-</td>
+                </tr>
+                <tr class="alternatingRow">
+                    <td><span class="aspNetLabelBold">Byline:</span></td>
+                    <td id="lblByline">-</td>
+                </tr>
+                <tr>
+                    <td><span class="aspNetLabelBold">Tags:</span></td>
+                    <td id="lblTags" class="tagList">-</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="articleBody" id="articleBody">
+            <p>Loading article content...</p>
+        </div>
+
+        <div class="formSection" id="relatedSection">
+            <strong>Related Articles</strong>
+            <div class="relatedLinks" id="relatedLinks"></div>
+        </div>
+
+        <div class="formSection">
+            <strong>Article Options</strong>
+            <table style="margin: 10px 0;">
+                <tr>
+                    <td style="padding: 5px;">
+                        <a href="javascript:window.print();" class="aspNetButton">Print Article</a>
+                    </td>
+                    <td style="padding: 5px;">
+                        <a href="/l1/news/articles" class="aspNetButton">Back to Articles</a>
+                    </td>
+                    <td style="padding: 5px;">
+                        <a href="/l1/news/" class="aspNetButton">Herald Home</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footerBar">
+            &copy; 2026 Mountainhome Herald | MHH CMS v1.0.2004
+        </div>
+
+        <script is:inline>
+        var ARTICLES = {
+            'MHH-001': {
+                id: 'MHH-001',
+                category: 'Politics',
+                date: '01/01/2026',
+                headline: 'Arcane Council Votes 7-2 to Expand Magma Infrastructure Eastward',
+                author: 'Urist McReporter',
+                byline: 'Senior Correspondent, Politics Desk',
+                tags: ['Arcane Council', 'Magma Infrastructure', 'East Expansion', 'Public Works'],
+                body: [
+                    'MOUNTAINHOME — The Arcane Council voted 7-2 on Thursday to approve the Eastern Magma Infrastructure Expansion Act, authorising the Bureau of Deep Works to extend the main magma channel network an estimated 340 z-meters eastward into the previously undeveloped Granite Flats sector.',
+                    'The measure, which passed after three hours of debate, will fund construction of two new primary magma conduits, four secondary distribution channels, and an emergency containment station at Z-Level 80. Councillor Urist Stonesinger (Guild Ward) and Councillor Meng Doren (Residential Quarter) cast the dissenting votes, citing concerns about seismic risk in the Granite Flats and the absence of an independent geomantic survey.',
+                    '"The expansion is overdue," said Council Chair Aban Copperhelm following the vote. "Twelve forges in the eastern quarter have been operating on auxiliary heat for two seasons. This is an economic necessity."',
+                    'Critics from the Residential Quarter Tenants\' Assembly argue that the council moved too quickly, pointing to the Geomancer\'s Office advisory issued last week flagging elevated seismic readings at Z-Level 45 in the same general region.',
+                    'The Bureau of Deep Works estimates construction will take four seasons and cost approximately 14,000 Gold Sovereigns. A public comment period of 30 days is open for citizens wishing to submit objections. The Bureau\'s project office is located at Z-Level 3, Room 44.'
+                ]
+            },
+            'MHH-002': {
+                id: 'MHH-002',
+                category: 'Crime',
+                date: '01/08/2026',
+                headline: 'Fortress Guard Arrest Three in Trophy Hall Gem-Skimming Scheme',
+                author: 'Bomrek Hammerfall',
+                byline: 'Staff Reporter, Crime Desk',
+                tags: ['Fortress Guard', 'Gem Theft', 'Trophy Hall', 'Arrest'],
+                body: [
+                    'MOUNTAINHOME — Fortress Guard officers arrested three dwarves late Wednesday in connection with an alleged gem-skimming operation at the Grand Trophy Hall on Z-Level 14, where an estimated 80 to 120 carats of raw emerald and sapphire material are believed to have been diverted over a period of six months.',
+                    'Those taken into custody were identified as Doren Stonepick, 44, a Trophy Hall maintenance worker; Rimtar Coalvein, 51, a licensed gem appraiser; and Aban Silkthread, 38, described by investigators as the alleged organiser of the scheme. All three were booked at the Z-Level 6 Guard Station and are being held pending a bond hearing scheduled for Friday.',
+                    'According to the Fortress Guard\'s preliminary account, the three allegedly exploited a gap in the Trophy Hall\'s gem inventory reconciliation process, substituting lower-quality stones in display cases while siphoning higher-grade material to a third-party buyer whose identity has not yet been disclosed.',
+                    '"The integrity of the Trophy Hall collection is a matter of civic pride," said Guard Captain Morul Axebearer at a brief press gathering. "We take this extremely seriously."',
+                    'The Grand Trophy Hall, which houses the Grand Duchy\'s official collection of battle trophies, beast skulls, and commemorative gemstone awards, underwent a full inventory audit following a tip from an anonymous source. The audit identified 94 carats of suspected substitutions.'
+                ]
+            },
+            'MHH-003': {
+                id: 'MHH-003',
+                category: 'Economy',
+                date: '01/14/2026',
+                headline: 'Dwarven Iron Guild Reports Record Smelting Output for Fifth Consecutive Season',
+                author: 'Rigoth Gemcutter',
+                byline: 'Economics Correspondent',
+                tags: ['Dwarven Iron Guild', 'Smelting', 'Production Record', 'Economy'],
+                body: [
+                    'MOUNTAINHOME — The Dwarven Iron Guild announced on Tuesday that its member forges collectively produced 48,200 iron ingots in the most recent smelting season, a 6.4 per cent increase over the prior season and the fifth consecutive record output.',
+                    'Guild Master Iden Ironclad attributed the sustained growth to expanded ore access following the opening of three new mining shafts in the Z-Level 60–80 corridor, efficiency improvements at the Koganusan Processing Complex, and a seasonal reduction in forge-disrupting cave-in incidents.',
+                    '"Five consecutive records is a milestone we are proud of," Ironclad told guild members at the quarterly assembly. "The eastern shaft network has proven more productive than initial surveys suggested."',
+                    'The strong output has contributed to downward price pressure on standard iron bars on the Mountainhome open market, with the spot price falling from 12 GP per ingot to 10.5 GP since mid-Year 311. Smaller independent smiths have complained that Guild pricing advantages are squeezing their margins.',
+                    'The Guild dismissed the concerns, saying market normalisation benefits consumers and noting that the Guild\'s standard wage for forge workers remains the highest in the Duchy at 3.2 GP per shift. The next quarterly output report is expected in late spring.'
+                ]
+            },
+            'MHH-004': {
+                id: 'MHH-004',
+                category: 'Culture',
+                date: '01/20/2026',
+                headline: "Mountainhome Bard's Troupe Premieres 'The Ballad of Boatmurdered'",
+                author: 'Fikod Silentstone',
+                byline: 'Arts & Culture Reporter',
+                tags: ['Bard Troupe', 'Boatmurdered', 'Theatre', 'Performance', 'Culture'],
+                body: [
+                    'MOUNTAINHOME — The Mountainhome Bard\'s Troupe opened its new production, "The Ballad of Boatmurdered," at the Grand Amphitheatre on Z-Level 5 to a near-capacity audience on Monday evening, receiving extended applause from an audience estimated at 320 dwarves.',
+                    'The three-hour performance chronicles the legendary fall of Boatmurdered Fortress, incorporating recently declassified historical records from the Grand Duchy Archive. Lead performer Rigoth Silvervoice plays the doomed expedition overseer, with an ensemble of 14 portraying the ill-fated migrants, the goblin sieges, and the catastrophic elephant incursions that defined the fortress\'s final year.',
+                    '"It is essential that we confront this history," said Troupe Director Fikod Oakcrown in remarks before the premiere. "Boatmurdered is not merely tragedy — it is instruction. We dig so that we may learn."',
+                    'Critical reception was largely positive. This reviewer found the second act — depicting the magma pump sabotage sequence — genuinely harrowing, and the stagecraft depicting the elephant stampede through the dining hall deserves special commendation.',
+                    'The production runs through the end of the month. Tickets are available at the Amphitheatre box office (Z-Level 5, Room 2) for 4 GP general admission, 2 GP guild members.'
+                ]
+            },
+            'MHH-005': {
+                id: 'MHH-005',
+                category: 'Weather',
+                date: '01/23/2026',
+                headline: "Geomancer's Office Issues Seismic Advisory for Z-Level 45",
+                author: 'Zulban Tunnelworks',
+                byline: 'Science Correspondent',
+                tags: ['Geomancer', 'Seismic', 'Z-Level 45', 'Safety Advisory'],
+                body: [
+                    'MOUNTAINHOME — The Geomancer\'s Office issued a formal Seismic Advisory on Wednesday covering Z-Level 45 and adjacent corridors, following detection of anomalous tectonic stress readings at monitoring stations 45-C and 45-D over the preceding five days.',
+                    'The advisory, rated Level 2 (Elevated Concern) on the five-tier Geomantic Hazard Scale, recommends that residents and workers in the affected zone limit non-essential foot traffic, that tunnel integrity inspections be expedited for any passage over 20 years old, and that heavy equipment operations be suspended pending further assessment.',
+                    '"The readings are not at a critical threshold, but the trend is unusual and warrants precautionary action," said Chief Geomancer Zulban Deepstone at a briefing attended by representatives from the Bureau of Deep Works, the Fortress Guard, and the residential dwellers\' associations of Z-Levels 44 through 47.',
+                    'Approximately 1,200 dwarves reside or work on Z-Level 45, including the Granite Flats Workshop District and two residential quarters. The Bureau of Deep Works confirmed it will dispatch structural assessment teams to the area by end of week.',
+                    'The Geomancer\'s Office emphasized that no evacuation is currently recommended, but noted that the situation will be reassessed within seven days. Citizens with concerns may contact the Office at Z-Level 1, Room 8.'
+                ]
+            },
+            'MHH-006': {
+                id: 'MHH-006',
+                category: 'Politics',
+                date: '02/02/2026',
+                headline: 'Goblin Diplomatic Envoy Expelled After Alleged Theft of Council Minutes',
+                author: 'Urist McReporter',
+                byline: 'Senior Correspondent, Politics Desk',
+                tags: ['Goblin Diplomacy', 'Arcane Council', 'Espionage', 'Foreign Relations'],
+                body: [
+                    'MOUNTAINHOME — The Grand Duchy expelled goblin diplomatic envoy Snatchtooth the Mild on Sunday after Fortress Guard investigators found copies of sealed Arcane Council session minutes in his diplomatic pouch during a routine inspection at the Upper Gate.',
+                    'The incident has significantly complicated ongoing truce negotiations between the Grand Duchy and the Goblin Confederation, which have been proceeding haltingly for the past two seasons under the auspices of the neutral Elven Mediation Council.',
+                    'Council Chair Aban Copperhelm convened an emergency session Monday morning, characterising the incident as "a deliberate and serious breach of diplomatic protocol." The Chair declined to confirm what specific council documents were among the materials recovered, citing ongoing guard investigation.',
+                    'The Goblin Confederation\'s official response, transmitted via sending stone Tuesday morning, characterised Snatchtooth\'s expulsion as "unilateral and provocative" and denied that the envoy had engaged in any improper conduct, suggesting the inspection itself violated diplomatic immunity provisions.',
+                    'Legal scholars consulted by the Herald noted that the Grand Duchy\'s treaty with the Confederation contains no explicit diplomatic immunity clause, which the Confederation disputes. Truce talks are considered suspended indefinitely pending resolution of the dispute.'
+                ]
+            },
+            'MHH-007': {
+                id: 'MHH-007',
+                category: 'Sports',
+                date: '02/05/2026',
+                headline: 'Mountainhome Wrestlers Triumph at Z-Level Games',
+                author: 'Bomrek Hammerfall',
+                byline: 'Staff Reporter, Sports Desk',
+                tags: ['Wrestling', 'Z-Level Games', 'Sports', 'Mountainhome'],
+                body: [
+                    'MOUNTAINHOME — The Mountainhome contingent swept four of six wrestling weight classes at the annual Z-Level Games held at the Grand Arena on Z-Level 8 over the weekend, with standout performances by veteran Avar Ironhand in the Heavyweight Division and rising competitor Dumed Stoneback in the Middleweight ranks.',
+                    'Ironhand, competing in his twelfth Z-Level Games, defeated challenger Morul Boulderarm of the Koganusan delegation in a best-of-three match that drew the largest crowd of the event — an estimated 540 spectators. The bout lasted nearly two hours, with Ironhand securing the deciding fall in the final round to prolonged cheering from the Mountainhome stands.',
+                    '"Avar is just something different," said Mountainhome team captain Iden Hammerleg after the event. "He reads his opponents better than anyone I have seen in thirty years of competition."',
+                    'Stoneback\'s Middleweight title was also notable, as the 23-year-old becomes the youngest Mountainhome champion in that division since Year 298. He defeated three opponents in the single-elimination bracket without conceding a fall.',
+                    'The Z-Level Games also included axe-throwing, barrel-rolling, and the traditional deep-mine relay, where Mountainhome finished second to the Granite Flats delegation. Full results are available at the Grand Arena office, Z-Level 8, Room 1.'
+                ]
+            },
+            'MHH-008': {
+                id: 'MHH-008',
+                category: 'Crime',
+                date: '02/11/2026',
+                headline: 'Headshoots LLC Faces Civil Suit Over Catapult Safety Logs',
+                author: 'Bomrek Hammerfall',
+                byline: 'Staff Reporter, Crime Desk',
+                tags: ['Headshoots LLC', 'Catapult', 'Civil Suit', 'Safety', 'Legal'],
+                body: [
+                    'MOUNTAINHOME — Headshoots LLC, the fortress\'s largest siege equipment manufacturer and maintenance contractor, is facing a civil action filed in the Grand Duchy Circuit Court on behalf of five dwarves injured in a catapult malfunction at the Eastern Rampart in Year 311.',
+                    'The suit, brought by the law firm Stonecleave & Gemcutter, alleges that Headshoots LLC failed to maintain accurate safety inspection logs for the Eastern Rampart battery and that a routine inspection required under the Siege Equipment Safety Ordinance of Year 302 was not performed in the 18 months prior to the malfunction.',
+                    '"Our clients suffered serious injuries that were entirely preventable," said lead counsel Rimtar Stonecleave in a statement provided to the Herald. "The inspection records speak for themselves — or rather, they do not exist, and that is precisely the problem."',
+                    'Headshoots LLC issued a statement denying the allegations, characterising the suit as "without merit" and asserting that all required inspections were performed, with records inadvertently misfiled during an office relocation in Year 310.',
+                    'The malfunction in question involved the premature release of a counterweight during a live-fire exercise, injuring five members of the Rampart maintenance crew. Two of the five required extended care at the Fortress Infirmary. The case has been assigned to Circuit Judge Urist Hammerwright and a preliminary hearing is scheduled for the fourth week of next month.'
+                ]
+            },
+            'MHH-009': {
+                id: 'MHH-009',
+                category: 'Economy',
+                date: '02/17/2026',
+                headline: 'Armok Holdings LLC Acquires Three Magma Sea Sector Parcels',
+                author: 'Rigoth Gemcutter',
+                byline: 'Economics Correspondent',
+                tags: ['Armok Holdings', 'Magma Sea', 'Real Estate', 'Acquisition', 'Economy'],
+                body: [
+                    'MOUNTAINHOME — Armok Holdings LLC announced on Monday the acquisition of three commercial-industrial parcels in the Magma Sea Sector at Z-Level 114, completing a portfolio expansion the company first signalled at last autumn\'s Grand Duchy Infrastructure Investment Summit.',
+                    'The three parcels — designated MS-114-A, MS-114-B, and MS-114-C in the Registry of Deeds — were acquired from prior holders Fungiwood Trust, the Steelthunder Clan, and a private individual whose identity was not disclosed, for a combined consideration the company declined to specify. Registry filings reviewed by the Herald indicate total recorded transfer values of approximately 48,000 Gold Sovereigns.',
+                    'Armok Holdings, which already operates two magma smelting facilities at Z-Level 110, is expected to use the new parcels to expand its refined-metal production capacity. The company has not filed formal development plans with the Bureau of Deep Works as of press time.',
+                    '"These acquisitions position us for the next phase of industrial expansion," said Armok Holdings managing partner Aban Flamehollow in a prepared statement. "The Magma Sea Sector remains the most strategically important industrial zone in the Grand Duchy."',
+                    'The transactions were recorded at the Arcane Registry of Deeds. Citizens can review deed records at the ROD public counter, Z-Level 1, Room 14, or via the online tax search portal.'
+                ]
+            },
+            'MHH-010': {
+                id: 'MHH-010',
+                category: 'Culture',
+                date: '02/21/2026',
+                headline: "Grand Duchy Museum Unveils 'Forgotten Beast Collection'",
+                author: 'Fikod Silentstone',
+                byline: 'Arts & Culture Reporter',
+                tags: ['Grand Duchy Museum', 'Forgotten Beasts', 'Exhibition', 'Culture', 'History'],
+                body: [
+                    'MOUNTAINHOME — The Grand Duchy Museum of Natural and Arcane History opened its newest permanent exhibition, "Confronting the Deep: The Forgotten Beast Collection," to the public on Friday, drawing an opening-day attendance of over 800 dwarves.',
+                    'The exhibition, housed in three newly renovated galleries on Z-Level 4, presents skeletal remains, preserved specimens, and arcane artefacts associated with 31 Forgotten Beast encounters recorded in Grand Duchy annals since Year 42. It represents the museum\'s most comprehensive effort yet to document the Forgotten Beast phenomenon for general audiences.',
+                    '"These creatures are part of our history, however terrifying," said Museum Director Kogan Stonelens at the opening ceremony. "Each one tells us something about the depths we have chosen to inhabit."',
+                    'Highlights of the collection include the near-complete skeleton of Ozan Moltenwing, the three-headed fire drake encountered at Z-Level 122 in Year 198, and the preserved shell segments of Tholtig Crystalline, the cave spider of extraordinary size that besieged Z-Level 67 for eleven months in Year 266.',
+                    'Interactive rune-displays allow visitors to consult archival records of each beast encounter, cross-referenced with Registry of Deeds filings documenting property claims filed after the beasts were slain. Admission is 2 GP adults, 1 GP children under 50 years. The museum is open daily except during siege conditions.'
+                ]
+            },
+            'MHH-011': {
+                id: 'MHH-011',
+                category: 'Weather',
+                date: '02/25/2026',
+                headline: 'Surface Trade Route Closure Extended Through Mid-March',
+                author: 'Zulban Tunnelworks',
+                byline: 'Science Correspondent',
+                tags: ['Trade Route', 'Surface Closure', 'Weather', 'Supply Chain'],
+                body: [
+                    'MOUNTAINHOME — The Bureau of Surface Commerce announced Wednesday that the primary surface trade route connecting Mountainhome to the Elven Forest Trading Post will remain closed through at least mid-March, extending a closure that had initially been projected to last only through the end of February.',
+                    'The route has been impassable since a combination of late-season blizzard conditions and goblin raiding activity in the Outer Surface Zone forced its suspension on the 14th of last month. The Bureau had hoped to reopen it within two weeks, but ongoing meteorological assessments from the Geomancer\'s Office indicate that surface conditions will not meet the minimum safety threshold for merchant convoys until approximately the 12th of next month.',
+                    '"We understand this creates hardship," said Bureau Director Iden Copperstone at a briefing held Wednesday afternoon. "We are working with the Grand Duke\'s office to identify alternative supply channels through the mountain pass routes and via deep tunnel trading connections."',
+                    'The extended closure has already affected supplies of surface-origin goods in Mountainhome markets, with prices for above-ground timber, surface grain, and elf-manufactured cloth rising noticeably over the past two weeks. The Mountainhome Merchant\'s Guild has requested emergency authorization to increase prices on affected goods pending normalisation.',
+                    'Citizens with urgent surface trade inquiries should contact the Bureau of Surface Commerce at Z-Level 1, Room 22. The Geomancer\'s Office will publish updated surface condition assessments every three days.'
+                ]
+            },
+            'MHH-012': {
+                id: 'MHH-012',
+                category: 'Politics',
+                date: '03/02/2026',
+                headline: 'Arcane Council Debates Mandatory Literacy Rune Testing',
+                author: 'Urist McReporter',
+                byline: 'Senior Correspondent, Politics Desk',
+                tags: ['Arcane Council', 'Literacy', 'Rune Testing', 'Education Policy'],
+                body: [
+                    'MOUNTAINHOME — A proposal to require mandatory literacy rune testing for all citizens seeking employment in civic positions drew sharp debate in the Arcane Council chamber on Monday, with supporters calling it essential to administrative competency and opponents characterising it as an unfair barrier to working-class dwarves.',
+                    'The proposal, introduced by Councillor Urist Stonesinger (Guild Ward), would require applicants for any civic position — including forge workers employed by Bureau-operated facilities, not just administrative staff — to pass a standardised literacy rune examination developed by the Bureau of Education.',
+                    '"Every dwarf working in a Bureau facility must be able to read safety instructions and emergency protocols," Stonesinger told the Council. "This is not elitism. This is basic operational necessity."',
+                    'Opposition was led by Councillor Bomrek Deepvein (Residential Quarter), who argued that the examination standards were designed by and for guild-educated dwarves, systematically disadvantaging those trained through apprenticeships rather than formal schooling.',
+                    '"You are proposing to deny honest dwarves honest work because they learned their craft from a master rather than a rune-scribe," Deepvein said. "The testing framework needs months more development before it is ready for mandatory use." The Council referred the proposal to committee for further review, with a deadline of late spring for a revised version.'
+                ]
+            },
+            'MHH-013': {
+                id: 'MHH-013',
+                category: 'Crime',
+                date: '03/06/2026',
+                headline: 'Rune-Wire Fraud Ring Dismantled; 12 Arrested',
+                author: 'Bomrek Hammerfall',
+                byline: 'Staff Reporter, Crime Desk',
+                tags: ['Rune-Wire Fraud', 'Arrest', 'Fortress Guard', 'Financial Crime'],
+                body: [
+                    'MOUNTAINHOME — Fortress Guard investigators announced Thursday that a coordinated operation has dismantled a rune-wire fraud network responsible for an estimated 6,200 Gold Sovereigns in losses across the Grand Duchy, resulting in 12 arrests across four z-levels.',
+                    'The investigation, designated Operation Hollow Stone, spanned eight months and involved collaboration between the Fortress Guard Financial Crimes Unit, the Bureau of Rune-Wire Communications, and the Mountainhome Merchant\'s Guild security office.',
+                    'According to Guard Captain Aban Axewright, the network operated by intercepting legitimate rune-wire payment transmissions between merchants and substituting fraudulent routing instructions that redirected funds to controlled receiving accounts. At least 47 merchants are identified as victims, the Guard said.',
+                    'Those arrested range in age from 28 to 64 and include two former Bureau of Rune-Wire technicians, a guild-licensed communications broker, and nine alleged intermediaries. All 12 are charged with organised fraud under the Grand Duchy Commerce Code. Bond hearings are scheduled for early next week.',
+                    '"Rune-wire payment security is the backbone of our commercial system," said Guard Captain Axewright. "Today\'s operation sends a clear message that financial fraud at this scale will be pursued with the full resources of the Guard." Affected merchants are being notified individually by the Guard\'s Financial Crimes Unit.'
+                ]
+            },
+            'MHH-014': {
+                id: 'MHH-014',
+                category: 'Economy',
+                date: '03/09/2026',
+                headline: 'Plump Helmet Harvest Forecast Slashed 18% After Cave Mold Infestation',
+                author: 'Rigoth Gemcutter',
+                byline: 'Economics Correspondent',
+                tags: ['Plump Helmets', 'Agriculture', 'Cave Mold', 'Food Supply', 'Economy'],
+                body: [
+                    'MOUNTAINHOME — The Bureau of Subterranean Agriculture released a revised growing season forecast on Sunday, projecting plump helmet mushroom output at 82 per cent of its earlier estimate after a cave mold infestation was confirmed in Growing Sectors 7 through 11 on Z-Level 25.',
+                    'The infestation, caused by an aggressive strain of Deeprock Gray Mold, was first identified by sector foremen approximately three weeks ago. Containment efforts have been ongoing, but Bureau agronomists now believe the spread has affected too large an area to fully arrest before the end of the current growing cycle.',
+                    '"We are not looking at a food crisis," said Bureau Director Morul Farmstone at a press gathering Sunday afternoon. "We have strategic reserves sufficient for 14 months at standard consumption. But we need to communicate clearly to the public that plump helmet prices will rise and that rationing of fresh helmets for non-essential uses is under consideration."',
+                    'Plump helmets are the Grand Duchy\'s primary cultivated food source and a feedstock for Dwarven ale production. Brewers at the Mountainhome Ale Guild said Monday that they are already beginning to reformulate seasonal batches to reduce helmet content, though they insisted overall ale production will not be significantly curtailed.',
+                    'Citizens are advised not to panic-purchase and to report any unusual mold growth in residential growing gardens to the Bureau of Subterranean Agriculture at Z-Level 3, Room 17.'
+                ]
+            },
+            'MHH-015': {
+                id: 'MHH-015',
+                category: 'Sports',
+                date: '03/11/2026',
+                headline: 'Fortress Wrestling League Opens Season; Avar Ironhand Defends Championship',
+                author: 'Bomrek Hammerfall',
+                byline: 'Staff Reporter, Sports Desk',
+                tags: ['Wrestling', 'Fortress Wrestling League', 'Avar Ironhand', 'Season Opener'],
+                body: [
+                    'MOUNTAINHOME — The Fortress Wrestling League opened its Year 312 season at the Grand Arena on Z-Level 8 on Wednesday evening with a sold-out card of eight bouts, headlined by defending Heavyweight Champion Avar Ironhand\'s successful title defence against challenger Urist Stoneback.',
+                    'Ironhand, who captured his first League championship in Year 309 and has since defended it four times, submitted Stoneback in the second round of a scheduled five-round main event to retain the title. The capacity crowd of 680 gave Ironhand a prolonged standing ovation.',
+                    '"He is the best I have faced," said Stoneback, who was gracious in defeat. "I will be back." Ironhand, characteristically brief in his post-bout remarks, said only: "Season opener. Season is long. More to come."',
+                    'The undercard featured three newcomers making their League debuts. Of particular note was Dumed Rockhammer, 21, who secured a decisive first-round victory over veteran Meng Axearm in what observers called the most impressive debut performance in three seasons.',
+                    'The Fortress Wrestling League runs through early autumn, with championship bouts scheduled for the final event. Season tickets remain available at the Grand Arena box office. The next event is scheduled for the 25th of this month.'
+                ]
+            },
+            'MHH-016': {
+                id: 'MHH-016',
+                category: 'Politics',
+                date: '03/11/2026',
+                headline: 'Surface Relations Act Passes Second Reading',
+                author: 'Urist McReporter',
+                byline: 'Senior Correspondent, Politics Desk',
+                tags: ['Surface Relations Act', 'Arcane Council', 'Legislation', 'Foreign Policy'],
+                body: [
+                    'MOUNTAINHOME — The Arcane Council passed the Surface Relations Normalisation Act on second reading Wednesday morning by a vote of 6-3, advancing the most comprehensive framework for regulating Mountainhome\'s dealings with surface nations in nearly four decades.',
+                    'The Act, if it passes the required third reading, would establish a permanent Bureau of Surface Affairs, create a formal ambassador designation for Grand Duchy representatives to surface polities, and set binding protocols for the inspection of surface trade goods entering via the Upper Gate.',
+                    'Supporters argue the existing framework, a patchwork of ordinances dating to Year 274, is inadequate for the volume and complexity of current surface commerce. "We trade with elves, with humans, occasionally with other dwarven outposts," said Councillor Urist Stonesinger. "We need a system, not a collection of old proclamations."',
+                    'The three dissenting councillors — Deepvein, Moldath, and Avar — objected primarily to provisions granting surface ambassadors access to the Mountainhome Trade Registry, which they characterised as a security risk. An amendment to restrict registry access was tabled after failing to achieve the majority required.',
+                    'Third reading is expected to be scheduled within the next 30 days. If passed, the Act would take effect at the start of Year 313.'
+                ]
+            },
+            'MHH-017': {
+                id: 'MHH-017',
+                category: 'Culture',
+                date: '03/11/2026',
+                headline: "Goden Boulderback's Platinum Statue Wins Grand Duke's Medal",
+                author: 'Fikod Silentstone',
+                byline: 'Arts & Culture Reporter',
+                tags: ['Goden Boulderback', 'Grand Duke Medal', 'Sculpture', 'Platinum', 'Arts Award'],
+                body: [
+                    'MOUNTAINHOME — Master sculptor Goden Boulderback received the Grand Duke\'s Medal for Artistic Excellence on Wednesday at the annual Grand Duchy Arts Recognition Ceremony, awarded for his monumental platinum statue "The Overseer\'s Burden," which has been on permanent display in the Grand Hall since its completion last autumn.',
+                    'The statue, cast from a single 840-kilogram block of refined platinum sourced from Armok Holdings\' Z-Level 110 processing facility, depicts a stylised dwarven overseer in the act of consulting a construction blueprint while a fortress rises behind them. Standing 4.2 meters tall, it is the largest platinum casting completed in the Grand Duchy in over a century.',
+                    '"This is the work of twenty-three years," said Boulderback at the ceremony, his voice visibly strained. "I have thought about this statue since I was an apprentice. To see it finished and to receive this recognition in the same year — I lack the runes for it."',
+                    'The Grand Duke\'s Medal, presented by Grand Duke Aban the Steadfast himself, is the highest cultural honour in the Duchy\'s gift. Previous recipients include composer Iden Drumstone (Year 298), muralist Kogan Wallcarver (Year 305), and the late lithographer Zulban Inkstone (Year 308).',
+                    '"The Overseer\'s Burden" is open to public viewing in the Grand Hall, Z-Level 1, during standard civic hours. A commemorative catalogue of Boulderback\'s complete works is available at the Grand Duchy Museum gift counter.'
+                ]
+            },
+            'MHH-018': {
+                id: 'MHH-018',
+                category: 'Crime',
+                date: '03/11/2026',
+                headline: 'Z-Level 28 Tavern Brawl Leaves Five Hospitalized',
+                author: 'Bomrek Hammerfall',
+                byline: 'Staff Reporter, Crime Desk',
+                tags: ['Tavern Brawl', 'Z-Level 28', 'Hospitalized', 'Fortress Guard'],
+                body: [
+                    'MOUNTAINHOME — A late-night brawl at the Cracked Anvil tavern on Z-Level 28 left five dwarves requiring treatment at the Fortress Infirmary on Wednesday, with two described as having serious injuries, following an altercation that Fortress Guard officers say involved at least 15 participants.',
+                    'Guards responded to the Cracked Anvil shortly after midnight following a rune-wire alert from the tavern\'s proprietor, Dumed Alecarver. Officers found the tavern\'s main common room in significant disarray, with five injured dwarves, extensive damage to furniture and ceramic ware, and approximately twelve individuals who had departed the premises before guards arrived.',
+                    '"We have spoken to the proprietor and several witnesses," said Guard Sergeant Rimtar Hammerpost. "We have a reasonable picture of how the incident started. We are identifying the remaining participants." The Sergeant declined to specify the cause of the altercation, citing the ongoing investigation.',
+                    'The two most seriously injured were admitted to the Infirmary overnight, one with a fractured orbital bone and one with a dislocated shoulder complicated by a pre-existing joint condition. The remaining three were treated and released. No fatalities were reported.',
+                    'Alecarver, the proprietor, said in a brief statement: "The Cracked Anvil has operated on this level for 40 years without an incident of this kind. We are cooperating fully with the Guard." The Cracked Anvil remained closed on Thursday pending a Guard inspection of the premises.'
+                ]
+            },
+            'MHH-019': {
+                id: 'MHH-019',
+                category: 'Economy',
+                date: '03/11/2026',
+                headline: 'Steelthunder Clan Files Injunction Against Koganusan Estates LLC',
+                author: 'Rigoth Gemcutter',
+                byline: 'Economics Correspondent',
+                tags: ['Steelthunder Clan', 'Koganusan Estates', 'Injunction', 'Property Dispute', 'Legal'],
+                body: [
+                    'MOUNTAINHOME — The Steelthunder Clan filed for an emergency injunction in Grand Duchy Circuit Court on Tuesday seeking to halt Koganusan Estates LLC from proceeding with excavation work on a parcel in the Z-Level 35 Eastern Cavern Network that the Clan alleges encroaches on a pre-existing ancestral mineral claim recorded in Year 189.',
+                    'The injunction application, reviewed by the Herald, argues that Koganusan Estates\' recently approved excavation permit encompasses a 40-meter corridor that overlaps with Claim ST-189-EAST, which the Steelthunder Clan says has been continuously maintained in the Registry of Deeds for 137 years.',
+                    '"This is not a boundary dispute," said Steelthunder Clan legal counsel Morul Stonecleave in a statement Tuesday. "Our claim is unambiguous in the records. Koganusan knew or should have known before they applied for that permit."',
+                    'Koganusan Estates LLC disputed the characterisation, contending that the ancestral claim in question expired under Year 302 ordinance amendments governing dormant mineral claims and that their permit was properly issued following a full Registry of Deeds title search.',
+                    'Circuit Judge Urist Hammerwright has scheduled an emergency hearing for Friday morning at the Grand Duchy Courthouse, Z-Level 2, Room 14. Koganusan Estates\' permit authorises excavation beginning next week, giving both parties limited time to resolve the matter through the courts.'
+                ]
+            },
+            'MHH-020': {
+                id: 'MHH-020',
+                category: 'Weather',
+                date: '03/11/2026',
+                headline: "Geomancer's Annual Report: Year 312 Trending 'Exceptionally Stable'",
+                author: 'Zulban Tunnelworks',
+                byline: 'Science Correspondent',
+                tags: ['Geomancer', 'Annual Report', 'Stability', 'Year 312', 'Forecast'],
+                body: [
+                    'MOUNTAINHOME — The Geomancer\'s Office released its annual subterranean conditions report for the first quarter of Year 312 on Wednesday, characterising the overall geomantic environment as "Exceptionally Stable" — the highest stability rating the Office has assigned in any first-quarter report in 14 years.',
+                    'The report, which synthesises data from 86 monitoring stations distributed across Z-Levels 1 through 140, found tectonic stress indices at their lowest quarterly average since Year 298, magma sea surface pressure within the lowest 10 per cent of all historical readings, and aquifer flow rates stable across all monitored deep-water systems.',
+                    '"By every primary metric, the fortress\'s geological foundation is performing exceptionally well," said Chief Geomancer Zulban Deepstone at the morning briefing. "This does not mean complacency is warranted — the Granite Flats advisory remains in effect — but the overall picture is genuinely encouraging."',
+                    'The report does note two areas of continued monitoring: the previously disclosed seismic advisory zone around Z-Level 45, which remains at Elevated Concern status, and a developing pressure differential in the Z-Level 90–100 corridor that the Geomancer\'s Office is classifying as a Watchlist Item pending further data collection over the next quarter.',
+                    'Citizens interested in reviewing the full annual report may obtain a copy at the Geomancer\'s Office public counter, Z-Level 1, Room 8, for 0.50 GP. A summary digest version is available free of charge at the same location.'
+                ]
+            }
+        };
+
+        var categoryBadgeClass = {
+            'Politics': 'statusReview',
+            'Crime': 'statusPending',
+            'Economy': 'statusApproved',
+            'Culture': 'statusReview',
+            'Sports': 'statusApproved',
+            'Weather': 'statusPending'
+        };
+
+        function navigateToArticle(id) {
+            var hash = Math.random().toString(36).substring(2,15);
+            var payload = 'MHH_v1_Kp9rXm2bQs' +
+                          'XXXNNNXXX' +
+                          'ID=' + encodeURIComponent(id) + '&HASH=' + hash +
+                          'XXXNNNXXX' +
+                          'tR7vYw1hF3dG' +
+                          'XXXNNNXXX';
+            window.location.href = '/l1/news/article?postData=' + encodeURIComponent(payload);
+        }
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var rawPostData = urlParams.has('postData') ? decodeURIComponent(urlParams.get('postData')) : '';
+
+        var articleId = '';
+        if (rawPostData.indexOf('XXXNNNXXX') !== -1) {
+            var parts = rawPostData.split('XXXNNNXXX');
+            for (var i = 0; i < parts.length; i++) {
+                if (parts[i].indexOf('ID=') !== -1) {
+                    articleId = decodeURIComponent(parts[i].split('ID=')[1].split('&')[0]);
+                    break;
+                }
+            }
+        }
+
+        var article = articleId ? ARTICLES[articleId] : null;
+
+        if (article) {
+            document.title = article.headline + ' - Mountainhome Herald';
+            document.getElementById('articleTitle').textContent = article.headline;
+            document.getElementById('breadHeadline').textContent = article.headline;
+            document.getElementById('lblDate').textContent = article.date;
+            document.getElementById('lblAuthor').textContent = article.author;
+            document.getElementById('lblByline').textContent = article.byline;
+
+            var catEl = document.getElementById('lblCategory');
+            catEl.textContent = article.category;
+            catEl.className = categoryBadgeClass[article.category] || 'statusApproved';
+
+            var tagsEl = document.getElementById('lblTags');
+            tagsEl.innerHTML = article.tags.map(function(t) {
+                return '<span>' + t + '</span>';
+            }).join(' ');
+
+            var bodyEl = document.getElementById('articleBody');
+            bodyEl.innerHTML = article.body.map(function(p) {
+                return '<p>' + p + '</p>';
+            }).join('');
+
+            var related = [];
+            var ids = Object.keys(ARTICLES);
+            for (var j = 0; j < ids.length && related.length < 3; j++) {
+                if (ids[j] !== articleId && ARTICLES[ids[j]].category === article.category) {
+                    related.push(ARTICLES[ids[j]]);
+                }
+            }
+            var relEl = document.getElementById('relatedLinks');
+            if (related.length > 0) {
+                relEl.innerHTML = related.map(function(r) {
+                    return '<a href="javascript:navigateToArticle(\'' + r.id + '\')">' + r.date + ' — ' + r.headline + '</a>';
+                }).join('');
+            } else {
+                document.getElementById('relatedSection').style.display = 'none';
+            }
+        } else {
+            document.getElementById('articleTitle').textContent = 'Article Not Found';
+            document.getElementById('breadHeadline').textContent = 'Not Found';
+            document.getElementById('articleBody').innerHTML = '<p>The requested article could not be found. Please <a href="/l1/news/articles">return to the article listing</a>.</p>';
+            document.getElementById('relatedSection').style.display = 'none';
+        }
+        </script>
+    </div>
+</body>
+</html>
