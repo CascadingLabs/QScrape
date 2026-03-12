@@ -24,5 +24,5 @@ The site uses a Dwarf Fortress-inspired theme for its dummy data. Only the text 
 
 ### 3. Document Extraction (`/viewer`)
 - **Action:** Retrieve the actual tax deed document.
-- **Mechanism:** The document is not served as a standard `.pdf` download link. It is embedded as a raw Base64 Data URI (`data:application/pdf;base64,...`) within an iframe and a download button.
-- **Expected Agent Behavior:** Extract and decode the Base64 string into a usable document format for OCR or further processing.
+- **Mechanism:** The viewer sets both the iframe `src` and the download link `href` to a direct PDF URL at `/<fileNum>.pdf` (e.g., `/26-008492.pdf`). No Base64 encoding is used.
+- **Expected Agent Behavior:** Identify the file number from the parsed postData, construct the PDF URL, and fetch or download it directly.

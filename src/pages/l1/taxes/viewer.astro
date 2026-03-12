@@ -16,8 +16,7 @@ const postData = Astro.url.searchParams.get('postData') || '';
         <div class="navBar">
             <a href="/l1/taxes/">Home</a>
             <a href="/l1/taxes/tax-search">Tax Search</a>
-            <a href="#">Deed Records</a>
-            <a href="#">Maps & GIS</a>
+            <a href="/l1/taxes/how-to">How To</a>
         </div>
         
         <div class="breadcrumbs">
@@ -63,11 +62,11 @@ const postData = Astro.url.searchParams.get('postData') || '';
                 </tr>
                 <tr class="alternatingRow">
                     <td style="width: 180px;"><span class="aspNetLabelBold">Amount Due:</span></td>
-                    <td><span style="color: #cc0000; font-weight: bold;">1,847.52 Gold Sovereigns</span></td>
+                    <td><span id="lblAmount" style="color: #cc0000; font-weight: bold;">-</span></td>
                 </tr>
                 <tr>
                     <td style="width: 180px;"><span class="aspNetLabelBold">Status:</span></td>
-                    <td><span class="statusApproved">PAID</span></td>
+                    <td><span id="lblStatus" class="statusApproved">-</span></td>
                 </tr>
             </table>
         </div>
@@ -106,14 +105,6 @@ const postData = Astro.url.searchParams.get('postData') || '';
         </div>
         
         <script is:inline>
-        var pdfBase64 = 'JVBERi0xLjQKMSAwIG9iago8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFI+PgplbmRvYmoKMiAwIG9iago8PC9UeXBlL1BhZ2VzL0tpZHMgWzMgMCBSXS9Db3VudCAxPj4KZW5kb2JqCjMgMCBvYmoKPDwvVHlwZS9QYWdlL1BhcmVudCAyIDAgUi9NZWRpYUJveFswIDAgNjEyIDc5Ml0vQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PC9Gb250IDw8L0YxIDUgMCBSID4+ID4+ID4+CmVuZG9iago0IDAgb2JqCjw8L0xlbmd0aCA2MCA+PgpzdHJlYW0KQlQKL0YxIDE0IFRmCjgwIDcwMCBUZAooQ0xBSU0gUkVHSVNUUFJBVElPTiAgLSAgU1VCTUlUVEVEIFJFQ09SRCkgVGoKMAogMjAyNiAtIExFRkQgQ0xBSU0gQlkgRUxPUklOIERFVkVMT1BNRU5UIFRSSVNUCgplbmRzdHJlYW0KZW5kb2JqCjUgMCBvYmoKPDwvVHlwZS9Gb250L1N1YnR5cGUvVHlwZTEvQmFzZUZvbnQgL0hlbHZldGljYSA+PgplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAowMDAwMDAwMjY2IDAwMDAwIG4gCjAwMDAwMDAzNzkgMDAwMDAgbiAKdHJhaWxlcgo8PC9TaXplIDYgL1Jvb3QgMSAwIFIgPj4Kc3RhcnRyejC0NzgKJSVFT0YK';
-        
-        var fullPdf = 'data:application/pdf;base64,' + pdfBase64;
-        
-        document.getElementById('ctl00_MainContent_lnkDownload').href = fullPdf;
-        document.getElementById('ctl00_MainContent_lnkDownload').setAttribute('download', 'ClaimRegistration_2026.pdf');
-        document.getElementById('ctl00_MainContent_iframeViewer').src = fullPdf;
-        
         var postData = '';
         var urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('postData')) {
@@ -127,6 +118,8 @@ const postData = Astro.url.searchParams.get('postData') || '';
         var fileNum = '-';
         var indexType = '-';
         var recordDate = '-';
+        var amount = '-';
+        var status = '-';
         
         if (postData.indexOf('CLAIM=') !== -1) {
             var parts = postData.split('XXXBBBXXX');
@@ -152,6 +145,12 @@ const postData = Astro.url.searchParams.get('postData') || '';
                 if (parts[i].indexOf('RECORD=') !== -1) {
                     recordDate = parts[i].split('RECORD=')[1].split('&')[0];
                 }
+                if (parts[i].indexOf('AMOUNT=') !== -1) {
+                    amount = decodeURIComponent(parts[i].split('AMOUNT=')[1].split('&')[0]);
+                }
+                if (parts[i].indexOf('STATUS=') !== -1) {
+                    status = decodeURIComponent(parts[i].split('STATUS=')[1].split('&')[0]);
+                }
             }
         }
         
@@ -162,6 +161,20 @@ const postData = Astro.url.searchParams.get('postData') || '';
         document.getElementById('lblFile').innerHTML = fileNum;
         document.getElementById('lblIndex').innerHTML = indexType;
         document.getElementById('lblRecord').innerHTML = recordDate;
+
+        document.getElementById('lblAmount').textContent = amount;
+
+        var statusEl = document.getElementById('lblStatus');
+        statusEl.textContent = status;
+        var statusClassMap = { 'RECORDED': 'statusApproved', 'SATISFIED': 'statusReview', 'DELINQUENT': 'statusPending' };
+        statusEl.className = statusClassMap[status] || 'statusApproved';
+
+        if (fileNum && fileNum !== '-') {
+            var pdfUrl = '/' + fileNum + '.pdf';
+            document.getElementById('ctl00_MainContent_lnkDownload').href = pdfUrl;
+            document.getElementById('ctl00_MainContent_lnkDownload').setAttribute('download', 'ClaimRegistration_' + fileNum + '.pdf');
+            document.getElementById('ctl00_MainContent_iframeViewer').src = pdfUrl;
+        }
         </script>
     </div>
 </body>

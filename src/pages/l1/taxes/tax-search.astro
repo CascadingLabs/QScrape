@@ -15,8 +15,7 @@
         <div class="navBar">
             <a href="/l1/taxes/">Home</a>
             <a href="/l1/taxes/tax-search">Tax Search</a>
-            <a href="#">Deed Records</a>
-            <a href="#">Maps & GIS</a>
+            <a href="/l1/taxes/how-to">How To</a>
         </div>
         
         <div class="breadcrumbs">
@@ -37,26 +36,52 @@
                 <table border="0" cellpadding="3" cellspacing="0" style="width: 100%;">
                     <tr>
                         <td align="right" style="width: 25%;">
-                            <strong>Claim / Parcel ID:</strong>
+                            <strong>Last Name / Firm Name:</strong>
                         </td>
                         <td>
-                            <input name="ctl00$MainContent$txtClaimNumber" type="text" id="MainContent_txtClaimNumber" class="aspNetDisabled" style="width:200px;" />
+                            <input name="ctl00$MainContent$txtLastName" type="text" id="MainContent_txtLastName" style="width:200px;" />
                         </td>
                     </tr>
                     <tr>
                         <td align="right">
-                            <strong>Entity / Clan Name:</strong>
+                            <strong>First Name / Firm Name:</strong>
                         </td>
                         <td>
-                            <input name="ctl00$MainContent$txtEntityName" type="text" id="MainContent_txtEntityName" style="width:200px;" />
+                            <input name="ctl00$MainContent$txtFirstName" type="text" id="MainContent_txtFirstName" style="width:200px;" />
                         </td>
                     </tr>
                     <tr>
                         <td align="right">
-                            <strong>Z-Level / Address:</strong>
+                            <strong>Record Date From:</strong>
                         </td>
                         <td>
-                            <input name="ctl00$MainContent$txtZLevel" type="text" id="MainContent_txtZLevel" style="width:200px;" />
+                            <input name="ctl00$MainContent$txtDateFrom" type="text" id="MainContent_txtDateFrom" placeholder="MM/DD/YYYY" style="width:120px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>Record Date To:</strong>
+                        </td>
+                        <td>
+                            <input name="ctl00$MainContent$txtDateTo" type="text" id="MainContent_txtDateTo" placeholder="MM/DD/YYYY" style="width:120px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>Index Type:</strong>
+                        </td>
+                        <td>
+                            <select name="ctl00$MainContent$ddlIndexType" id="MainContent_ddlIndexType" style="width:206px;">
+                                <option value="">(All)</option>
+                                <option value="AFF">AFF - Affidavit</option>
+                                <option value="ASGN">ASGN - Assignment</option>
+                                <option value="DEED">DEED - Deed</option>
+                                <option value="ESMT">ESMT - Easement</option>
+                                <option value="LIEN">LIEN - Lien</option>
+                                <option value="MTG">MTG - Mortgage</option>
+                                <option value="NTC">NTC - Notice</option>
+                                <option value="REL">REL - Release</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -68,8 +93,8 @@
                 </table>
             </div>
             
-            <div class="resultsInfo">
-                Showing 3 record(s) found
+            <div class="resultsInfo" id="resultsInfo">
+                Showing 15 record(s) found
             </div>
             
             <table class="grid-view" cellspacing="0" rules="all" border="1" id="MainContent_gridResults" style="border-collapse:collapse;">
@@ -119,6 +144,150 @@
                         <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$2')">View</a>
                     </td>
                 </tr>
+                <tr style="background-color:#E3EAEB;">
+                    <td>2026</td>
+                    <td>26-010241</td>
+                    <td>DEED</td>
+                    <td>12/10/2026</td>
+                    <td>&nbsp;</td>
+                    <td>KOGANUSAN ESTATES LLC</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$3')">View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2026</td>
+                    <td>26-010502</td>
+                    <td>MTG</td>
+                    <td>12/22/2026</td>
+                    <td>&nbsp;</td>
+                    <td>DOREN</td>
+                    <td>MENG</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$4')">View</a>
+                    </td>
+                </tr>
+                <tr style="background-color:#E3EAEB;">
+                    <td>2027</td>
+                    <td>26-010618</td>
+                    <td>ESMT</td>
+                    <td>01/08/2027</td>
+                    <td>&nbsp;</td>
+                    <td>STEELTHUNDER CLAN</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$5')">View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2027</td>
+                    <td>26-010744</td>
+                    <td>REL</td>
+                    <td>01/15/2027</td>
+                    <td>SAT</td>
+                    <td>HEADSHOOTS LLC</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$6')">View</a>
+                    </td>
+                </tr>
+                <tr style="background-color:#E3EAEB;">
+                    <td>2027</td>
+                    <td>26-010831</td>
+                    <td>ASGN</td>
+                    <td>01/28/2027</td>
+                    <td>&nbsp;</td>
+                    <td>IRONHAND</td>
+                    <td>AVAR</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$7')">View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2027</td>
+                    <td>26-010999</td>
+                    <td>LIEN</td>
+                    <td>02/03/2027</td>
+                    <td>&nbsp;</td>
+                    <td>FUNGIWOOD TRUST</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$8')">View</a>
+                    </td>
+                </tr>
+                <tr style="background-color:#E3EAEB;">
+                    <td>2027</td>
+                    <td>26-011102</td>
+                    <td>DEED</td>
+                    <td>02/14/2027</td>
+                    <td>&nbsp;</td>
+                    <td>SPEARBREAKER</td>
+                    <td>MOLDATH</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$9')">View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2027</td>
+                    <td>26-011287</td>
+                    <td>MTG</td>
+                    <td>02/20/2027</td>
+                    <td>SAT</td>
+                    <td>DWARVEN IRON GUILD</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$10')">View</a>
+                    </td>
+                </tr>
+                <tr style="background-color:#E3EAEB;">
+                    <td>2027</td>
+                    <td>26-011344</td>
+                    <td>AFF</td>
+                    <td>02/27/2027</td>
+                    <td>&nbsp;</td>
+                    <td>STONECLEAVE</td>
+                    <td>RIMTAR</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$11')">View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2027</td>
+                    <td>26-011521</td>
+                    <td>LIEN</td>
+                    <td>03/05/2027</td>
+                    <td>&nbsp;</td>
+                    <td>IDEN METALCRAFTERS LLC</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$12')">View</a>
+                    </td>
+                </tr>
+                <tr style="background-color:#E3EAEB;">
+                    <td>2027</td>
+                    <td>26-011689</td>
+                    <td>DEED</td>
+                    <td>03/09/2027</td>
+                    <td>&nbsp;</td>
+                    <td>GODEN BOULDERBACK TRUST</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$13')">View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2027</td>
+                    <td>26-011872</td>
+                    <td>NTC</td>
+                    <td>03/11/2027</td>
+                    <td>&nbsp;</td>
+                    <td>ZULBAN TUNNELWORKS LLC</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Select$14')">View</a>
+                    </td>
+                </tr>
             </table>
             
             <table style="margin: 15px;">
@@ -141,6 +310,48 @@
             theForm = document.aspnetForm;
         }
 
+        // Client-side grid filtering
+        function parseDate(str) {
+            // Expects MM/DD/YYYY
+            var parts = str.trim().split('/');
+            if (parts.length !== 3) return null;
+            var d = new Date(parseInt(parts[2]), parseInt(parts[0]) - 1, parseInt(parts[1]));
+            return isNaN(d.getTime()) ? null : d;
+        }
+
+        document.getElementById('aspnetForm').addEventListener('submit', function(e) {
+            var lastQ   = document.getElementById('MainContent_txtLastName').value.trim().toLowerCase();
+            var firstQ  = document.getElementById('MainContent_txtFirstName').value.trim().toLowerCase();
+            var dateFrom = parseDate(document.getElementById('MainContent_txtDateFrom').value);
+            var dateTo   = parseDate(document.getElementById('MainContent_txtDateTo').value);
+            var indexQ  = document.getElementById('MainContent_ddlIndexType').value;
+
+            var rows = document.querySelectorAll('#MainContent_gridResults tr:not(:first-child)');
+            var visible = 0;
+            rows.forEach(function(row) {
+                row.style.display = '';
+                var cells = row.querySelectorAll('td');
+                var indexType = cells[2] ? cells[2].textContent.trim() : '';
+                var recordDate = cells[3] ? parseDate(cells[3].textContent.trim()) : null;
+                var lastName  = cells[5] ? cells[5].textContent.toLowerCase() : '';
+                var firstName = cells[6] ? cells[6].textContent.toLowerCase() : '';
+
+                var matchLast  = !lastQ  || lastName.indexOf(lastQ) !== -1;
+                var matchFirst = !firstQ || firstName.indexOf(firstQ) !== -1;
+                var matchIndex = !indexQ || indexType === indexQ;
+                var matchFrom  = !dateFrom || (recordDate && recordDate >= dateFrom);
+                var matchTo    = !dateTo   || (recordDate && recordDate <= dateTo);
+
+                if (matchLast && matchFirst && matchIndex && matchFrom && matchTo) {
+                    visible++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            document.getElementById('resultsInfo').textContent = 'Showing ' + visible + ' record(s) found';
+            e.preventDefault();
+        });
+
         function __doPostBack(eventTarget, eventArgument) {
             if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
                 document.getElementById('__EVENTTARGET').value = eventTarget;
@@ -157,6 +368,9 @@
                 var lastName = '';
                 var firstName = '';
                 
+                var amount = '';
+                var status = '';
+
                 if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$0') {
                     claimNumber = '26-008492';
                     entityName = 'ARMOK HOLDINGS LLC';
@@ -168,6 +382,8 @@
                     satEtc = '';
                     lastName = 'ARMOK HOLDINGS LLC';
                     firstName = '';
+                    amount = '15.00 Gold Sovereigns';
+                    status = 'RECORDED';
                 }
                 else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$1') {
                     claimNumber = '26-009104';
@@ -180,6 +396,8 @@
                     satEtc = 'SAT';
                     lastName = 'MCMINER';
                     firstName = 'URIST';
+                    amount = '50.00 Copper Coins';
+                    status = 'SATISFIED';
                 }
                 else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$2') {
                     claimNumber = '26-010033';
@@ -192,14 +410,184 @@
                     satEtc = '';
                     lastName = 'BOATMURDERED TRUST';
                     firstName = '';
+                    amount = '9,999.99 Gold Sovereigns';
+                    status = 'DELINQUENT';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$3') {
+                    claimNumber = '26-010241';
+                    entityName = 'KOGANUSAN ESTATES LLC';
+                    zLevel = 'Z-55 (Koganusan Deep Sector)';
+                    fileYear = '2026';
+                    fileNumber = '26-010241';
+                    indexType = 'DEED';
+                    recordDate = '12/10/2026';
+                    satEtc = '';
+                    lastName = 'KOGANUSAN ESTATES LLC';
+                    firstName = '';
+                    amount = '250.00 Gold Sovereigns';
+                    status = 'RECORDED';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$4') {
+                    claimNumber = '26-010502';
+                    entityName = 'DOREN, MENG';
+                    zLevel = 'Z-28 (Mid-Fortress Residential)';
+                    fileYear = '2026';
+                    fileNumber = '26-010502';
+                    indexType = 'MTG';
+                    recordDate = '12/22/2026';
+                    satEtc = '';
+                    lastName = 'DOREN';
+                    firstName = 'MENG';
+                    amount = '1,200.00 Gold Sovereigns';
+                    status = 'RECORDED';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$5') {
+                    claimNumber = '26-010618';
+                    entityName = 'STEELTHUNDER CLAN';
+                    zLevel = 'Z-35 (Eastern Cavern Network)';
+                    fileYear = '2027';
+                    fileNumber = '26-010618';
+                    indexType = 'ESMT';
+                    recordDate = '01/08/2027';
+                    satEtc = '';
+                    lastName = 'STEELTHUNDER CLAN';
+                    firstName = '';
+                    amount = '75.00 Gold Sovereigns';
+                    status = 'RECORDED';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$6') {
+                    claimNumber = '26-010744';
+                    entityName = 'HEADSHOOTS LLC';
+                    zLevel = 'Z-22 (Trophy Hall District)';
+                    fileYear = '2027';
+                    fileNumber = '26-010744';
+                    indexType = 'REL';
+                    recordDate = '01/15/2027';
+                    satEtc = 'SAT';
+                    lastName = 'HEADSHOOTS LLC';
+                    firstName = '';
+                    amount = '0.00 Gold Sovereigns';
+                    status = 'SATISFIED';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$7') {
+                    claimNumber = '26-010831';
+                    entityName = 'IRONHAND, AVAR';
+                    zLevel = 'Z-19 (Ironhand Family Compound)';
+                    fileYear = '2027';
+                    fileNumber = '26-010831';
+                    indexType = 'ASGN';
+                    recordDate = '01/28/2027';
+                    satEtc = '';
+                    lastName = 'IRONHAND';
+                    firstName = 'AVAR';
+                    amount = '500.00 Gold Sovereigns';
+                    status = 'RECORDED';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$8') {
+                    claimNumber = '26-010999';
+                    entityName = 'FUNGIWOOD TRUST';
+                    zLevel = 'Z-60 (Fungiwood Cavern Biome)';
+                    fileYear = '2027';
+                    fileNumber = '26-010999';
+                    indexType = 'LIEN';
+                    recordDate = '02/03/2027';
+                    satEtc = '';
+                    lastName = 'FUNGIWOOD TRUST';
+                    firstName = '';
+                    amount = '3,400.50 Gold Sovereigns';
+                    status = 'DELINQUENT';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$9') {
+                    claimNumber = '26-011102';
+                    entityName = 'SPEARBREAKER, MOLDATH';
+                    zLevel = 'Z-48 (Spearbreaker Holdings Zone)';
+                    fileYear = '2027';
+                    fileNumber = '26-011102';
+                    indexType = 'DEED';
+                    recordDate = '02/14/2027';
+                    satEtc = '';
+                    lastName = 'SPEARBREAKER';
+                    firstName = 'MOLDATH';
+                    amount = '800.00 Gold Sovereigns';
+                    status = 'RECORDED';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$10') {
+                    claimNumber = '26-011287';
+                    entityName = 'DWARVEN IRON GUILD';
+                    zLevel = 'Z-70 (Guild Hall Complex)';
+                    fileYear = '2027';
+                    fileNumber = '26-011287';
+                    indexType = 'MTG';
+                    recordDate = '02/20/2027';
+                    satEtc = 'SAT';
+                    lastName = 'DWARVEN IRON GUILD';
+                    firstName = '';
+                    amount = '2,500.00 Gold Sovereigns';
+                    status = 'SATISFIED';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$11') {
+                    claimNumber = '26-011344';
+                    entityName = 'STONECLEAVE, RIMTAR';
+                    zLevel = 'Z-15 (Stonecleave Family Claim)';
+                    fileYear = '2027';
+                    fileNumber = '26-011344';
+                    indexType = 'AFF';
+                    recordDate = '02/27/2027';
+                    satEtc = '';
+                    lastName = 'STONECLEAVE';
+                    firstName = 'RIMTAR';
+                    amount = '10.00 Gold Sovereigns';
+                    status = 'RECORDED';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$12') {
+                    claimNumber = '26-011521';
+                    entityName = 'IDEN METALCRAFTERS LLC';
+                    zLevel = 'Z-80 (Deep Forge District)';
+                    fileYear = '2027';
+                    fileNumber = '26-011521';
+                    indexType = 'LIEN';
+                    recordDate = '03/05/2027';
+                    satEtc = '';
+                    lastName = 'IDEN METALCRAFTERS LLC';
+                    firstName = '';
+                    amount = '6,750.00 Gold Sovereigns';
+                    status = 'DELINQUENT';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$13') {
+                    claimNumber = '26-011689';
+                    entityName = 'GODEN BOULDERBACK TRUST';
+                    zLevel = 'Z-33 (Boulderback Estate Sector)';
+                    fileYear = '2027';
+                    fileNumber = '26-011689';
+                    indexType = 'DEED';
+                    recordDate = '03/09/2027';
+                    satEtc = '';
+                    lastName = 'GODEN BOULDERBACK TRUST';
+                    firstName = '';
+                    amount = '1,500.00 Gold Sovereigns';
+                    status = 'RECORDED';
+                }
+                else if (eventTarget === 'ctl00$MainContent$gridResults' && eventArgument === 'Select$14') {
+                    claimNumber = '26-011872';
+                    entityName = 'ZULBAN TUNNELWORKS LLC';
+                    zLevel = 'Z-92 (New Tunnelworks Extension)';
+                    fileYear = '2027';
+                    fileNumber = '26-011872';
+                    indexType = 'NTC';
+                    recordDate = '03/11/2027';
+                    satEtc = '';
+                    lastName = 'ZULBAN TUNNELWORKS LLC';
+                    firstName = '';
+                    amount = '25.00 Gold Sovereigns';
+                    status = 'RECORDED';
                 }
                 else if (eventTarget === 'ctl00$MainContent$btnSearch') {
-                    claimNumber = document.getElementById('MainContent_txtClaimNumber').value;
-                    entityName = document.getElementById('MainContent_txtEntityName').value;
-                    zLevel = document.getElementById('MainContent_txtZLevel').value;
+                    lastName = document.getElementById('MainContent_txtLastName').value;
+                    firstName = document.getElementById('MainContent_txtFirstName').value;
+                    indexType = document.getElementById('MainContent_ddlIndexType').value;
                 }
-                
-                var payload = '7BQa0btstnHdh16zsg' + 
+
+                var payload = '7BQa0btstnHdh16zsg' +
                               'XXXBBBXXX' +
                               'vzm6OY8hb1' +
                               'CLAIM=' + encodeURIComponent(claimNumber) +
@@ -212,6 +600,8 @@
                               '&SAT=' + encodeURIComponent(satEtc) +
                               '&LAST=' + encodeURIComponent(lastName) +
                               '&FIRST=' + encodeURIComponent(firstName) +
+                              '&AMOUNT=' + encodeURIComponent(amount) +
+                              '&STATUS=' + encodeURIComponent(status) +
                               '&HASH=' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) +
                               'XXXBBBXXX' +
                               'xK9pLm2nQ4rT8vY7w' +

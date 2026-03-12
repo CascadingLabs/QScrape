@@ -318,3 +318,21 @@ table.formTable td.labelCol {
 .actionButtons input {
     margin-right: 10px;
 }
+
+table.grid-view {
+    border-collapse: collapse;
+    margin: 15px;
+    width: 95%;
+    font-size: 11px;
+}
+table.grid-view th {
+    background-color: #003366;
+    color: #ffffff;
+    padding: 4px 8px;
+    text-align: left;
+    border: 1px solid #999999;
+}
+table.grid-view td {
+    padding: 4px 8px;
+    border: 1px solid #cccccc;
+}
