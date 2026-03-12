@@ -1,0 +1,395 @@
+---
+import SiteShell from './_components/SiteShell.astro';
+import WidgetPanel from './_components/WidgetPanel.astro';
+import GameTag from './_components/GameTag.astro';
+import EventBadge from './_components/EventBadge.astro';
+---
+<SiteShell title="ScoreTap — Esports Teams" activePage="teams">
+
+  <style>
+    .featured-teams-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .featured-team-card {
+      padding: 16px 12px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .featured-team-card:last-child { border-right: none; }
+    .featured-team-card:hover { background: #131320; }
+    .featured-team-logo {
+      width: 56px;
+      height: 56px;
+      background: #10101c;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin: 0 auto 8px;
+    }
+    .featured-team-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .featured-team-record {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 6px;
+    }
+    .featured-team-record .wins { color: var(--green); font-weight: 700; }
+    .featured-team-record .losses { color: var(--red); }
+    .teams-table-wrap { overflow-x: auto; }
+    .teams-table th:first-child,
+    .teams-table td:first-child { width: 36px; text-align: center; }
+    .teams-table .team-cell { font-weight: 700; color: var(--text-bright); text-transform: uppercase; letter-spacing: 0.3px; }
+    .teams-table .num-cell { text-align: center; color: var(--text-dim); }
+    .teams-table .pct-cell { text-align: center; font-weight: 700; }
+    .pct-high { color: var(--green); }
+    .pct-mid  { color: #c87800; }
+    .pct-low  { color: var(--red); }
+  </style>
+
+  <!-- Game filter tabs -->
+  <div id="game-filter">
+    <button class="game-tab active" data-filter="all">All Games</button>
+    <button class="game-tab" data-filter="cs2">CS2</button>
+    <button class="game-tab" data-filter="valorant">Valorant</button>
+    <button class="game-tab" data-filter="lol">LoL</button>
+    <button class="game-tab" data-filter="dota2">Dota 2</button>
+    <button class="game-tab" data-filter="rl">Rocket League</button>
+  </div>
+
+  <!-- Page layout -->
+  <div class="page-layout">
+
+    <!-- Main column -->
+    <div class="main-col">
+
+      <!-- Featured Teams -->
+      <WidgetPanel title="Featured Teams" linkText="All Teams" linkHref="#">
+        <div class="featured-teams-grid">
+          <div class="featured-team-card" data-game="cs2">
+            <div class="featured-team-logo">VIT</div>
+            <div class="featured-team-name">Team Vitality</div>
+            <div style="margin:4px 0;"><GameTag game="cs2" /></div>
+            <div style="font-size:10px;color:var(--text-dim);">EU &middot; Ranked #1</div>
+            <div class="featured-team-record"><span class="wins">W 34</span> &nbsp;/&nbsp; <span class="losses">L 8</span></div>
+          </div>
+          <div class="featured-team-card" data-game="valorant">
+            <div class="featured-team-logo">SEN</div>
+            <div class="featured-team-name">Sentinels</div>
+            <div style="margin:4px 0;"><GameTag game="valorant" /></div>
+            <div style="font-size:10px;color:var(--text-dim);">NA &middot; Americas #1</div>
+            <div class="featured-team-record"><span class="wins">W 21</span> &nbsp;/&nbsp; <span class="losses">L 4</span></div>
+          </div>
+          <div class="featured-team-card" data-game="lol">
+            <div class="featured-team-logo">T1</div>
+            <div class="featured-team-name">T1</div>
+            <div style="margin:4px 0;"><GameTag game="lol" /></div>
+            <div style="font-size:10px;color:var(--text-dim);">KR &middot; LCK #1</div>
+            <div class="featured-team-record"><span class="wins">W 16</span> &nbsp;/&nbsp; <span class="losses">L 2</span></div>
+          </div>
+        </div>
+      </WidgetPanel>
+
+      <!-- All Teams table -->
+      <WidgetPanel title="All Teams" linkText="Rankings" linkHref="#">
+        <div class="teams-table-wrap">
+          <table class="teams-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>Game</th>
+                <th>Region</th>
+                <th>W</th>
+                <th>L</th>
+                <th>Win%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-game="cs2">
+                <td class="num-cell">#1</td>
+                <td class="team-cell">Team Vitality</td>
+                <td><GameTag game="cs2" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">EU</td>
+                <td class="num-cell">34</td>
+                <td class="num-cell">8</td>
+                <td class="pct-cell pct-high">81%</td>
+              </tr>
+              <tr data-game="cs2">
+                <td class="num-cell">#2</td>
+                <td class="team-cell">NAVI</td>
+                <td><GameTag game="cs2" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">CIS</td>
+                <td class="num-cell">30</td>
+                <td class="num-cell">10</td>
+                <td class="pct-cell pct-high">75%</td>
+              </tr>
+              <tr data-game="cs2">
+                <td class="num-cell">#3</td>
+                <td class="team-cell">G2 Esports</td>
+                <td><GameTag game="cs2" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">EU</td>
+                <td class="num-cell">28</td>
+                <td class="num-cell">11</td>
+                <td class="pct-cell pct-high">72%</td>
+              </tr>
+              <tr data-game="cs2">
+                <td class="num-cell">#4</td>
+                <td class="team-cell">MOUZ</td>
+                <td><GameTag game="cs2" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">EU</td>
+                <td class="num-cell">25</td>
+                <td class="num-cell">12</td>
+                <td class="pct-cell pct-mid">68%</td>
+              </tr>
+              <tr data-game="valorant">
+                <td class="num-cell">#1</td>
+                <td class="team-cell">Sentinels</td>
+                <td><GameTag game="valorant" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">NA</td>
+                <td class="num-cell">21</td>
+                <td class="num-cell">4</td>
+                <td class="pct-cell pct-high">84%</td>
+              </tr>
+              <tr data-game="valorant">
+                <td class="num-cell">#2</td>
+                <td class="team-cell">Paper Rex</td>
+                <td><GameTag game="valorant" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">APAC</td>
+                <td class="num-cell">19</td>
+                <td class="num-cell">6</td>
+                <td class="pct-cell pct-high">76%</td>
+              </tr>
+              <tr data-game="valorant">
+                <td class="num-cell">#3</td>
+                <td class="team-cell">NRG Esports</td>
+                <td><GameTag game="valorant" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">NA</td>
+                <td class="num-cell">17</td>
+                <td class="num-cell">8</td>
+                <td class="pct-cell pct-mid">68%</td>
+              </tr>
+              <tr data-game="lol">
+                <td class="num-cell">#1</td>
+                <td class="team-cell">T1</td>
+                <td><GameTag game="lol" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">KR</td>
+                <td class="num-cell">16</td>
+                <td class="num-cell">2</td>
+                <td class="pct-cell pct-high">89%</td>
+              </tr>
+              <tr data-game="lol">
+                <td class="num-cell">#2</td>
+                <td class="team-cell">Gen.G</td>
+                <td><GameTag game="lol" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">KR</td>
+                <td class="num-cell">14</td>
+                <td class="num-cell">4</td>
+                <td class="pct-cell pct-high">78%</td>
+              </tr>
+              <tr data-game="lol">
+                <td class="num-cell">#3</td>
+                <td class="team-cell">G2 Esports</td>
+                <td><GameTag game="lol" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">EU</td>
+                <td class="num-cell">11</td>
+                <td class="num-cell">5</td>
+                <td class="pct-cell pct-mid">69%</td>
+              </tr>
+              <tr data-game="dota2">
+                <td class="num-cell">#1</td>
+                <td class="team-cell">Team Spirit</td>
+                <td><GameTag game="dota2" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">CIS</td>
+                <td class="num-cell">22</td>
+                <td class="num-cell">7</td>
+                <td class="pct-cell pct-high">76%</td>
+              </tr>
+              <tr data-game="dota2">
+                <td class="num-cell">#2</td>
+                <td class="team-cell">OG</td>
+                <td><GameTag game="dota2" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">EU</td>
+                <td class="num-cell">18</td>
+                <td class="num-cell">10</td>
+                <td class="pct-cell pct-mid">64%</td>
+              </tr>
+              <tr data-game="rl">
+                <td class="num-cell">#1</td>
+                <td class="team-cell">Team BDS</td>
+                <td><GameTag game="rl" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">EU</td>
+                <td class="num-cell">20</td>
+                <td class="num-cell">5</td>
+                <td class="pct-cell pct-high">80%</td>
+              </tr>
+              <tr data-game="rl">
+                <td class="num-cell">#2</td>
+                <td class="team-cell">Team Liquid</td>
+                <td><GameTag game="rl" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">NA</td>
+                <td class="num-cell">17</td>
+                <td class="num-cell">8</td>
+                <td class="pct-cell pct-mid">68%</td>
+              </tr>
+              <tr data-game="rl">
+                <td class="num-cell">#3</td>
+                <td class="team-cell">Cloud9</td>
+                <td><GameTag game="rl" /></td>
+                <td style="font-size:10px;color:var(--text-dim);">NA</td>
+                <td class="num-cell">14</td>
+                <td class="num-cell">11</td>
+                <td class="pct-cell pct-mid">56%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </WidgetPanel>
+
+    </div><!-- /main-col -->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <!-- Upcoming -->
+      <WidgetPanel title="Upcoming" linkText="Schedule" linkHref="#">
+        <div class="upcoming-card" data-game="cs2">
+          <div>
+            <div class="upcoming-teams">Vitality vs MOUZ</div>
+            <div style="margin-top:3px;"><GameTag game="cs2" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Today 18:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="valorant">
+          <div>
+            <div class="upcoming-teams">100T vs NRG</div>
+            <div style="margin-top:3px;"><GameTag game="valorant" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Today 20:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="lol">
+          <div>
+            <div class="upcoming-teams">T1 vs Gen.G</div>
+            <div style="margin-top:3px;"><GameTag game="lol" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Tomorrow 14:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="dota2">
+          <div>
+            <div class="upcoming-teams">Spirit vs OG</div>
+            <div style="margin-top:3px;"><GameTag game="dota2" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Tomorrow 16:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="rl">
+          <div>
+            <div class="upcoming-teams">BDS vs G2</div>
+            <div style="margin-top:3px;"><GameTag game="rl" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Mar 12 15:00</div>
+          </div>
+        </div>
+      </WidgetPanel>
+
+      <!-- CS2 World Rankings -->
+      <WidgetPanel title="CS2 World Rankings" linkText="Full Table" linkHref="#">
+        <div class="rank-row"><div class="rank-num">#1</div><div class="rank-team">Vitality</div><div class="rank-points">1,842 pts</div><div class="rank-change same">&mdash;</div></div>
+        <div class="rank-row"><div class="rank-num">#2</div><div class="rank-team">NAVI</div><div class="rank-points">1,710 pts</div><div class="rank-change up">&#9650;2</div></div>
+        <div class="rank-row"><div class="rank-num">#3</div><div class="rank-team">G2 Esports</div><div class="rank-points">1,655 pts</div><div class="rank-change down">&#9660;1</div></div>
+        <div class="rank-row"><div class="rank-num">#4</div><div class="rank-team">FaZe Clan</div><div class="rank-points">1,580 pts</div><div class="rank-change down">&#9660;1</div></div>
+        <div class="rank-row"><div class="rank-num">#5</div><div class="rank-team">MOUZ</div><div class="rank-points">1,490 pts</div><div class="rank-change up">&#9650;1</div></div>
+        <div class="rank-row"><div class="rank-num">#6</div><div class="rank-team">Heroic</div><div class="rank-points">1,320 pts</div><div class="rank-change same">&mdash;</div></div>
+        <div class="rank-row"><div class="rank-num">#7</div><div class="rank-team">Virtus.pro</div><div class="rank-points">1,210 pts</div><div class="rank-change up">&#9650;3</div></div>
+        <div class="rank-row"><div class="rank-num">#8</div><div class="rank-team">Cloud9</div><div class="rank-points">1,150 pts</div><div class="rank-change down">&#9660;2</div></div>
+        <div class="rank-row"><div class="rank-num">#9</div><div class="rank-team">Team Liquid</div><div class="rank-points">1,080 pts</div><div class="rank-change same">&mdash;</div></div>
+        <div class="rank-row"><div class="rank-num">#10</div><div class="rank-team">Spirit</div><div class="rank-points">1,020 pts</div><div class="rank-change up">&#9650;1</div></div>
+      </WidgetPanel>
+
+      <!-- Top Events -->
+      <WidgetPanel title="Top Events" linkText="All Events" linkHref="#">
+        <div class="event-row" data-game="cs2">
+          <div class="event-name">IEM Katowice 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="cs2" /></div>
+            <div class="event-dates">Mar 5&ndash;15</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="valorant">
+          <div class="event-name">VCT Americas 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="valorant" /></div>
+            <div class="event-dates">Mar 1&ndash;20</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="rl">
+          <div class="event-name">RLCS 2026 Spring</div>
+          <div style="text-align:right;">
+            <div><GameTag game="rl" /></div>
+            <div class="event-dates">Mar 8&ndash;22</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="lol">
+          <div class="event-name">LCK Spring 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="lol" /></div>
+            <div class="event-dates">Feb 15&ndash;Apr 5</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="dota2">
+          <div class="event-name">ESL One Stockholm 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="dota2" /></div>
+            <div class="event-dates">Mar 20&ndash;30</div>
+          </div>
+          <div><EventBadge status="upcoming" /></div>
+        </div>
+      </WidgetPanel>
+
+    </div><!-- /sidebar -->
+  </div><!-- /page-layout -->
+
+  <script is:inline>
+    var tabs = document.querySelectorAll('.game-tab');
+    var filterables = document.querySelectorAll('[data-game]');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        var filter = tab.dataset.filter;
+        filterables.forEach(function(el) {
+          el.style.display = (filter === 'all' || el.dataset.game === filter) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+
+</SiteShell>

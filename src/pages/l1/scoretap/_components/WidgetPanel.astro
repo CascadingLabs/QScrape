@@ -1,0 +1,15 @@
+---
+interface Props {
+  title: string;
+  linkText?: string;
+  linkHref?: string;
+}
+const { title, linkText, linkHref } = Astro.props;
+---
+<div class="widget">
+  <div class="widget-header">
+    <span class="widget-title">&#9632; {title}</span>
+    {linkText && <a href={linkHref ?? '#'} class="widget-link">{linkText} &rsaquo;</a>}
+  </div>
+  <slot />
+</div>

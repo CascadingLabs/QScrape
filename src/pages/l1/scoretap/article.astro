@@ -1,0 +1,1091 @@
+---
+import SiteShell from './_components/SiteShell.astro';
+---
+<SiteShell title="Article — ScoreTap" activePage="news">
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    .article-container {
+      max-width: 1280px;
+      margin: 16px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 16px;
+    }
+    .article-main { min-width: 0; }
+    .article-sidebar { min-width: 0; }
+
+    .breadcrumb { font-size: 12px; color: var(--text-dim); padding: 8px 0 12px; }
+    .breadcrumb a { color: var(--accent); }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .article-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      margin-bottom: 16px;
+    }
+    .article-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-meta-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 10px;
+    }
+    .article-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .article-byline {
+      font-size: 11px;
+      color: var(--text-dim);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .article-byline .author { color: var(--accent); font-weight: 700; }
+
+    /* ── BODY TYPOGRAPHY ── */
+    .article-body { padding: 28px 28px 32px; }
+
+    .article-body h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin: 36px 0 16px;
+      padding-bottom: 7px;
+      border-bottom: 2px solid var(--accent);
+    }
+    .article-body h2:first-child { margin-top: 0; }
+
+    .article-body h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin: 28px 0 12px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .article-body h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin: 20px 0 8px;
+    }
+
+    .article-body p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+    .article-body p:last-child { margin-bottom: 0; }
+
+    .article-body strong {
+      color: var(--text-bright);
+      font-weight: 700;
+    }
+    .article-body em {
+      font-style: italic;
+      color: #b0b0c0;
+    }
+    .article-body a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-color: #ff6b0040;
+    }
+    .article-body a:hover {
+      text-decoration-color: var(--accent);
+    }
+
+    .pull-quote {
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(135deg, #0e0e18, #111122);
+      padding: 20px 24px;
+      margin: 24px 0;
+      font-size: 14px;
+      font-style: italic;
+      color: var(--text-bright);
+      line-height: 1.7;
+    }
+    .pull-quote cite {
+      display: block;
+      font-style: normal;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 700;
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .stats-box {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .stats-box-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      padding: 10px 14px;
+      background: linear-gradient(135deg, #1e1e30, #181828);
+      border-bottom: 2px solid var(--accent);
+    }
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+    .stats-box-body .stats-row:nth-child(odd) { background: var(--bg-panel); }
+    .stats-box-body .stats-row:nth-child(even) { background: var(--bg-row-alt); }
+    .stats-row:last-child { border-bottom: none; }
+    .stats-label { color: var(--text-dim); }
+    .stats-value { color: var(--text-bright); font-weight: 700; font-family: 'Courier New', monospace; letter-spacing: 0.5px; }
+
+    /* ── TABLE OF CONTENTS ── */
+    .article-toc {
+      display: inline-block;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      min-width: 260px;
+      margin-bottom: 24px;
+    }
+    .article-toc-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-bright);
+      padding: 10px 14px;
+      background: linear-gradient(135deg, #1e1e30, #181828);
+      border-bottom: 2px solid var(--accent);
+      cursor: pointer;
+      user-select: none;
+    }
+    .article-toc-title::after {
+      content: ' [hide]';
+      font-size: 10px;
+      color: var(--accent);
+      font-weight: 400;
+    }
+    .article-toc-title.collapsed::after {
+      content: ' [show]';
+    }
+    .article-toc-list {
+      list-style: none;
+      padding: 10px 14px;
+      margin: 0;
+      counter-reset: toc-counter;
+    }
+    .article-toc-list li {
+      counter-increment: toc-counter;
+      padding: 4px 0;
+      font-size: 13px;
+    }
+    .article-toc-list li::before {
+      content: counter(toc-counter) ". ";
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .article-toc-list a {
+      color: var(--text);
+      text-decoration: none;
+    }
+    .article-toc-list a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    /* ── WIKI-STYLE TABLES ── */
+    .article-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 12px;
+    }
+    .article-body th {
+      background: linear-gradient(135deg, #1e1e30, #181828);
+      color: var(--text-bright);
+      font-weight: 700;
+      text-align: left;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+    }
+    .article-body td {
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .article-body tr:nth-child(odd) td { background: var(--bg-panel); }
+    .article-body tr:nth-child(even) td { background: var(--bg-row-alt); }
+    .article-body tr:hover td { background: #1a1a2e; }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .related-card {
+      padding: 14px;
+      border-right: 1px solid var(--border);
+    }
+    .related-card:last-child { border-right: none; }
+    .related-card:hover { background: #131320; }
+    .related-headline {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-bright);
+      line-height: 1.5;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .related-headline:hover { color: var(--accent); }
+    .related-meta { font-size: 10px; color: var(--text-dim); display: flex; gap: 6px; align-items: center; }
+
+    .sidebar-news-list { list-style: none; }
+    .sidebar-news-list li {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+    }
+    .sidebar-news-list li:nth-child(odd)  { background: var(--bg-panel); }
+    .sidebar-news-list li:nth-child(even) { background: var(--bg-row-alt); }
+    .sidebar-news-list li:last-child { border-bottom: none; }
+    .sidebar-news-list a { color: var(--text); line-height: 1.4; display: block; }
+    .sidebar-news-list a:hover { color: var(--accent); }
+    .sidebar-news-meta { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+
+    #article-not-found {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-dim);
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+    }
+  </style>
+
+  <div class="article-container">
+    <div class="article-main">
+      <div class="breadcrumb" id="article-breadcrumb">
+        <a href="/l1/scoretap/">Home</a> &rsaquo;
+        <a href="/l1/scoretap/news">News</a> &rsaquo;
+        <span id="breadcrumb-title">Loading&hellip;</span>
+      </div>
+      <div id="article-content"></div>
+      <div id="article-not-found" style="display:none;">
+        Article not found. <a href="/l1/scoretap/news" style="color:var(--accent);">Return to News</a>
+      </div>
+    </div>
+
+    <div class="article-sidebar">
+      <div class="widget" style="margin-bottom:10px;">
+        <div class="widget-header">
+          <span class="widget-title">Latest News</span>
+          <a class="widget-link" href="/l1/scoretap/news">All News</a>
+        </div>
+        <ul class="sidebar-news-list" id="sidebar-news-list"></ul>
+      </div>
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-title">Top Events</span>
+          <a class="widget-link" href="#">All Events</a>
+        </div>
+        <div class="event-row"><div class="event-name">IEM Katowice 2026</div><div style="text-align:right;"><span class="game-tag cs2">CS2</span><div class="event-dates">Mar 5&ndash;15</div></div><span class="event-badge live">LIVE</span></div>
+        <div class="event-row"><div class="event-name">VCT Americas 2026</div><div style="text-align:right;"><span class="game-tag valorant">VAL</span><div class="event-dates">Mar 1&ndash;20</div></div><span class="event-badge live">LIVE</span></div>
+        <div class="event-row"><div class="event-name">RLCS 2026 Spring</div><div style="text-align:right;"><span class="game-tag rl">RL</span><div class="event-dates">Mar 8&ndash;22</div></div><span class="event-badge live">LIVE</span></div>
+        <div class="event-row"><div class="event-name">LCK Spring 2026</div><div style="text-align:right;"><span class="game-tag lol">LOL</span><div class="event-dates">Feb 15&ndash;Apr 5</div></div><span class="event-badge live">LIVE</span></div>
+        <div class="event-row"><div class="event-name">ESL One Stockholm 2026</div><div style="text-align:right;"><span class="game-tag dota2">DOTA</span><div class="event-dates">Mar 20&ndash;30</div></div><span class="event-badge upcoming">UPCOMING</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+  // ── HELPERS ──────────────────────────────────────────────────────────────────
+
+  function pq(text, cite) {
+    return '<blockquote class="pull-quote">&ldquo;' + text + '&rdquo;<cite>&mdash; ' + cite + '</cite></blockquote>';
+  }
+
+  function sb(title, rows) {
+    var html = '<div class="stats-box"><div class="stats-box-title">' + title + '</div><div class="stats-box-body">';
+    rows.forEach(function(r) {
+      html += '<div class="stats-row"><span class="stats-label">' + r[0] + '</span><span class="stats-value">' + r[1] + '</span></div>';
+    });
+    return html + '</div></div>';
+  }
+
+  function a(href, text) { return '<a href="' + href + '">' + text + '</a>'; }
+  function art(id, text) { return a('/l1/scoretap/article?id=' + id, text); }
+  function teams(text) { return a('/l1/scoretap/teams', text); }
+
+  // ── ARTICLES ─────────────────────────────────────────────────────────────────
+
+  var ARTICLES = {
+
+    'zywoo-katowice-record': {
+      id: 'zywoo-katowice-record',
+      game: 'cs2', gameLabel: 'CS2',
+      title: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026',
+      author: 'Marcus Holt', date: 'Mar 11, 2026 · 2h ago', event: 'IEM Katowice 2026',
+      related: ['navi-blamef-signing', 'mouz-heroic-semifinal', 'vitality-faze-results'],
+      body: [
+        '<h2>A Performance for the Ages</h2>',
+        '<p><strong>Mathieu &ldquo;ZywOo&rdquo; Herbaut</strong> has delivered the most dominant individual performance in recent CS2 history, posting a <strong>1.42 HLTV rating</strong> across eight maps at <em>IEM Katowice 2026</em>, the highest recorded by any player at a Major-tier event since the transition from CS:GO. ' + teams('Team Vitality') + ' advance to the semifinals on the back of a display that left analysts reaching for superlatives they had already exhausted.</p>',
+        '<p>The French superstar was particularly lethal on <strong>Mirage</strong> and <strong>Inferno</strong>, where he averaged over <strong>92 ADR</strong> and closed out rounds in moments that would have otherwise slipped from Vitality\'s grasp. His <strong>opening-duel win rate of 67%</strong> forced entire opposing strategies to bend around the question of how to avoid him, which inevitably meant gifting space elsewhere.</p>',
+        pq('I never think about ratings. I just try to make the right call every round. If the numbers are high, it means the team is in good shape.', 'ZywOo, post-match press conference'),
+        '<h2>The Group Stage in Detail</h2>',
+        '<p>ZywOo\'s brilliance carried Vitality through a brutal group that included <strong>G2 Esports</strong> and <strong>MOUZ</strong>. Against G2, in what many considered a potential final preview, he dropped <strong>32 kills</strong> on the deciding map while holding a <strong>1.58 series rating</strong>. ' + art('g2-niko-interview', 'NiKo later said') + ' they had prepared specifically for ZywOo but that &ldquo;he found ways we hadn\'t anticipated.&rdquo;</p>',
+        sb('IEM Katowice 2026 — ZywOo Stats', [
+          ['HLTV Rating (8 maps)', '1.42'],
+          ['K/D Ratio', '1.61'],
+          ['ADR (Average Damage/Round)', '88.4'],
+          ['Headshot %', '52.3%'],
+          ['Opening Kill Win %', '67%'],
+          ['Clutch Rounds Won', '7'],
+        ]),
+        '<h2>What Comes Next</h2>',
+        '<p>With Vitality in the semifinals, ZywOo now faces ' + teams('NAVI') + ' and the recently signed ' + art('navi-blamef-signing', '<strong>blameF</strong>') + ', who has brought a physical, map-controlling rifle game that Head Coach <strong>B1ad3</strong> says he has been building toward for years. Whether ZywOo\'s historic form continues against that style of late-round defense will define whether Vitality lift the trophy on Sunday.</p>',
+        '<p><em>Vitality\'s semifinal kicks off Thursday at 17:00 CET. Follow live scores on ' + a('/l1/scoretap/', 'ScoreTap\'s scores page') + '.</em></p>',
+      ],
+    },
+
+    'navi-blamef-signing': {
+      id: 'navi-blamef-signing',
+      game: 'cs2', gameLabel: 'CS2',
+      title: 'NAVI Confirm Signing of Rifler blameF Ahead of Major Qualifier',
+      author: 'Elena Vasquez', date: 'Mar 11, 2026 · 4h ago', event: 'Transfer News',
+      related: ['zywoo-katowice-record', 'cs2-major-copenhagen', 'vitality-faze-results'],
+      body: [
+        '<h2>The Signing</h2>',
+        '<p><strong>Natus Vincere</strong> have officially confirmed the acquisition of Danish rifler <strong>Kristian &ldquo;blameF&rdquo; Steffensen</strong>, ending weeks of speculation following his departure from <em>Astralis</em>. The 26-year-old joins a rebuilt NAVI core alongside emerging Ukrainian fragger <strong>iM</strong> and veteran <strong>electronic</strong>, giving Head Coach <strong>B1ad3</strong> the physical rifle presence he has publicly sought since early 2025.</p>',
+        '<p>blameF arrives with a reputation as one of the most imposing individual riflers in the world. His win rate in duels from <em>unexpected</em> positions consistently outperforms the statistical expectation for any given angle. His <strong>2025 ESL Pro League</strong> run averaged a <strong>1.24 rating across 14 maps</strong>, with a first-kill percentage that ranked <strong>fourth globally</strong>.</p>',
+        pq('NAVI is the club I dreamed about playing for when I was sixteen years old. This signing is not just a career move. It is a chapter I have been building toward.', 'blameF, signing announcement'),
+        '<h2>Why NAVI Needed This</h2>',
+        '<p>The signing is a direct response to NAVI\'s inability to close out matches in 2025, a period in which the team repeatedly traded fraggers inefficiently in late-round situations. ' + teams('NAVI') + '\'s <strong>late-round win rate in 2025 ranked ninth among top-16 teams</strong>, a damning number for a squad with individual talent of that calibre. blameF\'s high opening-kill percentage addresses the structural deficit that B1ad3\'s system had been unable to paper over.</p>',
+        sb('blameF — Career Snapshot', [
+          ['Previous Team', 'Astralis'],
+          ['2025 HLTV Rating', '1.18'],
+          ['Career Majors', '3'],
+          ['First-Kill % (2025)', '64.2%'],
+          ['Contract Length', '2 years'],
+        ]),
+        '<h2>The Road to the Major Qualifier</h2>',
+        '<p>NAVI enter the upcoming Major qualifier ranked <strong>#2 in the world</strong>, sitting directly behind ' + art('zywoo-katowice-record', 'Vitality') + ' in the standings. The qualifier begins just three days after <em>IEM Katowice</em> concludes, giving blameF minimal integration time before elimination pressure arrives. B1ad3 is unbothered: <em>&ldquo;Pressure reveals what players are made of. We already know what blameF is made of.&rdquo;</em></p>',
+        '<p>The ' + art('cs2-major-copenhagen', 'CS2 Major 2026 in Copenhagen') + ' is the explicit target for this new-look lineup. Securing attendance would give blameF his fourth Major appearance and NAVI their first Major title shot since 2023.</p>',
+      ],
+    },
+
+    'cs2-major-copenhagen': {
+      id: 'cs2-major-copenhagen',
+      game: 'cs2', gameLabel: 'CS2',
+      title: 'CS2 Major 2026 Location Officially Announced — Copenhagen Confirmed',
+      author: 'James Archer', date: 'Mar 11, 2026 · 6h ago', event: 'CS2 Major 2026',
+      related: ['navi-blamef-signing', 'blast-premier-schedule', 'zywoo-katowice-record'],
+      body: [
+        '<h2>Royal Arena Returns</h2>',
+        '<p><strong>Valve</strong> and <strong>PGL</strong> have jointly confirmed that the <em>CS2 Major 2026</em> will take place in <strong>Copenhagen, Denmark</strong> at the <strong>Royal Arena</strong>, a 16,000-capacity venue that last hosted a CS:GO Major in 2022 and is widely regarded as one of the finest esports venues in Europe for its atmosphere, acoustics, and crowd proximity to the stage. The event runs <strong>June 14&ndash;28</strong> with a record <strong>$1,250,000 prize pool</strong>.</p>',
+        pq('Copenhagen has one of the world\'s most passionate CS fan bases. Bringing the Major back here felt inevitable. We cannot wait to fill Royal Arena again.', 'PGL CEO, official press release'),
+        '<h2>Format and Structure</h2>',
+        '<p>The Major will unfold across three phases: the <strong>Challengers Stage</strong> (24 teams, Swiss format), the <strong>Legends Stage</strong> (16 teams), and the <strong>Champions Stage</strong> (8 teams, single-elimination bracket). Teams currently ranked inside the <strong>top 10 of the Valve ranking</strong> are expected to receive direct invitations to the Legends Stage, bypassing the Challengers qualifier.</p>',
+        sb('CS2 Major 2026 — Key Details', [
+          ['Venue', 'Royal Arena, Copenhagen'],
+          ['Capacity', '16,000'],
+          ['Prize Pool', '$1,250,000'],
+          ['Dates', 'June 14–28, 2026'],
+          ['Organizer', 'PGL'],
+          ['Teams (total)', '24'],
+        ]),
+        '<h2>Competition and Road to Qualification</h2>',
+        '<p>Copenhagen\'s selection beat out competing bids from <strong>Seoul</strong>, <strong>Warsaw</strong>, and <strong>Montreal</strong>. Denmark\'s domestic CS2 scene, home to <strong>blameF</strong>, <strong>Magisk</strong>, and <strong>dupreeh</strong>, ensures local turnout will be exceptional. ' + art('navi-blamef-signing', 'NAVI\'s newly signed blameF') + ' will be one of the most-watched players on home soil if NAVI qualify.</p>',
+        '<p>Qualifier pathways will be announced by PGL in the coming weeks. Regional leagues across <em>Europe</em>, <em>Asia</em>, <em>North America</em>, <em>South America</em>, and <em>Oceania</em> will each receive allocation slots. The ' + art('blast-premier-schedule', 'BLAST Premier Spring') + ' is expected to serve as one of the primary European qualifying routes.</p>',
+      ],
+    },
+
+    'g2-niko-interview': {
+      id: 'g2-niko-interview',
+      game: 'cs2', gameLabel: 'CS2',
+      title: 'G2 NiKo: "We Came to Katowice to Win Everything, Not Just Qualify"',
+      author: 'Sophie Lindberg', date: 'Mar 11, 2026 · 16h ago', event: 'IEM Katowice 2026',
+      related: ['zywoo-katowice-record', 'mouz-heroic-semifinal', 'vitality-faze-results'],
+      body: [
+        '<h2>On the Record</h2>',
+        '<p>In an extended sit-down following <strong>G2 Esports\'</strong> quarterfinal win, <strong>Nikola &ldquo;NiKo&rdquo; Kovač</strong> was uncharacteristically candid about the pressure, the ambition, and the narrative that has followed him for most of his career. <em>&ldquo;People say we always fall short in the big moments,&rdquo;</em> he said, leaning forward. <em>&ldquo;And yes, there have been times when that has been true. But this version of G2 is different. The depth of our roster is different. I feel that every single round.&rdquo;</em></p>',
+        '<p>NiKo has been exceptional at <em>IEM Katowice 2026</em>, posting a <strong>1.31 rating</strong> with <strong>five clutch rounds</strong>, all of which came in rounds where the map was directly at stake. His <strong>1v2 clutch on Nuke in overtime</strong> against Heroic in the quarterfinals was the defining moment of G2\'s run and immediately became one of the most-clipped plays of the event.</p>',
+        pq('We came to Katowice to win everything, not just qualify. If we lose now, it means we failed. I do not plan on failing.', 'NiKo, post-match press conference'),
+        '<h2>The System Behind the Superstar</h2>',
+        '<p>G2\'s Head Coach <strong>Damien &ldquo;maLeK&rdquo; Marcel</strong> has built a system around NiKo\'s game-reading as a <em>secondary decision-maker</em>, not merely a fragger. <em>&ldquo;Nikola understands the game at an architectural level,&rdquo;</em> maLeK explained. <em>&ldquo;He influences mid-round calls from the rifle position in ways that are impossible to counter-stratify because they\'re not predictable.&rdquo;</em></p>',
+        sb('NiKo — IEM Katowice 2026 Stats', [
+          ['HLTV Rating', '1.31'],
+          ['Clutch Rounds Won', '5'],
+          ['Opening Kill %', '61%'],
+          ['G2 Group Record', '3–1'],
+          ['Maps Played', '9'],
+        ]),
+        '<h2>On the Semifinal vs. Vitality</h2>',
+        '<p>The upcoming semifinal against ' + art('zywoo-katowice-record', 'Vitality and ZywOo') + ' is being billed as the de facto Grand Final given the bracket weight. NiKo is direct when pressed: <em>&ldquo;He is the best player in the world right now and I respect him deeply. But we are prepared for him specifically. I will not say more than that.&rdquo;</em></p>',
+        '<p><strong>G2 vs. Vitality</strong> kicks off Thursday. ' + a('/l1/scoretap/', 'Watch live on ScoreTap.') + '</p>',
+      ],
+    },
+
+    'mouz-heroic-semifinal': {
+      id: 'mouz-heroic-semifinal',
+      game: 'cs2', gameLabel: 'CS2',
+      title: 'MOUZ Advance to IEM Katowice Semifinals After 2-0 Sweep of Heroic',
+      author: 'Marcus Holt', date: 'Mar 10, 2026 · 18h ago', event: 'IEM Katowice 2026',
+      related: ['zywoo-katowice-record', 'g2-niko-interview', 'vitality-faze-results'],
+      body: [
+        '<h2>Clinical Execution</h2>',
+        '<p><strong>MOUZ</strong> produced a near-flawless <strong>2-0 dismantling of Heroic</strong> to book their semifinal spot at <em>IEM Katowice 2026</em>, with Hungarian AWPer <strong>Mátyás &ldquo;torzsi&rdquo; Törzs</strong> leading the charge at an event-best <strong>1.44 rating</strong> across both maps. The result ended Heroic\'s four-map win streak on Inferno and confirmed ' + teams('MOUZ') + ' as the tournament\'s most complete team outside the top seeds.</p>',
+        '<p>Map one, <strong>Mirage</strong>, was effectively over at halftime. MOUZ\'s T-side dismantled Heroic\'s CT structure through coordinated utility. Their <strong>B Apartments smoke timing</strong> and double-flash entry on A were executed with a precision that left Heroic unable to rotate effectively. They closed Mirage <strong>16&ndash;8</strong>. Inferno, expected to be more competitive, lasted barely longer: <strong>16&ndash;10</strong>, with MOUZ winning the first seven rounds of their CT half in succession.</p>',
+        pq('This team is playing at a level I\'ve never experienced before. Every player trusts every call. That\'s not common. That\'s something you build over a long time.', 'torzsi, post-match'),
+        '<h2>Heroic\'s Honest Post-Mortem</h2>',
+        '<p>Heroic captain <strong>casle</strong> was blunt in defeat: <em>&ldquo;We did not lose because MOUZ outfragged us. We lost because we did not adapt when our strategy was read. That is a coaching failure and a player failure equally.&rdquo;</em> The verdict was harsh but accurate. Heroic\'s <strong>42% round win rate</strong> across both maps suggested a team that had been scouted exhaustively.</p>',
+        sb('Match Statistics', [
+          ['Map 1: Mirage', 'MOUZ 16–8'],
+          ['Map 2: Inferno', 'MOUZ 16–10'],
+          ['torzsi Rating', '1.44'],
+          ['MOUZ Round Win %', '73%'],
+          ['Heroic Round Win %', '42%'],
+        ]),
+        '<h2>The Road Ahead</h2>',
+        '<p>MOUZ now face the winner of ' + art('vitality-faze-results', 'Vitality') + ' vs. ' + art('g2-niko-interview', 'G2') + ' in the semifinals. Head Coach <strong>Torben &ldquo;Snappi&rdquo; Frederiksen</strong>, a former Heroic IGL who knows both opponents well, says the team is &ldquo;rested and prepared for either outcome,&rdquo; but that lifting the trophy remains the explicit goal. <em>Winning IEM Katowice is the only result that matters this week.</em></p>',
+      ],
+    },
+
+    'vitality-faze-results': {
+      id: 'vitality-faze-results',
+      game: 'cs2', gameLabel: 'CS2',
+      title: 'Vitality Defeat FaZe 16-12 in Tense IEM Katowice Quarter-Final',
+      author: 'Elena Vasquez', date: 'Mar 9, 2026 · 1d ago', event: 'IEM Katowice 2026',
+      related: ['zywoo-katowice-record', 'g2-niko-interview', 'navi-blamef-signing'],
+      body: [
+        '<h2>A Test Survived</h2>',
+        '<p><strong>Team Vitality</strong> survived the closest test of their <em>IEM Katowice 2026</em> campaign, defeating <strong>FaZe Clan 16&ndash;12</strong> on <strong>Ancient</strong> in a quarterfinal that shifted momentum three separate times before finally resolving in the French organisation\'s favour. The win sets up a blockbuster semifinal against ' + art('g2-niko-interview', 'G2 Esports') + '.</p>',
+        '<p>FaZe built a <strong>9&ndash;3 T-side lead</strong> that had analysts questioning Vitality\'s CT defaults against FaZe\'s high-tempo aggression, the kind of read that could spiral into a full collapse. But the second half showed the depth of <strong>XTQZZZ\'s system</strong>: Vitality reeled off <strong>eight consecutive rounds</strong> after the pistol to turn a deficit into a commanding 12&ndash;9 lead.</p>',
+        pq('We trusted the system when it looked bad. Nine-three is not a disaster in CS2. It is a challenge. We respond to challenges.', 'ZywOo, post-match interview'),
+        '<h2>The Unexpected Hero</h2>',
+        '<p>The match\'s real story was not ' + art('zywoo-katowice-record', 'ZywOo') + ', despite his <strong>1.38 rating</strong>. It was <strong>misutaaa</strong>, Vitality\'s AWPer, who finally delivered the individual performance the roster has needed from him at a top event. Three crucial opening picks in the final five rounds, a <strong>1.19 series rating</strong>, and retake initiations that consistently denied FaZe economy. XTQZZZ had built those specific retake scenarios around misutaaa\'s positioning, and tonight they paid off.</p>',
+        sb('Match Summary — Ancient', [
+          ['Final Score', 'Vitality 16–12 FaZe'],
+          ['ZywOo Rating', '1.38'],
+          ['misutaaa Rating', '1.19'],
+          ['karrigan Rating', '0.91'],
+          ['Match Duration', '58 min'],
+          ['Vitality T-Side', '9–6'],
+        ]),
+        '<h2>FaZe\'s Perspective</h2>',
+        '<p>FaZe captain <strong>Finn &ldquo;karrigan&rdquo; Andersen</strong> was measured in defeat: <em>&ldquo;Vitality are a complete team. We gave them real problems in the first half but had no answers when they started contesting differently. ZywOo is a force of nature but it was misutaaa who decided the match tonight.&rdquo;</em></p>',
+        '<p>FaZe exit <em>Katowice</em> with genuine questions about roster composition heading into the ' + art('blast-premier-schedule', 'BLAST Premier Spring') + ' season. karrigan has suggested changes may come in the offseason if results don\'t improve through April.</p>',
+      ],
+    },
+
+    'blast-premier-schedule': {
+      id: 'blast-premier-schedule',
+      game: 'cs2', gameLabel: 'CS2',
+      title: 'BLAST Premier 2026 Spring Schedule Revealed With 12-Team Format',
+      author: 'James Archer', date: 'Mar 8, 2026 · 2d ago', event: 'BLAST Premier 2026',
+      related: ['cs2-major-copenhagen', 'navi-blamef-signing', 'zywoo-katowice-record'],
+      body: [
+        '<h2>An Expanded, Upgraded Field</h2>',
+        '<p><strong>BLAST</strong> has released full format details for <em>BLAST Premier Spring 2026</em>, confirming an expanded <strong>12-team field</strong> and a <strong>$425,000 prize pool</strong>, an increase of $75,000 over last year\'s edition. The event begins <strong>April 3</strong> with an online group stage and concludes with a <strong>LAN playoff at OVO Arena Wembley in London</strong>, April 24&ndash;27.</p>',
+        '<p>Invited teams: <strong>Vitality, G2, NAVI, MOUZ, Heroic, Virtus.pro, FaZe, NIP, Astralis, Cloud9, Team Liquid,</strong> and <strong>FURIA</strong>. BLAST confirmed APAC representation will expand beginning in the second half of 2026 as the regional partnership structure matures.</p>',
+        pq('BLAST Premier has always been about the elite of the elite. This year\'s field is the deepest it has ever been. Twelve of the top fifteen teams in the world on one stage.', 'Charlotte Beck, BLAST Head of Competition'),
+        '<h2>Format Change: Bo3 Group Stage</h2>',
+        '<p>The headline format change introduces a <strong>bo3 group stage</strong> replacing the bo1 format that critics argued produced misleading results. <em>&ldquo;Teams told us that bo1s weren\'t giving an accurate picture of tier-one form,&rdquo;</em> said BLAST\'s Head of Competition <strong>Charlotte Beck</strong>. <em>&ldquo;We listened.&rdquo;</em> Six teams per group, top four advance, and the online phase feeds directly into the Wembley bracket.</p>',
+        sb('BLAST Premier Spring 2026 — Details', [
+          ['Start Date', 'April 3, 2026'],
+          ['LAN Venue', 'OVO Arena Wembley, London'],
+          ['Prize Pool', '$425,000'],
+          ['Format', 'Bo3 Group Stage + LAN Playoffs'],
+          ['Teams', '12 (6 per group)'],
+          ['World Final Spots', '3 direct invitations'],
+        ]),
+        '<h2>Stakes and Qualification</h2>',
+        '<p>The top <strong>three finishers</strong> at BLAST Premier Spring earn direct invitations to the <em>BLAST Premier World Final</em> in December, creating a direct pipeline that makes this event far more than a seasonal prize-money tournament. Combined with the ' + art('cs2-major-copenhagen', 'CS2 Major in Copenhagen') + ' later in the year, BLAST Premier is shaping up as the most consequential pre-Major CS2 event of 2026.</p>',
+      ],
+    },
+
+    'cs2-patch-notes': {
+      id: 'cs2-patch-notes',
+      game: 'cs2', gameLabel: 'CS2',
+      title: 'CS2 Update Brings Major Changes to Dust2 and Mirage Geometry',
+      author: 'Sophie Lindberg', date: 'Mar 7, 2026 · 3d ago', event: 'CS2 Update',
+      related: ['mouz-heroic-semifinal', 'zywoo-katowice-record', 'blast-premier-schedule'],
+      body: [
+        '<h2>What Changed</h2>',
+        '<p>Valve released <strong>CS2 patch 1.40.2</strong> on March 7, introducing geometry adjustments to <strong>Dust2</strong> and <strong>Mirage</strong>, the two most-played maps in professional play, alongside performance improvements the studio claims will improve average frame rates by <strong>12% across all hardware tiers</strong>. Thirty-eight bugs were also fixed, including a lighting anomaly on Vertigo that teams had been quietly exploiting for sightline reads.</p>',
+        '<h3>Dust2 Changes</h3>',
+        '<p>The <strong>Long A corridor</strong> receives the most significant Dust2 modification: a new pixel-walk blocker and a small geometry adjustment to the car near the corner removes a reliable <em>one-way smoke position</em> that teams had exploited for two full seasons. The B tunnels are untouched, but <strong>CT-side box positioning near B Site</strong> has been slightly opened, giving AWPers a marginally wider angle without full exposure.</p>',
+        '<h3>Mirage Changes</h3>',
+        '<p>Mirage changes are more substantial. <strong>Mid-window has been lowered by approximately 8 units</strong>, affecting the legendary &ldquo;connector window&rdquo; peek that has defined T-side aggression at the highest level for two years. <strong>A boxes on A Site</strong> have also been adjusted, with topography altered to remove a pixel boost that teams had quietly deployed in anti-eco rounds.</p>',
+        pq('The Mirage window change is bigger than people realize. That peek has been part of the meta for four years. Removing it reshapes half the T-side default.', 'Snappi, MOUZ Head Coach'),
+        '<h2>Competitive Impact</h2>',
+        sb('Patch 1.40.2 — Summary', [
+          ['Maps Updated', 'Dust2, Mirage'],
+          ['Smoke Lineups Invalidated', '14'],
+          ['Performance Uplift (avg)', '+12% FPS'],
+          ['Bug Fixes', '38'],
+          ['Long A car position', 'Modified'],
+          ['Mid-window height (Mirage)', '–8 units'],
+        ]),
+        '<p>Fourteen established smoke lineups are now invalid. Community resources are cataloguing new positions, with preliminary analysis suggesting <strong>A-site smokes on Mirage</strong> will require significant recalibration. Professional teams, including ' + art('mouz-heroic-semifinal', 'MOUZ') + ' heading into their <em>IEM Katowice</em> semifinal, face the unusual challenge of updating playbooks mid-tournament under the same constraints as every opponent.</p>',
+      ],
+    },
+
+    // ── VALORANT ─────────────────────────────────────────────────────────────
+
+    'sentinels-group-stage': {
+      id: 'sentinels-group-stage',
+      game: 'valorant', gameLabel: 'Valorant',
+      title: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record',
+      author: 'Aisha Mendez', date: 'Mar 11, 2026 · 5h ago', event: 'VCT Americas 2026',
+      related: ['nrg-americas-playoffs', 'loud-vct-preview', 'paper-rex-flippzjder'],
+      body: [
+        '<h2>Dominance, Defined</h2>',
+        '<p><strong>Sentinels</strong> completed the <em>VCT Americas 2026</em> group stage without a single loss, going <strong>5&ndash;0</strong>, conceding just one map in the process, a result that has the Valorant world asking whether this iteration of the roster is the strongest team ever assembled in the game. <strong>Tyson &ldquo;TenZ&rdquo; Ngo</strong> leads the charge with a <strong>265.4 ACS average</strong> and a <strong>1.38 KDA</strong> that puts him comfortably atop the Americas statistical leaderboard.</p>',
+        '<p>The most striking aspect of SEN\'s run was not the wins themselves but the <em>manner</em> in which they arrived. Against ' + teams('NRG') + ', considered the strongest American challenger, Sentinels overcame a <strong>3&ndash;6 deficit</strong> in Map 2, reeling off <strong>14 consecutive rounds</strong> from a position that typically signals a map concession at the top level.</p>',
+        pq('A 5-0 record is just a number. The way we won those matches is what matters. We didn\'t just beat teams. We controlled them.', 'TenZ, Sentinels captain'),
+        '<h2>Beyond TenZ</h2>',
+        '<p>The supporting cast deserves equal billing. <strong>Sacy</strong>, entering his third year with the organisation, has evolved into one of the most reliable sentinel players in the game. His rotation timing consistently arriving one second before defenses would otherwise collapse. Chilean duelist <strong>ban</strong> has added frenetic entry energy that keeps defenses guessing in a way that previous SEN rosters never managed. Head Coach <strong>Adam Kaplan</strong> has built specific scenarios around this combination.</p>',
+        sb('VCT Americas Group Stage — Sentinels', [
+          ['Group Record', '5–0'],
+          ['Maps Won / Lost', '11 / 1'],
+          ['Avg Round Differential', '+7.4'],
+          ['TenZ ACS', '265.4'],
+          ['TenZ KDA', '1.38'],
+          ['Best-of-5 record (2026)', '4–0'],
+        ]),
+        '<h2>Playoffs and the Path Forward</h2>',
+        '<p>Sentinels will face the second-place team from the opposite group in the quarterfinals. The most likely opponent is ' + art('loud-vct-preview', 'LOUD') + ', setting up the most anticipated Americas rivalry matchup of the split. With their track record in best-of-fives, with <strong>one loss in their last nine</strong>, SEN enter as clear favourites regardless of opponent. ' + a('/l1/scoretap/', 'Track bracket progress live.') + '</p>',
+      ],
+    },
+
+    'paper-rex-flippzjder': {
+      id: 'paper-rex-flippzjder',
+      game: 'valorant', gameLabel: 'Valorant',
+      title: 'Paper Rex Sign Filipino Prodigy fl1pzjder to Replace Departing Jinggg',
+      author: 'Kevin Tanaka', date: 'Mar 11, 2026 · 8h ago', event: 'Transfer News',
+      related: ['vct-pacific-standings', 'sentinels-group-stage', 'loud-vct-preview'],
+      body: [
+        '<h2>The Signing</h2>',
+        '<p><strong>Paper Rex</strong> have confirmed the acquisition of <strong>Jason &ldquo;fl1pzjder&rdquo; Dizon</strong>, a 19-year-old Filipino duelist from <em>Neon Esports</em>, filling the vacancy created by the retirement of <strong>Jinggg</strong>, one of the most beloved players in Valorant history. Jinggg stepped away in January citing burnout after six years at the top level, a decision PRX management described as &ldquo;entirely his own and entirely respected.&rdquo;</p>',
+        '<p>fl1pzjder is widely considered the most mechanically gifted young player to emerge from Southeast Asia in two years. His <strong>284.1 ACS average</strong> across the 2025 APAC season ranked second in the region behind only f0rsakeN, his <em>future teammate</em>. His defining characteristic is an <em>aggressive wide-peek style</em> that wins duels from angles where the crossfire technically favours the defender.</p>',
+        pq('I have watched Paper Rex since I was sixteen. The way they play it is beautiful. It is chaos but it is intelligent chaos. That is how I play naturally.', 'fl1pzjder, signing announcement'),
+        '<h2>The Recruitment Story</h2>',
+        '<p>PRX CEO <strong>Tariq Amir</strong> described a swift process: <em>&ldquo;We had been watching Jason since mid-2024. When Jinggg\'s situation resolved, we moved immediately. We called him directly and he came to Singapore for a trial the next week. By end of day two, everyone knew.&rdquo;</em> The team f0rsakeN, Benkai, d4v41, and mindfreak have three years of shared chemistry, which typically makes onboarding difficult. PRX is betting fl1pzjder\'s instinct-driven style is compatible by nature, not by instruction.</p>',
+        sb('fl1pzjder — Player Profile', [
+          ['Age', '19'],
+          ['Previous Team', 'Neon Esports'],
+          ['2025 ACS (APAC)', '284.1'],
+          ['Role', 'Duelist / Entry Fragger'],
+          ['Region', 'Philippines'],
+          ['Debut Event', 'VCT Pacific 2026 Phase 2'],
+        ]),
+        '<h2>What to Expect</h2>',
+        '<p>' + teams('Paper Rex') + ' debut fl1pzjder at <em>VCT Pacific 2026 Phase 2</em> in two weeks. ' + art('vct-pacific-standings', 'Current Pacific standings') + ' have PRX leading the table, though expectations within the organisation are intentionally tempered given integration time, but the talent floor of this lineup is higher than any previous PRX roster.</p>',
+      ],
+    },
+
+    'vct-pacific-standings': {
+      id: 'vct-pacific-standings',
+      game: 'valorant', gameLabel: 'Valorant',
+      title: 'VCT Pacific 2026 Group Stage Standings: All 10 Teams Ranked',
+      author: 'Aisha Mendez', date: 'Mar 11, 2026 · 12h ago', event: 'VCT Pacific 2026',
+      related: ['paper-rex-flippzjder', 'sentinels-group-stage', 'nrg-americas-playoffs'],
+      body: [
+        '<h2>The Table</h2>',
+        '<p>The <em>VCT Pacific 2026</em> group stage has produced tighter results than most predicted, with five of ten teams separated by a single match win. <strong>Paper Rex</strong> lead the table following a dominant early run, but <strong>DRX</strong> and the Korean contingent are positioned to challenge for top seeding as the final two group rounds approach.</p>',
+        sb('VCT Pacific 2026 — Group Standings', [
+          ['#1 Paper Rex', '3W 0L  (+8 map diff)'],
+          ['#2 DRX', '3W 1L  (+5 map diff)'],
+          ['#3 T1 (KR)', '2W 1L  (+3 map diff)'],
+          ['#4 Gen.G Esports', '2W 2L  (+1 map diff)'],
+          ['#5 Talon Esports', '1W 2L  (−2 map diff)'],
+          ['#6 ZETA DIVISION', '1W 2L  (−3 map diff)'],
+          ['#7 Fnatic', '1W 3L  (−4 map diff)'],
+        ]),
+        '<h2>Paper Rex\'s Strengths and Vulnerabilities</h2>',
+        '<p>' + teams('Paper Rex') + '\'s dominance has been total in round economy. They have not trailed in a second half since the competition began. However, their <strong>map pool remains a concern</strong>: strong on <strong>Sunset (2&ndash;0)</strong>, visibly more uncertain on <strong>Bind (1&ndash;1)</strong>. Analysts expect opponents to target Bind aggressively in best-of-three settings, which makes ' + art('paper-rex-flippzjder', 'fl1pzjder\'s integration') + ' into their B-site default structure an important variable.</p>',
+        pq('We are not going to panic. Two rounds left, and we control our destiny. That is all that matters.', 'Boaster, Fnatic IGL'),
+        '<h2>The Korean Bloc</h2>',
+        '<p>DRX, T1, and Gen.G collectively occupy three of the top four positions, continuing a trend that has made <strong>Korea the dominant Valorant region globally</strong>. DRX\'s IGL <strong>Zest</strong> runs three distinct default structures per map, making scouting preparation uniquely difficult. Their sole loss came to PRX in Game 5 of their opening match, a match that left both teams visibly drained and both fan bases breathless.</p>',
+        '<p><strong>Fnatic</strong>, at 1&ndash;3, have been the tournament\'s biggest disappointment. Despite fielding one of the most experienced rosters in the region, their defensive passivity against Korean-style structured offenses has been exposed repeatedly. Two wins in the final round are required for playoff survival, an unlikely but not impossible outcome.</p>',
+      ],
+    },
+
+    'nrg-americas-playoffs': {
+      id: 'nrg-americas-playoffs',
+      game: 'valorant', gameLabel: 'Valorant',
+      title: 'NRG Secure Americas Playoff Spot With 13-9 Win Over 100 Thieves',
+      author: 'Marcus Holt', date: 'Mar 10, 2026 · 20h ago', event: 'VCT Americas 2026',
+      related: ['sentinels-group-stage', 'loud-vct-preview', 'vct-pacific-standings'],
+      body: [
+        '<h2>The Win That Mattered</h2>',
+        '<p><strong>NRG Esports</strong> punched their <em>VCT Americas 2026</em> playoff ticket with a clinical <strong>13&ndash;9 win over 100 Thieves</strong> on Ascent, a map that has historically favoured 100T\'s rigid structure, yet played out as the exact opposite on this occasion. American duelist <strong>Victor</strong> led all players with <strong>269 ACS</strong> and a series of opening picks that denied 100T the early information they rely on to set up mid-round reads.</p>',
+        '<p>The match turned on a critical stretch between rounds 11 and 15 of NRG\'s CT half. Holding a 9&ndash;6 lead, 100T pushed back with three consecutive round wins on an economic push and appeared set to force overtime. NRG Head Coach <strong>Mike Grzesiek</strong> called a timeout. What followed was four consecutive retake wins that sealed the map before 100T could complete the comeback.</p>',
+        pq('We called timeout to reset, not to draw up X\'s and O\'s. Sometimes your players just need to hear "you\'ve got this." That is what happened.', 'Mike Grzesiek, NRG Head Coach'),
+        '<h2>100T\'s Precarious Position</h2>',
+        '<p><strong>100 Thieves</strong> now face a critical final group round with playoff position in jeopardy. A loss would likely eliminate them before the bracket stage, a catastrophic outcome for a team regarded as a title contender heading into the split. IGL <strong>Asuna</strong> gave a measured post-match statement, but the body language of the roster in the post-game handshake was telling.</p>',
+        sb('Match Summary — Ascent', [
+          ['Final Score', 'NRG 13–9'],
+          ['Victor ACS', '269'],
+          ['NRG Group Record', '4–1'],
+          ['100T Group Record', '2–3'],
+          ['Key Stretch', 'NRG win 4 straight (rds 12–15)'],
+        ]),
+        '<h2>NRG\'s Path Forward</h2>',
+        '<p>NRG advance knowing they will likely face ' + art('sentinels-group-stage', 'Sentinels') + ' in the quarterfinals, the most anticipated Americas rivalry matchup of the split. Historically NRG struggle in high-stakes best-of-fives against SEN, going <strong>1&ndash;4</strong> in their last five playoff encounters. Whether the structure Mike Grzesiek has built in 2026 finally breaks that pattern is the central narrative of the postseason.</p>',
+      ],
+    },
+
+    'loud-vct-preview': {
+      id: 'loud-vct-preview',
+      game: 'valorant', gameLabel: 'Valorant',
+      title: 'LOUD vs Sentinels VCT Americas Preview: A Clash of Opposite Styles',
+      author: 'Kevin Tanaka', date: 'Mar 9, 2026 · 1d ago', event: 'VCT Americas 2026',
+      related: ['sentinels-group-stage', 'nrg-americas-playoffs', 'paper-rex-flippzjder'],
+      body: [
+        '<h2>The Setup</h2>',
+        '<p>When <strong>LOUD</strong> and <strong>Sentinels</strong> share a stage they produce Valorant at its most watchable. Their upcoming quarterfinal at <em>VCT Americas 2026</em> pits two fundamentally different philosophies against each other: <em>Sentinels\' controlled, information-first structure</em> versus <em>LOUD\'s reactive, instinct-driven chaos</em>. The tactical chess match begins in the map veto, where both teams will be trying to dictate terrain well before round one starts.</p>',
+        pq('LOUD have never once been easy for us. aspas is probably the most dangerous individual player we face in this region. We have to plan for him specifically.', 'Adam Kaplan, Sentinels Head Coach'),
+        '<h2>LOUD\'s Plan of Attack</h2>',
+        '<p><strong>aspas</strong> is LOUD\'s primary weapon: an entry-fragger whose first-round aggression creates space that IGL <strong>Saadhak</strong> exploits through delayed executes and fake-site pressure. Against structured teams, this combination works exceptionally well. Against ' + art('sentinels-group-stage', 'Sentinels') + ', who are the most disciplined team at reading T-side structure, the question is whether LOUD can introduce enough unpredictability to compromise SEN\'s pre-round read. Their answer will likely be to <strong>ban Lotus and Bind</strong> maps where SEN\'s defaults are most optimized and push toward Pearl or Haven.</p>',
+        '<h2>Sentinels\' Counter</h2>',
+        '<p>SEN\'s counter doesn\'t start with <strong>TenZ</strong>. It starts with <strong>Sacy\'s</strong> sentinel read. In their 2025 encounter, Sacy\'s <em>two defensive clutches</em> were the decisive moments in Map 2, both arriving because he rotated exactly one second before the standard timing would have demanded. LOUD had prepared for the rotation. They just hadn\'t prepared for it arriving <em>that</em> early.</p>',
+        sb('Head-to-Head Context', [
+          ['2025 Head-to-Head', 'SEN 2–1 LOUD'],
+          ['SEN Group Record (2026)', '5–0'],
+          ['LOUD Group Record (2026)', '3–2'],
+          ['SEN Avg ACS (split)', '248.7'],
+          ['LOUD Avg ACS (split)', '221.4'],
+          ['Last meeting (result)', 'SEN 2–1 (VCT Americas 2025)'],
+        ]),
+        '<h2>The Prediction</h2>',
+        '<p>Sentinels are clear favourites on paper and form. But LOUD under Saadhak have a documented history of outperforming their pre-series odds in knockout stages, going <strong>7&ndash;3</strong> as statistical underdogs over the past two years. Whoever advances faces either ' + art('nrg-americas-playoffs', 'NRG') + ' or FURIA in the semifinal. ' + a('/l1/scoretap/', 'Follow the match live.') + '</p>',
+      ],
+    },
+
+    'valorant-episode-9': {
+      id: 'valorant-episode-9',
+      game: 'valorant', gameLabel: 'Valorant',
+      title: 'Valorant Episode 9 Act 2: Omen Rework, New Map Trident, Balance Changes',
+      author: 'Sophie Lindberg', date: 'Mar 6, 2026 · 4d ago', event: 'Valorant Update',
+      related: ['sentinels-group-stage', 'paper-rex-flippzjder', 'loud-vct-preview'],
+      body: [
+        '<h2>The Headlines</h2>',
+        '<p><strong>Riot Games</strong> launched <em>Episode 9 Act 2</em> on March 6, introducing the most significant controller overhaul in Valorant\'s history alongside a new competitive map, <strong>Trident</strong>, set in the favelas and forested cliffs of coastal Brazil. Eleven balance changes, three agent updates, and a partial competitive rank reset accompany the release.</p>',
+        '<h2>Omen Rework</h2>',
+        '<p><strong>Omen\'s</strong> kit has been redesigned around a new passive called <strong>&ldquo;Dread Presence&rdquo;</strong>. His smokes now apply a brief slow effect on enemies that push through them. His <strong>Paranoia</strong> ability shifts from a traveling projectile to a <em>ground-level blind</em>, making it harder to dodge in narrow corridors but easier to counter in open spaces. The changes significantly raise his floor in lower ranks while potentially lowering his ceiling for creative players like ' + art('loud-vct-preview', 'LOUD\'s Saadhak') + ', who built entire systems around the old kit\'s travel-path manipulation.</p>',
+        pq('I need time with this. The old Omen\'s ceiling was very high with the right player. I\'m not sure the new version has the same ceiling. But I could be wrong.', 'Saadhak, LOUD IGL'),
+        '<h2>New Map: Trident</h2>',
+        '<p><strong>Trident</strong> enters the competitive pool immediately. Riot\'s map team describe it as built around a <em>&ldquo;vertical philosophy&rdquo;</em> elevation changes that reward high-ground control more than any existing map. Three-lane combat funnels into a central tower structure that provides sightlines to both sites, which analysts are already calling <em>the dominant position of the map</em>. Agent picks that control verticality <strong>Chamber, Jett, Killjoy</strong> are expected to become immediate meta answers.</p>',
+        sb('Episode 9 Act 2 — Patch Summary', [
+          ['Patch', 'Episode 9 Act 2'],
+          ['New Map', 'Trident (Brazil)'],
+          ['Agents Updated', '3 (Omen, Brimstone, Yoru)'],
+          ['Balance Changes', '11'],
+          ['Rank Reset', 'Partial (-750 RR)'],
+          ['Goes Live', 'March 6, 2026'],
+        ]),
+        '<h2>Competitive Impact</h2>',
+        '<p>Professional teams have had limited time with Trident. Early scrimmage reports suggest the map strongly favours <em>controller-heavy compositions</em>, ironically, at the same time Omen\'s rework has made that agent a less reliable pick. <strong>Brimstone</strong> and <strong>Astra</strong> may see renewed priority. Expect Trident to appear in ' + art('vct-pacific-standings', 'VCT Pacific Phase 2') + ' map pools beginning next week.</p>',
+      ],
+    },
+
+    // ── LEAGUE OF LEGENDS ──────────────────────────────────────────────────────
+
+    'faker-contract-2028': {
+      id: 'faker-contract-2028',
+      game: 'lol', gameLabel: 'LoL',
+      title: 'T1 Faker Signs Landmark Contract Extension Through 2028',
+      author: 'Min-Jun Park', date: 'Mar 11, 2026 · 10h ago', event: 'Transfer News',
+      related: ['lck-spring-preview', 'geng-ruler-contract', 'msi-2026-location'],
+      body: [
+        '<h2>The Announcement</h2>',
+        '<p><strong>Lee &ldquo;Faker&rdquo; Sang-hyeok</strong> will remain with <strong>T1</strong> through the <strong>2028 season</strong> after signing a landmark extension that includes an <strong>equity stake in T1 Entertainment & Sports</strong>, making him the <em>first active League of Legends player to hold a formal ownership position</em> in their team. T1 CEO <strong>Joe Marsh</strong> called it &ldquo;the most significant signing in esports history.&rdquo;</p>',
+        '<p>Faker, who turned 30 in May 2025, has defied every conventional wisdom about player longevity in competitive League of Legends. Where the consensus held that 27&ndash;28 represented peak performance, his 2025 season produced his <strong>sixth All-LCK selection</strong> and the <strong>highest KDA of his career</strong>. The extension acknowledges that he remains not just T1\'s best player but the best in the LCK.</p>',
+        pq('I do not play to prove I am still good. I play because I love the game and I love this team. As long as those two things are true, I will keep playing.', 'Faker, contract signing ceremony'),
+        '<h2>The Equity Component</h2>',
+        '<p>The equity stake is <em>unprecedented</em> in Korean esports. Sources familiar with the negotiation described it as <strong>Faker\'s specific priority</strong>. He wanted long-term investment alignment with an organisation he has called home for over a decade. <em>&ldquo;I want to help build T1 for the next generation,&rdquo;</em> Faker said through a translator at the signing ceremony, which was attended by over 400 invited press and partners.</p>',
+        sb('Faker — Career Highlights', [
+          ['World Championships', '5 (2013, 2015, 2016, 2023, 2025)'],
+          ['All-LCK Selections', '6'],
+          ['Years at T1', '11'],
+          ['Contract End', '2028'],
+          ['Equity Stake', 'Yes (undisclosed %)'],
+          ['Current LCK Record', '16W–2L'],
+        ]),
+        '<h2>The 2026 Goal</h2>',
+        '<p>' + teams('T1') + ' enter the ' + art('lck-spring-preview', 'LCK Spring 2026 playoff run') + ' as heavy favourites with a <strong>16&ndash;2 regular season record</strong>. A sixth World Championship title which would extend Faker\'s own record is the explicit goal for the year. The extension through 2028 also implicitly signals that T1 believe he can deliver <em>two more</em> after this one. For context: <strong>' + art('msi-2026-location', 'MSI 2026') + ' is in Seoul</strong>, Faker\'s home city. The symmetry is not lost on anyone.</p>',
+      ],
+    },
+
+    'geng-ruler-contract': {
+      id: 'geng-ruler-contract',
+      game: 'lol', gameLabel: 'LoL',
+      title: 'Gen.G ADC Ruler Extends Contract Ahead of MSI 2026',
+      author: 'Min-Jun Park', date: 'Mar 10, 2026 · 1d ago', event: 'Transfer News',
+      related: ['faker-contract-2028', 'lck-spring-preview', 'msi-2026-location'],
+      body: [
+        '<h2>Ruler Stays</h2>',
+        '<p><strong>Park &ldquo;Ruler&rdquo; Jae-hyuk</strong> has signed a <strong>two-year contract extension</strong> with <strong>Gen.G</strong>, confirming he remains with the organisation through the 2028 season. The announcement came three months before <em>' + art('msi-2026-location', 'MSI 2026') + '</em> and was positioned explicitly as a statement of long-term ambition: Gen.G intend to compete for world titles, not just LCK placings, and Ruler is the centerpiece of that plan.</p>',
+        '<p>The 26-year-old has developed over five years into one of the most complete ADC players in LCK history, exceptional at both isolated lane pressure and team fight positioning. His <strong>642.4 DPM in 2025</strong> ranked <em>first among all Korean ADCs</em>, and his ability to convert resource leads into objective control has become the primary driver of Gen.G\'s macro system.</p>',
+        pq('I extended because I believe Gen.G can win Worlds. That is the only goal. The contract length tells you how long I think it will take.', 'Ruler, contract extension announcement'),
+        '<h2>Why the Timing Matters</h2>',
+        '<p>Gen.G GM <strong>Kim &ldquo;Dread&rdquo; Jong-min</strong> explained the urgency: <em>&ldquo;Ruler is a generational ADC. We were not willing to enter a situation where European or North American teams could open conversations. We extended early to send a clear signal. Ruler is a Gen.G player.&rdquo;</em> European scouts had reportedly made informal inquiries following his 2025 season.</p>',
+        sb('Ruler — Career Context', [
+          ['Years at Gen.G', '5'],
+          ['2025 DPM (rank)', '642.4 (#1 KR ADC)'],
+          ['MSI Appearances', '6'],
+          ['Career Finals MVPs', '2'],
+          ['Contract End (new)', 'December 2028'],
+          ['2024 MSI Result', 'Runner-Up (vs T1)'],
+        ]),
+        '<h2>The Unfinished Business</h2>',
+        '<p>Ruler has specifically cited the <strong>2024 MSI final</strong>, a five-game loss to ' + art('faker-contract-2028', 'Faker\'s T1') + ' as his primary competitive motivation. <em>&ldquo;We were the better team in some respects that day and still lost. That does not leave you.&rdquo;</em> With ' + art('msi-2026-location', 'MSI 2026 in Seoul') + ', T1\'s home turf, Ruler will need to perform at the highest level in the most psychologically charged setting possible.</p>',
+      ],
+    },
+
+    'lec-g2-standings': {
+      id: 'lec-g2-standings',
+      game: 'lol', gameLabel: 'LoL',
+      title: 'LEC Spring 2026 Standings: G2 Lead by Three Wins With Four Weeks Remaining',
+      author: 'Elena Vasquez', date: 'Mar 10, 2026 · 1d ago', event: 'LEC Spring 2026',
+      related: ['faker-contract-2028', 'lck-spring-preview', 'msi-2026-location'],
+      body: [
+        '<h2>The State of the League</h2>',
+        '<p><strong>G2 Esports</strong> hold a commanding <strong>three-win lead</strong> at the top of <em>LEC Spring 2026</em> standings through round thirteen, sitting at <strong>11&ndash;2</strong>. The record, the best in the league at this point of any split, has been built on superior <strong>dragon prioritisation</strong> and arguably the most versatile champion pool in any region globally heading into the playoff push.</p>',
+        sb('LEC Spring 2026 Standings (Week 9)', [
+          ['#1 G2 Esports', '11W – 2L'],
+          ['#2 Fnatic', '8W – 5L'],
+          ['#3 Team BDS', '7W – 6L'],
+          ['#4 Karmine Corp', '7W – 6L'],
+          ['#5 Excel Esports', '6W – 7L'],
+          ['Playoffs Start', 'April 5, 2026'],
+        ]),
+        '<h2>The G2 Formula</h2>',
+        '<p>The engine driving G2\'s run is mid-laner <strong>Caps</strong>, entering his tenth LEC season having resolved the inconsistency that plagued his 2024 campaign. His primary picks this split, <strong>Azir, Corki, Orianna</strong> give G2\'s macro system <em>flexibility that opponents struggle to draft against</em>, because any of the three can anchor the same rotational pattern. G2\'s two losses both came in five-game series against BDS and KCorp, suggesting a ceiling is not yet in sight from regular season opponents.</p>',
+        pq('Three wins is not a safe lead in the LEC. You can lose three in a row to anyone in this league. We know that. We are not relaxing.', 'Caps, G2 mid-laner'),
+        '<h2>The Playoff Race</h2>',
+        '<p>Five teams sit separated by a single win between positions 5 and 9, making the final playoff spot genuinely contested across multiple weeks. <strong>Excel Esports</strong> and <strong>Vitality</strong>, both tipped for top-four finishes before the split, now find themselves fighting simply to qualify. The stakes are significant: top-six seeding determines the MSI pathway and a direct invitation to the <em>' + art('msi-2026-location', 'MSI 2026 in Seoul') + '</em>.</p>',
+        '<p>G2 enter the playoffs as heavy favourites for both the LEC title and the European MSI seed. Whether <strong>Fnatic</strong>, who have looked inconsistent against mid-table opponents, can mount a genuine title challenge will be answered in the double-elimination bracket beginning April 5.</p>',
+      ],
+    },
+
+    'lck-spring-preview': {
+      id: 'lck-spring-preview',
+      game: 'lol', gameLabel: 'LoL',
+      title: 'LCK Spring 2026 Midseason Report: T1 Dominant but Gen.G Closing the Gap',
+      author: 'Min-Jun Park', date: 'Mar 8, 2026 · 2d ago', event: 'LCK Spring 2026',
+      related: ['faker-contract-2028', 'geng-ruler-contract', 'msi-2026-location'],
+      body: [
+        '<h2>At the Midpoint</h2>',
+        '<p><strong>T1</strong> remain in dominant form at the <em>LCK Spring 2026</em> midpoint, posting a <strong>16&ndash;2 record</strong> that mirrors their best-ever regular season pace. But <strong>Gen.G</strong> have tightened their grip on second place and are positioning for the playoff run that ultimately determines <strong>MSI seeding</strong>, making the final five weeks of regular season critical beyond the surface-level standings.</p>',
+        sb('LCK Spring 2026 Standings (Midpoint)', [
+          ['#1 T1', '16W – 2L'],
+          ['#2 Gen.G', '13W – 5L'],
+          ['#3 DRX', '10W – 8L'],
+          ['#4 KT Rolster', '9W – 9L'],
+          ['T1 vs Gen.G H2H', 'T1 2–1'],
+        ]),
+        '<h2>T1\'s Two Losses</h2>',
+        '<p>Both of T1\'s losses came against ' + art('geng-ruler-contract', 'Gen.G') + ' in close five-game series that tested T1\'s rotational discipline more than any other opponent has in recent memory. <strong>Faker</strong> acknowledged after both results that <em>&ldquo;Gen.G were better on the day&rdquo;</em>, an unusually direct admission from a player who typically deflects credit. It signals genuine respect, and perhaps a degree of concern about the playoff matchup.</p>',
+        pq('Gen.G are not the same team that we beat two years ago. They have grown, and they have grown specifically in the ways that threaten us. That is good. It makes us better.', 'Faker, midseason media day'),
+        '<h2>Gen.G\'s Improvement</h2>',
+        '<p>Gen.G\'s progress has been most visible on the <strong>blue side</strong>, where their early-game vision control under top-laner <strong>Doran\'s</strong> leadership creates structural advantages that persist deep into the mid-game. <strong>Ruler\'s</strong> performance from controlled states, consistently completing item builds without exposure translates into late-game team fight dominance at a rate that exceeds his already impressive 2025 metrics.</p>',
+        '<h2>What the Playoffs Decide</h2>',
+        '<p>LCK playoffs begin in four weeks. T1 have all but secured first seed. The battle between Gen.G, DRX, and a surging KT Rolster for second through fourth will define MSI allocation, and second seed at <em>' + art('msi-2026-location', 'MSI 2026 in Seoul') + '</em> carries enormous implications given the anticipated calibre of the LPL representatives.</p>',
+      ],
+    },
+
+    'msi-2026-location': {
+      id: 'msi-2026-location',
+      game: 'lol', gameLabel: 'LoL',
+      title: 'MSI 2026 Officially Announced — Seoul to Host Mid-Season Invitational',
+      author: 'James Archer', date: 'Mar 7, 2026 · 3d ago', event: 'MSI 2026',
+      related: ['faker-contract-2028', 'lck-spring-preview', 'geng-ruler-contract'],
+      body: [
+        '<h2>Seoul Gets MSI</h2>',
+        '<p><strong>Riot Games</strong> confirmed that <em>MSI 2026</em> will take place in <strong>Seoul, South Korea</strong> at the <strong>KSPO Dome</strong>, a 15,000-seat arena that has hosted Olympic events and major entertainment shows, returning the Mid-Season Invitational to Korea for the <em>first time since 2018</em>. The event runs <strong>May 1&ndash;18</strong> with a record <strong>$2,250,000 prize pool</strong>, up 12.5% over MSI 2025.</p>',
+        pq('Bringing MSI to Seoul is a dream scenario. This city lives and breathes League of Legends. The atmosphere will be something special.', 'Riot Games Global Competitive Director'),
+        '<h2>The Field</h2>',
+        '<p>Expected attendees: <strong>T1</strong> and <strong>Gen.G</strong> as LCK\'s first and second seeds, <strong>G2 or Fnatic</strong> as LEC representative, <strong>Cloud9 or Team Liquid</strong> from the LCS, and representatives from the PCS, LPL, VCS, and CBLoL. The LPL representatives, always a decisive factor in MSI outcomes, will be announced following the ongoing LPL Spring playoffs, with <em>JDG</em> and <em>BLG</em> currently considered the front-runners.</p>',
+        sb('MSI 2026 — Key Details', [
+          ['Venue', 'KSPO Dome, Seoul'],
+          ['Capacity', '15,000'],
+          ['Dates', 'May 1–18, 2026'],
+          ['Prize Pool', '$2,250,000'],
+          ['Winner Prize', '$500,000'],
+          ['LCK Seeds', 'T1 (1st), Gen.G (2nd)'],
+        ]),
+        '<h2>The Faker Dimension</h2>',
+        '<p>For ' + art('faker-contract-2028', 'Faker') + ', who signed his extension specifically referencing MSI and Worlds ambitions, the Seoul location carries profound symbolism. His seventh MSI appearance, at home, has already drawn international attention beyond competitive esports. The prospect of Faker winning MSI in front of 15,000 fans in the city where he grew up is the kind of narrative that transcends the game.</p>',
+        '<p>' + art('geng-ruler-contract', 'Ruler\'s Gen.G') + ' travel to Seoul with unfinished business of their own after the <strong>2024 MSI final loss to T1</strong>. A Faker vs. Gen.G MSI final in Seoul would be one of the most watched esports events in history. ' + a('/l1/scoretap/', 'Track team progress on ScoreTap.') + '</p>',
+      ],
+    },
+
+    // ── DOTA 2 ────────────────────────────────────────────────────────────────
+
+    'spirit-dreamleague': {
+      id: 'spirit-dreamleague',
+      game: 'dota2', gameLabel: 'Dota 2',
+      title: 'Team Spirit Win DreamLeague Season 25 After Stunning Grand Final Comeback',
+      author: 'Dmitri Volkov', date: 'Mar 11, 2026 · 14h ago', event: 'DreamLeague Season 25',
+      related: ['og-rebuild-roster', 'ti12-format-changes'],
+      body: [
+        '<h2>0-2 to 3-2: The Comeback</h2>',
+        '<p><strong>Team Spirit</strong> won <em>DreamLeague Season 25</em> in one of the most dramatic Grand Finals in recent Dota 2 history, recovering from an <strong>0&ndash;2 series deficit</strong> to defeat <strong>Tundra Esports 3&ndash;2</strong> in a match that lasted nearly five hours and produced moments that will be discussed for years. The <strong>$350,000 first prize</strong> goes to Spirit; the <em>narrative</em> belongs to everyone who watched.</p>',
+        '<p>Games 1 and 2 were a <strong>Tundra clinic</strong>. <strong>9Pasha\'s Nature\'s Prophet</strong> split-pushed Spirit\'s base into submission before team fights were relevant, and Tundra\'s draft had a answer for every Spirit hero combination attempted. Game 3\'s pivot, Spirit dropping their comfort <strong>Tidehunter</strong> for a surprising <em>Bristleback-Beastmaster dual-offlane</em>, caught Tundra completely unprepared. The crowd watching via stream registered the audacity of it before the game had even begun.</p>',
+        pq('Going 0-2 in a Grand Final is not the end. It is the beginning of finding out who your team really is. We found out today.', 'TORONTOTOKYO, Team Spirit'),
+        '<h2>The Decisive Moment</h2>',
+        '<p>In Game 3, Spirit carry <strong>Yatoro</strong> executed a <strong>34-minute base attack</strong> with a Radiance-Yasha Terrorblade that took <em>two barracks</em> before Tundra could regroup. The timing was precise to a window of under ninety seconds. Games 4 and 5 were decided on draft. Spirit\'s coach, who rarely speaks publicly, revealed post-series that a backup draft system had been prepared <strong>two weeks in advance</strong> specifically for a Game 5 scenario against Tundra.</p>',
+        sb('Grand Final — Key Stats', [
+          ['Final Result', 'Spirit 3–2 Tundra'],
+          ['Game 5 Duration', '68 minutes'],
+          ['Yatoro avg KDA (event)', '7.1'],
+          ['Prize (Spirit)', '$350,000'],
+          ['Spirit Event Win Streak', '7 matches'],
+          ['Spirit DreamLeague Titles', '2 (only team)'],
+        ]),
+        '<h2>Looking Ahead to TI 2026</h2>',
+        '<p>Spirit cement themselves as the team to beat heading into <em>' + art('ti12-format-changes', 'The International 2026') + '</em>. Their second DreamLeague title, the first CIS team to win it twice confirms they are not merely a Major winner but a <strong>consistent elite force</strong>. ' + art('og-rebuild-roster', 'OG\'s rebuilt lineup') + ' will be one of the teams looking to challenge that status at ESL Stockholm and beyond.</p>',
+      ],
+    },
+
+    'og-rebuild-roster': {
+      id: 'og-rebuild-roster',
+      game: 'dota2', gameLabel: 'Dota 2',
+      title: 'OG Unveil Rebuilt Roster Ahead of ESL One Stockholm 2026 Qualifier',
+      author: 'Dmitri Volkov', date: 'Mar 10, 2026 · 20h ago', event: 'Roster News',
+      related: ['spirit-dreamleague', 'ti12-format-changes'],
+      body: [
+        '<h2>A New Chapter</h2>',
+        '<p><strong>OG</strong> have confirmed their rebuilt Dota 2 roster ahead of the <em>ESL One Stockholm 2026</em> open qualifier beginning <strong>March 25</strong>: carry <strong>bzm</strong> joins from the former NAVI.Dota2 project, and offlaner <strong>Crystallis</strong> completes the lineup alongside retained players <strong>Ceb</strong>, <strong>ATF</strong>, and <strong>Boxi</strong>. The signing of bzm in particular represents a significant talent acquisition for a team rebuilding toward TI relevance.</p>',
+        '<p><strong>bzm</strong> is one of the highest-ceiling carries in the European scene outside established tier-one team rosters. His <strong>Morphling</strong> and <strong>Medusa</strong> performances at regional events have consistently ranked among the most impactful individual showings in terms of resource efficiency. He converts farm leads into map pressure at a rate that his previous organisations were unable to build systematic play around.</p>',
+        pq('I have respected OG my whole career. Ceb and ATF are players I learned from. Being on the same team as them is surreal and also deeply motivating.', 'bzm, OG roster announcement'),
+        '<h2>The Crystallis Addition</h2>',
+        '<p><strong>Crystallis</strong> is the more surprising choice. A Southeast Asian player who relocated to Europe three years ago, his cross-regional style, with <em>aggressive laning, atypical item timings</em> and a comfort with improvised draft situations is expected to bring flexibility to OG\'s draft pool that previous offlane picks haven\'t provided.</p>',
+        sb('OG Dota2 — 2026 Roster', [
+          ['Pos 1 (Carry)', 'bzm'],
+          ['Pos 2 (Mid)', 'ATF'],
+          ['Pos 3 (Offlane)', 'Crystallis'],
+          ['Pos 4 (Support)', 'Boxi'],
+          ['Pos 5 (Hard Support)', 'Ceb (player-coach)'],
+          ['First Event', 'ESL Stockholm Qualifier (Mar 25)'],
+        ]),
+        '<h2>Realistic Expectations</h2>',
+        '<p>OG and Ceb are measured about the Stockholm qualifier. Integration under pressure is the primary test. Whether the new players can absorb OG\'s communication systems in a live event environment. The real target is ' + art('ti12-format-changes', 'TI 2026') + ', and everything before that is, in Ceb\'s words, <em>&ldquo;development opportunities dressed as competition.&rdquo;</em> Given what OG did with two TI titles as supposed underdogs, nobody is entirely discounting them.</p>',
+      ],
+    },
+
+    'ti12-format-changes': {
+      id: 'ti12-format-changes',
+      game: 'dota2', gameLabel: 'Dota 2',
+      title: 'The International 2026 Format Changes Announced by Valve',
+      author: 'James Archer', date: 'Mar 5, 2026 · 5d ago', event: 'The International 2026',
+      related: ['spirit-dreamleague', 'og-rebuild-roster'],
+      body: [
+        '<h2>Swiss Replaces Round-Robin</h2>',
+        '<p><strong>Valve</strong> has released the competitive format for <em>The International 2026</em>, introducing a <strong>Swiss-system group stage</strong> that replaces the traditional double round-robin used in previous years. The expanded field grows to <strong>20 teams</strong> up from 18 in 2025 and the change has generated immediate community debate about fairness, variance, and what it means for teams traditionally reliant on a slow start followed by a strong mid-bracket run.</p>',
+        '<p>Under the Swiss format, teams play until reaching either a <strong>6&ndash;2 record</strong> (advance to upper bracket) or a <strong>2&ndash;6 record</strong> (eliminated). Every round features teams of matching records, ensuring meaningful matches throughout the stage. The format is borrowed from CS2\'s Major structure, a system that has broadly been praised for reducing the number of &ldquo;dead rubber&rdquo; matches in group play.</p>',
+        pq('Swiss means every match matters from round one. No hiding, no coasting. I love it. This is how the best team should be determined.', 'Ceb, OG player-coach'),
+        '<h2>The Controversy</h2>',
+        '<p>A point of contention: teams finishing <strong>6&ndash;2 in Swiss</strong> receive <em>upper bracket placement</em> and a bo3 advantage in the first round of the main event, a meaningful structural benefit that critics argue over-rewards group stage performance in a game where draft and meta adaptation often matters more than raw form over nine rounds. Valve addressed this in their blog: <em>&ldquo;Sustained performance over nine rounds is a more reliable indicator of championship calibre than a single-elimination bracket seeded from a compressed group stage.&rdquo;</em></p>',
+        sb('TI 2026 — Format Details', [
+          ['Teams', '20 (up from 18)'],
+          ['Group Format', 'Swiss (9 rounds)'],
+          ['Advance Record', '6–2'],
+          ['Eliminate Record', '2–6'],
+          ['Prize Pool (est.)', '$20M+'],
+          ['Location', 'TBD (Q2 announcement)'],
+        ]),
+        '<h2>Prize Pool and Timeline</h2>',
+        '<p>The prize pool for TI 2026 has not been officially announced, but Valve confirmed the return of the <strong>Battle Pass crowdfunding model</strong>. Industry observers project the pool will exceed <strong>$20 million</strong> even under conservative engagement assumptions, a number that, if achieved, would make TI 2026 the highest-paid non-CS2 event in esports history. The location will be confirmed in a separate announcement in Q2. ' + art('spirit-dreamleague', 'Team Spirit') + ' enter as the current favourite based on form.</p>',
+      ],
+    },
+
+    // ── ROCKET LEAGUE ─────────────────────────────────────────────────────────
+
+    'rlcs-prize-pool': {
+      id: 'rlcs-prize-pool',
+      game: 'rl', gameLabel: 'Rocket League',
+      title: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million',
+      author: 'Aisha Mendez', date: 'Mar 11, 2026 · 12h ago', event: 'RLCS 2026 Spring',
+      related: ['bds-karmine-win', 'liquid-rl-roster'],
+      body: [
+        '<h2>A Record Pool</h2>',
+        '<p><strong>Psyonix</strong> and <strong>Epic Games</strong> have confirmed a <strong>$2.5 million prize pool</strong> for the <em>RLCS 2026 Spring Split</em>, the largest in the competition\'s history and a <strong>25% increase</strong> over the 2025 Spring figure. The announcement was accompanied by a full structure breakdown: regional allocation, three LAN event locations, and a championship prize distribution that rewards sustained regional dominance over one-off international performance.</p>',
+        sb('RLCS Spring 2026 — Prize Structure', [
+          ['Total Pool', '$2,500,000'],
+          ['Championship Prize (1st)', '$500,000'],
+          ['Regions', '4 (EU, NA, SAM, MENA)'],
+          ['LAN Events', '3 (Amsterdam, Las Vegas, TBD Asia)'],
+          ['Teams Competing', '80+'],
+          ['Championship Date', 'May 2026'],
+        ]),
+        '<h2>The Format</h2>',
+        '<p>The Spring Split runs across four regions with each hosting a <strong>LAN Major</strong> at the midpoint and end of the split. The three confirmed LAN events are set for <strong>Amsterdam</strong>, <strong>Las Vegas</strong>, and an as-yet-unannounced Asian city that Psyonix says will be confirmed within the month. This structure, introduced in 2025, incentivises regional consistency rather than a single high-variance international event.</p>',
+        pq('$2.5 million is a statement. It tells players this is a career, not just a game. It tells organisations this is worth building around. That is what we are trying to create.', 'Psyonix Head of Esports'),
+        '<h2>The Competitive Landscape</h2>',
+        '<p>' + art('bds-karmine-win', 'Team BDS') + ' currently lead the European standings and enter as clear favourites for the EU Major. In North America, three first-year organisations are currently inside the top six of regional standings a depth Psyonix describes as validation of their investment in regional infrastructure. ' + art('liquid-rl-roster', 'Team Liquid\'s revamped roster') + ' are the consensus pick to challenge BDS at the international level if both teams advance through their respective regional events.</p>',
+      ],
+    },
+
+    'bds-karmine-win': {
+      id: 'bds-karmine-win',
+      game: 'rl', gameLabel: 'Rocket League',
+      title: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp',
+      author: 'Marcus Holt', date: 'Mar 10, 2026 · 22h ago', event: 'RLCS 2026 Spring — EU Regional',
+      related: ['rlcs-prize-pool', 'liquid-rl-roster'],
+      body: [
+        '<h2>Fifth in Six: BDS Claim Another Regional Title</h2>',
+        '<p><strong>Team BDS</strong> won the <em>RLCS 2026 Spring EU Regional</em> with a <strong>3&ndash;1 series victory over Karmine Corp</strong>, claiming their <strong>fifth regional title in six events</strong> and a direct invitation to the RLCS Spring Major in Amsterdam. The win extends a period of European dominance that has made BDS the most successful team in RLCS history across multiple format iterations.</p>',
+        '<p>Karmine Corp\'s <strong>Game 2 win</strong>, a 5&ndash;3 demolition that showcased their aggressive mechanical style, prompted real uncertainty about whether BDS\'s defensive system could hold across a long series. <em>It could.</em> Games 3 and 4 were BDS at their most clinical, with the fourth game requiring overtime to resolve in a moment that will define the event\'s highlight reel.</p>',
+        pq('I knew where their goalkeeper was going before the shot. When you play enough matches against the best teams, you start reading them like a language. That goal was a sentence I have been writing for months.', 'Seikoo, Team BDS'),
+        '<h2>The Overtime Goal</h2>',
+        '<p>In Game 4 overtime, tied at <strong>4&ndash;4</strong>, BDS\'s <strong>Seikoo</strong> converted a diagonal strike from the left wall after reading Karmine\'s goalkeeper positioning off an aerial challenge, anticipating a defensive decision <em>three seconds before it was made</em>. The Rocket League community immediately dubbed it <em>&ldquo;the read of the year.&rdquo;</em> Seikoo\'s post-match explanation made it sound effortless, which somehow made it more impressive.</p>',
+        sb('Series Summary', [
+          ['Game 1', 'BDS 4–2'],
+          ['Game 2', 'Karmine Corp 5–3'],
+          ['Game 3', 'BDS 4–1'],
+          ['Game 4 (OT)', 'BDS 6–4'],
+          ['BDS EU Regional Titles (2025-26)', '5 of 6'],
+        ]),
+        '<h2>Amsterdam Awaits</h2>',
+        '<p>BDS turn attention to preparation for the Amsterdam Major where South American and NA teams present stylistically distinct challenges to the European meta. Head Coach <strong>Claude Rouget</strong> paid tribute to Karmine: <em>&ldquo;The margins in this region are very thin. We didn\'t win because they made mistakes. We won because we made marginally better decisions in the critical moments.&rdquo;</em> Follow ' + a('/l1/scoretap/', 'live RLCS scores on ScoreTap') + '.</p>',
+      ],
+    },
+
+    'liquid-rl-roster': {
+      id: 'liquid-rl-roster',
+      game: 'rl', gameLabel: 'Rocket League',
+      title: 'Team Liquid Unveil Revamped RLCS Roster Ahead of Spring Split',
+      author: 'Kevin Tanaka', date: 'Mar 6, 2026 · 4d ago', event: 'Roster News',
+      related: ['rlcs-prize-pool', 'bds-karmine-win'],
+      body: [
+        '<h2>The New Lineup</h2>',
+        '<p><strong>Team Liquid</strong> have confirmed their revamped Rocket League roster for the <em>2026 Spring Split</em>: EU star <strong>Théo &ldquo;Aztral&rdquo; Coustillas</strong> and returning North American veteran <strong>Justin &ldquo;jstn&rdquo; Morales</strong> join <strong>Cameron &ldquo;Squishy&rdquo; Mackay-Lathwell</strong>, who remains as the franchise cornerstone around which the new lineup was built. The acquisition of Aztral is the headline move of the RLCS offseason.</p>',
+        '<p>Aztral, 21, spent two years developing at second-tier European organisations after a brief 2024 stint at a top team that ended prematurely. His 2025 form which included a semifinal appearance at the RLCS Fall Regional with a career-best <strong>431 Goal Score</strong> average, which prompted renewed top-tier interest. Liquid\'s decision to bring him to North America rather than compete in EU is an organisational bet that <em>NA\'s physicality will unlock dimensions in his game that Europe hasn\'t demanded</em>.</p>',
+        pq('I took the year off to remember why I love Rocket League. Coming back to Liquid, with Squishy and now Aztral this is the most excited I\'ve been about a team since 2021.', 'jstn, Team Liquid announcement'),
+        '<h2>jstn\'s Return</h2>',
+        '<p><strong>jstn\'s</strong> comeback is notable for different reasons. After a one-year absence from tier-one play during which he streamed consistently and refined mechanical fundamentals in ranked play. He rejoins at a career point where maturity should <em>complement</em> rather than compete with Squishy\'s leadership. Their history as teammates gives the communication baseline that new partnerships typically require months to develop.</p>',
+        sb('Team Liquid RLCS 2026 Roster', [
+          ['Pos 1', 'Squishy (Cameron Mackay-Lathwell)'],
+          ['Pos 2', 'Aztral (Théo Coustillas)'],
+          ['Pos 3', 'jstn (Justin Morales)'],
+          ['Region', 'North America'],
+          ['NA Pre-Split Standing', '#2'],
+          ['Primary Target', 'RLCS Spring Championship'],
+        ]),
+        '<h2>Can They Challenge BDS?</h2>',
+        '<p>Liquid enter the Spring Split ranked second in NA based on carryover points. Internally, the team has set the <em>' + art('rlcs-prize-pool', 'Spring Championship') + '</em> as their primary target, a result that has eluded Liquid\'s RL division despite multiple strong seasonal finishes. Whether this lineup can close the gap on ' + art('bds-karmine-win', 'Team BDS') + ' at the international level is the central Rocket League question of 2026.</p>',
+      ],
+    },
+
+  }; // end ARTICLES
+
+  // ── RENDERING ──────────────────────────────────────────────────────────────
+
+  var GAME_LABELS = { cs2: 'CS2', valorant: 'Valorant', lol: 'LoL', dota2: 'Dota 2', rl: 'Rocket League' };
+
+  function getParam(key) {
+    return new URLSearchParams(window.location.search).get(key);
+  }
+
+  function gameTagHTML(game) {
+    return '<span class="game-tag ' + game + '">' + (GAME_LABELS[game] || game.toUpperCase()) + '</span>';
+  }
+
+  function renderRelated(ids) {
+    if (!ids || !ids.length) return '';
+    var cards = ids.slice(0, 3).map(function(id) {
+      var a = ARTICLES[id];
+      if (!a) return '';
+      return '<div class="related-card"><a class="related-headline" href="/l1/scoretap/article?id=' + a.id + '">' + a.title + '</a><div class="related-meta">' + gameTagHTML(a.game) + '<span>' + a.date.split('\u00b7')[1].trim() + '</span></div></div>';
+    }).join('');
+    return '<div class="widget" style="margin-bottom:10px;"><div class="widget-header"><span class="widget-title">Related Articles</span><a class="widget-link" href="/l1/scoretap/news">All News</a></div><div class="related-grid">' + cards + '</div></div>';
+  }
+
+  function renderArticle(article) {
+    var bodyHTML = article.body.join('');
+
+    var headings = [];
+    var idx = 0;
+    bodyHTML = bodyHTML.replace(/<h2>(.*?)<\/h2>/g, function(match, text) {
+      idx++;
+      var anchorId = 'section-' + idx;
+      headings.push({ id: anchorId, text: text });
+      return '<h2 id="' + anchorId + '">' + text + '</h2>';
+    });
+
+    var tocHTML = '';
+    if (headings.length >= 2) {
+      var tocItems = headings.map(function(h) {
+        return '<li><a href="#' + h.id + '">' + h.text + '</a></li>';
+      }).join('');
+      tocHTML = '<div class="article-toc"><div class="article-toc-title" onclick="var list=this.nextElementSibling;if(list.style.display===\'none\'){list.style.display=\'\';this.classList.remove(\'collapsed\');}else{list.style.display=\'none\';this.classList.add(\'collapsed\');}">Contents</div><ol class="article-toc-list">' + tocItems + '</ol></div>';
+    }
+
+    return [
+      '<div class="article-card">',
+        '<div class="article-header">',
+          '<div class="article-meta-top">',
+            gameTagHTML(article.game),
+            '<span class="event-badge live" style="font-size:9px;">' + article.event + '</span>',
+          '</div>',
+          '<div class="article-title">' + article.title + '</div>',
+          '<div class="article-byline">',
+            '<span>By <span class="author">' + article.author + '</span></span>',
+            '<span>' + article.date + '</span>',
+          '</div>',
+        '</div>',
+        '<div class="article-body">' + tocHTML + bodyHTML + '</div>',
+      '</div>',
+      renderRelated(article.related),
+    ].join('');
+  }
+
+  function buildSidebarNews(currentId) {
+    return Object.values(ARTICLES)
+      .filter(function(a) { return a.id !== currentId; })
+      .slice(0, 10)
+      .map(function(a) {
+        return '<li><a href="/l1/scoretap/article?id=' + a.id + '">' + a.title + '</a><div class="sidebar-news-meta">' + gameTagHTML(a.game) + ' &nbsp;' + a.date.split('\u00b7')[1].trim() + '</div></li>';
+      }).join('');
+  }
+
+  var id = getParam('id');
+  var article = id ? ARTICLES[id] : null;
+
+  if (article) {
+    document.getElementById('breadcrumb-title').textContent = article.title;
+    document.getElementById('article-content').innerHTML = renderArticle(article);
+    document.getElementById('sidebar-news-list').innerHTML = buildSidebarNews(id);
+    document.title = article.title + ' \u2014 ScoreTap';
+  } else {
+    document.getElementById('article-not-found').style.display = '';
+    document.getElementById('article-breadcrumb').style.display = 'none';
+    document.getElementById('sidebar-news-list').innerHTML = buildSidebarNews(null);
+  }
+  </script>
+
+</SiteShell>

@@ -1,0 +1,297 @@
+---
+import SiteShell from './_components/SiteShell.astro';
+import WidgetPanel from './_components/WidgetPanel.astro';
+import GameTag from './_components/GameTag.astro';
+import EventBadge from './_components/EventBadge.astro';
+---
+<SiteShell title="ScoreTap — Esports News" activePage="news">
+
+  <style>
+    .news-card-featured {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .news-card-featured:last-child { border-bottom: none; }
+    .news-card-featured:hover { background: #131320; }
+    .news-headline-featured {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.4;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .news-headline-featured:hover { color: var(--accent); }
+    .news-summary {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+  </style>
+
+  <!-- Game filter tabs -->
+  <div id="game-filter">
+    <button class="game-tab active" data-filter="all">All Games</button>
+    <button class="game-tab" data-filter="cs2">CS2</button>
+    <button class="game-tab" data-filter="valorant">Valorant</button>
+    <button class="game-tab" data-filter="lol">LoL</button>
+    <button class="game-tab" data-filter="dota2">Dota 2</button>
+    <button class="game-tab" data-filter="rl">Rocket League</button>
+  </div>
+
+  <!-- Page layout -->
+  <div class="page-layout">
+
+    <!-- Main column -->
+    <div class="main-col">
+
+      <!-- Breaking News -->
+      <WidgetPanel title="Breaking News" linkText="All News" linkHref="/l1/scoretap/news">
+        <div class="news-card-featured" data-game="cs2">
+          <a class="news-headline-featured" href="/l1/scoretap/article?id=zywoo-katowice-record">ZywOo sets new career-high rating record at IEM Katowice 2026 — 1.42 across 8 maps</a>
+          <p class="news-summary">Team Vitality's star player Mathieu "ZywOo" Herbaut delivered a stunning performance throughout the group stage, posting a 1.42 HLTV rating — the highest ever recorded at a Major-tier event. Vitality advances to the semifinals.</p>
+          <div class="news-meta"><GameTag game="cs2" /><span>2h ago</span><span style="color:var(--accent);font-weight:700;">BREAKING</span></div>
+        </div>
+        <div class="news-card-featured" data-game="valorant">
+          <a class="news-headline-featured" href="/l1/scoretap/article?id=sentinels-group-stage">Sentinels sweep group stage with 5-0 record at VCT Americas 2026</a>
+          <p class="news-summary">Sentinels completed a perfect group stage at VCT Americas, going 5-0 with dominant map scores. TenZ credited the team's new coach for the structural improvements that made the run possible.</p>
+          <div class="news-meta"><GameTag game="valorant" /><span>5h ago</span></div>
+        </div>
+        <div class="news-card-featured" data-game="lol">
+          <a class="news-headline-featured" href="/l1/scoretap/article?id=faker-contract-2028">T1 Faker signs landmark contract extension through 2028</a>
+          <p class="news-summary">Lee "Faker" Sang-hyeok will continue with T1 through the 2028 season in what the organization called "the most significant signing in esports history." Terms include equity stake in T1 Entertainment & Sports.</p>
+          <div class="news-meta"><GameTag game="lol" /><span>10h ago</span></div>
+        </div>
+      </WidgetPanel>
+
+      <!-- All News grid -->
+      <WidgetPanel title="All News" linkText="Archive" linkHref="#">
+        <div class="news-grid">
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=navi-blamef-signing">NAVI confirm signing of rifler blameF ahead of Major qualifier</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>4h ago</span></div>
+          </div>
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=cs2-major-copenhagen">CS2 Major 2026 location officially announced &mdash; Copenhagen confirmed</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>6h ago</span></div>
+          </div>
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=g2-niko-interview">G2 NiKo: "We came to Katowice to win everything, not just qualify"</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>16h ago</span></div>
+          </div>
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=mouz-heroic-semifinal">MOUZ advance to IEM Katowice semifinals after 2-0 sweep of Heroic</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>18h ago</span></div>
+          </div>
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=vitality-faze-results">Vitality defeat FaZe 16-12 in tense IEM quarter-final</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>1d ago</span></div>
+          </div>
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=blast-premier-schedule">BLAST Premier 2026 Spring schedule revealed with 12-team format</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>2d ago</span></div>
+          </div>
+          <div class="news-card" data-game="cs2">
+            <a class="news-headline" href="/l1/scoretap/article?id=cs2-patch-notes">CS2 update brings major changes to Dust2 and Mirage geometry</a>
+            <div class="news-meta"><GameTag game="cs2" /><span>3d ago</span></div>
+          </div>
+          <div class="news-card" data-game="valorant">
+            <a class="news-headline" href="/l1/scoretap/article?id=paper-rex-flippzjder">Paper Rex sign Filipino prodigy fl1pzjder to replace departing Jinggg</a>
+            <div class="news-meta"><GameTag game="valorant" /><span>8h ago</span></div>
+          </div>
+          <div class="news-card" data-game="valorant">
+            <a class="news-headline" href="/l1/scoretap/article?id=vct-pacific-standings">VCT Pacific 2026 group stage results: all 10 teams ranked by net map score</a>
+            <div class="news-meta"><GameTag game="valorant" /><span>12h ago</span></div>
+          </div>
+          <div class="news-card" data-game="valorant">
+            <a class="news-headline" href="/l1/scoretap/article?id=nrg-americas-playoffs">NRG secure Americas playoff spot with 13-9 win over 100 Thieves</a>
+            <div class="news-meta"><GameTag game="valorant" /><span>20h ago</span></div>
+          </div>
+          <div class="news-card" data-game="valorant">
+            <a class="news-headline" href="/l1/scoretap/article?id=loud-vct-preview">LOUD vs Sentinels VCT Americas preview: clash of opposite styles</a>
+            <div class="news-meta"><GameTag game="valorant" /><span>1d ago</span></div>
+          </div>
+          <div class="news-card" data-game="valorant">
+            <a class="news-headline" href="/l1/scoretap/article?id=valorant-episode-9">Valorant Episode 9 Act 2: Omen rework and new map Trident</a>
+            <div class="news-meta"><GameTag game="valorant" /><span>4d ago</span></div>
+          </div>
+          <div class="news-card" data-game="lol">
+            <a class="news-headline" href="/l1/scoretap/article?id=geng-ruler-contract">Gen.G ADC Ruler extends contract ahead of MSI 2026</a>
+            <div class="news-meta"><GameTag game="lol" /><span>1d ago</span></div>
+          </div>
+          <div class="news-card" data-game="lol">
+            <a class="news-headline" href="/l1/scoretap/article?id=lec-g2-standings">LEC Spring 2026 standings: G2 lead by 3 wins with 4 weeks remaining</a>
+            <div class="news-meta"><GameTag game="lol" /><span>1d ago</span></div>
+          </div>
+          <div class="news-card" data-game="lol">
+            <a class="news-headline" href="/l1/scoretap/article?id=lck-spring-preview">LCK Spring 2026 midseason report: T1 dominant but Gen.G closing gap</a>
+            <div class="news-meta"><GameTag game="lol" /><span>2d ago</span></div>
+          </div>
+          <div class="news-card" data-game="lol">
+            <a class="news-headline" href="/l1/scoretap/article?id=msi-2026-location">MSI 2026 location officially announced &mdash; Seoul confirmed</a>
+            <div class="news-meta"><GameTag game="lol" /><span>3d ago</span></div>
+          </div>
+          <div class="news-card" data-game="dota2">
+            <a class="news-headline" href="/l1/scoretap/article?id=spirit-dreamleague">Team Spirit win DreamLeague Season 25 after stunning Grand Final comeback</a>
+            <div class="news-meta"><GameTag game="dota2" /><span>14h ago</span></div>
+          </div>
+          <div class="news-card" data-game="dota2">
+            <a class="news-headline" href="/l1/scoretap/article?id=og-rebuild-roster">OG unveil rebuilt roster ahead of ESL One Stockholm 2026 qualifier</a>
+            <div class="news-meta"><GameTag game="dota2" /><span>20h ago</span></div>
+          </div>
+          <div class="news-card" data-game="dota2">
+            <a class="news-headline" href="/l1/scoretap/article?id=ti12-format-changes">The International 2026 format changes announced by Valve</a>
+            <div class="news-meta"><GameTag game="dota2" /><span>5d ago</span></div>
+          </div>
+          <div class="news-card" data-game="rl">
+            <a class="news-headline" href="/l1/scoretap/article?id=rlcs-prize-pool">RLCS 2026 Spring Split prize pool revealed at $2.5 million</a>
+            <div class="news-meta"><GameTag game="rl" /><span>12h ago</span></div>
+          </div>
+          <div class="news-card" data-game="rl">
+            <a class="news-headline" href="/l1/scoretap/article?id=bds-karmine-win">Team BDS secure RLCS Spring regional spot after 3-1 win over Karmine Corp</a>
+            <div class="news-meta"><GameTag game="rl" /><span>22h ago</span></div>
+          </div>
+          <div class="news-card" data-game="rl">
+            <a class="news-headline" href="/l1/scoretap/article?id=liquid-rl-roster">Team Liquid unveil revamped RLCS roster ahead of Spring Split</a>
+            <div class="news-meta"><GameTag game="rl" /><span>4d ago</span></div>
+          </div>
+        </div>
+      </WidgetPanel>
+
+    </div><!-- /main-col -->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <!-- Upcoming -->
+      <WidgetPanel title="Upcoming" linkText="Schedule" linkHref="#">
+        <div class="upcoming-card" data-game="cs2">
+          <div>
+            <div class="upcoming-teams">Vitality vs MOUZ</div>
+            <div style="margin-top:3px;"><GameTag game="cs2" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Today 18:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="valorant">
+          <div>
+            <div class="upcoming-teams">100T vs NRG</div>
+            <div style="margin-top:3px;"><GameTag game="valorant" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Today 20:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="lol">
+          <div>
+            <div class="upcoming-teams">T1 vs Gen.G</div>
+            <div style="margin-top:3px;"><GameTag game="lol" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Tomorrow 14:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="dota2">
+          <div>
+            <div class="upcoming-teams">Spirit vs OG</div>
+            <div style="margin-top:3px;"><GameTag game="dota2" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Tomorrow 16:00</div>
+          </div>
+        </div>
+        <div class="upcoming-card" data-game="rl">
+          <div>
+            <div class="upcoming-teams">BDS vs G2</div>
+            <div style="margin-top:3px;"><GameTag game="rl" /></div>
+          </div>
+          <div class="upcoming-time">
+            <div><EventBadge status="upcoming" /></div>
+            <div style="margin-top:3px;">Mar 12 15:00</div>
+          </div>
+        </div>
+      </WidgetPanel>
+
+      <!-- CS2 World Rankings -->
+      <WidgetPanel title="CS2 World Rankings" linkText="Full Table" linkHref="#">
+        <div class="rank-row"><div class="rank-num">#1</div><div class="rank-team">Vitality</div><div class="rank-points">1,842 pts</div><div class="rank-change same">&mdash;</div></div>
+        <div class="rank-row"><div class="rank-num">#2</div><div class="rank-team">NAVI</div><div class="rank-points">1,710 pts</div><div class="rank-change up">&#9650;2</div></div>
+        <div class="rank-row"><div class="rank-num">#3</div><div class="rank-team">G2 Esports</div><div class="rank-points">1,655 pts</div><div class="rank-change down">&#9660;1</div></div>
+        <div class="rank-row"><div class="rank-num">#4</div><div class="rank-team">FaZe Clan</div><div class="rank-points">1,580 pts</div><div class="rank-change down">&#9660;1</div></div>
+        <div class="rank-row"><div class="rank-num">#5</div><div class="rank-team">MOUZ</div><div class="rank-points">1,490 pts</div><div class="rank-change up">&#9650;1</div></div>
+        <div class="rank-row"><div class="rank-num">#6</div><div class="rank-team">Heroic</div><div class="rank-points">1,320 pts</div><div class="rank-change same">&mdash;</div></div>
+        <div class="rank-row"><div class="rank-num">#7</div><div class="rank-team">Virtus.pro</div><div class="rank-points">1,210 pts</div><div class="rank-change up">&#9650;3</div></div>
+        <div class="rank-row"><div class="rank-num">#8</div><div class="rank-team">Cloud9</div><div class="rank-points">1,150 pts</div><div class="rank-change down">&#9660;2</div></div>
+        <div class="rank-row"><div class="rank-num">#9</div><div class="rank-team">Team Liquid</div><div class="rank-points">1,080 pts</div><div class="rank-change same">&mdash;</div></div>
+        <div class="rank-row"><div class="rank-num">#10</div><div class="rank-team">Spirit</div><div class="rank-points">1,020 pts</div><div class="rank-change up">&#9650;1</div></div>
+      </WidgetPanel>
+
+      <!-- Top Events -->
+      <WidgetPanel title="Top Events" linkText="All Events" linkHref="#">
+        <div class="event-row" data-game="cs2">
+          <div class="event-name">IEM Katowice 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="cs2" /></div>
+            <div class="event-dates">Mar 5&ndash;15</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="valorant">
+          <div class="event-name">VCT Americas 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="valorant" /></div>
+            <div class="event-dates">Mar 1&ndash;20</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="rl">
+          <div class="event-name">RLCS 2026 Spring</div>
+          <div style="text-align:right;">
+            <div><GameTag game="rl" /></div>
+            <div class="event-dates">Mar 8&ndash;22</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="lol">
+          <div class="event-name">LCK Spring 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="lol" /></div>
+            <div class="event-dates">Feb 15&ndash;Apr 5</div>
+          </div>
+          <div><EventBadge status="live" /></div>
+        </div>
+        <div class="event-row" data-game="dota2">
+          <div class="event-name">ESL One Stockholm 2026</div>
+          <div style="text-align:right;">
+            <div><GameTag game="dota2" /></div>
+            <div class="event-dates">Mar 20&ndash;30</div>
+          </div>
+          <div><EventBadge status="upcoming" /></div>
+        </div>
+      </WidgetPanel>
+
+    </div><!-- /sidebar -->
+  </div><!-- /page-layout -->
+
+  <script is:inline>
+    var tabs = document.querySelectorAll('.game-tab');
+    var filterables = document.querySelectorAll('[data-game]');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        var filter = tab.dataset.filter;
+        filterables.forEach(function(el) {
+          el.style.display = (filter === 'all' || el.dataset.game === filter) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+
+</SiteShell>
