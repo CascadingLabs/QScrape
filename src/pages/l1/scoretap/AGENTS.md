@@ -15,8 +15,11 @@ The site covers CS2, Valorant, League of Legends, Dota 2, and Rocket League. All
 ## Site Structure
 
 ```
-/l1/scoretap/           — Main hub (live scores, results, news, rankings, events)
+/l1/scoretap/           — Main hub (live scores, results, news feed, rankings, events)
+/l1/scoretap/news       — News index (breaking + all articles, game filter tabs)
+/l1/scoretap/teams      — Teams directory (featured cards + full table with stats)
 /l1/scoretap/match      — Match detail page (query param: ?id=<match-id>)
+/l1/scoretap/article    — Article page (query param: ?id=<article-slug>)
 ```
 
 ## Test Flows
@@ -40,6 +43,8 @@ The site covers CS2, Valorant, League of Legends, Dota 2, and Rocket League. All
 - **Mechanism:** Page starts as an empty shell. All content is injected into `#match-content` by inline JS that reads `?id=` from `URLSearchParams` and looks up a hardcoded data object.
 - **Expected Agent Behavior:** Navigate to URL with valid `?id=` param, wait for JS execution, then extract from populated DOM.
 - **Valid Match IDs:** `match-001` (NAVI vs G2, CS2), `match-002` (Sentinels vs LOUD, Valorant), `match-003` (Team Liquid vs Cloud9, Rocket League).
+- **Related News:** Each match links to real articles on `/l1/scoretap/article?id=<slug>`. News item `href` attributes are now populated (not `#`).
+- **Team Links:** Team name and logo elements in the match header link to `/l1/scoretap/teams`.
 
 ### 4. CS2 World Rankings Extraction
 
@@ -49,9 +54,29 @@ The site covers CS2, Valorant, League of Legends, Dota 2, and Rocket League. All
 
 ### 5. News Feed Extraction
 
-- **Data Location:** `.news-card` elements inside `.news-grid`.
-- **Fields per card:** Headline (`.news-headline`), game tag (`.game-tag`), timestamp (`.news-meta span`).
-- **Count:** 8 news items total across all games.
+- **Data Location (index):** `.news-card` elements inside `.news-grid` on `/l1/scoretap/`. 8 cards, each linking to `/l1/scoretap/article?id=<slug>`.
+- **Data Location (news page):** `/l1/scoretap/news` has a "Breaking News" section (3 featured cards) and an "All News" grid (22 cards across all 5 games).
+- **Fields per card:** Headline (`.news-headline` or `.news-headline-featured`), game tag (`.game-tag`), timestamp (`.news-meta span`), link href.
+
+### 6. Article Extraction (`/l1/scoretap/article?id=<slug>`)
+
+- **Mechanism:** Same shell-injection pattern as match pages. JS reads `?id=` param, looks up `ARTICLES[id]`, and renders into `#article-content`.
+- **Expected Agent Behavior:** Navigate with a valid slug, wait for JS, then extract from populated DOM.
+- **Content structure (rendered):** `<div class="article-card">` containing `.article-header` (title, game tag, byline) and `.article-body` (h2 sections, p, blockquote.pull-quote, div.stats-box).
+- **Related Articles:** Rendered as `.related-grid` with `.related-card` elements, each containing a `.related-headline` anchor linking to another article.
+- **Sidebar:** `#sidebar-news-list` contains up to 10 `.sidebar-news-list li` items linking to other articles.
+- **Valid Article Slugs (25 total):**
+  - CS2: `zywoo-katowice-record`, `navi-blamef-signing`, `cs2-major-copenhagen`, `g2-niko-interview`, `mouz-heroic-semifinal`, `vitality-faze-results`, `blast-premier-schedule`, `cs2-patch-notes`
+  - Valorant: `sentinels-group-stage`, `paper-rex-flippzjder`, `vct-pacific-standings`, `nrg-americas-playoffs`, `loud-vct-preview`, `valorant-episode-9`
+  - LoL: `faker-contract-2028`, `geng-ruler-contract`, `lec-g2-standings`, `lck-spring-preview`, `msi-2026-location`
+  - Dota 2: `spirit-dreamleague`, `og-rebuild-roster`, `ti12-format-changes`
+  - Rocket League: `rlcs-prize-pool`, `bds-karmine-win`, `liquid-rl-roster`
+
+### 7. Teams Page (`/l1/scoretap/teams`)
+
+- **Featured Teams:** `.featured-teams-grid` with 3 `.featured-team-card` elements (Vitality/CS2, Sentinels/Valorant, T1/LoL). Each shows team abbr, name, game tag, region, win/loss record.
+- **All Teams Table:** `.teams-table` with 15 rows covering all 5 games. Columns: Rank, Team, Game, Region, W, L, Win%.
+- **Game Filter:** Same `[data-game]` tab system — filtering hides featured cards and table rows.
 
 ## Data Schema
 

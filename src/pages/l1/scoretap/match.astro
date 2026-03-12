@@ -48,9 +48,9 @@ import SiteShell from './_components/SiteShell.astro';
           { name: 'huNter-',    team: 'G2',   kills: 27, deaths: 26, assists: 9,  rating: '1.05', hs: '47%' }
         ],
         news: [
-          { headline: 'NAVI looking sharp on Mirage in map 1 victory over G2', time: '1h ago' },
-          { headline: 'G2 NiKo interview: "We need to pick up our CT side on Inferno"', time: '2h ago' },
-          { headline: 'IEM Katowice 2026 quarterfinals bracket overview', time: '4h ago' }
+          { headline: 'G2 NiKo: "We Came to Katowice to Win Everything, Not Just Qualify"', time: '16h ago', href: '/l1/scoretap/article?id=g2-niko-interview' },
+          { headline: 'NAVI Confirm Signing of Rifler blameF Ahead of Major Qualifier', time: '4h ago', href: '/l1/scoretap/article?id=navi-blamef-signing' },
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' }
         ]
       },
       'match-002': {
@@ -80,9 +80,9 @@ import SiteShell from './_components/SiteShell.astro';
           { name: 'Less',    team: 'LOUD', kills: 16, deaths: 18, assists: 8,  rating: '0.93', hs: '38%' }
         ],
         news: [
-          { headline: 'Sentinels TenZ posting 1.38 rating through first half of Ascent', time: '30m ago' },
-          { headline: 'LOUD aspas looking to reverse deficit in second half', time: '45m ago' },
-          { headline: 'VCT Americas 2026: Week 4 match previews and predictions', time: '6h ago' }
+          { headline: 'LOUD vs Sentinels VCT Americas Preview: A Clash of Opposite Styles', time: '1d ago', href: '/l1/scoretap/article?id=loud-vct-preview' },
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' },
+          { headline: 'NRG Secure Americas Playoff Spot With 13-9 Win Over 100 Thieves', time: '20h ago', href: '/l1/scoretap/article?id=nrg-americas-playoffs' }
         ]
       },
       'match-003': {
@@ -113,9 +113,9 @@ import SiteShell from './_components/SiteShell.astro';
           { name: 'Rizzo',      team: 'C9', kills: 15, deaths: 21, assists: 24, rating: '0.91', hs: '—' }
         ],
         news: [
-          { headline: 'Team Liquid take commanding series lead 2-1 over Cloud9 in RLCS', time: '20m ago' },
-          { headline: 'Cloud9 fighting back — Game 4 goes to overtime', time: '5m ago' },
-          { headline: 'RLCS 2026 Spring Split lower bracket results and standings', time: '8h ago' }
+          { headline: 'Team Liquid Unveil Revamped RLCS Roster Ahead of Spring Split', time: '4d ago', href: '/l1/scoretap/article?id=liquid-rl-roster' },
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' },
+          { headline: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp', time: '22h ago', href: '/l1/scoretap/article?id=bds-karmine-win' }
         ]
       }
     };
@@ -163,7 +163,7 @@ import SiteShell from './_components/SiteShell.astro';
 
       // News items
       var newsItems = m.news.map(function(n) {
-        return '<li><a href="#">' + n.headline + '</a><div class="news-meta-small">' + n.time + '</div></li>';
+        return '<li><a href="' + (n.href || '#') + '">' + n.headline + '</a><div class="news-meta-small">' + n.time + '</div></li>';
       }).join('');
 
       var html =
@@ -173,8 +173,8 @@ import SiteShell from './_components/SiteShell.astro';
           '</div>' +
           '<div class="teams-row">' +
             '<div class="team-block">' +
-              '<div class="team-logo-placeholder">' + m.team1.abbr + '</div>' +
-              '<div class="team-full-name">' + m.team1.full + '</div>' +
+              '<a href="/l1/scoretap/teams" style="text-decoration:none;"><div class="team-logo-placeholder">' + m.team1.abbr + '</div></a>' +
+              '<div class="team-full-name"><a href="/l1/scoretap/teams" style="color:inherit;">' + m.team1.full + '</a></div>' +
               '<div class="team-region">' + m.team1.region + '</div>' +
             '</div>' +
             '<div class="score-center">' +
@@ -182,8 +182,8 @@ import SiteShell from './_components/SiteShell.astro';
               '<div class="score-status">' + statusHtml + '</div>' +
             '</div>' +
             '<div class="team-block">' +
-              '<div class="team-logo-placeholder">' + m.team2.abbr + '</div>' +
-              '<div class="team-full-name">' + m.team2.full + '</div>' +
+              '<a href="/l1/scoretap/teams" style="text-decoration:none;"><div class="team-logo-placeholder">' + m.team2.abbr + '</div></a>' +
+              '<div class="team-full-name"><a href="/l1/scoretap/teams" style="color:inherit;">' + m.team2.full + '</a></div>' +
               '<div class="team-region">' + m.team2.region + '</div>' +
             '</div>' +
           '</div>' +
@@ -213,7 +213,7 @@ import SiteShell from './_components/SiteShell.astro';
         '</div>' +
 
         '<div class="widget">' +
-          '<div class="widget-header"><span class="widget-title">&#9632; Related News</span></div>' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Related News</span><a class="widget-link" href="/l1/scoretap/news">All News</a></div>' +
           '<ul class="news-list">' + newsItems + '</ul>' +
         '</div>';
 
