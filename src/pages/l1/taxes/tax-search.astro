@@ -16,6 +16,7 @@
             <a href="/l1/taxes/">Home</a>
             <a href="/l1/taxes/tax-search">Tax Search</a>
             <a href="/l1/taxes/how-to">How To</a>
+            <a href="/l1/taxes/recording-fees">Recording Fees</a>
         </div>
         
         <div class="breadcrumbs">
@@ -292,8 +293,8 @@
             
             <table style="margin: 15px;">
                 <tr>
-                    <td>
-                        <span class="aspNetLabel">Page 1 of 1</span>
+                    <td id="gridPager">
+                        <span class="aspNetLabel">Page 1 of 2</span>&nbsp;&nbsp;<span style="font-weight:bold;">[1]</span>&nbsp;<a href="javascript:__doPostBack('ctl00$MainContent$gridResults','Page$2')">2</a>
                     </td>
                 </tr>
             </table>
@@ -310,49 +311,84 @@
             theForm = document.aspnetForm;
         }
 
-        // Client-side grid filtering
+        var PAGE_SIZE = 10;
+        var currentPage = 1;
+        var filteredRows = [];
+
         function parseDate(str) {
-            // Expects MM/DD/YYYY
             var parts = str.trim().split('/');
             if (parts.length !== 3) return null;
             var d = new Date(parseInt(parts[2]), parseInt(parts[0]) - 1, parseInt(parts[1]));
             return isNaN(d.getTime()) ? null : d;
         }
 
-        document.getElementById('aspnetForm').addEventListener('submit', function(e) {
-            var lastQ   = document.getElementById('MainContent_txtLastName').value.trim().toLowerCase();
-            var firstQ  = document.getElementById('MainContent_txtFirstName').value.trim().toLowerCase();
+        function applyFilters() {
+            var lastQ    = document.getElementById('MainContent_txtLastName').value.trim().toLowerCase();
+            var firstQ   = document.getElementById('MainContent_txtFirstName').value.trim().toLowerCase();
             var dateFrom = parseDate(document.getElementById('MainContent_txtDateFrom').value);
             var dateTo   = parseDate(document.getElementById('MainContent_txtDateTo').value);
-            var indexQ  = document.getElementById('MainContent_ddlIndexType').value;
+            var indexQ   = document.getElementById('MainContent_ddlIndexType').value;
 
-            var rows = document.querySelectorAll('#MainContent_gridResults tr:not(:first-child)');
-            var visible = 0;
-            rows.forEach(function(row) {
-                row.style.display = '';
+            var allRows = Array.prototype.slice.call(document.querySelectorAll('#MainContent_gridResults tr:not(:first-child)'));
+            filteredRows = allRows.filter(function(row) {
                 var cells = row.querySelectorAll('td');
-                var indexType = cells[2] ? cells[2].textContent.trim() : '';
+                var indexType  = cells[2] ? cells[2].textContent.trim() : '';
                 var recordDate = cells[3] ? parseDate(cells[3].textContent.trim()) : null;
-                var lastName  = cells[5] ? cells[5].textContent.toLowerCase() : '';
-                var firstName = cells[6] ? cells[6].textContent.toLowerCase() : '';
+                var lastName   = cells[5] ? cells[5].textContent.toLowerCase() : '';
+                var firstName  = cells[6] ? cells[6].textContent.toLowerCase() : '';
 
-                var matchLast  = !lastQ  || lastName.indexOf(lastQ) !== -1;
-                var matchFirst = !firstQ || firstName.indexOf(firstQ) !== -1;
-                var matchIndex = !indexQ || indexType === indexQ;
-                var matchFrom  = !dateFrom || (recordDate && recordDate >= dateFrom);
-                var matchTo    = !dateTo   || (recordDate && recordDate <= dateTo);
-
-                if (matchLast && matchFirst && matchIndex && matchFrom && matchTo) {
-                    visible++;
-                } else {
-                    row.style.display = 'none';
-                }
+                return (!lastQ  || lastName.indexOf(lastQ) !== -1)
+                    && (!firstQ || firstName.indexOf(firstQ) !== -1)
+                    && (!indexQ || indexType === indexQ)
+                    && (!dateFrom || (recordDate && recordDate >= dateFrom))
+                    && (!dateTo   || (recordDate && recordDate <= dateTo));
             });
-            document.getElementById('resultsInfo').textContent = 'Showing ' + visible + ' record(s) found';
+
+            currentPage = 1;
+            renderPage();
+        }
+
+        function renderPage() {
+            var allRows = Array.prototype.slice.call(document.querySelectorAll('#MainContent_gridResults tr:not(:first-child)'));
+            allRows.forEach(function(r) { r.style.display = 'none'; });
+
+            var start = (currentPage - 1) * PAGE_SIZE;
+            filteredRows.slice(start, start + PAGE_SIZE).forEach(function(r) { r.style.display = ''; });
+
+            document.getElementById('resultsInfo').textContent = 'Showing ' + filteredRows.length + ' record(s) found';
+            renderPager();
+        }
+
+        function renderPager() {
+            var totalPages = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
+            var pager = document.getElementById('gridPager');
+            var html = '<span class="aspNetLabel">Page ' + currentPage + ' of ' + totalPages + '</span>&nbsp;&nbsp;';
+            for (var i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    html += '<span style="font-weight:bold;">[' + i + ']</span>&nbsp;';
+                } else {
+                    html += '<a href="javascript:__doPostBack(\'ctl00$MainContent$gridResults\',\'Page$' + i + '\')">' + i + '</a>&nbsp;';
+                }
+            }
+            pager.innerHTML = html;
+        }
+
+        document.getElementById('aspnetForm').addEventListener('submit', function(e) {
+            applyFilters();
             e.preventDefault();
         });
 
+        window.addEventListener('load', function() {
+            applyFilters();
+        });
+
         function __doPostBack(eventTarget, eventArgument) {
+            if (eventArgument.indexOf('Page$') === 0) {
+                currentPage = parseInt(eventArgument.split('$')[1]);
+                renderPage();
+                return;
+            }
+
             if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
                 document.getElementById('__EVENTTARGET').value = eventTarget;
                 document.getElementById('__EVENTARGUMENT').value = eventArgument;

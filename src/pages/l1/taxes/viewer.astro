@@ -17,6 +17,7 @@ const postData = Astro.url.searchParams.get('postData') || '';
             <a href="/l1/taxes/">Home</a>
             <a href="/l1/taxes/tax-search">Tax Search</a>
             <a href="/l1/taxes/how-to">How To</a>
+            <a href="/l1/taxes/recording-fees">Recording Fees</a>
         </div>
         
         <div class="breadcrumbs">
@@ -154,13 +155,13 @@ const postData = Astro.url.searchParams.get('postData') || '';
             }
         }
         
-        document.getElementById('lblClaim').innerHTML = claim;
-        document.getElementById('lblEntity').innerHTML = entity;
-        document.getElementById('lblZLevel').innerHTML = zLevel;
-        document.getElementById('lblYear').innerHTML = year;
-        document.getElementById('lblFile').innerHTML = fileNum;
-        document.getElementById('lblIndex').innerHTML = indexType;
-        document.getElementById('lblRecord').innerHTML = recordDate;
+        document.getElementById('lblClaim').textContent = claim;
+        document.getElementById('lblEntity').textContent = entity;
+        document.getElementById('lblZLevel').textContent = zLevel;
+        document.getElementById('lblYear').textContent = year;
+        document.getElementById('lblFile').textContent = fileNum;
+        document.getElementById('lblIndex').textContent = indexType;
+        document.getElementById('lblRecord').textContent = recordDate;
 
         document.getElementById('lblAmount').textContent = amount;
 
