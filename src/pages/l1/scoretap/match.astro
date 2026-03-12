@@ -1,0 +1,234 @@
+---
+import SiteShell from './_components/SiteShell.astro';
+---
+<SiteShell title="Match Details — ScoreTap">
+
+  <div class="match-detail-container">
+    <div class="breadcrumb">
+      <a href="/l1/scoretap/">Home</a> &rsaquo;
+      <a href="/l1/scoretap/">Scores</a> &rsaquo;
+      <span id="breadcrumb-match">Match Detail</span>
+    </div>
+
+    <div id="match-content">
+      <!-- Populated by JS -->
+    </div>
+
+    <div id="match-not-found" style="display:none;">
+      Match not found. <a href="/l1/scoretap/" style="color:var(--accent);">Return to scores</a>
+    </div>
+  </div>
+
+  <script is:inline>
+    var matchData = {
+      'match-001': {
+        id: 'match-001',
+        team1: { name: 'NAVI', full: 'Natus Vincere', abbr: 'NV', region: 'Europe' },
+        team2: { name: 'G2',   full: 'G2 Esports',   abbr: 'G2', region: 'Europe' },
+        score1: 11,
+        score2: 8,
+        status: 'LIVE',
+        statusNote: 'Map 2 · 2nd Half',
+        event: 'IEM Katowice 2026',
+        eventStage: 'Quarterfinal',
+        date: 'March 11, 2026',
+        game: 'cs2',
+        gameTag: '<span class="game-tag cs2">CS2</span>',
+        maps: [
+          { map: 'Mirage',  score1: 16, score2: 14, winner: 1,    status: 'Finished' },
+          { map: 'Inferno', score1: 11, score2: 8,  winner: null, status: 'Live · 2nd Half' },
+          { map: 'Nuke',    score1: '—', score2: '—', winner: null, status: 'Not played' }
+        ],
+        players: [
+          { name: 's1mple',     team: 'NAVI', kills: 38, deaths: 24, assists: 6,  rating: '1.41', hs: '52%' },
+          { name: 'electroNic', team: 'NAVI', kills: 29, deaths: 26, assists: 8,  rating: '1.12', hs: '44%' },
+          { name: 'b1t',        team: 'NAVI', kills: 26, deaths: 27, assists: 11, rating: '0.98', hs: '38%' },
+          { name: 'NiKo',       team: 'G2',   kills: 33, deaths: 25, assists: 7,  rating: '1.22', hs: '58%' },
+          { name: 'HooXi',      team: 'G2',   kills: 18, deaths: 28, assists: 14, rating: '0.81', hs: '31%' },
+          { name: 'huNter-',    team: 'G2',   kills: 27, deaths: 26, assists: 9,  rating: '1.05', hs: '47%' }
+        ],
+        news: [
+          { headline: 'NAVI looking sharp on Mirage in map 1 victory over G2', time: '1h ago' },
+          { headline: 'G2 NiKo interview: "We need to pick up our CT side on Inferno"', time: '2h ago' },
+          { headline: 'IEM Katowice 2026 quarterfinals bracket overview', time: '4h ago' }
+        ]
+      },
+      'match-002': {
+        id: 'match-002',
+        team1: { name: 'Sentinels', full: 'Sentinels', abbr: 'SEN',  region: 'North America' },
+        team2: { name: 'LOUD',      full: 'LOUD',      abbr: 'LOUD', region: 'Brazil' },
+        score1: 9,
+        score2: 7,
+        status: 'LIVE',
+        statusNote: 'Map 1 · Attack Side',
+        event: 'VCT Americas 2026',
+        eventStage: 'Group Stage — Week 4',
+        date: 'March 11, 2026',
+        game: 'valorant',
+        gameTag: '<span class="game-tag valorant">Valorant</span>',
+        maps: [
+          { map: 'Ascent', score1: 9,   score2: 7,   winner: null, status: 'Live · Attack' },
+          { map: 'Sunset', score1: '—', score2: '—', winner: null, status: 'Not played' },
+          { map: 'Haven',  score1: '—', score2: '—', winner: null, status: 'Not played' }
+        ],
+        players: [
+          { name: 'TenZ',    team: 'SEN',  kills: 22, deaths: 14, assists: 4,  rating: '1.38', hs: '61%' },
+          { name: 'zekken',  team: 'SEN',  kills: 18, deaths: 16, assists: 7,  rating: '1.09', hs: '44%' },
+          { name: 'bang',    team: 'SEN',  kills: 14, deaths: 15, assists: 12, rating: '0.97', hs: '29%' },
+          { name: 'aspas',   team: 'LOUD', kills: 20, deaths: 17, assists: 5,  rating: '1.15', hs: '55%' },
+          { name: 'saadhak', team: 'LOUD', kills: 12, deaths: 16, assists: 14, rating: '0.88', hs: '22%' },
+          { name: 'Less',    team: 'LOUD', kills: 16, deaths: 18, assists: 8,  rating: '0.93', hs: '38%' }
+        ],
+        news: [
+          { headline: 'Sentinels TenZ posting 1.38 rating through first half of Ascent', time: '30m ago' },
+          { headline: 'LOUD aspas looking to reverse deficit in second half', time: '45m ago' },
+          { headline: 'VCT Americas 2026: Week 4 match previews and predictions', time: '6h ago' }
+        ]
+      },
+      'match-003': {
+        id: 'match-003',
+        team1: { name: 'Team Liquid', full: 'Team Liquid', abbr: 'TL', region: 'North America' },
+        team2: { name: 'Cloud9',      full: 'Cloud9',      abbr: 'C9', region: 'North America' },
+        score1: 2,
+        score2: 1,
+        status: 'LIVE',
+        statusNote: 'Game 4 · Overtime',
+        event: 'RLCS 2026 — Spring Split',
+        eventStage: 'Main Event — Lower Bracket R2',
+        date: 'March 11, 2026',
+        game: 'rl',
+        gameTag: '<span class="game-tag rl">Rocket League</span>',
+        maps: [
+          { map: 'Game 1', score1: 3, score2: 1, winner: 1,    status: 'Finished' },
+          { map: 'Game 2', score1: 2, score2: 3, winner: 2,    status: 'Finished' },
+          { map: 'Game 3', score1: 4, score2: 2, winner: 1,    status: 'Finished' },
+          { map: 'Game 4', score1: 1, score2: 1, winner: null, status: 'Live · OT' }
+        ],
+        players: [
+          { name: 'Fairy Peak', team: 'TL', kills: 24, deaths: 18, assists: 15, rating: '1.31', hs: '—' },
+          { name: 'jstn',       team: 'TL', kills: 19, deaths: 20, assists: 22, rating: '1.08', hs: '—' },
+          { name: 'Squishy',    team: 'TL', kills: 21, deaths: 19, assists: 18, rating: '1.14', hs: '—' },
+          { name: 'Torment',    team: 'C9', kills: 22, deaths: 22, assists: 17, rating: '1.02', hs: '—' },
+          { name: 'Gimmick',    team: 'C9', kills: 18, deaths: 21, assists: 20, rating: '0.96', hs: '—' },
+          { name: 'Rizzo',      team: 'C9', kills: 15, deaths: 21, assists: 24, rating: '0.91', hs: '—' }
+        ],
+        news: [
+          { headline: 'Team Liquid take commanding series lead 2-1 over Cloud9 in RLCS', time: '20m ago' },
+          { headline: 'Cloud9 fighting back — Game 4 goes to overtime', time: '5m ago' },
+          { headline: 'RLCS 2026 Spring Split lower bracket results and standings', time: '8h ago' }
+        ]
+      }
+    };
+
+    function getRatingClass(r) {
+      var n = parseFloat(r);
+      if (isNaN(n)) return '';
+      if (n >= 1.2)  return 'rating-high';
+      if (n >= 0.95) return 'rating-mid';
+      return 'rating-low';
+    }
+
+    function buildMatchPage(m) {
+      document.title = m.team1.name + ' vs ' + m.team2.name + ' — ScoreTap';
+      document.getElementById('breadcrumb-match').textContent = m.team1.name + ' vs ' + m.team2.name;
+
+      var statusHtml = m.status === 'LIVE'
+        ? '<span class="live-pill">LIVE</span> ' + m.statusNote
+        : m.status;
+
+      // Map rows
+      var mapRows = m.maps.map(function(mp) {
+        var w1 = mp.winner === 1 ? 'td-win' : (mp.winner === 2 ? 'td-loss' : '');
+        var w2 = mp.winner === 2 ? 'td-win' : (mp.winner === 1 ? 'td-loss' : '');
+        return '<tr>' +
+          '<td class="td-map">' + mp.map + '</td>' +
+          '<td class="' + w1 + '">' + mp.score1 + '</td>' +
+          '<td class="' + w2 + '">' + mp.score2 + '</td>' +
+          '<td style="color:var(--text-dim);font-size:10px;">' + mp.status + '</td>' +
+        '</tr>';
+      }).join('');
+
+      // Player rows
+      var playerRows = m.players.map(function(p) {
+        return '<tr>' +
+          '<td style="font-weight:700;color:var(--text-bright);">' + p.name + '</td>' +
+          '<td style="color:var(--text-dim);">' + p.team + '</td>' +
+          '<td class="stat-highlight">' + p.kills + '</td>' +
+          '<td>' + p.deaths + '</td>' +
+          '<td>' + p.assists + '</td>' +
+          '<td>' + p.hs + '</td>' +
+          '<td class="' + getRatingClass(p.rating) + '">' + p.rating + '</td>' +
+        '</tr>';
+      }).join('');
+
+      // News items
+      var newsItems = m.news.map(function(n) {
+        return '<li><a href="#">' + n.headline + '</a><div class="news-meta-small">' + n.time + '</div></li>';
+      }).join('');
+
+      var html =
+        '<div class="match-header-card">' +
+          '<div class="match-event-info">' +
+            m.gameTag + ' &nbsp; <span>' + m.event + '</span> &nbsp;&middot;&nbsp; ' + m.eventStage + ' &nbsp;&middot;&nbsp; ' + m.date +
+          '</div>' +
+          '<div class="teams-row">' +
+            '<div class="team-block">' +
+              '<div class="team-logo-placeholder">' + m.team1.abbr + '</div>' +
+              '<div class="team-full-name">' + m.team1.full + '</div>' +
+              '<div class="team-region">' + m.team1.region + '</div>' +
+            '</div>' +
+            '<div class="score-center">' +
+              '<div class="main-score" id="detail-score">' + m.score1 + ' : ' + m.score2 + '</div>' +
+              '<div class="score-status">' + statusHtml + '</div>' +
+            '</div>' +
+            '<div class="team-block">' +
+              '<div class="team-logo-placeholder">' + m.team2.abbr + '</div>' +
+              '<div class="team-full-name">' + m.team2.full + '</div>' +
+              '<div class="team-region">' + m.team2.region + '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Map Breakdown</span></div>' +
+          '<table>' +
+            '<thead><tr>' +
+              '<th>Map</th>' +
+              '<th>' + m.team1.name + '</th>' +
+              '<th>' + m.team2.name + '</th>' +
+              '<th>Status</th>' +
+            '</tr></thead>' +
+            '<tbody>' + mapRows + '</tbody>' +
+          '</table>' +
+        '</div>' +
+
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Player Statistics</span></div>' +
+          '<table>' +
+            '<thead><tr>' +
+              '<th>Player</th><th>Team</th><th>K</th><th>D</th><th>A</th><th>HS%</th><th>Rating</th>' +
+            '</tr></thead>' +
+            '<tbody>' + playerRows + '</tbody>' +
+          '</table>' +
+        '</div>' +
+
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Related News</span></div>' +
+          '<ul class="news-list">' + newsItems + '</ul>' +
+        '</div>';
+
+      document.getElementById('match-content').innerHTML = html;
+    }
+
+    var params  = new URLSearchParams(window.location.search);
+    var matchId = params.get('id');
+    var match   = matchId ? matchData[matchId] : null;
+
+    if (match) {
+      buildMatchPage(match);
+    } else {
+      document.getElementById('match-not-found').style.display = 'block';
+    }
+  </script>
+
+</SiteShell>
