@@ -40,12 +40,12 @@ import SiteShell from './_components/SiteShell.astro';
           { map: 'Nuke',    score1: '—', score2: '—', winner: null, status: 'Not played' }
         ],
         players: [
-          { name: 's1mple',     team: 'NAVI', kills: 38, deaths: 24, assists: 6,  rating: '1.41', hs: '52%' },
-          { name: 'electroNic', team: 'NAVI', kills: 29, deaths: 26, assists: 8,  rating: '1.12', hs: '44%' },
-          { name: 'b1t',        team: 'NAVI', kills: 26, deaths: 27, assists: 11, rating: '0.98', hs: '38%' },
-          { name: 'NiKo',       team: 'G2',   kills: 33, deaths: 25, assists: 7,  rating: '1.22', hs: '58%' },
-          { name: 'HooXi',      team: 'G2',   kills: 18, deaths: 28, assists: 14, rating: '0.81', hs: '31%' },
-          { name: 'huNter-',    team: 'G2',   kills: 27, deaths: 26, assists: 9,  rating: '1.05', hs: '47%' }
+          { name: 's1mple',     team: 'NAVI', kills: 38, deaths: 24, assists: 6,  rating: '1.41', hs: '52%', playerId: 's1mple' },
+          { name: 'electroNic', team: 'NAVI', kills: 29, deaths: 26, assists: 8,  rating: '1.12', hs: '44%', playerId: 'electronic' },
+          { name: 'b1t',        team: 'NAVI', kills: 26, deaths: 27, assists: 11, rating: '0.98', hs: '38%', playerId: 'b1t' },
+          { name: 'NiKo',       team: 'G2',   kills: 33, deaths: 25, assists: 7,  rating: '1.22', hs: '58%', playerId: 'niko' },
+          { name: 'HooXi',      team: 'G2',   kills: 18, deaths: 28, assists: 14, rating: '0.81', hs: '31%', playerId: 'hooxi' },
+          { name: 'huNter-',    team: 'G2',   kills: 27, deaths: 26, assists: 9,  rating: '1.05', hs: '47%', playerId: 'hunter' }
         ],
         news: [
           { headline: 'G2 NiKo: "We Came to Katowice to Win Everything, Not Just Qualify"', time: '16h ago', href: '/l1/scoretap/article?id=g2-niko-interview' },
@@ -72,9 +72,9 @@ import SiteShell from './_components/SiteShell.astro';
           { map: 'Haven',  score1: '—', score2: '—', winner: null, status: 'Not played' }
         ],
         players: [
-          { name: 'TenZ',    team: 'SEN',  kills: 22, deaths: 14, assists: 4,  rating: '1.38', hs: '61%' },
-          { name: 'zekken',  team: 'SEN',  kills: 18, deaths: 16, assists: 7,  rating: '1.09', hs: '44%' },
-          { name: 'bang',    team: 'SEN',  kills: 14, deaths: 15, assists: 12, rating: '0.97', hs: '29%' },
+          { name: 'TenZ',    team: 'SEN',  kills: 22, deaths: 14, assists: 4,  rating: '1.38', hs: '61%', playerId: 'tenz' },
+          { name: 'zekken',  team: 'SEN',  kills: 18, deaths: 16, assists: 7,  rating: '1.09', hs: '44%', playerId: 'zekken' },
+          { name: 'bang',    team: 'SEN',  kills: 14, deaths: 15, assists: 12, rating: '0.97', hs: '29%', playerId: 'bang' },
           { name: 'aspas',   team: 'LOUD', kills: 20, deaths: 17, assists: 5,  rating: '1.15', hs: '55%' },
           { name: 'saadhak', team: 'LOUD', kills: 12, deaths: 16, assists: 14, rating: '0.88', hs: '22%' },
           { name: 'Less',    team: 'LOUD', kills: 16, deaths: 18, assists: 8,  rating: '0.93', hs: '38%' }
@@ -105,12 +105,12 @@ import SiteShell from './_components/SiteShell.astro';
           { map: 'Game 4', score1: 1, score2: 1, winner: null, status: 'Live · OT' }
         ],
         players: [
-          { name: 'Fairy Peak', team: 'TL', kills: 24, deaths: 18, assists: 15, rating: '1.31', hs: '—' },
-          { name: 'jstn',       team: 'TL', kills: 19, deaths: 20, assists: 22, rating: '1.08', hs: '—' },
-          { name: 'Squishy',    team: 'TL', kills: 21, deaths: 19, assists: 18, rating: '1.14', hs: '—' },
-          { name: 'Torment',    team: 'C9', kills: 22, deaths: 22, assists: 17, rating: '1.02', hs: '—' },
-          { name: 'Gimmick',    team: 'C9', kills: 18, deaths: 21, assists: 20, rating: '0.96', hs: '—' },
-          { name: 'Rizzo',      team: 'C9', kills: 15, deaths: 21, assists: 24, rating: '0.91', hs: '—' }
+          { name: 'Fairy Peak', team: 'TL', kills: 24, deaths: 18, assists: 15, rating: '1.31', hs: '—', playerId: 'fairy-peak' },
+          { name: 'jstn',       team: 'TL', kills: 19, deaths: 20, assists: 22, rating: '1.08', hs: '—', playerId: 'jstn' },
+          { name: 'Squishy',    team: 'TL', kills: 21, deaths: 19, assists: 18, rating: '1.14', hs: '—', playerId: 'squishy' },
+          { name: 'Torment',    team: 'C9', kills: 22, deaths: 22, assists: 17, rating: '1.02', hs: '—', playerId: 'torment' },
+          { name: 'Gimmick',    team: 'C9', kills: 18, deaths: 21, assists: 20, rating: '0.96', hs: '—', playerId: 'gimmick' },
+          { name: 'Rizzo',      team: 'C9', kills: 15, deaths: 21, assists: 24, rating: '0.91', hs: '—', playerId: 'rizzo' }
         ],
         news: [
           { headline: 'Team Liquid Unveil Revamped RLCS Roster Ahead of Spring Split', time: '4d ago', href: '/l1/scoretap/article?id=liquid-rl-roster' },
@@ -150,8 +150,11 @@ import SiteShell from './_components/SiteShell.astro';
 
       // Player rows
       var playerRows = m.players.map(function(p) {
+        var playerNameHtml = p.playerId
+          ? '<a href="/l1/scoretap/player?id=' + p.playerId + '" style="color:inherit;">' + p.name + '</a>'
+          : p.name;
         return '<tr>' +
-          '<td style="font-weight:700;color:var(--text-bright);">' + p.name + '</td>' +
+          '<td style="font-weight:700;color:var(--text-bright);">' + playerNameHtml + '</td>' +
           '<td style="color:var(--text-dim);">' + p.team + '</td>' +
           '<td class="stat-highlight">' + p.kills + '</td>' +
           '<td>' + p.deaths + '</td>' +

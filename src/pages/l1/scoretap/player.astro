@@ -1,0 +1,1314 @@
+---
+import SiteShell from './_components/SiteShell.astro';
+---
+<SiteShell title="Player — ScoreTap" activePage="teams">
+
+  <style>
+    .player-detail-container { max-width: 1100px; margin: 14px auto; padding: 0 12px; display: flex; flex-direction: column; gap: 10px; }
+    .player-header-card { background: linear-gradient(180deg, #181828 0%, var(--bg-panel) 100%); border: 1px solid var(--border); border-top: 3px solid var(--accent); padding: 20px; }
+    .player-name-display { font-size: 1.6rem; font-weight: 900; color: var(--text-bright); text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; margin-bottom: 4px; }
+    .player-real-name { font-size: 12px; color: var(--text-dim); margin-bottom: 10px; font-style: italic; }
+    .player-meta-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font-size: 11px; color: var(--text-dim); }
+    .player-meta-row .team-link { color: var(--accent); font-weight: 700; }
+    .player-meta-row .team-link:hover { text-decoration: underline; }
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); }
+    .stat-box { padding: 12px; text-align: center; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-panel); }
+    .stat-box:last-child { border-right: none; }
+    .stat-box .stat-value { font-size: 1.3rem; font-weight: 900; color: var(--accent); font-family: 'Courier New', monospace; }
+    .stat-box .stat-label { font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; }
+    #player-not-found { text-align: center; padding: 40px; color: var(--text-dim); font-size: 1rem; border: 1px solid var(--border); background: var(--bg-panel); }
+  </style>
+
+  <div class="player-detail-container">
+    <div class="breadcrumb">
+      <a href="/l1/scoretap/">Home</a> &rsaquo;
+      <a href="/l1/scoretap/teams">Teams</a> &rsaquo;
+      <span id="breadcrumb-team">Team</span> &rsaquo;
+      <span id="breadcrumb-player">Player Detail</span>
+    </div>
+
+    <div id="player-content">
+      <!-- Populated by JS -->
+    </div>
+
+    <div id="player-not-found" style="display:none;">
+      Player not found. <a href="/l1/scoretap/teams" style="color:var(--accent);">Return to teams</a>
+    </div>
+  </div>
+
+  <script is:inline>
+    var PLAYERS = {
+      // ── CS2: Team Vitality ──
+      'zywoo': {
+        id: 'zywoo', name: 'ZywOo', realName: 'Mathieu Herbaut',
+        team: 'Team Vitality', teamId: 'vitality', game: 'cs2', gameLabel: 'CS2',
+        role: 'AWPer', nationality: 'France', age: 24,
+        stats: { rating: '1.35', kd: '1.42', hsPercent: '48%', mapsPlayed: 156 },
+        career: [
+          { year: '2019\u2013present', team: 'Team Vitality', role: 'AWPer' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'SF (ongoing)', eventId: 'iem-katowice-2026' },
+          { event: 'IEM Dallas 2026', placement: '3rd\u20134th', eventId: 'iem-dallas-2026' }
+        ],
+        news: [
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' },
+          { headline: 'Vitality vs FaZe: IEM Katowice 2026 Results and Highlights', time: '6h ago', href: '/l1/scoretap/article?id=vitality-faze-results' }
+        ]
+      },
+      'apex': {
+        id: 'apex', name: 'apEX', realName: 'Dan Madesclaire',
+        team: 'Team Vitality', teamId: 'vitality', game: 'cs2', gameLabel: 'CS2',
+        role: 'IGL', nationality: 'France', age: 30,
+        stats: { rating: '0.98', kd: '0.94', hsPercent: '42%', mapsPlayed: 310 },
+        career: [
+          { year: '2018\u2013present', team: 'Team Vitality', role: 'IGL' },
+          { year: '2015\u20132018', team: 'EnVyUs', role: 'Entry' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'SF (ongoing)', eventId: 'iem-katowice-2026' },
+          { event: 'IEM Dallas 2026', placement: '3rd\u20134th', eventId: 'iem-dallas-2026' }
+        ],
+        news: [
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' },
+          { headline: 'Vitality vs FaZe: IEM Katowice 2026 Results and Highlights', time: '6h ago', href: '/l1/scoretap/article?id=vitality-faze-results' }
+        ]
+      },
+      'magisk': {
+        id: 'magisk', name: 'Magisk', realName: 'Emil Reif',
+        team: 'Team Vitality', teamId: 'vitality', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Denmark', age: 25,
+        stats: { rating: '1.08', kd: '1.12', hsPercent: '51%', mapsPlayed: 280 },
+        career: [
+          { year: '2023\u2013present', team: 'Team Vitality', role: 'Rifler' },
+          { year: '2018\u20132023', team: 'Astralis', role: 'Rifler' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'SF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' },
+          { headline: 'Vitality vs FaZe: IEM Katowice 2026 Results and Highlights', time: '6h ago', href: '/l1/scoretap/article?id=vitality-faze-results' }
+        ]
+      },
+      'flamez': {
+        id: 'flamez', name: 'flameZ', realName: 'Shahar Shushan',
+        team: 'Team Vitality', teamId: 'vitality', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Israel', age: 21,
+        stats: { rating: '1.15', kd: '1.18', hsPercent: '46%', mapsPlayed: 120 },
+        career: [
+          { year: '2023\u2013present', team: 'Team Vitality', role: 'Rifler' },
+          { year: '2021\u20132023', team: 'OG', role: 'Rifler' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'SF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' },
+          { headline: 'Vitality vs FaZe: IEM Katowice 2026 Results and Highlights', time: '6h ago', href: '/l1/scoretap/article?id=vitality-faze-results' }
+        ]
+      },
+      'spinx': {
+        id: 'spinx', name: 'Spinx', realName: 'Lotan Giladi',
+        team: 'Team Vitality', teamId: 'vitality', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Israel', age: 23,
+        stats: { rating: '1.10', kd: '1.14', hsPercent: '44%', mapsPlayed: 95 },
+        career: [
+          { year: '2024\u2013present', team: 'Team Vitality', role: 'Rifler' },
+          { year: '2022\u20132024', team: 'ENCE', role: 'Rifler' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'SF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' },
+          { headline: 'Vitality vs FaZe: IEM Katowice 2026 Results and Highlights', time: '6h ago', href: '/l1/scoretap/article?id=vitality-faze-results' }
+        ]
+      },
+
+      // ── CS2: NAVI ──
+      's1mple': {
+        id: 's1mple', name: 's1mple', realName: 'Oleksandr Kostyliev',
+        team: 'NAVI', teamId: 'navi', game: 'cs2', gameLabel: 'CS2',
+        role: 'AWPer', nationality: 'Ukraine', age: 28,
+        stats: { rating: '1.41', kd: '1.58', hsPercent: '52%', mapsPlayed: 420 },
+        career: [
+          { year: '2024\u2013present', team: 'NAVI', role: 'AWPer' },
+          { year: '2016\u20132023', team: 'NAVI', role: 'Rifler/AWPer' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' },
+          { event: 'IEM Dallas 2026', placement: '3rd\u20134th', eventId: 'iem-dallas-2026' }
+        ],
+        news: [
+          { headline: 'NAVI Confirm Signing of Rifler blameF Ahead of Major Qualifier', time: '4h ago', href: '/l1/scoretap/article?id=navi-blamef-signing' },
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' }
+        ]
+      },
+      'electronic': {
+        id: 'electronic', name: 'electroNic', realName: 'Denis Sharipov',
+        team: 'NAVI', teamId: 'navi', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Russia', age: 26,
+        stats: { rating: '1.12', kd: '1.08', hsPercent: '44%', mapsPlayed: 340 },
+        career: [
+          { year: '2017\u2013present', team: 'NAVI', role: 'Rifler' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' },
+          { event: 'IEM Dallas 2026', placement: '3rd\u20134th', eventId: 'iem-dallas-2026' }
+        ],
+        news: [
+          { headline: 'NAVI Confirm Signing of Rifler blameF Ahead of Major Qualifier', time: '4h ago', href: '/l1/scoretap/article?id=navi-blamef-signing' },
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' }
+        ]
+      },
+      'b1t': {
+        id: 'b1t', name: 'b1t', realName: 'Valeriy Vakhovskiy',
+        team: 'NAVI', teamId: 'navi', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Ukraine', age: 21,
+        stats: { rating: '0.98', kd: '0.96', hsPercent: '38%', mapsPlayed: 180 },
+        career: [
+          { year: '2021\u2013present', team: 'NAVI', role: 'Rifler' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'NAVI Confirm Signing of Rifler blameF Ahead of Major Qualifier', time: '4h ago', href: '/l1/scoretap/article?id=navi-blamef-signing' },
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' }
+        ]
+      },
+      'perfecto': {
+        id: 'perfecto', name: 'Perfecto', realName: 'Ilya Zalutskiy',
+        team: 'NAVI', teamId: 'navi', game: 'cs2', gameLabel: 'CS2',
+        role: 'Support', nationality: 'Russia', age: 24,
+        stats: { rating: '0.94', kd: '0.91', hsPercent: '35%', mapsPlayed: 200 },
+        career: [
+          { year: '2020\u2013present', team: 'NAVI', role: 'Support' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'NAVI Confirm Signing of Rifler blameF Ahead of Major Qualifier', time: '4h ago', href: '/l1/scoretap/article?id=navi-blamef-signing' },
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' }
+        ]
+      },
+      'blamef': {
+        id: 'blamef', name: 'blameF', realName: 'Benjamin Bremer',
+        team: 'NAVI', teamId: 'navi', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Denmark', age: 27,
+        stats: { rating: '1.14', kd: '1.16', hsPercent: '49%', mapsPlayed: 260 },
+        career: [
+          { year: '2025\u2013present', team: 'NAVI', role: 'Rifler' },
+          { year: '2020\u20132025', team: 'Astralis', role: 'IGL' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'NAVI Confirm Signing of Rifler blameF Ahead of Major Qualifier', time: '4h ago', href: '/l1/scoretap/article?id=navi-blamef-signing' },
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' }
+        ]
+      },
+
+      // ── CS2: G2 Esports ──
+      'niko': {
+        id: 'niko', name: 'NiKo', realName: 'Nikola Kova\u010d',
+        team: 'G2 Esports', teamId: 'g2', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Bosnia', age: 27,
+        stats: { rating: '1.22', kd: '1.28', hsPercent: '58%', mapsPlayed: 380 },
+        career: [
+          { year: '2021\u2013present', team: 'G2 Esports', role: 'Rifler' },
+          { year: '2017\u20132021', team: 'FaZe Clan', role: 'Rifler' },
+          { year: '2015\u20132017', team: 'mousesports', role: 'Rifler' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' },
+          { event: 'IEM Dallas 2026', placement: '2nd', eventId: 'iem-dallas-2026' }
+        ],
+        news: [
+          { headline: 'G2 NiKo: \u201cWe Came to Katowice to Win Everything, Not Just Qualify\u201d', time: '16h ago', href: '/l1/scoretap/article?id=g2-niko-interview' },
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' }
+        ]
+      },
+      'hooxi': {
+        id: 'hooxi', name: 'HooXi', realName: 'Rasmus Nielsen',
+        team: 'G2 Esports', teamId: 'g2', game: 'cs2', gameLabel: 'CS2',
+        role: 'IGL', nationality: 'Denmark', age: 27,
+        stats: { rating: '0.81', kd: '0.76', hsPercent: '31%', mapsPlayed: 150 },
+        career: [
+          { year: '2022\u2013present', team: 'G2 Esports', role: 'IGL' },
+          { year: '2020\u20132022', team: 'Copenhagen Flames', role: 'IGL' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'G2 NiKo: \u201cWe Came to Katowice to Win Everything, Not Just Qualify\u201d', time: '16h ago', href: '/l1/scoretap/article?id=g2-niko-interview' },
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' }
+        ]
+      },
+      'hunter': {
+        id: 'hunter', name: 'huNter-', realName: 'Nemanja Kova\u010d',
+        team: 'G2 Esports', teamId: 'g2', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Bosnia', age: 28,
+        stats: { rating: '1.05', kd: '1.04', hsPercent: '47%', mapsPlayed: 320 },
+        career: [
+          { year: '2019\u2013present', team: 'G2 Esports', role: 'Rifler' },
+          { year: '2018\u20132019', team: 'Valiance', role: 'Rifler' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'G2 NiKo: \u201cWe Came to Katowice to Win Everything, Not Just Qualify\u201d', time: '16h ago', href: '/l1/scoretap/article?id=g2-niko-interview' },
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' }
+        ]
+      },
+      'm0nesy': {
+        id: 'm0nesy', name: 'm0NESY', realName: 'Ilya Osipov',
+        team: 'G2 Esports', teamId: 'g2', game: 'cs2', gameLabel: 'CS2',
+        role: 'AWPer', nationality: 'Russia', age: 19,
+        stats: { rating: '1.18', kd: '1.24', hsPercent: '50%', mapsPlayed: 110 },
+        career: [
+          { year: '2022\u2013present', team: 'G2 Esports', role: 'AWPer' },
+          { year: '2021\u20132022', team: 'NAVI Junior', role: 'AWPer' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' },
+          { event: 'IEM Dallas 2026', placement: '2nd', eventId: 'iem-dallas-2026' }
+        ],
+        news: [
+          { headline: 'G2 NiKo: \u201cWe Came to Katowice to Win Everything, Not Just Qualify\u201d', time: '16h ago', href: '/l1/scoretap/article?id=g2-niko-interview' },
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' }
+        ]
+      },
+      'nexa': {
+        id: 'nexa', name: 'nexa', realName: 'Nemanja Isakovi\u0107',
+        team: 'G2 Esports', teamId: 'g2', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Serbia', age: 26,
+        stats: { rating: '1.02', kd: '1.00', hsPercent: '43%', mapsPlayed: 290 },
+        career: [
+          { year: '2023\u2013present', team: 'G2 Esports', role: 'Rifler' },
+          { year: '2020\u20132023', team: 'OG', role: 'IGL' }
+        ],
+        achievements: [
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'G2 NiKo: \u201cWe Came to Katowice to Win Everything, Not Just Qualify\u201d', time: '16h ago', href: '/l1/scoretap/article?id=g2-niko-interview' },
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' }
+        ]
+      },
+
+      // ── CS2: MOUZ ──
+      'torzsi': {
+        id: 'torzsi', name: 'torzsi', realName: '\u00c1d\u00e1m Torzsás',
+        team: 'MOUZ', teamId: 'mouz', game: 'cs2', gameLabel: 'CS2',
+        role: 'AWPer', nationality: 'Hungary', age: 22,
+        stats: { rating: '1.16', kd: '1.20', hsPercent: '45%', mapsPlayed: 90 },
+        career: [
+          { year: '2023\u2013present', team: 'MOUZ', role: 'AWPer' }
+        ],
+        achievements: [
+          { event: 'IEM Dallas 2026', placement: '1st \u2014 Champion', eventId: 'iem-dallas-2026' },
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' },
+          { headline: 'CS2 Patch Notes: Major Weapon Balance Changes Shake Up the Meta', time: '1d ago', href: '/l1/scoretap/article?id=cs2-patch-notes' }
+        ]
+      },
+      'xertion': {
+        id: 'xertion', name: 'xertioN', realName: 'Dorian Berman',
+        team: 'MOUZ', teamId: 'mouz', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Germany', age: 20,
+        stats: { rating: '1.08', kd: '1.06', hsPercent: '40%', mapsPlayed: 75 },
+        career: [
+          { year: '2023\u2013present', team: 'MOUZ', role: 'Rifler' }
+        ],
+        achievements: [
+          { event: 'IEM Dallas 2026', placement: '1st \u2014 Champion', eventId: 'iem-dallas-2026' }
+        ],
+        news: [
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' },
+          { headline: 'CS2 Patch Notes: Major Weapon Balance Changes Shake Up the Meta', time: '1d ago', href: '/l1/scoretap/article?id=cs2-patch-notes' }
+        ]
+      },
+      'jdc': {
+        id: 'jdc', name: 'JDC', realName: 'Jon de Castro',
+        team: 'MOUZ', teamId: 'mouz', game: 'cs2', gameLabel: 'CS2',
+        role: 'IGL', nationality: 'Germany', age: 24,
+        stats: { rating: '0.95', kd: '0.92', hsPercent: '38%', mapsPlayed: 85 },
+        career: [
+          { year: '2023\u2013present', team: 'MOUZ', role: 'IGL' },
+          { year: '2021\u20132023', team: 'Sprout', role: 'IGL' }
+        ],
+        achievements: [
+          { event: 'IEM Dallas 2026', placement: '1st \u2014 Champion', eventId: 'iem-dallas-2026' }
+        ],
+        news: [
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' },
+          { headline: 'CS2 Patch Notes: Major Weapon Balance Changes Shake Up the Meta', time: '1d ago', href: '/l1/scoretap/article?id=cs2-patch-notes' }
+        ]
+      },
+      'siuhy': {
+        id: 'siuhy', name: 'siuhy', realName: 'Kamil Szkaradek',
+        team: 'MOUZ', teamId: 'mouz', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Poland', age: 21,
+        stats: { rating: '1.04', kd: '1.02', hsPercent: '42%', mapsPlayed: 80 },
+        career: [
+          { year: '2023\u2013present', team: 'MOUZ', role: 'Rifler' }
+        ],
+        achievements: [
+          { event: 'IEM Dallas 2026', placement: '1st \u2014 Champion', eventId: 'iem-dallas-2026' }
+        ],
+        news: [
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' },
+          { headline: 'CS2 Patch Notes: Major Weapon Balance Changes Shake Up the Meta', time: '1d ago', href: '/l1/scoretap/article?id=cs2-patch-notes' }
+        ]
+      },
+      'jimpphat': {
+        id: 'jimpphat', name: 'Jimpphat', realName: 'Jimi Salo',
+        team: 'MOUZ', teamId: 'mouz', game: 'cs2', gameLabel: 'CS2',
+        role: 'Rifler', nationality: 'Finland', age: 17,
+        stats: { rating: '1.12', kd: '1.14', hsPercent: '44%', mapsPlayed: 70 },
+        career: [
+          { year: '2023\u2013present', team: 'MOUZ', role: 'Rifler' }
+        ],
+        achievements: [
+          { event: 'IEM Dallas 2026', placement: '1st \u2014 Champion', eventId: 'iem-dallas-2026' },
+          { event: 'IEM Katowice 2026', placement: 'QF (ongoing)', eventId: 'iem-katowice-2026' }
+        ],
+        news: [
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' },
+          { headline: 'CS2 Patch Notes: Major Weapon Balance Changes Shake Up the Meta', time: '1d ago', href: '/l1/scoretap/article?id=cs2-patch-notes' }
+        ]
+      },
+
+      // ── Valorant: Sentinels ──
+      'tenz': {
+        id: 'tenz', name: 'TenZ', realName: 'Tyson Ngo',
+        team: 'Sentinels', teamId: 'sentinels', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Duelist', nationality: 'Canada', age: 23,
+        stats: { rating: '1.38', kd: '1.45', hsPercent: '61%', mapsPlayed: 180 },
+        career: [
+          { year: '2021\u2013present', team: 'Sentinels', role: 'Duelist' },
+          { year: '2020\u20132021', team: 'Cloud9', role: 'Duelist' }
+        ],
+        achievements: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-americas-2026' }
+        ],
+        news: [
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' },
+          { headline: 'LOUD vs Sentinels VCT Americas Preview: A Clash of Opposite Styles', time: '1d ago', href: '/l1/scoretap/article?id=loud-vct-preview' }
+        ]
+      },
+      'zekken': {
+        id: 'zekken', name: 'zekken', realName: 'Zachary Patrone',
+        team: 'Sentinels', teamId: 'sentinels', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Flex', nationality: 'USA', age: 20,
+        stats: { rating: '1.09', kd: '1.06', hsPercent: '44%', mapsPlayed: 120 },
+        career: [
+          { year: '2023\u2013present', team: 'Sentinels', role: 'Flex' },
+          { year: '2022\u20132023', team: 'XSET', role: 'Flex' }
+        ],
+        achievements: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-americas-2026' }
+        ],
+        news: [
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' },
+          { headline: 'LOUD vs Sentinels VCT Americas Preview: A Clash of Opposite Styles', time: '1d ago', href: '/l1/scoretap/article?id=loud-vct-preview' }
+        ]
+      },
+      'bang': {
+        id: 'bang', name: 'bang', realName: 'Sean Bezerra',
+        team: 'Sentinels', teamId: 'sentinels', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Initiator', nationality: 'USA', age: 22,
+        stats: { rating: '0.97', kd: '0.94', hsPercent: '29%', mapsPlayed: 110 },
+        career: [
+          { year: '2023\u2013present', team: 'Sentinels', role: 'Initiator' },
+          { year: '2022\u20132023', team: 'Rise', role: 'Initiator' }
+        ],
+        achievements: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-americas-2026' }
+        ],
+        news: [
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' },
+          { headline: 'LOUD vs Sentinels VCT Americas Preview: A Clash of Opposite Styles', time: '1d ago', href: '/l1/scoretap/article?id=loud-vct-preview' }
+        ]
+      },
+      'sacy': {
+        id: 'sacy', name: 'Sacy', realName: 'Gustavo Rossi',
+        team: 'Sentinels', teamId: 'sentinels', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Initiator', nationality: 'Brazil', age: 28,
+        stats: { rating: '1.02', kd: '0.98', hsPercent: '32%', mapsPlayed: 160 },
+        career: [
+          { year: '2023\u2013present', team: 'Sentinels', role: 'Initiator' },
+          { year: '2020\u20132023', team: 'LOUD', role: 'Initiator' }
+        ],
+        achievements: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-americas-2026' }
+        ],
+        news: [
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' },
+          { headline: 'LOUD vs Sentinels VCT Americas Preview: A Clash of Opposite Styles', time: '1d ago', href: '/l1/scoretap/article?id=loud-vct-preview' }
+        ]
+      },
+      'pancada': {
+        id: 'pancada', name: 'pANcada', realName: 'Bryan Luna',
+        team: 'Sentinels', teamId: 'sentinels', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Controller', nationality: 'Brazil', age: 24,
+        stats: { rating: '0.96', kd: '0.92', hsPercent: '28%', mapsPlayed: 140 },
+        career: [
+          { year: '2023\u2013present', team: 'Sentinels', role: 'Controller' },
+          { year: '2020\u20132023', team: 'LOUD', role: 'Controller' }
+        ],
+        achievements: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-americas-2026' }
+        ],
+        news: [
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' },
+          { headline: 'LOUD vs Sentinels VCT Americas Preview: A Clash of Opposite Styles', time: '1d ago', href: '/l1/scoretap/article?id=loud-vct-preview' }
+        ]
+      },
+
+      // ── Valorant: Paper Rex ──
+      'f0rsaken': {
+        id: 'f0rsaken', name: 'f0rsakeN', realName: 'Jason Susanto',
+        team: 'Paper Rex', teamId: 'paper-rex', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Duelist', nationality: 'Indonesia', age: 20,
+        stats: { rating: '1.24', kd: '1.30', hsPercent: '55%', mapsPlayed: 130 },
+        career: [
+          { year: '2020\u2013present', team: 'Paper Rex', role: 'Duelist' }
+        ],
+        achievements: [
+          { event: 'VCT Pacific 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-pacific-2026' }
+        ],
+        news: [
+          { headline: 'Paper Rex Sign FlippzJder as Sixth Man for VCT Pacific', time: '8h ago', href: '/l1/scoretap/article?id=paper-rex-flippzjder' },
+          { headline: 'VCT Pacific 2026 Standings: Paper Rex Lead After Week 3', time: '1d ago', href: '/l1/scoretap/article?id=vct-pacific-standings' }
+        ]
+      },
+      'jinggg': {
+        id: 'jinggg', name: 'Jinggg', realName: 'Wang Jing Jie',
+        team: 'Paper Rex', teamId: 'paper-rex', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Duelist', nationality: 'Singapore', age: 21,
+        stats: { rating: '1.18', kd: '1.22', hsPercent: '50%', mapsPlayed: 140 },
+        career: [
+          { year: '2021\u2013present', team: 'Paper Rex', role: 'Duelist' }
+        ],
+        achievements: [
+          { event: 'VCT Pacific 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-pacific-2026' }
+        ],
+        news: [
+          { headline: 'Paper Rex Sign FlippzJder as Sixth Man for VCT Pacific', time: '8h ago', href: '/l1/scoretap/article?id=paper-rex-flippzjder' },
+          { headline: 'VCT Pacific 2026 Standings: Paper Rex Lead After Week 3', time: '1d ago', href: '/l1/scoretap/article?id=vct-pacific-standings' }
+        ]
+      },
+      'd4v41': {
+        id: 'd4v41', name: 'd4v41', realName: 'Muhammad Khalif',
+        team: 'Paper Rex', teamId: 'paper-rex', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Initiator', nationality: 'Indonesia', age: 22,
+        stats: { rating: '1.06', kd: '1.02', hsPercent: '38%', mapsPlayed: 120 },
+        career: [
+          { year: '2021\u2013present', team: 'Paper Rex', role: 'Initiator' }
+        ],
+        achievements: [
+          { event: 'VCT Pacific 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-pacific-2026' }
+        ],
+        news: [
+          { headline: 'Paper Rex Sign FlippzJder as Sixth Man for VCT Pacific', time: '8h ago', href: '/l1/scoretap/article?id=paper-rex-flippzjder' },
+          { headline: 'VCT Pacific 2026 Standings: Paper Rex Lead After Week 3', time: '1d ago', href: '/l1/scoretap/article?id=vct-pacific-standings' }
+        ]
+      },
+      'monyet': {
+        id: 'monyet', name: 'Monyet', realName: 'Cahya Nugraha',
+        team: 'Paper Rex', teamId: 'paper-rex', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Controller', nationality: 'Malaysia', age: 23,
+        stats: { rating: '0.98', kd: '0.95', hsPercent: '30%', mapsPlayed: 100 },
+        career: [
+          { year: '2023\u2013present', team: 'Paper Rex', role: 'Controller' }
+        ],
+        achievements: [
+          { event: 'VCT Pacific 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-pacific-2026' }
+        ],
+        news: [
+          { headline: 'Paper Rex Sign FlippzJder as Sixth Man for VCT Pacific', time: '8h ago', href: '/l1/scoretap/article?id=paper-rex-flippzjder' },
+          { headline: 'VCT Pacific 2026 Standings: Paper Rex Lead After Week 3', time: '1d ago', href: '/l1/scoretap/article?id=vct-pacific-standings' }
+        ]
+      },
+      'mindfreak': {
+        id: 'mindfreak', name: 'mindfreak', realName: 'Aaron Leonhart',
+        team: 'Paper Rex', teamId: 'paper-rex', game: 'valorant', gameLabel: 'Valorant',
+        role: 'IGL', nationality: 'Singapore', age: 27,
+        stats: { rating: '0.92', kd: '0.88', hsPercent: '34%', mapsPlayed: 180 },
+        career: [
+          { year: '2020\u2013present', team: 'Paper Rex', role: 'IGL' }
+        ],
+        achievements: [
+          { event: 'VCT Pacific 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-pacific-2026' }
+        ],
+        news: [
+          { headline: 'Paper Rex Sign FlippzJder as Sixth Man for VCT Pacific', time: '8h ago', href: '/l1/scoretap/article?id=paper-rex-flippzjder' },
+          { headline: 'VCT Pacific 2026 Standings: Paper Rex Lead After Week 3', time: '1d ago', href: '/l1/scoretap/article?id=vct-pacific-standings' }
+        ]
+      },
+
+      // ── Valorant: NRG Esports ──
+      's0m': {
+        id: 's0m', name: 's0m', realName: 'Sam Oh',
+        team: 'NRG Esports', teamId: 'nrg', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Duelist', nationality: 'USA', age: 22,
+        stats: { rating: '1.14', kd: '1.18', hsPercent: '48%', mapsPlayed: 100 },
+        career: [
+          { year: '2023\u2013present', team: 'NRG Esports', role: 'Duelist' }
+        ],
+        achievements: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-americas-2026' }
+        ],
+        news: [
+          { headline: 'NRG Secure Americas Playoff Spot With 13-9 Win Over 100 Thieves', time: '20h ago', href: '/l1/scoretap/article?id=nrg-americas-playoffs' },
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' }
+        ]
+      },
+      'fns': {
+        id: 'fns', name: 'FNS', realName: 'Pujan Mehta',
+        team: 'NRG Esports', teamId: 'nrg', game: 'valorant', gameLabel: 'Valorant',
+        role: 'IGL', nationality: 'Canada', age: 30,
+        stats: { rating: '0.86', kd: '0.82', hsPercent: '26%', mapsPlayed: 220 },
+        career: [
+          { year: '2023\u2013present', team: 'NRG Esports', role: 'IGL' },
+          { year: '2021\u20132023', team: 'OpTic Gaming', role: 'IGL' }
+        ],
+        achievements: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-americas-2026' }
+        ],
+        news: [
+          { headline: 'NRG Secure Americas Playoff Spot With 13-9 Win Over 100 Thieves', time: '20h ago', href: '/l1/scoretap/article?id=nrg-americas-playoffs' },
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' }
+        ]
+      },
+      'ardiis': {
+        id: 'ardiis', name: 'ardiis', realName: 'Ardis Svarenieks',
+        team: 'NRG Esports', teamId: 'nrg', game: 'valorant', gameLabel: 'Valorant',
+        role: 'AWPer', nationality: 'Latvia', age: 24,
+        stats: { rating: '1.12', kd: '1.16', hsPercent: '52%', mapsPlayed: 150 },
+        career: [
+          { year: '2023\u2013present', team: 'NRG Esports', role: 'AWPer' },
+          { year: '2021\u20132023', team: 'FPX', role: 'AWPer' }
+        ],
+        achievements: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-americas-2026' }
+        ],
+        news: [
+          { headline: 'NRG Secure Americas Playoff Spot With 13-9 Win Over 100 Thieves', time: '20h ago', href: '/l1/scoretap/article?id=nrg-americas-playoffs' },
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' }
+        ]
+      },
+      'crashies': {
+        id: 'crashies', name: 'crashies', realName: 'Austin Roberts',
+        team: 'NRG Esports', teamId: 'nrg', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Initiator', nationality: 'USA', age: 23,
+        stats: { rating: '1.04', kd: '1.00', hsPercent: '36%', mapsPlayed: 160 },
+        career: [
+          { year: '2023\u2013present', team: 'NRG Esports', role: 'Initiator' },
+          { year: '2021\u20132023', team: 'OpTic Gaming', role: 'Initiator' }
+        ],
+        achievements: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-americas-2026' }
+        ],
+        news: [
+          { headline: 'NRG Secure Americas Playoff Spot With 13-9 Win Over 100 Thieves', time: '20h ago', href: '/l1/scoretap/article?id=nrg-americas-playoffs' },
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' }
+        ]
+      },
+      'victor': {
+        id: 'victor', name: 'Victor', realName: 'Victor Wong',
+        team: 'NRG Esports', teamId: 'nrg', game: 'valorant', gameLabel: 'Valorant',
+        role: 'Flex', nationality: 'USA', age: 24,
+        stats: { rating: '1.00', kd: '0.96', hsPercent: '40%', mapsPlayed: 140 },
+        career: [
+          { year: '2023\u2013present', team: 'NRG Esports', role: 'Flex' },
+          { year: '2021\u20132023', team: 'OpTic Gaming', role: 'Duelist' }
+        ],
+        achievements: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', eventId: 'vct-americas-2026' }
+        ],
+        news: [
+          { headline: 'NRG Secure Americas Playoff Spot With 13-9 Win Over 100 Thieves', time: '20h ago', href: '/l1/scoretap/article?id=nrg-americas-playoffs' },
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' }
+        ]
+      },
+
+      // ── LoL: T1 ──
+      'faker': {
+        id: 'faker', name: 'Faker', realName: 'Lee Sang-hyeok',
+        team: 'T1', teamId: 't1', game: 'lol', gameLabel: 'LoL',
+        role: 'Mid', nationality: 'Korea', age: 29,
+        stats: { rating: '1.32', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 580 },
+        career: [
+          { year: '2013\u2013present', team: 'T1', role: 'Mid' }
+        ],
+        achievements: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', eventId: 'lck-spring-2026' }
+        ],
+        news: [
+          { headline: 'Faker Signs Contract Extension With T1 Through 2028', time: '12h ago', href: '/l1/scoretap/article?id=faker-contract-2028' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+      'zeus-lol': {
+        id: 'zeus-lol', name: 'Zeus', realName: 'Choi Woo-je',
+        team: 'T1', teamId: 't1', game: 'lol', gameLabel: 'LoL',
+        role: 'Top', nationality: 'Korea', age: 21,
+        stats: { rating: '1.18', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 120 },
+        career: [
+          { year: '2021\u2013present', team: 'T1', role: 'Top' }
+        ],
+        achievements: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', eventId: 'lck-spring-2026' }
+        ],
+        news: [
+          { headline: 'Faker Signs Contract Extension With T1 Through 2028', time: '12h ago', href: '/l1/scoretap/article?id=faker-contract-2028' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+      'oner': {
+        id: 'oner', name: 'Oner', realName: 'Moon Hyeon-jun',
+        team: 'T1', teamId: 't1', game: 'lol', gameLabel: 'LoL',
+        role: 'Jungle', nationality: 'Korea', age: 22,
+        stats: { rating: '1.14', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 110 },
+        career: [
+          { year: '2021\u2013present', team: 'T1', role: 'Jungle' }
+        ],
+        achievements: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', eventId: 'lck-spring-2026' }
+        ],
+        news: [
+          { headline: 'Faker Signs Contract Extension With T1 Through 2028', time: '12h ago', href: '/l1/scoretap/article?id=faker-contract-2028' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+      'gumayusi': {
+        id: 'gumayusi', name: 'Gumayusi', realName: 'Lee Min-hyeong',
+        team: 'T1', teamId: 't1', game: 'lol', gameLabel: 'LoL',
+        role: 'ADC', nationality: 'Korea', age: 22,
+        stats: { rating: '1.20', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 130 },
+        career: [
+          { year: '2020\u2013present', team: 'T1', role: 'ADC' }
+        ],
+        achievements: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', eventId: 'lck-spring-2026' }
+        ],
+        news: [
+          { headline: 'Faker Signs Contract Extension With T1 Through 2028', time: '12h ago', href: '/l1/scoretap/article?id=faker-contract-2028' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+      'keria': {
+        id: 'keria', name: 'Keria', realName: 'Ryu Min-seok',
+        team: 'T1', teamId: 't1', game: 'lol', gameLabel: 'LoL',
+        role: 'Support', nationality: 'Korea', age: 22,
+        stats: { rating: '1.16', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 125 },
+        career: [
+          { year: '2021\u2013present', team: 'T1', role: 'Support' },
+          { year: '2020\u20132021', team: 'DRX', role: 'Support' }
+        ],
+        achievements: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', eventId: 'lck-spring-2026' }
+        ],
+        news: [
+          { headline: 'Faker Signs Contract Extension With T1 Through 2028', time: '12h ago', href: '/l1/scoretap/article?id=faker-contract-2028' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+
+      // ── LoL: Gen.G ──
+      'chovy': {
+        id: 'chovy', name: 'Chovy', realName: 'Jeong Ji-hoon',
+        team: 'Gen.G', teamId: 'gen-g', game: 'lol', gameLabel: 'LoL',
+        role: 'Mid', nationality: 'Korea', age: 23,
+        stats: { rating: '1.28', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 240 },
+        career: [
+          { year: '2023\u2013present', team: 'Gen.G', role: 'Mid' },
+          { year: '2020\u20132023', team: 'Hanwha Life', role: 'Mid' }
+        ],
+        achievements: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', eventId: 'lck-spring-2026' }
+        ],
+        news: [
+          { headline: 'Gen.G Extend Ruler\u2019s Contract Through 2027 Season', time: '1d ago', href: '/l1/scoretap/article?id=geng-ruler-contract' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+      'doran': {
+        id: 'doran', name: 'Doran', realName: 'Choi Hyeon-joon',
+        team: 'Gen.G', teamId: 'gen-g', game: 'lol', gameLabel: 'LoL',
+        role: 'Top', nationality: 'Korea', age: 24,
+        stats: { rating: '1.06', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 200 },
+        career: [
+          { year: '2022\u2013present', team: 'Gen.G', role: 'Top' },
+          { year: '2019\u20132022', team: 'Griffin/DRX', role: 'Top' }
+        ],
+        achievements: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', eventId: 'lck-spring-2026' }
+        ],
+        news: [
+          { headline: 'Gen.G Extend Ruler\u2019s Contract Through 2027 Season', time: '1d ago', href: '/l1/scoretap/article?id=geng-ruler-contract' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+      'peanut': {
+        id: 'peanut', name: 'Peanut', realName: 'Han Wang-ho',
+        team: 'Gen.G', teamId: 'gen-g', game: 'lol', gameLabel: 'LoL',
+        role: 'Jungle', nationality: 'Korea', age: 27,
+        stats: { rating: '1.10', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 320 },
+        career: [
+          { year: '2022\u2013present', team: 'Gen.G', role: 'Jungle' },
+          { year: '2016\u20132022', team: 'Various (ROX/SKT/LGD)', role: 'Jungle' }
+        ],
+        achievements: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', eventId: 'lck-spring-2026' }
+        ],
+        news: [
+          { headline: 'Gen.G Extend Ruler\u2019s Contract Through 2027 Season', time: '1d ago', href: '/l1/scoretap/article?id=geng-ruler-contract' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+      'ruler': {
+        id: 'ruler', name: 'Ruler', realName: 'Park Jae-hyuk',
+        team: 'Gen.G', teamId: 'gen-g', game: 'lol', gameLabel: 'LoL',
+        role: 'ADC', nationality: 'Korea', age: 27,
+        stats: { rating: '1.22', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 310 },
+        career: [
+          { year: '2022\u2013present', team: 'Gen.G', role: 'ADC' },
+          { year: '2016\u20132022', team: 'Samsung/Gen.G', role: 'ADC' }
+        ],
+        achievements: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', eventId: 'lck-spring-2026' }
+        ],
+        news: [
+          { headline: 'Gen.G Extend Ruler\u2019s Contract Through 2027 Season', time: '1d ago', href: '/l1/scoretap/article?id=geng-ruler-contract' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+      'lehends': {
+        id: 'lehends', name: 'Lehends', realName: 'Son Si-woo',
+        team: 'Gen.G', teamId: 'gen-g', game: 'lol', gameLabel: 'LoL',
+        role: 'Support', nationality: 'Korea', age: 27,
+        stats: { rating: '1.04', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 280 },
+        career: [
+          { year: '2022\u2013present', team: 'Gen.G', role: 'Support' },
+          { year: '2018\u20132022', team: 'Griffin/Hanwha', role: 'Support' }
+        ],
+        achievements: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', eventId: 'lck-spring-2026' }
+        ],
+        news: [
+          { headline: 'Gen.G Extend Ruler\u2019s Contract Through 2027 Season', time: '1d ago', href: '/l1/scoretap/article?id=geng-ruler-contract' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+
+      // ── LoL: G2 Esports ──
+      'caps': {
+        id: 'caps', name: 'Caps', realName: 'Rasmus Winther',
+        team: 'G2 Esports', teamId: 'g2-lol', game: 'lol', gameLabel: 'LoL',
+        role: 'Mid', nationality: 'Denmark', age: 24,
+        stats: { rating: '1.24', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 280 },
+        career: [
+          { year: '2018\u2013present', team: 'G2 Esports', role: 'Mid' },
+          { year: '2017\u20132018', team: 'Fnatic', role: 'Mid' }
+        ],
+        achievements: [
+          { event: 'LEC Spring 2026', placement: 'Playoffs (ongoing)', eventId: 'lec-spring-2026' }
+        ],
+        news: [
+          { headline: 'LEC Spring 2026 Standings: G2 Clinch First-Round Bye', time: '1d ago', href: '/l1/scoretap/article?id=lec-g2-standings' }
+        ]
+      },
+      'brokenblade': {
+        id: 'brokenblade', name: 'BrokenBlade', realName: 'Sergen \u00c7elik',
+        team: 'G2 Esports', teamId: 'g2-lol', game: 'lol', gameLabel: 'LoL',
+        role: 'Top', nationality: 'Germany', age: 24,
+        stats: { rating: '1.10', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 220 },
+        career: [
+          { year: '2022\u2013present', team: 'G2 Esports', role: 'Top' },
+          { year: '2019\u20132022', team: 'TSM', role: 'Top' }
+        ],
+        achievements: [
+          { event: 'LEC Spring 2026', placement: 'Playoffs (ongoing)', eventId: 'lec-spring-2026' }
+        ],
+        news: [
+          { headline: 'LEC Spring 2026 Standings: G2 Clinch First-Round Bye', time: '1d ago', href: '/l1/scoretap/article?id=lec-g2-standings' }
+        ]
+      },
+      'yike': {
+        id: 'yike', name: 'Yike', realName: 'Martin Sundelin',
+        team: 'G2 Esports', teamId: 'g2-lol', game: 'lol', gameLabel: 'LoL',
+        role: 'Jungle', nationality: 'France', age: 23,
+        stats: { rating: '1.08', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 80 },
+        career: [
+          { year: '2024\u2013present', team: 'G2 Esports', role: 'Jungle' }
+        ],
+        achievements: [
+          { event: 'LEC Spring 2026', placement: 'Playoffs (ongoing)', eventId: 'lec-spring-2026' }
+        ],
+        news: [
+          { headline: 'LEC Spring 2026 Standings: G2 Clinch First-Round Bye', time: '1d ago', href: '/l1/scoretap/article?id=lec-g2-standings' }
+        ]
+      },
+      'hans-sama': {
+        id: 'hans-sama', name: 'Hans Sama', realName: 'Steven Liv',
+        team: 'G2 Esports', teamId: 'g2-lol', game: 'lol', gameLabel: 'LoL',
+        role: 'ADC', nationality: 'France', age: 24,
+        stats: { rating: '1.16', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 240 },
+        career: [
+          { year: '2023\u2013present', team: 'G2 Esports', role: 'ADC' },
+          { year: '2021\u20132023', team: 'Team Liquid', role: 'ADC' },
+          { year: '2017\u20132021', team: 'Misfits', role: 'ADC' }
+        ],
+        achievements: [
+          { event: 'LEC Spring 2026', placement: 'Playoffs (ongoing)', eventId: 'lec-spring-2026' }
+        ],
+        news: [
+          { headline: 'LEC Spring 2026 Standings: G2 Clinch First-Round Bye', time: '1d ago', href: '/l1/scoretap/article?id=lec-g2-standings' }
+        ]
+      },
+      'mikyx': {
+        id: 'mikyx', name: 'Mikyx', realName: 'Mihael Mehle',
+        team: 'G2 Esports', teamId: 'g2-lol', game: 'lol', gameLabel: 'LoL',
+        role: 'Support', nationality: 'Slovenia', age: 25,
+        stats: { rating: '1.02', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 300 },
+        career: [
+          { year: '2019\u2013present', team: 'G2 Esports', role: 'Support' },
+          { year: '2016\u20132019', team: 'Splyce/Misfits', role: 'Support' }
+        ],
+        achievements: [
+          { event: 'LEC Spring 2026', placement: 'Playoffs (ongoing)', eventId: 'lec-spring-2026' }
+        ],
+        news: [
+          { headline: 'LEC Spring 2026 Standings: G2 Clinch First-Round Bye', time: '1d ago', href: '/l1/scoretap/article?id=lec-g2-standings' }
+        ]
+      },
+
+      // ── Dota 2: Team Spirit ──
+      'yatoro': {
+        id: 'yatoro', name: 'Yatoro', realName: 'Illya Mulyarchuk',
+        team: 'Team Spirit', teamId: 'spirit', game: 'dota2', gameLabel: 'Dota 2',
+        role: 'Carry', nationality: 'Ukraine', age: 22,
+        stats: { rating: '1.30', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 200 },
+        career: [
+          { year: '2021\u2013present', team: 'Team Spirit', role: 'Carry' }
+        ],
+        achievements: [
+          { event: 'DreamLeague Season 25', placement: '1st \u2014 Champion', eventId: 'dreamleague-season-25' }
+        ],
+        news: [
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' },
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' }
+        ]
+      },
+      'torontotokyo': {
+        id: 'torontotokyo', name: 'TORONTOTOKYO', realName: 'Alexander Khertek',
+        team: 'Team Spirit', teamId: 'spirit', game: 'dota2', gameLabel: 'Dota 2',
+        role: 'Mid', nationality: 'Russia', age: 23,
+        stats: { rating: '1.18', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 180 },
+        career: [
+          { year: '2020\u2013present', team: 'Team Spirit', role: 'Mid' }
+        ],
+        achievements: [
+          { event: 'DreamLeague Season 25', placement: '1st \u2014 Champion', eventId: 'dreamleague-season-25' }
+        ],
+        news: [
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' },
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' }
+        ]
+      },
+      'collapse': {
+        id: 'collapse', name: 'Collapse', realName: 'Magomed Khalilov',
+        team: 'Team Spirit', teamId: 'spirit', game: 'dota2', gameLabel: 'Dota 2',
+        role: 'Offlane', nationality: 'Russia', age: 23,
+        stats: { rating: '1.22', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 190 },
+        career: [
+          { year: '2020\u2013present', team: 'Team Spirit', role: 'Offlane' }
+        ],
+        achievements: [
+          { event: 'DreamLeague Season 25', placement: '1st \u2014 Champion', eventId: 'dreamleague-season-25' }
+        ],
+        news: [
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' },
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' }
+        ]
+      },
+      'mira': {
+        id: 'mira', name: 'Mira', realName: 'Myroslav Slavhanov',
+        team: 'Team Spirit', teamId: 'spirit', game: 'dota2', gameLabel: 'Dota 2',
+        role: 'Pos 4', nationality: 'Russia', age: 24,
+        stats: { rating: '1.08', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 160 },
+        career: [
+          { year: '2022\u2013present', team: 'Team Spirit', role: 'Pos 4' }
+        ],
+        achievements: [
+          { event: 'DreamLeague Season 25', placement: '1st \u2014 Champion', eventId: 'dreamleague-season-25' }
+        ],
+        news: [
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' },
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' }
+        ]
+      },
+      'miposhka': {
+        id: 'miposhka', name: 'Miposhka', realName: 'Yaroslav Naidenov',
+        team: 'Team Spirit', teamId: 'spirit', game: 'dota2', gameLabel: 'Dota 2',
+        role: 'Captain', nationality: 'Russia', age: 27,
+        stats: { rating: '0.96', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 280 },
+        career: [
+          { year: '2020\u2013present', team: 'Team Spirit', role: 'Captain' },
+          { year: '2016\u20132020', team: 'Vega Squadron', role: 'Support' }
+        ],
+        achievements: [
+          { event: 'DreamLeague Season 25', placement: '1st \u2014 Champion', eventId: 'dreamleague-season-25' }
+        ],
+        news: [
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' },
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' }
+        ]
+      },
+
+      // ── Dota 2: OG ──
+      'atf': {
+        id: 'atf', name: 'ATF', realName: 'Ammar Al-Assaf',
+        team: 'OG', teamId: 'og', game: 'dota2', gameLabel: 'Dota 2',
+        role: 'Carry', nationality: 'Turkey', age: 20,
+        stats: { rating: '1.14', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 100 },
+        career: [
+          { year: '2023\u2013present', team: 'OG', role: 'Carry' }
+        ],
+        achievements: [
+          { event: 'DreamLeague Season 25', placement: '4th', eventId: 'dreamleague-season-25' }
+        ],
+        news: [
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' },
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' }
+        ]
+      },
+      'bzm': {
+        id: 'bzm', name: 'bzm', realName: 'Alin Nikov',
+        team: 'OG', teamId: 'og', game: 'dota2', gameLabel: 'Dota 2',
+        role: 'Mid', nationality: 'Romania', age: 20,
+        stats: { rating: '1.08', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 90 },
+        career: [
+          { year: '2022\u2013present', team: 'OG', role: 'Mid' }
+        ],
+        achievements: [
+          { event: 'DreamLeague Season 25', placement: '4th', eventId: 'dreamleague-season-25' }
+        ],
+        news: [
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' },
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' }
+        ]
+      },
+      'ammar': {
+        id: 'ammar', name: 'Ammar', realName: 'Ammar Al-Heeh',
+        team: 'OG', teamId: 'og', game: 'dota2', gameLabel: 'Dota 2',
+        role: 'Offlane', nationality: 'Jordan', age: 19,
+        stats: { rating: '1.10', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 85 },
+        career: [
+          { year: '2022\u2013present', team: 'OG', role: 'Offlane' }
+        ],
+        achievements: [
+          { event: 'DreamLeague Season 25', placement: '4th', eventId: 'dreamleague-season-25' }
+        ],
+        news: [
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' },
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' }
+        ]
+      },
+      'taiga': {
+        id: 'taiga', name: 'Taiga', realName: 'Anton Lundberg',
+        team: 'OG', teamId: 'og', game: 'dota2', gameLabel: 'Dota 2',
+        role: 'Pos 4', nationality: 'Norway', age: 26,
+        stats: { rating: '1.02', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 180 },
+        career: [
+          { year: '2023\u2013present', team: 'OG', role: 'Pos 4' },
+          { year: '2019\u20132023', team: 'Alliance/OG', role: 'Pos 4' }
+        ],
+        achievements: [
+          { event: 'DreamLeague Season 25', placement: '4th', eventId: 'dreamleague-season-25' }
+        ],
+        news: [
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' },
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' }
+        ]
+      },
+      'insania': {
+        id: 'insania', name: 'Insania', realName: 'Aydin Sarkohi',
+        team: 'OG', teamId: 'og', game: 'dota2', gameLabel: 'Dota 2',
+        role: 'Captain', nationality: 'Sweden', age: 27,
+        stats: { rating: '0.94', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 220 },
+        career: [
+          { year: '2024\u2013present', team: 'OG', role: 'Captain' },
+          { year: '2019\u20132024', team: 'Team Liquid', role: 'Captain' }
+        ],
+        achievements: [
+          { event: 'DreamLeague Season 25', placement: '4th', eventId: 'dreamleague-season-25' }
+        ],
+        news: [
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' },
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' }
+        ]
+      },
+
+      // ── Rocket League: Team BDS ──
+      'monkey-moon': {
+        id: 'monkey-moon', name: 'M0nkey M00n', realName: 'Evan de Jong',
+        team: 'Team BDS', teamId: 'bds', game: 'rl', gameLabel: 'Rocket League',
+        role: 'Player', nationality: 'France', age: 21,
+        stats: { rating: '1.28', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 240 },
+        career: [
+          { year: '2020\u2013present', team: 'Team BDS', role: 'Player' }
+        ],
+        achievements: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', eventId: 'rlcs-spring-2026' }
+        ],
+        news: [
+          { headline: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp', time: '22h ago', href: '/l1/scoretap/article?id=bds-karmine-win' },
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' }
+        ]
+      },
+      'extra': {
+        id: 'extra', name: 'Extra', realName: 'Alexandre Music',
+        team: 'Team BDS', teamId: 'bds', game: 'rl', gameLabel: 'Rocket League',
+        role: 'Player', nationality: 'France', age: 22,
+        stats: { rating: '1.16', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 230 },
+        career: [
+          { year: '2020\u2013present', team: 'Team BDS', role: 'Player' }
+        ],
+        achievements: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', eventId: 'rlcs-spring-2026' }
+        ],
+        news: [
+          { headline: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp', time: '22h ago', href: '/l1/scoretap/article?id=bds-karmine-win' },
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' }
+        ]
+      },
+      'seikoo': {
+        id: 'seikoo', name: 'Seikoo', realName: 'Enzo Grondein',
+        team: 'Team BDS', teamId: 'bds', game: 'rl', gameLabel: 'Rocket League',
+        role: 'Player', nationality: 'France', age: 19,
+        stats: { rating: '1.22', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 110 },
+        career: [
+          { year: '2023\u2013present', team: 'Team BDS', role: 'Player' },
+          { year: '2022\u20132023', team: 'Endpoint', role: 'Player' }
+        ],
+        achievements: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', eventId: 'rlcs-spring-2026' }
+        ],
+        news: [
+          { headline: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp', time: '22h ago', href: '/l1/scoretap/article?id=bds-karmine-win' },
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' }
+        ]
+      },
+
+      // ── Rocket League: Team Liquid ──
+      'fairy-peak': {
+        id: 'fairy-peak', name: 'Fairy Peak', realName: 'Victor Locquet',
+        team: 'Team Liquid', teamId: 'liquid', game: 'rl', gameLabel: 'Rocket League',
+        role: 'Player', nationality: 'France', age: 28,
+        stats: { rating: '1.18', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 320 },
+        career: [
+          { year: '2018\u2013present', team: 'Team Liquid', role: 'Player' }
+        ],
+        achievements: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', eventId: 'rlcs-spring-2026' }
+        ],
+        news: [
+          { headline: 'Team Liquid Unveil Revamped RLCS Roster Ahead of Spring Split', time: '4d ago', href: '/l1/scoretap/article?id=liquid-rl-roster' },
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' }
+        ]
+      },
+      'jstn': {
+        id: 'jstn', name: 'jstn', realName: 'Justin Morales',
+        team: 'Team Liquid', teamId: 'liquid', game: 'rl', gameLabel: 'Rocket League',
+        role: 'Player', nationality: 'USA', age: 22,
+        stats: { rating: '1.14', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 200 },
+        career: [
+          { year: '2024\u2013present', team: 'Team Liquid', role: 'Player' },
+          { year: '2018\u20132024', team: 'NRG', role: 'Player' }
+        ],
+        achievements: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', eventId: 'rlcs-spring-2026' }
+        ],
+        news: [
+          { headline: 'Team Liquid Unveil Revamped RLCS Roster Ahead of Spring Split', time: '4d ago', href: '/l1/scoretap/article?id=liquid-rl-roster' },
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' }
+        ]
+      },
+      'squishy': {
+        id: 'squishy', name: 'Squishy', realName: 'Mariano Arruda',
+        team: 'Team Liquid', teamId: 'liquid', game: 'rl', gameLabel: 'Rocket League',
+        role: 'Player', nationality: 'Canada', age: 23,
+        stats: { rating: '1.10', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 210 },
+        career: [
+          { year: '2024\u2013present', team: 'Team Liquid', role: 'Player' },
+          { year: '2017\u20132024', team: 'Cloud9/NRG', role: 'Player' }
+        ],
+        achievements: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', eventId: 'rlcs-spring-2026' }
+        ],
+        news: [
+          { headline: 'Team Liquid Unveil Revamped RLCS Roster Ahead of Spring Split', time: '4d ago', href: '/l1/scoretap/article?id=liquid-rl-roster' },
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' }
+        ]
+      },
+
+      // ── Rocket League: Cloud9 ──
+      'torment': {
+        id: 'torment', name: 'Torment', realName: 'Kyle Storer',
+        team: 'Cloud9', teamId: 'cloud9', game: 'rl', gameLabel: 'Rocket League',
+        role: 'Player', nationality: 'USA', age: 25,
+        stats: { rating: '1.04', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 260 },
+        career: [
+          { year: '2017\u2013present', team: 'Cloud9', role: 'Player' }
+        ],
+        achievements: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', eventId: 'rlcs-spring-2026' }
+        ],
+        news: [
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' },
+          { headline: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp', time: '22h ago', href: '/l1/scoretap/article?id=bds-karmine-win' }
+        ]
+      },
+      'gimmick': {
+        id: 'gimmick', name: 'Gimmick', realName: 'Jesse Giammarino',
+        team: 'Cloud9', teamId: 'cloud9', game: 'rl', gameLabel: 'Rocket League',
+        role: 'Player', nationality: 'USA', age: 24,
+        stats: { rating: '0.98', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 240 },
+        career: [
+          { year: '2017\u2013present', team: 'Cloud9', role: 'Player' }
+        ],
+        achievements: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', eventId: 'rlcs-spring-2026' }
+        ],
+        news: [
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' },
+          { headline: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp', time: '22h ago', href: '/l1/scoretap/article?id=bds-karmine-win' }
+        ]
+      },
+      'rizzo': {
+        id: 'rizzo', name: 'Rizzo', realName: 'Dillon Rizzo',
+        team: 'Cloud9', teamId: 'cloud9', game: 'rl', gameLabel: 'Rocket League',
+        role: 'Player', nationality: 'USA', age: 26,
+        stats: { rating: '0.96', kd: '\u2014', hsPercent: '\u2014', mapsPlayed: 280 },
+        career: [
+          { year: '2023\u2013present', team: 'Cloud9', role: 'Player' },
+          { year: '2017\u20132023', team: 'G2 Esports', role: 'Player' }
+        ],
+        achievements: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', eventId: 'rlcs-spring-2026' }
+        ],
+        news: [
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' },
+          { headline: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp', time: '22h ago', href: '/l1/scoretap/article?id=bds-karmine-win' }
+        ]
+      }
+    };
+
+    function buildPlayerPage(p) {
+      document.title = p.name + ' \u2014 ScoreTap';
+      var breadTeam = document.getElementById('breadcrumb-team');
+      breadTeam.innerHTML = '<a href="/l1/scoretap/team?id=' + p.teamId + '">' + p.team + '</a>';
+      document.getElementById('breadcrumb-player').textContent = p.name;
+
+      // Career rows
+      var careerRows = p.career.map(function(c) {
+        return '<tr>' +
+          '<td style="color:var(--text-dim);">' + c.year + '</td>' +
+          '<td style="font-weight:700;color:var(--text-bright);">' + c.team + '</td>' +
+          '<td>' + c.role + '</td>' +
+        '</tr>';
+      }).join('');
+
+      // Achievement rows
+      var achieveRows = p.achievements.map(function(a) {
+        var eventCell = a.eventId
+          ? '<a class="event-link" href="/l1/scoretap/event?id=' + a.eventId + '" style="color:var(--text);"><span style="color:var(--text);">' + a.event + '</span></a>'
+          : a.event;
+        var placementClass = (a.placement.indexOf('Champion') !== -1 || a.placement.indexOf('1st') !== -1) ? ' style="color:var(--accent);font-weight:700;"' : '';
+        return '<tr>' +
+          '<td>' + eventCell + '</td>' +
+          '<td' + placementClass + '>' + a.placement + '</td>' +
+        '</tr>';
+      }).join('');
+
+      // News items
+      var newsItems = p.news.map(function(n) {
+        return '<li><a href="' + (n.href || '#') + '">' + n.headline + '</a><div class="news-meta-small">' + n.time + '</div></li>';
+      }).join('');
+
+      var html =
+        // Player Header Card
+        '<div class="player-header-card">' +
+          '<div class="player-name-display">' + p.name + '</div>' +
+          '<div class="player-real-name">' + p.realName + '</div>' +
+          '<div class="player-meta-row">' +
+            '<span class="game-tag ' + p.game + '">' + p.gameLabel + '</span>' +
+            '<a class="team-link" href="/l1/scoretap/team?id=' + p.teamId + '">' + p.team + '</a>' +
+            '<span>' + p.role + '</span>' +
+            '<span>' + p.nationality + '</span>' +
+            '<span>Age: ' + p.age + '</span>' +
+          '</div>' +
+        '</div>' +
+
+        // Statistics Widget
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Statistics</span></div>' +
+          '<div class="stat-grid">' +
+            '<div class="stat-box"><div class="stat-value">' + p.stats.rating + '</div><div class="stat-label">Rating</div></div>' +
+            '<div class="stat-box"><div class="stat-value">' + p.stats.kd + '</div><div class="stat-label">K/D Ratio</div></div>' +
+            '<div class="stat-box"><div class="stat-value">' + p.stats.hsPercent + '</div><div class="stat-label">HS%</div></div>' +
+            '<div class="stat-box"><div class="stat-value">' + p.stats.mapsPlayed + '</div><div class="stat-label">Maps Played</div></div>' +
+          '</div>' +
+        '</div>' +
+
+        // Career History Widget
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Career History</span></div>' +
+          '<table>' +
+            '<thead><tr><th>Year</th><th>Team</th><th>Role</th></tr></thead>' +
+            '<tbody>' + careerRows + '</tbody>' +
+          '</table>' +
+        '</div>' +
+
+        // Achievements Widget
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Achievements</span></div>' +
+          '<table>' +
+            '<thead><tr><th>Event</th><th>Placement</th></tr></thead>' +
+            '<tbody>' + achieveRows + '</tbody>' +
+          '</table>' +
+        '</div>' +
+
+        // Related News Widget
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Related News</span><a class="widget-link" href="/l1/scoretap/news">All News</a></div>' +
+          '<ul class="news-list">' + newsItems + '</ul>' +
+        '</div>';
+
+      document.getElementById('player-content').innerHTML = html;
+    }
+
+    var params = new URLSearchParams(window.location.search);
+    var playerId = params.get('id');
+    var player = playerId ? PLAYERS[playerId] : null;
+
+    if (player) {
+      buildPlayerPage(player);
+    } else {
+      document.getElementById('player-not-found').style.display = 'block';
+    }
+  </script>
+
+</SiteShell>

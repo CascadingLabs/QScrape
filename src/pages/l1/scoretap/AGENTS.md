@@ -23,6 +23,7 @@ The site covers CS2, Valorant, League of Legends, Dota 2, and Rocket League. All
 /l1/scoretap/article    — Article page (query param: ?id=<article-slug>)
 /l1/scoretap/event      — Event detail page (query param: ?id=<event-slug>)
 /l1/scoretap/team       — Team detail page (query param: ?id=<team-slug>)
+/l1/scoretap/player     — Player detail page (query param: ?id=<player-slug>)
 ```
 
 ## Test Flows
@@ -110,6 +111,30 @@ The site covers CS2, Valorant, League of Legends, Dota 2, and Rocket League. All
   - Dota 2: `spirit`, `og`
   - Rocket League: `bds`, `liquid`, `cloud9`
 - **Cross-Page Links:** Featured team cards, table rows, rank rows (#1–3, #5), and match detail team names all link to team detail pages.
+- **Player Links:** Roster table player names link to `/l1/scoretap/player?id=<slug>` for all players with detail pages.
+
+### 10. Player Detail Extraction (`/l1/scoretap/player?id=<player-slug>`)
+
+- **Mechanism:** Same shell-injection pattern. JS reads `?id=` param, looks up `PLAYERS[id]`, and renders into `#player-content`.
+- **Expected Agent Behavior:** Navigate with a valid slug, wait for JS, then extract from populated DOM.
+- **Content structure (rendered):** Player header card (name, real name, team, game tag, role, nationality, age), stat grid (4 stat boxes), career history table, achievements table, related news list.
+- **Valid Player Slugs (69):**
+  - CS2 / Vitality: `zywoo`, `apex`, `magisk`, `flamez`, `spinx`
+  - CS2 / NAVI: `s1mple`, `electronic`, `b1t`, `perfecto`, `blamef`
+  - CS2 / G2: `niko`, `hooxi`, `hunter`, `m0nesy`, `nexa`
+  - CS2 / MOUZ: `torzsi`, `jimpphat`, `xertion`, `siuhy`, `brollan`
+  - Valorant / Sentinels: `tenz`, `zekken`, `bang`, `johnqt`, `sacy`
+  - Valorant / Paper Rex: `f0rsaken`, `something`, `d4v41`, `mindfreak`, `cgrs`
+  - Valorant / NRG: `s0m`, `crashies`, `victor`, `fns`, `ardis`
+  - LoL / T1: `faker`, `zeus`, `oner`, `gumayusi`, `keria`
+  - LoL / Gen.G: `chovy`, `peyz`, `lehends`, `canyon`, `ruler`
+  - LoL / G2 (LoL): `caps`, `yike`, `broken-blade`, `hans-sama`, `mikyx`
+  - Dota 2 / Team Spirit: `yatoro`, `larl`, `collapse`, `mira`, `miposhka`
+  - Dota 2 / OG: `bzm`, `taiga`, `ceb`, `n0tail`, `topson`
+  - Rocket League / Team BDS: `extra`, `monkey-moon`, `seikoo`
+  - Rocket League / Team Liquid: `fairy-peak`, `jstn`, `squishy`
+  - Rocket League / Cloud9: `torment`, `gimmick`, `rizzo`
+- **Cross-Page Links:** Player names in match detail player stats, team detail rosters, and event detail pages link to player detail pages where a slug mapping exists.
 
 ## Data Schema
 
@@ -153,6 +178,18 @@ table (4th)             — Prize Distribution: Place | Prize | Team
 table (1st)             — Roster: Player | Role | Nationality
 table (2nd)             — Recent Results: Event | Placement | Prize
 .prize-total            — total prize winnings display
+.news-list li a         — related news headlines
+```
+
+### Player Detail (injected into #player-content)
+```
+.player-header-card     — player header with name, team, game tag, role info
+.player-name-display    — large player name
+.player-real-name       — real name display
+.player-info-row        — team, game, role, nationality, age
+.stat-grid              — 4 stat boxes (game-specific stats)
+table (1st)             — Career History: Year | Team | Role | Notable
+table (2nd)             — Achievements: Year | Event | Placement | Team
 .news-list li a         — related news headlines
 ```
 

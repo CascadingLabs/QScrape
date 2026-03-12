@@ -723,6 +723,19 @@ import SiteShell from './_components/SiteShell.astro';
       }
     };
 
+    var TEAM_SLUGS = {
+      'Vitality': 'vitality', 'NAVI': 'navi', 'G2': 'g2', 'MOUZ': 'mouz',
+      'Sentinels': 'sentinels', 'Paper Rex': 'paper-rex', 'NRG': 'nrg',
+      'T1': 't1', 'Gen.G': 'gen-g', 'G2 Esports': 'g2-lol',
+      'Team Spirit': 'spirit', 'OG': 'og',
+      'Team BDS': 'bds', 'Team Liquid': 'liquid', 'Cloud9': 'cloud9'
+    };
+    function teamLink(name) {
+      var slug = TEAM_SLUGS[name];
+      if (slug) return '<a href="/l1/scoretap/team?id=' + slug + '" style="color:inherit;">' + name + '</a>';
+      return name;
+    }
+
     function buildEventPage(ev) {
       document.title = ev.name + ' — ScoreTap';
       document.getElementById('breadcrumb-event').textContent = ev.name;
@@ -795,9 +808,9 @@ import SiteShell from './_components/SiteShell.astro';
           var trClick = isLinkable ? ' onclick="window.location.href=\'/l1/scoretap/match?id=' + m.matchId + '\'"' : '';
           var statusStyle = m.status === 'Live' ? 'color:var(--green);font-weight:700;' : (m.status === 'Upcoming' ? 'color:#606070;' : 'color:var(--text-dim);');
           return '<tr' + trClass + trClick + '>' +
-            '<td style="font-weight:700;color:var(--text-bright);">' + m.team1 + '</td>' +
+            '<td style="font-weight:700;color:var(--text-bright);">' + teamLink(m.team1) + '</td>' +
             '<td style="text-align:center;font-weight:900;font-family:\'Courier New\',monospace;color:var(--accent);">' + m.score + '</td>' +
-            '<td style="font-weight:700;color:var(--text-bright);text-align:right;">' + m.team2 + '</td>' +
+            '<td style="font-weight:700;color:var(--text-bright);text-align:right;">' + teamLink(m.team2) + '</td>' +
             '<td style="color:var(--text-dim);font-size:10px;">' + m.stage + '</td>' +
             '<td style="' + statusStyle + 'font-size:10px;">' + m.status + (isLinkable ? ' &#8250;' : '') + '</td>' +
           '</tr>';
@@ -821,7 +834,7 @@ import SiteShell from './_components/SiteShell.astro';
           var statusColor = t.status === 'champion' ? 'color:var(--accent);font-weight:700;' : (t.status === 'runner-up' ? 'color:var(--text-bright);' : (t.status === 'eliminated' ? 'color:#505060;' : 'color:var(--green);'));
           return '<tr>' +
             '<td style="text-align:center;font-weight:700;color:var(--text-dim);">' + t.seed + '</td>' +
-            '<td style="font-weight:700;color:var(--text-bright);"' + elimClass + '>' + t.name + '</td>' +
+            '<td style="font-weight:700;color:var(--text-bright);"' + elimClass + '>' + teamLink(t.name) + '</td>' +
             '<td style="color:var(--text-dim);">' + t.region + '</td>' +
             '<td style="' + statusColor + '">' + statusText + '</td>' +
           '</tr>';
