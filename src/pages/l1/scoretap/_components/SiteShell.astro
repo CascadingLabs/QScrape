@@ -565,9 +565,7 @@ const { title, activePage } = Astro.props;
     <a class:list={["nav-link", { active: activePage === 'scores' || !activePage }]} href="/l1/scoretap/">Scores</a>
     <a class:list={["nav-link", { active: activePage === 'news' }]} href="/l1/scoretap/news">News</a>
     <a class:list={["nav-link", { active: activePage === 'teams' }]} href="/l1/scoretap/teams">Teams</a>
-    <a class="nav-link" href="#">Events</a>
-    <a class="nav-link" href="#">Rankings</a>
-    <a class="nav-link" href="#">Stats</a>
+    <a class:list={["nav-link", { active: activePage === 'events' }]} href="/l1/scoretap/events">Events</a>
   </div>
   </header>
 
