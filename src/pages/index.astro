@@ -3,15 +3,126 @@
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>QScrape - Web Scraper Test Suite</title>
+        <link rel="stylesheet" href="/qscrape.css" />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="logo">QScrape</div>
+                <div class="tagline">Web scraper evaluation suite</div>
+            </header>
+
+            <section>
+                <h2>About</h2>
+                <p>
+                    Test sites for web scrapers. Three difficulty levels target
+                    different scraper capabilities. Made by <a
+                        href="https://cascadinglabs.com"
+                        target="_blank"
+                        rel="noopener">Cascading Labs</a
+                    >
+                    , used for <a
+                        href="https://github.com/CascadingLabs/Yosoi"
+                        target="_blank"
+                        rel="noopener">Yosoi</a
+                    >.
+                </p>
+            </section>
+
+            <section>
+                <h2>Levels</h2>
+                <ul class="card-list">
+                    <li>
+                        <div class="card-item">
+                            <div class="card-header">
+                                <span class="card-label">L1</span>
+                                <span class="badge-live">LIVE</span>
+                                <a class="card-arrow" href="/l1/" title="Go to L1">↗</a>
+                            </div>
+                            <span class="card-desc">
+                                <strong>Standard HTML/CSS/JS.</strong> No dynamic data, no web frameworks. Built with <a href="https://astro.build/" target="_blank" rel="noopener">Astro</a> for multi-site management.
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card-item">
+                            <div class="card-header">
+                                <span class="card-label">L2</span>
+                                <span class="badge-soon">soon</span>
+                                <a class="card-arrow" href="/l2/" title="Go to L2">↗</a>
+                            </div>
+                            <span class="card-desc">
+                                <strong>Modern Web Frameworks.</strong> <a href="https://lit.dev/" target="_blank" rel="noopener">Lit</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>. Covers typical DOM-level changes in the wild.
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card-item">
+                            <div class="card-header">
+                                <span class="card-label">L3</span>
+                                <span class="badge-soon">soon</span>
+                                <a class="card-arrow" href="/l3/" title="Go to L3">↗</a>
+                            </div>
+                            <span class="card-desc">
+                                <strong>Anti-Bot Sites.</strong> No recaptchas or challenge puzzles (defined as unattainable without anti-captcha APIs).
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Sites</h2>
+                <ul class="nav-links">
+                    <li>
+                        <a class="nav-path" href="/l1/news/">/ l1 / news</a>
+                        <span class="nav-name"
+                            >Mountainhome Herald (news portal)</span
+                        >
+                    </li>
+                    <li>
+                        <a class="nav-path" href="/l1/scoretap/"
+                            >/ l1 / scoretap</a
+                        >
+                        <span class="nav-name">ScoreTap (esports scores)</span>
+                    </li>
+                    <li>
+                        <a class="nav-path" href="/l1/taxes/">/ l1 / taxes</a>
+                        <span class="nav-name"
+                            >Eldoria Registry of Deeds (tax records)</span
+                        >
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Resources</h2>
+                <div class="resources">
+                    <div class="resource-row">
+                        <span>sitemap</span>
+                        <a
+                            href="https://qscrape.dev/sitemap-0.xml"
+                            target="_blank"
+                            rel="noopener">qscrape.dev/sitemap-0.xml</a
+                        >
+                    </div>
+                    <div class="resource-row">
+                        <span>github</span>
+                        <a
+                            href="https://github.com/CascadingLabs/QScrape"
+                            target="_blank"
+                            rel="noopener">github.com/CascadingLabs/QScrape</a
+                        >
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
 </html>
