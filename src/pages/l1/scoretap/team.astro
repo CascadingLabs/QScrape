@@ -1,0 +1,681 @@
+---
+import SiteShell from './_components/SiteShell.astro';
+---
+<SiteShell title="Team — ScoreTap" activePage="teams">
+
+  <style>
+    .team-detail-container {
+      max-width: 1100px;
+      margin: 14px auto;
+      padding: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .team-header-card {
+      background: linear-gradient(180deg, #181828 0%, var(--bg-panel) 100%);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .team-header-logo {
+      width: 80px;
+      height: 80px;
+      background: #10101c;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .team-header-info {
+      flex: 1;
+    }
+    .team-header-name {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--text-bright);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .team-header-meta {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    .team-record-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+    }
+    .team-record-bar .wins { color: var(--green); font-weight: 700; }
+    .team-record-bar .losses { color: var(--red); font-weight: 700; }
+    .team-record-bar .pct { color: var(--text-bright); font-weight: 700; font-family: 'Courier New', monospace; }
+    .team-stat-row {
+      display: flex;
+      gap: 20px;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 6px;
+    }
+    .team-stat-row .label { color: var(--text-dim); }
+    .team-stat-row .value { color: var(--text-bright); font-weight: 700; }
+    .prize-total {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--green);
+      font-family: 'Courier New', monospace;
+      padding: 14px;
+      text-align: center;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-top: none;
+    }
+    .roster-role { color: var(--accent); font-weight: 600; }
+    .placement-1st { color: var(--accent); font-weight: 700; }
+    .event-link { color: var(--text); }
+    .event-link:hover { color: var(--accent); text-decoration: underline; }
+    #team-not-found {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-dim);
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+    }
+  </style>
+
+  <div class="team-detail-container">
+    <div class="breadcrumb">
+      <a href="/l1/scoretap/">Home</a> &rsaquo;
+      <a href="/l1/scoretap/teams">Teams</a> &rsaquo;
+      <span id="breadcrumb-team">Team Detail</span>
+    </div>
+
+    <div id="team-content">
+      <!-- Populated by JS -->
+    </div>
+
+    <div id="team-not-found" style="display:none;">
+      Team not found. <a href="/l1/scoretap/teams" style="color:var(--accent);">Return to teams</a>
+    </div>
+  </div>
+
+  <script is:inline>
+    var TEAMS = {
+      'vitality': {
+        id: 'vitality',
+        name: 'Team Vitality',
+        abbr: 'VIT',
+        game: 'cs2',
+        gameLabel: 'CS2',
+        region: 'Europe',
+        regionShort: 'EU',
+        rank: '#1',
+        rankPoints: '1,842 pts',
+        record: { wins: 34, losses: 8 },
+        founded: '2013',
+        coach: 'zonic',
+        roster: [
+          { name: 'ZywOo', role: 'AWPer', nationality: 'France' },
+          { name: 'apEX', role: 'IGL', nationality: 'France' },
+          { name: 'Magisk', role: 'Rifler', nationality: 'Denmark' },
+          { name: 'flameZ', role: 'Rifler', nationality: 'Israel' },
+          { name: 'Spinx', role: 'Rifler', nationality: 'Israel' }
+        ],
+        recentResults: [
+          { event: 'IEM Katowice 2026', placement: 'Semifinal (ongoing)', prize: '\u2014', eventId: 'iem-katowice-2026' },
+          { event: 'IEM Dallas 2026', placement: '3rd\u20134th', prize: '$25,000', eventId: 'iem-dallas-2026' }
+        ],
+        prizeWinnings: '$1,250,000',
+        news: [
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' },
+          { headline: 'Vitality vs FaZe: IEM Katowice 2026 Results and Highlights', time: '6h ago', href: '/l1/scoretap/article?id=vitality-faze-results' }
+        ]
+      },
+      'navi': {
+        id: 'navi',
+        name: 'Natus Vincere',
+        abbr: 'NAVI',
+        game: 'cs2',
+        gameLabel: 'CS2',
+        region: 'CIS',
+        regionShort: 'CIS',
+        rank: '#2',
+        rankPoints: '1,710 pts',
+        record: { wins: 30, losses: 10 },
+        founded: '2009',
+        coach: 'B1ad3',
+        roster: [
+          { name: 's1mple', role: 'AWPer', nationality: 'Ukraine' },
+          { name: 'electroNic', role: 'Rifler', nationality: 'Russia' },
+          { name: 'b1t', role: 'Rifler', nationality: 'Ukraine' },
+          { name: 'Perfecto', role: 'Support', nationality: 'Russia' },
+          { name: 'blameF', role: 'Rifler', nationality: 'Denmark' }
+        ],
+        recentResults: [
+          { event: 'IEM Katowice 2026', placement: 'Quarterfinal (ongoing)', prize: '\u2014', eventId: 'iem-katowice-2026' },
+          { event: 'IEM Dallas 2026', placement: '3rd\u20134th', prize: '$25,000', eventId: 'iem-dallas-2026' }
+        ],
+        prizeWinnings: '$980,000',
+        news: [
+          { headline: 'NAVI Confirm Signing of Rifler blameF Ahead of Major Qualifier', time: '4h ago', href: '/l1/scoretap/article?id=navi-blamef-signing' },
+          { headline: 'G2 NiKo: \u201cWe Came to Katowice to Win Everything, Not Just Qualify\u201d', time: '16h ago', href: '/l1/scoretap/article?id=g2-niko-interview' }
+        ]
+      },
+      'g2': {
+        id: 'g2',
+        name: 'G2 Esports',
+        abbr: 'G2',
+        game: 'cs2',
+        gameLabel: 'CS2',
+        region: 'Europe',
+        regionShort: 'EU',
+        rank: '#3',
+        rankPoints: '1,655 pts',
+        record: { wins: 28, losses: 11 },
+        founded: '2014',
+        coach: 'TBA',
+        roster: [
+          { name: 'NiKo', role: 'Rifler', nationality: 'Bosnia' },
+          { name: 'HooXi', role: 'IGL', nationality: 'Denmark' },
+          { name: 'huNter-', role: 'Rifler', nationality: 'Bosnia' },
+          { name: 'm0NESY', role: 'AWPer', nationality: 'Russia' },
+          { name: 'nexa', role: 'Rifler', nationality: 'Serbia' }
+        ],
+        recentResults: [
+          { event: 'IEM Katowice 2026', placement: 'Quarterfinal (ongoing)', prize: '\u2014', eventId: 'iem-katowice-2026' },
+          { event: 'IEM Dallas 2026', placement: '2nd', prize: '$50,000', eventId: 'iem-dallas-2026' }
+        ],
+        prizeWinnings: '$1,100,000',
+        news: [
+          { headline: 'G2 NiKo: \u201cWe Came to Katowice to Win Everything, Not Just Qualify\u201d', time: '16h ago', href: '/l1/scoretap/article?id=g2-niko-interview' },
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' }
+        ]
+      },
+      'mouz': {
+        id: 'mouz',
+        name: 'MOUZ',
+        abbr: 'MOUZ',
+        game: 'cs2',
+        gameLabel: 'CS2',
+        region: 'Europe',
+        regionShort: 'EU',
+        rank: '#4',
+        rankPoints: '1,490 pts',
+        record: { wins: 25, losses: 12 },
+        founded: '2002',
+        coach: 'Kassad',
+        roster: [
+          { name: 'torzsi', role: 'AWPer', nationality: 'Hungary' },
+          { name: 'xertioN', role: 'Rifler', nationality: 'Germany' },
+          { name: 'JDC', role: 'IGL', nationality: 'Germany' },
+          { name: 'siuhy', role: 'Rifler', nationality: 'Poland' },
+          { name: 'Jimpphat', role: 'Rifler', nationality: 'Finland' }
+        ],
+        recentResults: [
+          { event: 'IEM Dallas 2026', placement: '1st \u2014 Champion', prize: '$100,000', eventId: 'iem-dallas-2026' },
+          { event: 'IEM Katowice 2026', placement: 'Quarterfinal (ongoing)', prize: '\u2014', eventId: 'iem-katowice-2026' }
+        ],
+        prizeWinnings: '$850,000',
+        news: [
+          { headline: 'MOUZ vs Heroic: IEM Katowice Semifinal Preview and Predictions', time: '3h ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' },
+          { headline: 'CS2 Patch Notes: Major Weapon Balance Changes Shake Up the Meta', time: '1d ago', href: '/l1/scoretap/article?id=cs2-patch-notes' }
+        ]
+      },
+      'sentinels': {
+        id: 'sentinels',
+        name: 'Sentinels',
+        abbr: 'SEN',
+        game: 'valorant',
+        gameLabel: 'Valorant',
+        region: 'North America',
+        regionShort: 'NA',
+        rank: 'Americas #1',
+        rankPoints: '',
+        record: { wins: 21, losses: 4 },
+        founded: '2016',
+        coach: 'kaplan',
+        roster: [
+          { name: 'TenZ', role: 'Duelist', nationality: 'Canada' },
+          { name: 'zekken', role: 'Flex', nationality: 'USA' },
+          { name: 'bang', role: 'Initiator', nationality: 'USA' },
+          { name: 'Sacy', role: 'Initiator', nationality: 'Brazil' },
+          { name: 'pANcada', role: 'Controller', nationality: 'Brazil' }
+        ],
+        recentResults: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', prize: '\u2014', eventId: 'vct-americas-2026' }
+        ],
+        prizeWinnings: '$620,000',
+        news: [
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' },
+          { headline: 'LOUD vs Sentinels VCT Americas Preview: A Clash of Opposite Styles', time: '1d ago', href: '/l1/scoretap/article?id=loud-vct-preview' }
+        ]
+      },
+      'paper-rex': {
+        id: 'paper-rex',
+        name: 'Paper Rex',
+        abbr: 'PRX',
+        game: 'valorant',
+        gameLabel: 'Valorant',
+        region: 'APAC',
+        regionShort: 'APAC',
+        rank: 'Pacific #1',
+        rankPoints: '',
+        record: { wins: 19, losses: 6 },
+        founded: '2020',
+        coach: 'alecks',
+        roster: [
+          { name: 'f0rsakeN', role: 'Duelist', nationality: 'Indonesia' },
+          { name: 'Jinggg', role: 'Duelist', nationality: 'Singapore' },
+          { name: 'd4v41', role: 'Initiator', nationality: 'Indonesia' },
+          { name: 'Monyet', role: 'Controller', nationality: 'Malaysia' },
+          { name: 'mindfreak', role: 'IGL', nationality: 'Singapore' }
+        ],
+        recentResults: [
+          { event: 'VCT Pacific 2026', placement: 'Group Stage (ongoing)', prize: '\u2014', eventId: 'vct-pacific-2026' }
+        ],
+        prizeWinnings: '$480,000',
+        news: [
+          { headline: 'Paper Rex Sign FlippzJder as Sixth Man for VCT Pacific', time: '8h ago', href: '/l1/scoretap/article?id=paper-rex-flippzjder' },
+          { headline: 'VCT Pacific 2026 Standings: Paper Rex Lead After Week 3', time: '1d ago', href: '/l1/scoretap/article?id=vct-pacific-standings' }
+        ]
+      },
+      'nrg': {
+        id: 'nrg',
+        name: 'NRG Esports',
+        abbr: 'NRG',
+        game: 'valorant',
+        gameLabel: 'Valorant',
+        region: 'North America',
+        regionShort: 'NA',
+        rank: 'Americas #3',
+        rankPoints: '',
+        record: { wins: 17, losses: 8 },
+        founded: '2015',
+        coach: 'Chet',
+        roster: [
+          { name: 's0m', role: 'Duelist', nationality: 'USA' },
+          { name: 'FNS', role: 'IGL', nationality: 'Canada' },
+          { name: 'ardiis', role: 'AWPer', nationality: 'Latvia' },
+          { name: 'crashies', role: 'Initiator', nationality: 'USA' },
+          { name: 'Victor', role: 'Flex', nationality: 'USA' }
+        ],
+        recentResults: [
+          { event: 'VCT Americas 2026', placement: 'Group Stage (ongoing)', prize: '\u2014', eventId: 'vct-americas-2026' }
+        ],
+        prizeWinnings: '$340,000',
+        news: [
+          { headline: 'NRG Secure Americas Playoff Spot With 13-9 Win Over 100 Thieves', time: '20h ago', href: '/l1/scoretap/article?id=nrg-americas-playoffs' },
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' }
+        ]
+      },
+      't1': {
+        id: 't1',
+        name: 'T1',
+        abbr: 'T1',
+        game: 'lol',
+        gameLabel: 'LoL',
+        region: 'Korea',
+        regionShort: 'KR',
+        rank: 'LCK #1',
+        rankPoints: '',
+        record: { wins: 16, losses: 2 },
+        founded: '2003',
+        coach: 'kkOma',
+        roster: [
+          { name: 'Faker', role: 'Mid', nationality: 'Korea' },
+          { name: 'Zeus', role: 'Top', nationality: 'Korea' },
+          { name: 'Oner', role: 'Jungle', nationality: 'Korea' },
+          { name: 'Gumayusi', role: 'ADC', nationality: 'Korea' },
+          { name: 'Keria', role: 'Support', nationality: 'Korea' }
+        ],
+        recentResults: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', prize: '\u2014', eventId: 'lck-spring-2026' }
+        ],
+        prizeWinnings: '$2,800,000',
+        news: [
+          { headline: 'Faker Signs Contract Extension With T1 Through 2028', time: '12h ago', href: '/l1/scoretap/article?id=faker-contract-2028' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+      'gen-g': {
+        id: 'gen-g',
+        name: 'Gen.G',
+        abbr: 'GEN',
+        game: 'lol',
+        gameLabel: 'LoL',
+        region: 'Korea',
+        regionShort: 'KR',
+        rank: 'LCK #2',
+        rankPoints: '',
+        record: { wins: 14, losses: 4 },
+        founded: '2017',
+        coach: 'Score',
+        roster: [
+          { name: 'Chovy', role: 'Mid', nationality: 'Korea' },
+          { name: 'Doran', role: 'Top', nationality: 'Korea' },
+          { name: 'Peanut', role: 'Jungle', nationality: 'Korea' },
+          { name: 'Ruler', role: 'ADC', nationality: 'Korea' },
+          { name: 'Lehends', role: 'Support', nationality: 'Korea' }
+        ],
+        recentResults: [
+          { event: 'LCK Spring 2026', placement: 'Regular Season (ongoing)', prize: '\u2014', eventId: 'lck-spring-2026' }
+        ],
+        prizeWinnings: '$1,600,000',
+        news: [
+          { headline: 'Gen.G Extend Ruler\u2019s Contract Through 2027 Season', time: '1d ago', href: '/l1/scoretap/article?id=geng-ruler-contract' },
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Dethrone T1?', time: '2d ago', href: '/l1/scoretap/article?id=lck-spring-preview' }
+        ]
+      },
+      'g2-lol': {
+        id: 'g2-lol',
+        name: 'G2 Esports',
+        abbr: 'G2',
+        game: 'lol',
+        gameLabel: 'LoL',
+        region: 'Europe',
+        regionShort: 'EU',
+        rank: 'LEC #1',
+        rankPoints: '',
+        record: { wins: 11, losses: 5 },
+        founded: '2014',
+        coach: 'Dylan Falco',
+        roster: [
+          { name: 'Caps', role: 'Mid', nationality: 'Denmark' },
+          { name: 'BrokenBlade', role: 'Top', nationality: 'Germany' },
+          { name: 'Yike', role: 'Jungle', nationality: 'France' },
+          { name: 'Hans Sama', role: 'ADC', nationality: 'France' },
+          { name: 'Mikyx', role: 'Support', nationality: 'Slovenia' }
+        ],
+        recentResults: [
+          { event: 'LEC Spring 2026', placement: 'Playoffs (ongoing)', prize: '\u2014', eventId: 'lec-spring-2026' }
+        ],
+        prizeWinnings: '$900,000',
+        news: [
+          { headline: 'LEC Spring 2026 Standings: G2 Clinch First-Round Bye', time: '1d ago', href: '/l1/scoretap/article?id=lec-g2-standings' }
+        ]
+      },
+      'spirit': {
+        id: 'spirit',
+        name: 'Team Spirit',
+        abbr: 'SPR',
+        game: 'dota2',
+        gameLabel: 'Dota 2',
+        region: 'CIS',
+        regionShort: 'CIS',
+        rank: '#1',
+        rankPoints: '',
+        record: { wins: 22, losses: 7 },
+        founded: '2015',
+        coach: 'Silent',
+        roster: [
+          { name: 'Yatoro', role: 'Carry', nationality: 'Ukraine' },
+          { name: 'TORONTOTOKYO', role: 'Mid', nationality: 'Russia' },
+          { name: 'Collapse', role: 'Offlane', nationality: 'Russia' },
+          { name: 'Mira', role: 'Pos 4', nationality: 'Russia' },
+          { name: 'Miposhka', role: 'Pos 5/Captain', nationality: 'Russia' }
+        ],
+        recentResults: [
+          { event: 'DreamLeague Season 25', placement: '1st \u2014 Champion', prize: '$200,000', eventId: 'dreamleague-season-25' }
+        ],
+        prizeWinnings: '$3,200,000',
+        news: [
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' },
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' }
+        ]
+      },
+      'og': {
+        id: 'og',
+        name: 'OG',
+        abbr: 'OG',
+        game: 'dota2',
+        gameLabel: 'Dota 2',
+        region: 'Europe',
+        regionShort: 'EU',
+        rank: '#2',
+        rankPoints: '',
+        record: { wins: 18, losses: 10 },
+        founded: '2015',
+        coach: 'Ceb',
+        roster: [
+          { name: 'ATF', role: 'Carry', nationality: 'Turkey' },
+          { name: 'bzm', role: 'Mid', nationality: 'Romania' },
+          { name: 'Ammar', role: 'Offlane', nationality: 'Jordan' },
+          { name: 'Taiga', role: 'Pos 4', nationality: 'Norway' },
+          { name: 'Insania', role: 'Pos 5/Captain', nationality: 'Sweden' }
+        ],
+        recentResults: [
+          { event: 'DreamLeague Season 25', placement: '4th', prize: '$40,000', eventId: 'dreamleague-season-25' }
+        ],
+        prizeWinnings: '$1,800,000',
+        news: [
+          { headline: 'OG Announce Roster Rebuild Ahead of TI Qualifiers', time: '2d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' },
+          { headline: 'Team Spirit Win DreamLeague Season 25 in Dominant Grand Final', time: '1d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' }
+        ]
+      },
+      'bds': {
+        id: 'bds',
+        name: 'Team BDS',
+        abbr: 'BDS',
+        game: 'rl',
+        gameLabel: 'Rocket League',
+        region: 'Europe',
+        regionShort: 'EU',
+        rank: '#1',
+        rankPoints: '',
+        record: { wins: 20, losses: 5 },
+        founded: '2019',
+        coach: 'Kael',
+        roster: [
+          { name: 'M0nkey M00n', role: 'Player', nationality: 'France' },
+          { name: 'Extra', role: 'Player', nationality: 'France' },
+          { name: 'Seikoo', role: 'Player', nationality: 'France' }
+        ],
+        recentResults: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', prize: '\u2014', eventId: 'rlcs-spring-2026' }
+        ],
+        prizeWinnings: '$1,100,000',
+        news: [
+          { headline: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp', time: '22h ago', href: '/l1/scoretap/article?id=bds-karmine-win' },
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' }
+        ]
+      },
+      'liquid': {
+        id: 'liquid',
+        name: 'Team Liquid',
+        abbr: 'TL',
+        game: 'rl',
+        gameLabel: 'Rocket League',
+        region: 'North America',
+        regionShort: 'NA',
+        rank: '#2',
+        rankPoints: '',
+        record: { wins: 17, losses: 8 },
+        founded: '2000',
+        coach: 'Virge',
+        roster: [
+          { name: 'Fairy Peak', role: 'Player', nationality: 'France' },
+          { name: 'jstn', role: 'Player', nationality: 'USA' },
+          { name: 'Squishy', role: 'Player', nationality: 'Canada' }
+        ],
+        recentResults: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', prize: '\u2014', eventId: 'rlcs-spring-2026' }
+        ],
+        prizeWinnings: '$780,000',
+        news: [
+          { headline: 'Team Liquid Unveil Revamped RLCS Roster Ahead of Spring Split', time: '4d ago', href: '/l1/scoretap/article?id=liquid-rl-roster' },
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' }
+        ]
+      },
+      'cloud9': {
+        id: 'cloud9',
+        name: 'Cloud9',
+        abbr: 'C9',
+        game: 'rl',
+        gameLabel: 'Rocket League',
+        region: 'North America',
+        regionShort: 'NA',
+        rank: '#3',
+        rankPoints: '',
+        record: { wins: 14, losses: 11 },
+        founded: '2013',
+        coach: 'Kronovi',
+        roster: [
+          { name: 'Torment', role: 'Player', nationality: 'USA' },
+          { name: 'Gimmick', role: 'Player', nationality: 'USA' },
+          { name: 'Rizzo', role: 'Player', nationality: 'USA' }
+        ],
+        recentResults: [
+          { event: 'RLCS Spring 2026', placement: 'Regional Major (ongoing)', prize: '\u2014', eventId: 'rlcs-spring-2026' }
+        ],
+        prizeWinnings: '$520,000',
+        news: [
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' },
+          { headline: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp', time: '22h ago', href: '/l1/scoretap/article?id=bds-karmine-win' }
+        ]
+      }
+    };
+
+    var PLAYER_SLUGS = {
+      'ZywOo':'zywoo','apEX':'apex','Magisk':'magisk','flameZ':'flamez','Spinx':'spinx',
+      's1mple':'s1mple','electroNic':'electronic','b1t':'b1t','Perfecto':'perfecto','blameF':'blamef',
+      'NiKo':'niko','HooXi':'hooxi','huNter-':'hunter','m0NESY':'m0nesy','nexa':'nexa',
+      'torzsi':'torzsi','xertioN':'xertion','JDC':'jdc','siuhy':'siuhy','Jimpphat':'jimpphat',
+      'TenZ':'tenz','zekken':'zekken','bang':'bang','Sacy':'sacy','pANcada':'pancada',
+      'f0rsakeN':'f0rsaken','Jinggg':'jinggg','d4v41':'d4v41','Monyet':'monyet','mindfreak':'mindfreak',
+      's0m':'s0m','FNS':'fns','ardiis':'ardiis','crashies':'crashies','Victor':'victor',
+      'Faker':'faker','Zeus':'zeus-lol','Oner':'oner','Gumayusi':'gumayusi','Keria':'keria',
+      'Chovy':'chovy','Doran':'doran','Peanut':'peanut','Ruler':'ruler','Lehends':'lehends',
+      'Caps':'caps','BrokenBlade':'brokenblade','Yike':'yike','Hans Sama':'hans-sama','Mikyx':'mikyx',
+      'Yatoro':'yatoro','TORONTOTOKYO':'torontotokyo','Collapse':'collapse','Mira':'mira','Miposhka':'miposhka',
+      'ATF':'atf','bzm':'bzm','Ammar':'ammar','Taiga':'taiga','Insania':'insania',
+      'M0nkey M00n':'monkey-moon','Extra':'extra','Seikoo':'seikoo',
+      'Fairy Peak':'fairy-peak','jstn':'jstn','Squishy':'squishy',
+      'Torment':'torment','Gimmick':'gimmick','Rizzo':'rizzo'
+    };
+    function playerLink(name) {
+      var slug = PLAYER_SLUGS[name];
+      if (slug) return '<a href="/l1/scoretap/player?id=' + slug + '" style="color:inherit;">' + name + '</a>';
+      return name;
+    }
+
+    function buildTeamPage(t) {
+      document.title = t.name + ' \u2014 ScoreTap';
+      document.getElementById('breadcrumb-team').textContent = t.name;
+
+      var w = t.record.wins;
+      var l = t.record.losses;
+      var pct = Math.round((w / (w + l)) * 100) + '%';
+
+      var rankInfo = t.rank;
+      if (t.rankPoints) rankInfo += ' \u00b7 ' + t.rankPoints;
+
+      // Roster rows
+      var rosterRows = t.roster.map(function(p) {
+        return '<tr>' +
+          '<td style="font-weight:700;color:var(--text-bright);">' + playerLink(p.name) + '</td>' +
+          '<td class="roster-role">' + p.role + '</td>' +
+          '<td style="color:var(--text-dim);">' + p.nationality + '</td>' +
+        '</tr>';
+      }).join('');
+
+      // Recent results rows
+      var resultRows = t.recentResults.map(function(r) {
+        var eventCell = r.eventId
+          ? '<a class="event-link" href="/l1/scoretap/event?id=' + r.eventId + '">' + r.event + '</a>'
+          : r.event;
+        var placementClass = (r.placement.indexOf('Champion') !== -1 || r.placement.indexOf('1st') !== -1) ? ' class="placement-1st"' : '';
+        return '<tr>' +
+          '<td>' + eventCell + '</td>' +
+          '<td' + placementClass + '>' + r.placement + '</td>' +
+          '<td style="color:var(--text-dim);">' + r.prize + '</td>' +
+        '</tr>';
+      }).join('');
+
+      // News items
+      var newsItems = t.news.map(function(n) {
+        return '<li><a href="' + (n.href || '#') + '">' + n.headline + '</a><div class="news-meta-small">' + n.time + '</div></li>';
+      }).join('');
+
+      var html =
+        // Team Header Card
+        '<div class="team-header-card">' +
+          '<div class="team-header-logo">' + t.abbr + '</div>' +
+          '<div class="team-header-info">' +
+            '<div class="team-header-name">' + t.name + '</div>' +
+            '<div class="team-header-meta">' +
+              '<span class="game-tag ' + t.game + '">' + t.gameLabel + '</span>' +
+              '<span>' + t.regionShort + '</span>' +
+              '<span>' + rankInfo + '</span>' +
+            '</div>' +
+            '<div class="team-record-bar">' +
+              '<span class="wins">W ' + w + '</span>' +
+              '<span class="losses">L ' + l + '</span>' +
+              '<span class="pct">' + pct + '</span>' +
+            '</div>' +
+            '<div class="team-stat-row">' +
+              '<span><span class="label">Founded:</span> <span class="value">' + t.founded + '</span></span>' +
+              '<span><span class="label">Coach:</span> <span class="value">' + t.coach + '</span></span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // Roster Widget
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Roster</span></div>' +
+          '<table>' +
+            '<thead><tr><th>Player</th><th>Role</th><th>Nationality</th></tr></thead>' +
+            '<tbody>' + rosterRows + '</tbody>' +
+          '</table>' +
+        '</div>' +
+
+        // Recent Results Widget
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Recent Results</span></div>' +
+          '<table>' +
+            '<thead><tr><th>Event</th><th>Placement</th><th>Prize</th></tr></thead>' +
+            '<tbody>' + resultRows + '</tbody>' +
+          '</table>' +
+        '</div>' +
+
+        // Prize Winnings Widget
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Prize Winnings (2025\u20132026)</span></div>' +
+          '<div class="prize-total">' + t.prizeWinnings + '</div>' +
+        '</div>' +
+
+        // Related News Widget
+        '<div class="widget">' +
+          '<div class="widget-header"><span class="widget-title">&#9632; Related News</span><a class="widget-link" href="/l1/scoretap/news">All News</a></div>' +
+          '<ul class="news-list">' + newsItems + '</ul>' +
+        '</div>';
+
+      document.getElementById('team-content').innerHTML = html;
+    }
+
+    var params = new URLSearchParams(window.location.search);
+    var teamId = params.get('id');
+    var team = teamId ? TEAMS[teamId] : null;
+
+    if (team) {
+      buildTeamPage(team);
+    } else {
+      document.getElementById('team-not-found').style.display = 'block';
+    }
+  </script>
+
+</SiteShell>

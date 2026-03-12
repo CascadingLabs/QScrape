@@ -80,7 +80,7 @@ import GameTag from './_components/GameTag.astro';
       <WidgetPanel title="Recent Results" linkText="Full Results" linkHref="#">
         <div class="match-card" data-game="cs2">
           <div class="team-side">
-            <div class="team-name result-winner">Vitality</div>
+            <a href="/l1/scoretap/team?id=vitality" class="team-name result-winner">Vitality</a>
             <div class="team-abbr">Team Vitality</div>
           </div>
           <div class="score-block">
@@ -97,7 +97,7 @@ import GameTag from './_components/GameTag.astro';
 
         <div class="match-card" data-game="valorant">
           <div class="team-side">
-            <div class="team-name result-winner">NRG</div>
+            <a href="/l1/scoretap/team?id=nrg" class="team-name result-winner">NRG</a>
             <div class="team-abbr">NRG Esports</div>
           </div>
           <div class="score-block">
@@ -114,7 +114,7 @@ import GameTag from './_components/GameTag.astro';
 
         <div class="match-card" data-game="cs2">
           <div class="team-side">
-            <div class="team-name result-winner">MOUZ</div>
+            <a href="/l1/scoretap/team?id=mouz" class="team-name result-winner">MOUZ</a>
             <div class="team-abbr">MOUZ</div>
           </div>
           <div class="score-block">
@@ -131,7 +131,7 @@ import GameTag from './_components/GameTag.astro';
 
         <div class="match-card" data-game="valorant">
           <div class="team-side">
-            <div class="team-name result-winner">Paper Rex</div>
+            <a href="/l1/scoretap/team?id=paper-rex" class="team-name result-winner">Paper Rex</a>
             <div class="team-abbr">PRX</div>
           </div>
           <div class="score-block">
@@ -211,7 +211,7 @@ import GameTag from './_components/GameTag.astro';
       <WidgetPanel title="Upcoming" linkText="Schedule" linkHref="#">
         <div class="upcoming-card" data-game="cs2">
           <div>
-            <div class="upcoming-teams">Vitality vs MOUZ</div>
+            <div class="upcoming-teams"><a href="/l1/scoretap/team?id=vitality">Vitality</a> vs <a href="/l1/scoretap/team?id=mouz">MOUZ</a></div>
             <div style="margin-top:3px;"><GameTag game="cs2" /></div>
           </div>
           <div class="upcoming-time">
@@ -221,7 +221,7 @@ import GameTag from './_components/GameTag.astro';
         </div>
         <div class="upcoming-card" data-game="valorant">
           <div>
-            <div class="upcoming-teams">100T vs NRG</div>
+            <div class="upcoming-teams">100T vs <a href="/l1/scoretap/team?id=nrg">NRG</a></div>
             <div style="margin-top:3px;"><GameTag game="valorant" /></div>
           </div>
           <div class="upcoming-time">
@@ -231,7 +231,7 @@ import GameTag from './_components/GameTag.astro';
         </div>
         <div class="upcoming-card" data-game="lol">
           <div>
-            <div class="upcoming-teams">T1 vs Gen.G</div>
+            <div class="upcoming-teams"><a href="/l1/scoretap/team?id=t1">T1</a> vs <a href="/l1/scoretap/team?id=gen-g">Gen.G</a></div>
             <div style="margin-top:3px;"><GameTag game="lol" /></div>
           </div>
           <div class="upcoming-time">
@@ -241,7 +241,7 @@ import GameTag from './_components/GameTag.astro';
         </div>
         <div class="upcoming-card" data-game="dota2">
           <div>
-            <div class="upcoming-teams">Spirit vs OG</div>
+            <div class="upcoming-teams"><a href="/l1/scoretap/team?id=spirit">Spirit</a> vs <a href="/l1/scoretap/team?id=og">OG</a></div>
             <div style="margin-top:3px;"><GameTag game="dota2" /></div>
           </div>
           <div class="upcoming-time">
@@ -251,7 +251,7 @@ import GameTag from './_components/GameTag.astro';
         </div>
         <div class="upcoming-card" data-game="rl">
           <div>
-            <div class="upcoming-teams">BDS vs G2</div>
+            <div class="upcoming-teams"><a href="/l1/scoretap/team?id=bds">BDS</a> vs G2</div>
             <div style="margin-top:3px;"><GameTag game="rl" /></div>
           </div>
           <div class="upcoming-time">
@@ -263,11 +263,11 @@ import GameTag from './_components/GameTag.astro';
 
       <!-- CS2 World Rankings -->
       <WidgetPanel title="CS2 World Rankings" linkText="Full Table" linkHref="#">
-        <div class="rank-row"><div class="rank-num">#1</div><div class="rank-team">Vitality</div><div class="rank-points">1,842 pts</div><div class="rank-change same">&mdash;</div></div>
-        <div class="rank-row"><div class="rank-num">#2</div><div class="rank-team">NAVI</div><div class="rank-points">1,710 pts</div><div class="rank-change up">&#9650;2</div></div>
-        <div class="rank-row"><div class="rank-num">#3</div><div class="rank-team">G2 Esports</div><div class="rank-points">1,655 pts</div><div class="rank-change down">&#9660;1</div></div>
+        <a href="/l1/scoretap/team?id=vitality" class="rank-row"><div class="rank-num">#1</div><div class="rank-team">Vitality</div><div class="rank-points">1,842 pts</div><div class="rank-change same">&mdash;</div></a>
+        <a href="/l1/scoretap/team?id=navi" class="rank-row"><div class="rank-num">#2</div><div class="rank-team">NAVI</div><div class="rank-points">1,710 pts</div><div class="rank-change up">&#9650;2</div></a>
+        <a href="/l1/scoretap/team?id=g2" class="rank-row"><div class="rank-num">#3</div><div class="rank-team">G2 Esports</div><div class="rank-points">1,655 pts</div><div class="rank-change down">&#9660;1</div></a>
         <div class="rank-row"><div class="rank-num">#4</div><div class="rank-team">FaZe Clan</div><div class="rank-points">1,580 pts</div><div class="rank-change down">&#9660;1</div></div>
-        <div class="rank-row"><div class="rank-num">#5</div><div class="rank-team">MOUZ</div><div class="rank-points">1,490 pts</div><div class="rank-change up">&#9650;1</div></div>
+        <a href="/l1/scoretap/team?id=mouz" class="rank-row"><div class="rank-num">#5</div><div class="rank-team">MOUZ</div><div class="rank-points">1,490 pts</div><div class="rank-change up">&#9650;1</div></a>
         <div class="rank-row"><div class="rank-num">#6</div><div class="rank-team">Heroic</div><div class="rank-points">1,320 pts</div><div class="rank-change same">&mdash;</div></div>
         <div class="rank-row"><div class="rank-num">#7</div><div class="rank-team">Virtus.pro</div><div class="rank-points">1,210 pts</div><div class="rank-change up">&#9650;3</div></div>
         <div class="rank-row"><div class="rank-num">#8</div><div class="rank-team">Cloud9</div><div class="rank-points">1,150 pts</div><div class="rank-change down">&#9660;2</div></div>
@@ -276,47 +276,47 @@ import GameTag from './_components/GameTag.astro';
       </WidgetPanel>
 
       <!-- Top Events -->
-      <WidgetPanel title="Top Events" linkText="All Events" linkHref="#">
-        <div class="event-row" data-game="cs2">
+      <WidgetPanel title="Top Events" linkText="All Events" linkHref="/l1/scoretap/events">
+        <a href="/l1/scoretap/event?id=iem-katowice-2026" class="event-row" data-game="cs2">
           <div class="event-name">IEM Katowice 2026</div>
           <div style="text-align:right;">
             <div><GameTag game="cs2" /></div>
             <div class="event-dates">Mar 5&ndash;15</div>
           </div>
           <div><EventBadge status="live" /></div>
-        </div>
-        <div class="event-row" data-game="valorant">
+        </a>
+        <a href="/l1/scoretap/event?id=vct-americas-2026" class="event-row" data-game="valorant">
           <div class="event-name">VCT Americas 2026</div>
           <div style="text-align:right;">
             <div><GameTag game="valorant" /></div>
             <div class="event-dates">Mar 1&ndash;20</div>
           </div>
           <div><EventBadge status="live" /></div>
-        </div>
-        <div class="event-row" data-game="rl">
+        </a>
+        <a href="/l1/scoretap/event?id=rlcs-spring-2026" class="event-row" data-game="rl">
           <div class="event-name">RLCS 2026 Spring</div>
           <div style="text-align:right;">
             <div><GameTag game="rl" /></div>
             <div class="event-dates">Mar 8&ndash;22</div>
           </div>
           <div><EventBadge status="live" /></div>
-        </div>
-        <div class="event-row" data-game="lol">
+        </a>
+        <a href="/l1/scoretap/event?id=lck-spring-2026" class="event-row" data-game="lol">
           <div class="event-name">LCK Spring 2026</div>
           <div style="text-align:right;">
             <div><GameTag game="lol" /></div>
             <div class="event-dates">Feb 15&ndash;Apr 5</div>
           </div>
           <div><EventBadge status="live" /></div>
-        </div>
-        <div class="event-row" data-game="dota2">
+        </a>
+        <a href="/l1/scoretap/event?id=esl-one-stockholm-2026" class="event-row" data-game="dota2">
           <div class="event-name">ESL One Stockholm 2026</div>
           <div style="text-align:right;">
             <div><GameTag game="dota2" /></div>
             <div class="event-dates">Mar 20&ndash;30</div>
           </div>
           <div><EventBadge status="upcoming" /></div>
-        </div>
+        </a>
       </WidgetPanel>
 
     </div><!-- /sidebar -->

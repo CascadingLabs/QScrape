@@ -67,6 +67,13 @@ const { title, activePage } = Astro.props;
       position: relative;
     }
     .util-links a:hover { color: var(--accent); }
+    .util-links a[data-tooltip] {
+      color: #404050;
+      cursor: not-allowed;
+    }
+    .util-links a[data-tooltip]:hover {
+      color: #555568;
+    }
 
     .live-dot {
       display: inline-block;

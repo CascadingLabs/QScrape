@@ -1,0 +1,901 @@
+---
+import SiteShell from './_components/SiteShell.astro';
+---
+<SiteShell title="Event Details — ScoreTap" activePage="events">
+
+  <style>
+    .event-detail-container {
+      max-width: 1100px;
+      margin: 14px auto;
+      padding: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .event-header-card {
+      background: linear-gradient(180deg, #181828 0%, var(--bg-panel) 100%);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      padding: 20px;
+      text-align: center;
+    }
+    .event-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .event-name-display {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--text-bright);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .event-info-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      font-size: 11px;
+      color: var(--text-dim);
+      flex-wrap: wrap;
+    }
+    .event-info-row span { display: flex; align-items: center; gap: 4px; }
+    .event-info-row .prize-value {
+      color: var(--green);
+      font-weight: 700;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+
+    .event-progress-bar {
+      height: 4px;
+      background: #1c1c2c;
+      margin-top: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .event-progress-bar-fill {
+      height: 100%;
+      background: var(--accent);
+    }
+    .event-progress-bar-fill.upcoming { background: #404058; }
+    .event-progress-bar-fill.done { background: #303044; }
+
+    /* stage status badges */
+    .stage-live {
+      color: var(--green);
+      font-weight: 700;
+    }
+    .stage-done {
+      color: var(--text-dim);
+    }
+    .stage-upcoming {
+      color: #606070;
+    }
+
+    /* team eliminated */
+    .team-eliminated {
+      color: #505060 !important;
+      text-decoration: line-through;
+    }
+
+    /* prize styling */
+    .prize-first td:first-child {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .prize-amount {
+      color: var(--green);
+      font-weight: 700;
+      font-family: 'Courier New', monospace;
+    }
+
+    .match-row-link {
+      cursor: pointer;
+    }
+    .match-row-link:hover td {
+      background: #1e1e30 !important;
+    }
+
+    #event-not-found {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-dim);
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+    }
+  </style>
+
+  <div class="event-detail-container">
+    <div class="breadcrumb">
+      <a href="/l1/scoretap/">Home</a> &rsaquo;
+      <a href="/l1/scoretap/events">Events</a> &rsaquo;
+      <span id="breadcrumb-event">Event Detail</span>
+    </div>
+
+    <div id="event-content">
+      <!-- Populated by JS -->
+    </div>
+
+    <div id="event-not-found" style="display:none;">
+      Event not found. <a href="/l1/scoretap/events" style="color:var(--accent);">Return to events</a>
+    </div>
+  </div>
+
+  <script is:inline>
+    var EVENTS = {
+      'iem-katowice-2026': {
+        id: 'iem-katowice-2026',
+        name: 'IEM Katowice 2026',
+        game: 'cs2',
+        gameLabel: 'CS2',
+        status: 'live',
+        statusNote: 'Quarterfinals in progress',
+        dates: 'March 6–12, 2026',
+        location: 'Katowice, Poland',
+        prizePool: '$250,000',
+        organizer: 'ESL',
+        format: {
+          overview: '16-team single elimination with group stage seeding. Bo3 until semifinals, Bo5 Grand Final.',
+          stages: [
+            { name: 'Group Stage', format: 'GSL Groups (Bo3)', teams: 16, status: 'done' },
+            { name: 'Quarterfinals', format: 'Single Elim (Bo3)', teams: 8, status: 'live' },
+            { name: 'Semifinals', format: 'Single Elim (Bo3)', teams: 4, status: 'upcoming' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'upcoming' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'Vitality', region: 'Europe', status: 'active' },
+          { seed: 2, name: 'NAVI', region: 'Europe', status: 'active' },
+          { seed: 3, name: 'G2', region: 'Europe', status: 'active' },
+          { seed: 4, name: 'FaZe', region: 'Europe', status: 'active' },
+          { seed: 5, name: 'MOUZ', region: 'Europe', status: 'active' },
+          { seed: 6, name: 'Heroic', region: 'Europe', status: 'active' },
+          { seed: 7, name: 'Spirit', region: 'Europe', status: 'active' },
+          { seed: 8, name: 'Cloud9', region: 'Europe', status: 'active' },
+          { seed: 9, name: 'ENCE', region: 'Europe', status: 'eliminated' },
+          { seed: 10, name: 'BIG', region: 'Europe', status: 'eliminated' },
+          { seed: 11, name: 'Complexity', region: 'North America', status: 'eliminated' },
+          { seed: 12, name: 'Imperial', region: 'South America', status: 'eliminated' },
+          { seed: 13, name: 'GamerLegion', region: 'Europe', status: 'eliminated' },
+          { seed: 14, name: 'paiN', region: 'South America', status: 'eliminated' },
+          { seed: 15, name: 'Apeks', region: 'Europe', status: 'eliminated' },
+          { seed: 16, name: 'Lynn Vision', region: 'Asia', status: 'eliminated' }
+        ],
+        matches: [
+          { team1: 'NAVI', team2: 'G2', score: '11 : 8', stage: 'Quarterfinal', status: 'Live', matchId: 'match-001' },
+          { team1: 'Vitality', team2: 'FaZe', score: '— : —', stage: 'Quarterfinal', status: 'Upcoming' },
+          { team1: 'MOUZ', team2: 'Heroic', score: '— : —', stage: 'Quarterfinal', status: 'Upcoming' },
+          { team1: 'Spirit', team2: 'Cloud9', score: '— : —', stage: 'Quarterfinal', status: 'Upcoming' }
+        ],
+        prizes: [
+          { place: '1st', prize: '$100,000', team: 'TBD' },
+          { place: '2nd', prize: '$50,000', team: 'TBD' },
+          { place: '3rd–4th', prize: '$25,000', team: 'TBD' },
+          { place: '5th–8th', prize: '$10,000', team: 'TBD' },
+          { place: '9th–16th', prize: '$2,500', team: 'Various' }
+        ],
+        news: [
+          { headline: 'ZywOo Sets New Career-High Rating Record at IEM Katowice 2026', time: '2h ago', href: '/l1/scoretap/article?id=zywoo-katowice-record' },
+          { headline: 'NAVI Confirm Signing of Rifler blameF Ahead of Major Qualifier', time: '4h ago', href: '/l1/scoretap/article?id=navi-blamef-signing' },
+          { headline: 'G2 NiKo: "We Came to Katowice to Win Everything"', time: '16h ago', href: '/l1/scoretap/article?id=g2-niko-interview' },
+          { headline: 'MOUZ vs Heroic Semifinal Preview: Europe\'s Rising Stars', time: '1d ago', href: '/l1/scoretap/article?id=mouz-heroic-semifinal' },
+          { headline: 'Vitality Edge Out FaZe in Thrilling Group Stage Decider', time: '2d ago', href: '/l1/scoretap/article?id=vitality-faze-results' }
+        ]
+      },
+
+      'vct-americas-2026': {
+        id: 'vct-americas-2026',
+        name: 'VCT Americas 2026',
+        game: 'valorant',
+        gameLabel: 'Valorant',
+        status: 'live',
+        statusNote: 'Group Stage — Week 4',
+        dates: 'February 28 – March 22, 2026',
+        location: 'Online / LAN',
+        prizePool: '$500,000',
+        organizer: 'Riot Games',
+        format: {
+          overview: '12-team league format with double round-robin groups into playoffs.',
+          stages: [
+            { name: 'Group Stage', format: 'Round Robin (Bo3)', teams: 12, status: 'live' },
+            { name: 'Playoffs', format: 'Double Elim (Bo3/Bo5)', teams: 6, status: 'upcoming' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'upcoming' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'Sentinels', region: 'North America', status: 'active' },
+          { seed: 2, name: 'NRG', region: 'North America', status: 'active' },
+          { seed: 3, name: 'LOUD', region: 'Brazil', status: 'active' },
+          { seed: 4, name: '100 Thieves', region: 'North America', status: 'active' },
+          { seed: 5, name: 'FURIA', region: 'Brazil', status: 'active' },
+          { seed: 6, name: 'Cloud9', region: 'North America', status: 'active' },
+          { seed: 7, name: 'Evil Geniuses', region: 'North America', status: 'active' },
+          { seed: 8, name: 'MIBR', region: 'Brazil', status: 'active' },
+          { seed: 9, name: 'Leviatán', region: 'Chile', status: 'active' },
+          { seed: 10, name: 'KRÜ', region: 'Argentina', status: 'active' },
+          { seed: 11, name: 'G2', region: 'North America', status: 'active' },
+          { seed: 12, name: '2GAME', region: 'Brazil', status: 'active' }
+        ],
+        matches: [
+          { team1: 'Sentinels', team2: 'LOUD', score: '9 : 7', stage: 'Group Stage W4', status: 'Live' },
+          { team1: 'NRG', team2: '100 Thieves', score: '2 : 0', stage: 'Group Stage W4', status: 'Final' },
+          { team1: 'FURIA', team2: 'Cloud9', score: '— : —', stage: 'Group Stage W4', status: 'Upcoming' }
+        ],
+        prizes: [
+          { place: '1st', prize: '$200,000', team: 'TBD' },
+          { place: '2nd', prize: '$100,000', team: 'TBD' },
+          { place: '3rd–4th', prize: '$50,000', team: 'TBD' },
+          { place: '5th–6th', prize: '$25,000', team: 'TBD' },
+          { place: '7th–12th', prize: '$8,333', team: 'TBD' }
+        ],
+        news: [
+          { headline: 'Sentinels Sweep VCT Americas Group Stage With Perfect 5-0 Record', time: '5h ago', href: '/l1/scoretap/article?id=sentinels-group-stage' },
+          { headline: 'LOUD vs Sentinels VCT Americas Preview: A Clash of Opposite Styles', time: '1d ago', href: '/l1/scoretap/article?id=loud-vct-preview' },
+          { headline: 'NRG Secure Americas Playoff Spot With 13-9 Win Over 100 Thieves', time: '20h ago', href: '/l1/scoretap/article?id=nrg-americas-playoffs' }
+        ]
+      },
+
+      'vct-pacific-2026': {
+        id: 'vct-pacific-2026',
+        name: 'VCT Pacific 2026',
+        game: 'valorant',
+        gameLabel: 'Valorant',
+        status: 'live',
+        statusNote: 'Group Stage — Week 3',
+        dates: 'February 20 – April 5, 2026',
+        location: 'Online / LAN',
+        prizePool: '$500,000',
+        organizer: 'Riot Games',
+        format: {
+          overview: '10-team league with round-robin group stage into double-elimination playoffs.',
+          stages: [
+            { name: 'Group Stage', format: 'Round Robin (Bo3)', teams: 10, status: 'live' },
+            { name: 'Playoffs', format: 'Double Elim (Bo3/Bo5)', teams: 6, status: 'upcoming' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'upcoming' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'Paper Rex', region: 'Southeast Asia', status: 'active' },
+          { seed: 2, name: 'DRX', region: 'Korea', status: 'active' },
+          { seed: 3, name: 'T1', region: 'Korea', status: 'active' },
+          { seed: 4, name: 'Gen.G', region: 'Korea', status: 'active' },
+          { seed: 5, name: 'Fnatic', region: 'APAC', status: 'active' },
+          { seed: 6, name: 'ZETA DIVISION', region: 'Japan', status: 'active' },
+          { seed: 7, name: 'Global Esports', region: 'South Asia', status: 'active' },
+          { seed: 8, name: 'Talon', region: 'Southeast Asia', status: 'active' },
+          { seed: 9, name: 'DetonatioN FM', region: 'Japan', status: 'active' },
+          { seed: 10, name: 'Rex Regum Qeon', region: 'Southeast Asia', status: 'active' }
+        ],
+        matches: [
+          { team1: 'Paper Rex', team2: 'DRX', score: '2 : 1', stage: 'Group Stage W3', status: 'Final' },
+          { team1: 'T1', team2: 'Gen.G', score: '— : —', stage: 'Group Stage W3', status: 'Upcoming' },
+          { team1: 'Fnatic', team2: 'ZETA DIVISION', score: '— : —', stage: 'Group Stage W3', status: 'Upcoming' }
+        ],
+        prizes: [
+          { place: '1st', prize: '$200,000', team: 'TBD' },
+          { place: '2nd', prize: '$100,000', team: 'TBD' },
+          { place: '3rd–4th', prize: '$50,000', team: 'TBD' },
+          { place: '5th–6th', prize: '$25,000', team: 'TBD' },
+          { place: '7th–10th', prize: '$12,500', team: 'TBD' }
+        ],
+        news: [
+          { headline: 'VCT Pacific Standings: Paper Rex and DRX Lead After Week 3', time: '6h ago', href: '/l1/scoretap/article?id=vct-pacific-standings' },
+          { headline: 'Paper Rex Sign Former Fnatic Star f0rsakeN to Complete Roster', time: '2d ago', href: '/l1/scoretap/article?id=paper-rex-flippzjder' }
+        ]
+      },
+
+      'lck-spring-2026': {
+        id: 'lck-spring-2026',
+        name: 'LCK Spring 2026',
+        game: 'lol',
+        gameLabel: 'LoL',
+        status: 'live',
+        statusNote: 'Week 8 of regular season',
+        dates: 'January 15 – April 12, 2026',
+        location: 'Seoul, South Korea',
+        prizePool: '$1,000,000',
+        organizer: 'Riot Games Korea',
+        format: {
+          overview: '10-team double round-robin league into 6-team playoffs.',
+          stages: [
+            { name: 'Regular Season', format: 'Double Round Robin (Bo3)', teams: 10, status: 'live' },
+            { name: 'Playoffs', format: 'Gauntlet (Bo5)', teams: 6, status: 'upcoming' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'upcoming' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'T1', region: 'Korea', status: 'active' },
+          { seed: 2, name: 'Gen.G', region: 'Korea', status: 'active' },
+          { seed: 3, name: 'DRX', region: 'Korea', status: 'active' },
+          { seed: 4, name: 'KT Rolster', region: 'Korea', status: 'active' },
+          { seed: 5, name: 'Hanwha Life', region: 'Korea', status: 'active' },
+          { seed: 6, name: 'Dplus KIA', region: 'Korea', status: 'active' },
+          { seed: 7, name: 'Kwangdong Freecs', region: 'Korea', status: 'active' },
+          { seed: 8, name: 'BNK FearX', region: 'Korea', status: 'active' },
+          { seed: 9, name: 'OKSavingsBank', region: 'Korea', status: 'active' },
+          { seed: 10, name: 'Nongshim RedForce', region: 'Korea', status: 'active' }
+        ],
+        matches: [
+          { team1: 'T1', team2: 'Gen.G', score: '2 : 1', stage: 'Regular Season W8', status: 'Final' },
+          { team1: 'DRX', team2: 'KT Rolster', score: '— : —', stage: 'Regular Season W8', status: 'Upcoming' },
+          { team1: 'Hanwha Life', team2: 'Dplus KIA', score: '— : —', stage: 'Regular Season W8', status: 'Upcoming' }
+        ],
+        prizes: [
+          { place: '1st', prize: '$400,000', team: 'TBD' },
+          { place: '2nd', prize: '$200,000', team: 'TBD' },
+          { place: '3rd–4th', prize: '$100,000', team: 'TBD' },
+          { place: '5th–6th', prize: '$50,000', team: 'TBD' }
+        ],
+        news: [
+          { headline: 'LCK Spring 2026 Preview: Can Anyone Stop T1?', time: '3d ago', href: '/l1/scoretap/article?id=lck-spring-preview' },
+          { headline: 'Faker Signs Record $10M Contract Extension Through 2028', time: '1d ago', href: '/l1/scoretap/article?id=faker-contract-2028' },
+          { headline: 'Gen.G Extend Ruler\'s Contract Through 2027 Season', time: '2d ago', href: '/l1/scoretap/article?id=geng-ruler-contract' }
+        ]
+      },
+
+      'lec-spring-2026': {
+        id: 'lec-spring-2026',
+        name: 'LEC Spring 2026',
+        game: 'lol',
+        gameLabel: 'LoL',
+        status: 'live',
+        statusNote: 'Playoffs — Round 1',
+        dates: 'January 18 – April 5, 2026',
+        location: 'Berlin, Germany',
+        prizePool: '$500,000',
+        organizer: 'Riot Games EMEA',
+        format: {
+          overview: '10-team league with Bo1 regular season into 6-team double-elimination playoffs.',
+          stages: [
+            { name: 'Regular Season', format: 'Double Round Robin (Bo1)', teams: 10, status: 'done' },
+            { name: 'Playoffs', format: 'Double Elim (Bo5)', teams: 6, status: 'live' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'upcoming' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'G2 Esports', region: 'Europe', status: 'active' },
+          { seed: 2, name: 'Fnatic', region: 'Europe', status: 'active' },
+          { seed: 3, name: 'Team BDS', region: 'Europe', status: 'active' },
+          { seed: 4, name: 'Karmine Corp', region: 'Europe', status: 'active' },
+          { seed: 5, name: 'MAD Lions', region: 'Europe', status: 'active' },
+          { seed: 6, name: 'Rogue', region: 'Europe', status: 'active' },
+          { seed: 7, name: 'SK Gaming', region: 'Europe', status: 'eliminated' },
+          { seed: 8, name: 'Astralis', region: 'Europe', status: 'eliminated' },
+          { seed: 9, name: 'Team Heretics', region: 'Europe', status: 'eliminated' },
+          { seed: 10, name: 'Vitality.Bee', region: 'Europe', status: 'eliminated' }
+        ],
+        matches: [
+          { team1: 'G2 Esports', team2: 'Rogue', score: '3 : 1', stage: 'Playoffs R1', status: 'Final' },
+          { team1: 'Fnatic', team2: 'MAD Lions', score: '— : —', stage: 'Playoffs R1', status: 'Upcoming' },
+          { team1: 'Team BDS', team2: 'Karmine Corp', score: '— : —', stage: 'Playoffs R1', status: 'Upcoming' }
+        ],
+        prizes: [
+          { place: '1st', prize: '$200,000', team: 'TBD' },
+          { place: '2nd', prize: '$100,000', team: 'TBD' },
+          { place: '3rd–4th', prize: '$50,000', team: 'TBD' },
+          { place: '5th–6th', prize: '$25,000', team: 'TBD' }
+        ],
+        news: [
+          { headline: 'LEC Standings: G2 Lock First Seed, Fnatic Close Behind', time: '8h ago', href: '/l1/scoretap/article?id=lec-g2-standings' }
+        ]
+      },
+
+      'rlcs-spring-2026': {
+        id: 'rlcs-spring-2026',
+        name: 'RLCS 2026 Spring Split',
+        game: 'rl',
+        gameLabel: 'Rocket League',
+        status: 'live',
+        statusNote: 'Regional Major — Day 3',
+        dates: 'February 1 – March 20, 2026',
+        location: 'Regional + LAN',
+        prizePool: '$2,500,000',
+        organizer: 'Psyonix / Epic Games',
+        format: {
+          overview: '3 Open Qualifiers into Regional Major. 80 teams across regions.',
+          stages: [
+            { name: 'Open Qualifier 1', format: 'Swiss (Bo5)', teams: 80, status: 'done' },
+            { name: 'Open Qualifier 2', format: 'Swiss (Bo5)', teams: 80, status: 'done' },
+            { name: 'Open Qualifier 3', format: 'Swiss (Bo5)', teams: 80, status: 'done' },
+            { name: 'Regional Major', format: 'Double Elim (Bo7)', teams: 16, status: 'live' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'Team BDS', region: 'Europe', status: 'active' },
+          { seed: 2, name: 'Team Liquid', region: 'Europe', status: 'active' },
+          { seed: 3, name: 'Karmine Corp', region: 'Europe', status: 'active' },
+          { seed: 4, name: 'Cloud9', region: 'North America', status: 'active' },
+          { seed: 5, name: 'G2 Stride', region: 'North America', status: 'active' },
+          { seed: 6, name: 'Spacestation', region: 'North America', status: 'active' },
+          { seed: 7, name: 'Vitality', region: 'Europe', status: 'active' },
+          { seed: 8, name: 'Dignitas', region: 'North America', status: 'active' },
+          { seed: 9, name: 'FURIA', region: 'South America', status: 'eliminated' },
+          { seed: 10, name: 'Elevate', region: 'Oceania', status: 'eliminated' },
+          { seed: 11, name: 'Tokyo Verdy', region: 'Asia', status: 'eliminated' },
+          { seed: 12, name: 'Twisted Minds', region: 'MENA', status: 'eliminated' }
+        ],
+        matches: [
+          { team1: 'Team Liquid', team2: 'Cloud9', score: '2 : 1', stage: 'Major — Lower R2', status: 'Live' },
+          { team1: 'Team BDS', team2: 'Karmine Corp', score: '4 : 2', stage: 'Major — Upper Final', status: 'Final' },
+          { team1: 'G2 Stride', team2: 'Spacestation', score: '— : —', stage: 'Major — Lower R3', status: 'Upcoming' }
+        ],
+        prizes: [
+          { place: '1st', prize: '$600,000', team: 'TBD' },
+          { place: '2nd', prize: '$350,000', team: 'TBD' },
+          { place: '3rd–4th', prize: '$200,000', team: 'TBD' },
+          { place: '5th–8th', prize: '$100,000', team: 'TBD' },
+          { place: '9th–12th', prize: '$50,000', team: 'Various' }
+        ],
+        news: [
+          { headline: 'RLCS 2026 Spring Split Prize Pool Revealed at $2.5 Million', time: '12h ago', href: '/l1/scoretap/article?id=rlcs-prize-pool' },
+          { headline: 'Team BDS Secure RLCS Spring Regional After 3-1 Win Over Karmine Corp', time: '22h ago', href: '/l1/scoretap/article?id=bds-karmine-win' },
+          { headline: 'Team Liquid Unveil Revamped RLCS Roster Ahead of Spring Split', time: '4d ago', href: '/l1/scoretap/article?id=liquid-rl-roster' }
+        ]
+      },
+
+      'blast-premier-spring-2026': {
+        id: 'blast-premier-spring-2026',
+        name: 'BLAST Premier Spring 2026',
+        game: 'cs2',
+        gameLabel: 'CS2',
+        status: 'upcoming',
+        statusNote: 'Starts April 3',
+        dates: 'April 3–27, 2026',
+        location: 'OVO Arena Wembley, London',
+        prizePool: '$425,000',
+        organizer: 'BLAST',
+        format: {
+          overview: '12-team invitational with group stage into single-elimination playoffs.',
+          stages: [
+            { name: 'Group Stage', format: 'GSL Groups (Bo3)', teams: 12, status: 'upcoming' },
+            { name: 'Quarterfinals', format: 'Single Elim (Bo3)', teams: 8, status: 'upcoming' },
+            { name: 'Semifinals', format: 'Single Elim (Bo3)', teams: 4, status: 'upcoming' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'upcoming' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'Vitality', region: 'Europe', status: 'active' },
+          { seed: 2, name: 'G2', region: 'Europe', status: 'active' },
+          { seed: 3, name: 'NAVI', region: 'Europe', status: 'active' },
+          { seed: 4, name: 'MOUZ', region: 'Europe', status: 'active' },
+          { seed: 5, name: 'FaZe', region: 'Europe', status: 'active' },
+          { seed: 6, name: 'Heroic', region: 'Europe', status: 'active' },
+          { seed: 7, name: 'Spirit', region: 'Europe', status: 'active' },
+          { seed: 8, name: 'Cloud9', region: 'Europe', status: 'active' },
+          { seed: 9, name: 'Astralis', region: 'Europe', status: 'active' },
+          { seed: 10, name: 'Liquid', region: 'North America', status: 'active' },
+          { seed: 11, name: 'Complexity', region: 'North America', status: 'active' },
+          { seed: 12, name: 'ENCE', region: 'Europe', status: 'active' }
+        ],
+        matches: [],
+        prizes: [
+          { place: '1st', prize: '$200,000', team: 'TBD' },
+          { place: '2nd', prize: '$80,000', team: 'TBD' },
+          { place: '3rd–4th', prize: '$35,000', team: 'TBD' },
+          { place: '5th–8th', prize: '$10,000', team: 'TBD' }
+        ],
+        news: [
+          { headline: 'BLAST Premier Spring 2026 Schedule and Format Revealed', time: '5d ago', href: '/l1/scoretap/article?id=blast-premier-schedule' }
+        ]
+      },
+
+      'msi-2026': {
+        id: 'msi-2026',
+        name: 'MSI 2026',
+        game: 'lol',
+        gameLabel: 'LoL',
+        status: 'upcoming',
+        statusNote: 'Starts May 1',
+        dates: 'May 1–18, 2026',
+        location: 'KSPO Dome, Seoul',
+        prizePool: '$2,250,000',
+        organizer: 'Riot Games',
+        format: {
+          overview: '12 regional champions compete in play-in, group, and knockout stages.',
+          stages: [
+            { name: 'Play-In', format: 'Double Elim (Bo5)', teams: 8, status: 'upcoming' },
+            { name: 'Group Stage', format: 'Round Robin (Bo1)', teams: 8, status: 'upcoming' },
+            { name: 'Knockout', format: 'Single Elim (Bo5)', teams: 4, status: 'upcoming' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'upcoming' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'T1', region: 'Korea (LCK)', status: 'active' },
+          { seed: 2, name: 'Gen.G', region: 'Korea (LCK)', status: 'active' },
+          { seed: 3, name: 'G2 / Fnatic', region: 'Europe (LEC)', status: 'active' },
+          { seed: 4, name: 'Cloud9 / Liquid', region: 'North America (LCS)', status: 'active' },
+          { seed: 5, name: 'TBD', region: 'China (LPL)', status: 'active' },
+          { seed: 6, name: 'TBD', region: 'China (LPL)', status: 'active' },
+          { seed: 7, name: 'TBD', region: 'Vietnam (VCS)', status: 'active' },
+          { seed: 8, name: 'TBD', region: 'Turkey (TCL)', status: 'active' },
+          { seed: 9, name: 'TBD', region: 'Brazil (CBLOL)', status: 'active' },
+          { seed: 10, name: 'TBD', region: 'Japan (LJL)', status: 'active' },
+          { seed: 11, name: 'TBD', region: 'Oceania (LCO)', status: 'active' },
+          { seed: 12, name: 'TBD', region: 'Latin America (LLA)', status: 'active' }
+        ],
+        matches: [],
+        prizes: [
+          { place: '1st', prize: '$750,000', team: 'TBD' },
+          { place: '2nd', prize: '$400,000', team: 'TBD' },
+          { place: '3rd–4th', prize: '$250,000', team: 'TBD' },
+          { place: '5th–8th', prize: '$100,000', team: 'TBD' }
+        ],
+        news: [
+          { headline: 'MSI 2026 Confirmed for KSPO Dome in Seoul', time: '3d ago', href: '/l1/scoretap/article?id=msi-2026-location' }
+        ]
+      },
+
+      'cs2-major-2026': {
+        id: 'cs2-major-2026',
+        name: 'CS2 Major 2026',
+        game: 'cs2',
+        gameLabel: 'CS2',
+        status: 'upcoming',
+        statusNote: 'Starts June 14',
+        dates: 'June 14–28, 2026',
+        location: 'Royal Arena, Copenhagen',
+        prizePool: '$1,250,000',
+        organizer: 'PGL',
+        format: {
+          overview: '24-team Major with Challengers, Legends, and Champions stages.',
+          stages: [
+            { name: 'Challengers Stage', format: 'Swiss (Bo1/Bo3)', teams: 16, status: 'upcoming' },
+            { name: 'Legends Stage', format: 'Swiss (Bo1/Bo3)', teams: 16, status: 'upcoming' },
+            { name: 'Champions Stage', format: 'Single Elim (Bo3)', teams: 8, status: 'upcoming' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'upcoming' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: '24 teams', region: 'Global', status: 'active' },
+          { seed: 2, name: 'Qualifiers TBD', region: 'Various', status: 'active' }
+        ],
+        matches: [],
+        prizes: [
+          { place: '1st', prize: '$500,000', team: 'TBD' },
+          { place: '2nd', prize: '$250,000', team: 'TBD' },
+          { place: '3rd–4th', prize: '$100,000', team: 'TBD' },
+          { place: '5th–8th', prize: '$50,000', team: 'TBD' },
+          { place: '9th–16th', prize: '$18,750', team: 'TBD' }
+        ],
+        news: [
+          { headline: 'CS2 Major Copenhagen: Format, Dates, and Qualifying Teams', time: '4d ago', href: '/l1/scoretap/article?id=cs2-major-copenhagen' }
+        ]
+      },
+
+      'esl-one-stockholm-2026': {
+        id: 'esl-one-stockholm-2026',
+        name: 'ESL One Stockholm 2026',
+        game: 'dota2',
+        gameLabel: 'Dota 2',
+        status: 'upcoming',
+        statusNote: 'Starts April 10',
+        dates: 'April 10–20, 2026',
+        location: 'Stockholm, Sweden',
+        prizePool: '$500,000',
+        organizer: 'ESL',
+        format: {
+          overview: '16-team LAN with group stage into double-elimination playoffs.',
+          stages: [
+            { name: 'Group Stage', format: 'Round Robin (Bo2)', teams: 16, status: 'upcoming' },
+            { name: 'Playoffs', format: 'Double Elim (Bo3)', teams: 8, status: 'upcoming' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'upcoming' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'Team Spirit', region: 'Eastern Europe', status: 'active' },
+          { seed: 2, name: 'Tundra', region: 'Western Europe', status: 'active' },
+          { seed: 3, name: 'OG', region: 'Western Europe', status: 'active' },
+          { seed: 4, name: 'Gaimin Gladiators', region: 'Western Europe', status: 'active' },
+          { seed: 5, name: 'BetBoom Team', region: 'Eastern Europe', status: 'active' },
+          { seed: 6, name: 'Team Liquid', region: 'Western Europe', status: 'active' },
+          { seed: 7, name: 'Xtreme Gaming', region: 'China', status: 'active' },
+          { seed: 8, name: 'Azure Ray', region: 'China', status: 'active' },
+          { seed: 9, name: 'Talon', region: 'Southeast Asia', status: 'active' },
+          { seed: 10, name: 'Nigma Galaxy', region: 'Western Europe', status: 'active' },
+          { seed: 11, name: 'Nouns', region: 'North America', status: 'active' },
+          { seed: 12, name: 'beastcoast', region: 'South America', status: 'active' },
+          { seed: 13, name: 'Entity', region: 'Western Europe', status: 'active' },
+          { seed: 14, name: 'Aurora', region: 'Eastern Europe', status: 'active' },
+          { seed: 15, name: 'Execration', region: 'Southeast Asia', status: 'active' },
+          { seed: 16, name: 'Shopify Rebellion', region: 'North America', status: 'active' }
+        ],
+        matches: [],
+        prizes: [
+          { place: '1st', prize: '$200,000', team: 'TBD' },
+          { place: '2nd', prize: '$100,000', team: 'TBD' },
+          { place: '3rd–4th', prize: '$50,000', team: 'TBD' },
+          { place: '5th–8th', prize: '$18,750', team: 'TBD' }
+        ],
+        news: [
+          { headline: 'Team Spirit Continue DreamLeague Dominance With Season 25 Title', time: '3d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' },
+          { headline: 'OG Announce Complete Roster Rebuild Ahead of ESL One Stockholm', time: '5d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' }
+        ]
+      },
+
+      'dreamleague-season-25': {
+        id: 'dreamleague-season-25',
+        name: 'DreamLeague Season 25',
+        game: 'dota2',
+        gameLabel: 'Dota 2',
+        status: 'completed',
+        statusNote: 'Team Spirit wins 3–1',
+        dates: 'February 15 – March 9, 2026',
+        location: 'Online',
+        prizePool: '$500,000',
+        organizer: 'DreamHack',
+        format: {
+          overview: '16-team online league with group stage into double-elimination playoffs.',
+          stages: [
+            { name: 'Group Stage', format: 'Round Robin (Bo2)', teams: 16, status: 'done' },
+            { name: 'Playoffs', format: 'Double Elim (Bo3)', teams: 8, status: 'done' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'done' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'Team Spirit', region: 'Eastern Europe', status: 'champion' },
+          { seed: 2, name: 'Tundra', region: 'Western Europe', status: 'runner-up' },
+          { seed: 3, name: 'Gaimin Gladiators', region: 'Western Europe', status: 'eliminated' },
+          { seed: 4, name: 'OG', region: 'Western Europe', status: 'eliminated' },
+          { seed: 5, name: 'BetBoom Team', region: 'Eastern Europe', status: 'eliminated' },
+          { seed: 6, name: 'Team Liquid', region: 'Western Europe', status: 'eliminated' },
+          { seed: 7, name: 'Xtreme Gaming', region: 'China', status: 'eliminated' },
+          { seed: 8, name: 'Azure Ray', region: 'China', status: 'eliminated' }
+        ],
+        matches: [
+          { team1: 'Team Spirit', team2: 'Tundra', score: '3 : 1', stage: 'Grand Final', status: 'Final' },
+          { team1: 'Team Spirit', team2: 'Gaimin Gladiators', score: '2 : 0', stage: 'Upper Final', status: 'Final' },
+          { team1: 'Tundra', team2: 'OG', score: '2 : 1', stage: 'Lower Final', status: 'Final' }
+        ],
+        prizes: [
+          { place: '1st', prize: '$200,000', team: 'Team Spirit' },
+          { place: '2nd', prize: '$100,000', team: 'Tundra' },
+          { place: '3rd', prize: '$60,000', team: 'Gaimin Gladiators' },
+          { place: '4th', prize: '$40,000', team: 'OG' },
+          { place: '5th–8th', prize: '$25,000', team: 'Various' }
+        ],
+        news: [
+          { headline: 'Team Spirit Continue DreamLeague Dominance With Season 25 Title', time: '3d ago', href: '/l1/scoretap/article?id=spirit-dreamleague' },
+          { headline: 'OG Announce Complete Roster Rebuild Ahead of ESL One Stockholm', time: '5d ago', href: '/l1/scoretap/article?id=og-rebuild-roster' }
+        ]
+      },
+
+      'iem-dallas-2026': {
+        id: 'iem-dallas-2026',
+        name: 'IEM Dallas 2026',
+        game: 'cs2',
+        gameLabel: 'CS2',
+        status: 'completed',
+        statusNote: 'MOUZ wins 3–2',
+        dates: 'January 28 – February 9, 2026',
+        location: 'Dallas, TX, USA',
+        prizePool: '$250,000',
+        organizer: 'ESL',
+        format: {
+          overview: '16-team LAN with GSL group stage into single-elimination playoffs.',
+          stages: [
+            { name: 'Group Stage', format: 'GSL Groups (Bo3)', teams: 16, status: 'done' },
+            { name: 'Quarterfinals', format: 'Single Elim (Bo3)', teams: 8, status: 'done' },
+            { name: 'Semifinals', format: 'Single Elim (Bo3)', teams: 4, status: 'done' },
+            { name: 'Grand Final', format: 'Bo5', teams: 2, status: 'done' }
+          ]
+        },
+        teams: [
+          { seed: 1, name: 'MOUZ', region: 'Europe', status: 'champion' },
+          { seed: 2, name: 'G2', region: 'Europe', status: 'runner-up' },
+          { seed: 3, name: 'Vitality', region: 'Europe', status: 'eliminated' },
+          { seed: 4, name: 'NAVI', region: 'Europe', status: 'eliminated' },
+          { seed: 5, name: 'FaZe', region: 'Europe', status: 'eliminated' },
+          { seed: 6, name: 'Spirit', region: 'Europe', status: 'eliminated' },
+          { seed: 7, name: 'Heroic', region: 'Europe', status: 'eliminated' },
+          { seed: 8, name: 'Cloud9', region: 'Europe', status: 'eliminated' },
+          { seed: 9, name: 'ENCE', region: 'Europe', status: 'eliminated' },
+          { seed: 10, name: 'BIG', region: 'Europe', status: 'eliminated' },
+          { seed: 11, name: 'Complexity', region: 'North America', status: 'eliminated' },
+          { seed: 12, name: 'Liquid', region: 'North America', status: 'eliminated' },
+          { seed: 13, name: 'Imperial', region: 'South America', status: 'eliminated' },
+          { seed: 14, name: 'paiN', region: 'South America', status: 'eliminated' },
+          { seed: 15, name: 'GamerLegion', region: 'Europe', status: 'eliminated' },
+          { seed: 16, name: 'FURIA', region: 'South America', status: 'eliminated' }
+        ],
+        matches: [
+          { team1: 'MOUZ', team2: 'G2', score: '3 : 2', stage: 'Grand Final', status: 'Final' },
+          { team1: 'MOUZ', team2: 'Vitality', score: '2 : 1', stage: 'Semifinal', status: 'Final' },
+          { team1: 'G2', team2: 'NAVI', score: '2 : 0', stage: 'Semifinal', status: 'Final' }
+        ],
+        prizes: [
+          { place: '1st', prize: '$100,000', team: 'MOUZ' },
+          { place: '2nd', prize: '$50,000', team: 'G2' },
+          { place: '3rd–4th', prize: '$25,000', team: 'Vitality / NAVI' },
+          { place: '5th–8th', prize: '$10,000', team: 'Various' },
+          { place: '9th–16th', prize: '$2,500', team: 'Various' }
+        ],
+        news: [
+          { headline: 'CS2 Patch Notes: Valve Push Major Balance Update Ahead of Spring Season', time: '6d ago', href: '/l1/scoretap/article?id=cs2-patch-notes' }
+        ]
+      }
+    };
+
+    var TEAM_SLUGS = {
+      'Vitality': 'vitality', 'NAVI': 'navi', 'G2': 'g2', 'MOUZ': 'mouz',
+      'Sentinels': 'sentinels', 'Paper Rex': 'paper-rex', 'NRG': 'nrg',
+      'T1': 't1', 'Gen.G': 'gen-g', 'G2 Esports': 'g2-lol',
+      'Team Spirit': 'spirit', 'OG': 'og',
+      'Team BDS': 'bds', 'Team Liquid': 'liquid', 'Cloud9': 'cloud9'
+    };
+    function teamLink(name) {
+      var slug = TEAM_SLUGS[name];
+      if (slug) return '<a href="/l1/scoretap/team?id=' + slug + '" style="color:inherit;">' + name + '</a>';
+      return name;
+    }
+
+    function buildEventPage(ev) {
+      document.title = ev.name + ' — ScoreTap';
+      document.getElementById('breadcrumb-event').textContent = ev.name;
+
+      var gameTagHtml = '<span class="game-tag ' + ev.game + '">' + ev.gameLabel + '</span>';
+      var statusClass = ev.status === 'live' ? 'live' : (ev.status === 'completed' ? 'final' : 'upcoming');
+      var statusLabel = ev.status === 'live' ? 'Live' : (ev.status === 'completed' ? 'Completed' : 'Upcoming');
+      var badgeHtml = '<span class="event-badge ' + statusClass + '">' + statusLabel + '</span>';
+
+      var progressPct = ev.status === 'completed' ? 100 : (ev.status === 'upcoming' ? 0 : 65);
+      // Calculate progress from stages if live
+      if (ev.status === 'live' && ev.format && ev.format.stages) {
+        var totalStages = ev.format.stages.length;
+        var doneStages = 0;
+        var liveStage = -1;
+        for (var si = 0; si < totalStages; si++) {
+          if (ev.format.stages[si].status === 'done') doneStages++;
+          if (ev.format.stages[si].status === 'live') liveStage = si;
+        }
+        if (liveStage >= 0) {
+          progressPct = Math.round(((doneStages + 0.5) / totalStages) * 100);
+        }
+      }
+      var progressClass = ev.status === 'upcoming' ? ' upcoming' : (ev.status === 'completed' ? ' done' : '');
+
+      // Header card
+      var html =
+        '<div class="event-header-card">' +
+          '<div class="event-header-top">' + gameTagHtml + ' ' + badgeHtml + '</div>' +
+          '<div class="event-name-display">' + ev.name + '</div>' +
+          '<div class="event-info-row">' +
+            '<span>&#128197; ' + ev.dates + '</span>' +
+            '<span>&#128205; ' + ev.location + '</span>' +
+            '<span class="prize-value">&#127942; ' + ev.prizePool + '</span>' +
+            '<span>Organized by ' + ev.organizer + '</span>' +
+          '</div>' +
+          '<div class="event-progress-bar"><div class="event-progress-bar-fill' + progressClass + '" style="width:' + progressPct + '%"></div></div>' +
+          (ev.statusNote ? '<div style="text-align:center;font-size:10px;color:var(--text-dim);margin-top:6px;text-transform:uppercase;letter-spacing:1px;">' + ev.statusNote + '</div>' : '') +
+        '</div>';
+
+      // Format & Structure
+      if (ev.format) {
+        var stageRows = ev.format.stages.map(function(s) {
+          var stageStatusClass = s.status === 'live' ? 'stage-live' : (s.status === 'done' ? 'stage-done' : 'stage-upcoming');
+          var stageLabel = s.status === 'live' ? 'LIVE' : (s.status === 'done' ? 'Completed' : 'Upcoming');
+          return '<tr>' +
+            '<td style="font-weight:700;color:var(--text-bright);">' + s.name + '</td>' +
+            '<td>' + s.format + '</td>' +
+            '<td style="text-align:center;">' + s.teams + '</td>' +
+            '<td class="' + stageStatusClass + '">' + stageLabel + '</td>' +
+          '</tr>';
+        }).join('');
+
+        html +=
+          '<div class="widget">' +
+            '<div class="widget-header"><span class="widget-title">&#9632; Format &amp; Structure</span></div>' +
+            '<div style="padding:8px 10px;font-size:11px;color:var(--text);background:var(--bg-panel);border-bottom:1px solid var(--border);">' + ev.format.overview + '</div>' +
+            '<table>' +
+              '<thead><tr><th>Stage</th><th>Format</th><th>Teams</th><th>Status</th></tr></thead>' +
+              '<tbody>' + stageRows + '</tbody>' +
+            '</table>' +
+          '</div>';
+      }
+
+      // Notable Matches
+      if (ev.matches && ev.matches.length > 0) {
+        var matchRows = ev.matches.map(function(m) {
+          var isLinkable = m.matchId ? true : false;
+          var trClass = isLinkable ? ' class="match-row-link"' : '';
+          var trClick = isLinkable ? ' onclick="window.location.href=\'/l1/scoretap/match?id=' + m.matchId + '\'"' : '';
+          var statusStyle = m.status === 'Live' ? 'color:var(--green);font-weight:700;' : (m.status === 'Upcoming' ? 'color:#606070;' : 'color:var(--text-dim);');
+          return '<tr' + trClass + trClick + '>' +
+            '<td style="font-weight:700;color:var(--text-bright);">' + teamLink(m.team1) + '</td>' +
+            '<td style="text-align:center;font-weight:900;font-family:\'Courier New\',monospace;color:var(--accent);">' + m.score + '</td>' +
+            '<td style="font-weight:700;color:var(--text-bright);text-align:right;">' + teamLink(m.team2) + '</td>' +
+            '<td style="color:var(--text-dim);font-size:10px;">' + m.stage + '</td>' +
+            '<td style="' + statusStyle + 'font-size:10px;">' + m.status + (isLinkable ? ' &#8250;' : '') + '</td>' +
+          '</tr>';
+        }).join('');
+
+        html +=
+          '<div class="widget">' +
+            '<div class="widget-header"><span class="widget-title">&#9632; Notable Matches</span></div>' +
+            '<table>' +
+              '<thead><tr><th>Team 1</th><th>Score</th><th style="text-align:right;">Team 2</th><th>Stage</th><th>Status</th></tr></thead>' +
+              '<tbody>' + matchRows + '</tbody>' +
+            '</table>' +
+          '</div>';
+      }
+
+      // Participating Teams
+      if (ev.teams && ev.teams.length > 0) {
+        var teamRows = ev.teams.map(function(t) {
+          var elimClass = (t.status === 'eliminated') ? ' class="team-eliminated"' : '';
+          var statusText = t.status === 'champion' ? 'Champion' : (t.status === 'runner-up' ? 'Runner-up' : (t.status === 'eliminated' ? 'Eliminated' : 'Active'));
+          var statusColor = t.status === 'champion' ? 'color:var(--accent);font-weight:700;' : (t.status === 'runner-up' ? 'color:var(--text-bright);' : (t.status === 'eliminated' ? 'color:#505060;' : 'color:var(--green);'));
+          return '<tr>' +
+            '<td style="text-align:center;font-weight:700;color:var(--text-dim);">' + t.seed + '</td>' +
+            '<td style="font-weight:700;color:var(--text-bright);"' + elimClass + '>' + teamLink(t.name) + '</td>' +
+            '<td style="color:var(--text-dim);">' + t.region + '</td>' +
+            '<td style="' + statusColor + '">' + statusText + '</td>' +
+          '</tr>';
+        }).join('');
+
+        html +=
+          '<div class="widget">' +
+            '<div class="widget-header"><span class="widget-title">&#9632; Participating Teams</span><span class="widget-link">' + ev.teams.length + ' teams</span></div>' +
+            '<table>' +
+              '<thead><tr><th>Seed</th><th>Team</th><th>Region</th><th>Status</th></tr></thead>' +
+              '<tbody>' + teamRows + '</tbody>' +
+            '</table>' +
+          '</div>';
+      }
+
+      // Prize Distribution
+      if (ev.prizes && ev.prizes.length > 0) {
+        var prizeRows = ev.prizes.map(function(p, i) {
+          var rowClass = i === 0 ? ' class="prize-first"' : '';
+          return '<tr' + rowClass + '>' +
+            '<td style="font-weight:700;">' + p.place + '</td>' +
+            '<td class="prize-amount">' + p.prize + '</td>' +
+            '<td style="color:var(--text-dim);">' + p.team + '</td>' +
+          '</tr>';
+        }).join('');
+
+        html +=
+          '<div class="widget">' +
+            '<div class="widget-header"><span class="widget-title">&#9632; Prize Distribution</span><span class="widget-link">' + ev.prizePool + ' total</span></div>' +
+            '<table>' +
+              '<thead><tr><th>Place</th><th>Prize</th><th>Team</th></tr></thead>' +
+              '<tbody>' + prizeRows + '</tbody>' +
+            '</table>' +
+          '</div>';
+      }
+
+      // Related News
+      if (ev.news && ev.news.length > 0) {
+        var newsItems = ev.news.map(function(n) {
+          return '<li><a href="' + n.href + '">' + n.headline + '</a><div class="news-meta-small">' + n.time + '</div></li>';
+        }).join('');
+
+        html +=
+          '<div class="widget">' +
+            '<div class="widget-header"><span class="widget-title">&#9632; Related News</span><a class="widget-link" href="/l1/scoretap/news">All News</a></div>' +
+            '<ul class="news-list">' + newsItems + '</ul>' +
+          '</div>';
+      }
+
+      document.getElementById('event-content').innerHTML = html;
+    }
+
+    var params = new URLSearchParams(window.location.search);
+    var eventId = params.get('id');
+    var ev = eventId ? EVENTS[eventId] : null;
+
+    if (ev) {
+      buildEventPage(ev);
+    } else {
+      document.getElementById('event-not-found').style.display = 'block';
+    }
+  </script>
+
+</SiteShell>
