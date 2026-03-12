@@ -1,0 +1,70 @@
+---
+interface Props {
+  size: 'leaderboard' | 'rectangle' | 'skyscraper' | 'banner';
+  adId: string;
+  text?: string;
+  cta?: string;
+  campaign?: string;
+  placement?: string;
+}
+
+const { size, adId, text = 'Your Ad Here', cta = 'Learn More', campaign = 'DSN-CAM-2026-Q1', placement = 'run-of-site' } = Astro.props;
+
+const dims: Record<string, { w: number; h: number; fontSize: number; ctaSize: number }> = {
+  leaderboard: { w: 728, h: 90, fontSize: 16, ctaSize: 10 },
+  rectangle:   { w: 300, h: 250, fontSize: 16, ctaSize: 11 },
+  skyscraper:  { w: 160, h: 600, fontSize: 13, ctaSize: 10 },
+  banner:      { w: 468, h: 60, fontSize: 13, ctaSize: 9 },
+};
+
+const d = dims[size];
+const seed = adId.replace(/[^a-z0-9]/gi, '').toLowerCase();
+const trackBase = 'https://ads.deepstone-network.mh';
+const clickUrl = `${trackBase}/click?ad_id=${adId}&campaign=${campaign}&placement=${placement}&redirect=true`;
+const pixelUrl = `${trackBase}/pixel?ad_id=${adId}&imp=1&fmt=gif&cb=${Math.floor(Math.random() * 99999)}`;
+const beaconUrl = `${trackBase}/beacon?ad_id=${adId}&event=viewable`;
+const imgUrl = `https://picsum.photos/seed/${seed}/${d.w}/${d.h}`;
+
+const srcdoc = `<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box;}body{overflow:hidden;}</style></head><body><a href="${clickUrl}" target="_top" style="display:block;position:relative;width:${d.w}px;height:${d.h}px;overflow:hidden;text-decoration:none;"><img src="${imgUrl}" width="${d.w}" height="${d.h}" alt="Ad" style="position:absolute;width:100%;height:100%;object-fit:cover;"/><div style="position:absolute;inset:0;background:rgba(0,51,102,0.6);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;"><div style="color:#fff;font-family:Arial,sans-serif;font-size:${d.fontSize}px;font-weight:bold;text-align:center;text-shadow:1px 1px 3px rgba(0,0,0,0.6);line-height:1.3;max-width:90%;">${text}</div><div style="margin-top:6px;background:#cc0000;color:#fff;padding:4px 14px;font-family:Arial,sans-serif;font-size:${d.ctaSize}px;font-weight:bold;border-radius:2px;letter-spacing:0.5px;">${cta}</div></div></a><img src="${pixelUrl}" width="1" height="1" alt="" style="position:absolute;left:-9999px;"/><script>(function(){var i=new Image();i.src='${beaconUrl}&ts='+Date.now();})()</script></body></html>`;
+---
+
+<div
+  class="mhh-ad-unit"
+  data-ad-id={adId}
+  data-ad-size={size}
+  data-ad-campaign={campaign}
+  data-ad-placement={placement}
+  data-ad-network="deepstone-network"
+>
+  <iframe
+    srcdoc={srcdoc}
+    width={d.w}
+    height={d.h}
+    scrolling="no"
+    frameborder="0"
+    style={`border:none;overflow:hidden;width:${d.w}px;height:${d.h}px;display:block;margin:0 auto;`}
+    title={`Advertisement ${adId}`}
+    sandbox="allow-scripts allow-popups allow-top-navigation"
+    loading="lazy"
+  ></iframe>
+  <div class="mhh-ad-label" data-ad-ref={adId}>
+    ADVERTISEMENT &middot; <span class="mhh-ad-id">{adId}</span> &middot; <a href={`${trackBase}/report?ad_id=${adId}`} target="_blank" rel="noopener" style="color:#aaa;text-decoration:underline;">Report</a>
+  </div>
+</div>
+
+<style>
+  .mhh-ad-unit {
+    text-align: center;
+    margin: 8px auto;
+    line-height: 0;
+  }
+  .mhh-ad-label {
+    font-size: 9px;
+    color: #999999;
+    text-align: center;
+    line-height: 1;
+    margin-top: 2px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 0.5px;
+  }
+</style>

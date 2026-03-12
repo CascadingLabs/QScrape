@@ -1,6 +1,7 @@
 import { defineMiddleware } from 'astro:middleware';
 
 const aliases: Record<string, string> = {
+	news: 'l1/news',
 	level1: 'l1',
 	'level-1': 'l1',
 	'1': 'l1',

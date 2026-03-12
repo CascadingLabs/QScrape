@@ -1,328 +1,189 @@
 ---
+import HeraldShell from './_components/HeraldShell.astro';
+import AdUnit from './_components/AdUnit.astro';
+import WeatherWidget from './_components/WeatherWidget.astro';
+import { getLatest, getByCategory, getBreaking, categories, formatDateTime, formatTime } from './_data/articles';
+
+const latest = getLatest(20);
+const featured = latest[0]; // Most recent by published time
+const topStories = latest.slice(1, 5);
+const newsFeed = latest.slice(5, 13);
+const breaking = getBreaking();
+const categoryCounts = Object.fromEntries(categories.map(c => [c, getByCategory(c).length]));
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mountainhome Herald</title>
-    <link rel="stylesheet" href="/global.css">
-    <style>
-        #container { max-width: 800px; }
-        .categoryStrip { background-color: #ece9d8; padding: 4px 15px; border-bottom: 2px solid #003366; }
-        .categoryStrip a {
-            color: #003366; text-decoration: none; margin-right: 12px;
-            padding: 2px 6px; font-weight: bold; font-size: 11px;
-        }
-        .categoryStrip a:hover, .categoryStrip a.active { background-color: #003366; color: #ffffff; }
-        .mainCol { float: left; width: 580px; }
-        .sidebarCol { float: right; width: 190px; }
-        .clearfix::after { content: ""; display: table; clear: both; }
-        .featuredBox {
-            border: 2px solid #003366; margin: 10px 10px 10px 15px; padding: 10px;
-            background-color: #f0f0f0;
-        }
-        .featuredBox .featuredLabel {
-            background-color: #cc0000; color: #ffffff; font-size: 10px;
-            font-weight: bold; padding: 2px 6px; margin-bottom: 6px; display: inline-block;
-        }
-        .featuredBox h2 { font-size: 14px; margin: 4px 0 6px 0; }
-        .featuredBox p { font-size: 11px; margin: 4px 0; line-height: 1.5; }
-        .topStoriesBox { margin: 10px 10px 10px 15px; }
-        .topStoriesBox h3 {
-            background-color: #003366; color: #ffffff; padding: 4px 8px;
-            margin: 0 0 0 0; font-size: 12px;
-        }
-        .articleCard { border-bottom: 1px solid #cccccc; padding: 6px 8px; }
-        .articleCard .cardMeta { color: #666666; font-size: 10px; }
-        .articleCard a { color: #003366; text-decoration: none; font-weight: bold; font-size: 11px; }
-        .articleCard a:hover { text-decoration: underline; }
-        .latestBox { margin: 10px 10px 10px 15px; }
-        .latestBox h3 { background-color: #003366; color: #ffffff; padding: 4px 8px; margin: 0; font-size: 12px; }
-        .latestBox ul { margin: 0; padding: 4px 0; list-style: none; }
-        .latestBox ul li { border-bottom: 1px solid #eeeeee; padding: 4px 8px; font-size: 11px; }
-        .latestBox ul li a { color: #003366; text-decoration: none; }
-        .latestBox ul li a:hover { text-decoration: underline; }
-        .sidebarBox { border: 1px solid #999999; margin: 10px 15px 10px 5px; }
-        .sidebarBox h4 {
-            background-color: #cc0000; color: #ffffff; padding: 4px 8px;
-            margin: 0; font-size: 11px; font-weight: bold;
-        }
-        .sidebarBox .sidebarContent { padding: 6px 8px; font-size: 10px; line-height: 1.5; }
-        .sidebarBox .sidebarContent a { color: #003366; font-weight: bold; }
-        .breakingItem { border-bottom: 1px solid #eeeeee; padding: 4px 0; }
-        .catCount { display: flex; justify-content: space-between; border-bottom: 1px solid #eeeeee; padding: 3px 0; }
-        .categoryBadge { padding: 1px 5px; font-size: 10px; font-weight: bold; }
-        .cat-Politics { background-color: #bee3f8; color: #2a4365; }
-        .cat-Crime    { background-color: #feebc8; color: #744210; }
-        .cat-Economy  { background-color: #c6f6d5; color: #22543d; }
-        .cat-Culture  { background-color: #bee3f8; color: #2a4365; }
-        .cat-Sports   { background-color: #c6f6d5; color: #22543d; }
-        .cat-Weather  { background-color: #feebc8; color: #744210; }
-    </style>
-</head>
-<body>
-    <div id="container">
-        <div class="headerBar">
-            MOUNTAINHOME HERALD
-            <span style="float:right; font-size:11px; font-weight:normal;">Edition No. 847 | March 11, 2026</span>
+
+<HeraldShell title="Home" activePage="home" breadcrumbs={[{ label: 'Home' }]}>
+
+  <div class="categoryStrip" id="categoryStrip">
+    <a href="javascript:void(0)" onclick="filterCategory('')" class="active" id="cat-All">All</a>
+    {categories.map(c => (
+      <a href="javascript:void(0)" onclick={`filterCategory('${c}')`} id={`cat-${c}`}>{c}</a>
+    ))}
+  </div>
+
+  <div class="pageTitle">Rolling News Feed &mdash; Last updated {formatDateTime(featured.published)}</div>
+
+  <div class="twoCol clearfix">
+    <!-- Main column -->
+    <div class="mainCol">
+      <!-- Featured story -->
+      <div class="featuredBox articleCard" data-category={featured.category}>
+        <div class="featuredLabel">
+          FEATURED
+          {featured.updated && <span style="margin-left:8px;font-size:9px;color:#ffcc00;">UPDATED</span>}
         </div>
-
-        <div class="navBar">
-            <a href="/news/">Home</a>
-            <a href="/news/articles">Articles</a>
-            <a href="/news/about">About</a>
-            <a href="/l1/taxes/">ROD Records</a>
+        <img class="featuredImg" src={featured.image.replace('/580/', '/560/').replace('/320', '/280')}
+          alt={featured.headline} />
+        <div class="featuredImgCaption">{featured.imageCaption} — {featured.imageCredit}</div>
+        <div class="featuredContent">
+          <h2>
+            <a href="javascript:void(0)" onclick={`navigateToArticle('${featured.id}')`}>{featured.headline}</a>
+          </h2>
+          <div class="cardMeta">
+            <span class={`categoryBadge cat-${featured.category}`}>{featured.category}</span>&nbsp;
+            {formatDateTime(featured.published)} &mdash; {featured.author}
+            &nbsp;<span class="cardTimeAgo" data-time-ago={featured.published}></span>
+          </div>
+          <p style="margin-top:6px;">{featured.excerpt}</p>
+          <p>
+            <a href="javascript:void(0)" onclick={`navigateToArticle('${featured.id}')`}>Read full story &raquo;</a>
+          </p>
         </div>
+      </div>
 
-        <div class="categoryStrip" id="categoryStrip">
-            <a href="javascript:filterCategory('')" class="active" id="cat-All">All</a>
-            <a href="javascript:filterCategory('Politics')" id="cat-Politics">Politics</a>
-            <a href="javascript:filterCategory('Crime')" id="cat-Crime">Crime</a>
-            <a href="javascript:filterCategory('Economy')" id="cat-Economy">Economy</a>
-            <a href="javascript:filterCategory('Culture')" id="cat-Culture">Culture</a>
-            <a href="javascript:filterCategory('Sports')" id="cat-Sports">Sports</a>
-            <a href="javascript:filterCategory('Weather')" id="cat-Weather">Weather</a>
-        </div>
-
-        <div class="breadcrumbs">
-            <a href="/news/">Home</a>
-        </div>
-
-        <div class="pageTitle">Today's Edition &mdash; March 11, 2026</div>
-
-        <div class="clearfix">
-            <!-- Main column -->
-            <div class="mainCol">
-                <!-- Featured story -->
-                <div class="featuredBox articleCard" data-category="Politics">
-                    <div class="featuredLabel">FEATURED</div>
-                    <h2>
-                        <a href="javascript:navigateToArticle('MHH-016')">Surface Relations Act Passes Second Reading</a>
-                    </h2>
-                    <div class="cardMeta">
-                        <span class="categoryBadge cat-Politics">Politics</span>&nbsp;
-                        March 11, 2026 &mdash; Urist McReporter
-                    </div>
-                    <p style="margin-top:6px;">
-                        The Arcane Council passed the Surface Relations Normalisation Act on second reading
-                        Wednesday by a vote of 6-3, advancing the most comprehensive framework for regulating
-                        Mountainhome's dealings with surface nations in nearly four decades. Third reading
-                        expected within 30 days.
-                    </p>
-                    <p><a href="javascript:navigateToArticle('MHH-016')">Read full story &raquo;</a></p>
-                </div>
-
-                <!-- Top 4 stories -->
-                <div class="topStoriesBox">
-                    <h3>Top Stories</h3>
-                    <div class="articleCard" data-category="Crime">
-                        <div class="cardMeta">
-                            <span class="categoryBadge cat-Crime">Crime</span>&nbsp;
-                            March 11, 2026
-                        </div>
-                        <a href="javascript:navigateToArticle('MHH-018')">Z-Level 28 Tavern Brawl Leaves Five Hospitalized</a>
-                        <div style="font-size:10px; color:#333; margin-top:3px;">
-                            A late-night brawl at the Cracked Anvil tavern on Z-Level 28 left five dwarves requiring treatment at the Fortress Infirmary. Fortress Guard investigating.
-                        </div>
-                    </div>
-                    <div class="articleCard" data-category="Economy">
-                        <div class="cardMeta">
-                            <span class="categoryBadge cat-Economy">Economy</span>&nbsp;
-                            March 11, 2026
-                        </div>
-                        <a href="javascript:navigateToArticle('MHH-019')">Steelthunder Clan Files Injunction Against Koganusan Estates LLC</a>
-                        <div style="font-size:10px; color:#333; margin-top:3px;">
-                            Emergency injunction sought to halt excavation at Z-Level 35 Eastern Cavern, citing 137-year ancestral mineral claim conflict. Hearing set for Friday.
-                        </div>
-                    </div>
-                    <div class="articleCard" data-category="Sports">
-                        <div class="cardMeta">
-                            <span class="categoryBadge cat-Sports">Sports</span>&nbsp;
-                            March 11, 2026
-                        </div>
-                        <a href="javascript:navigateToArticle('MHH-015')">Fortress Wrestling League Opens Season; Avar Ironhand Defends Championship</a>
-                        <div style="font-size:10px; color:#333; margin-top:3px;">
-                            Sold-out opening card at the Grand Arena. Ironhand submits challenger Urist Stoneback in the second round to retain Heavyweight title.
-                        </div>
-                    </div>
-                    <div class="articleCard" data-category="Culture">
-                        <div class="cardMeta">
-                            <span class="categoryBadge cat-Culture">Culture</span>&nbsp;
-                            March 11, 2026
-                        </div>
-                        <a href="javascript:navigateToArticle('MHH-017')">Goden Boulderback's Platinum Statue Wins Grand Duke's Medal</a>
-                        <div style="font-size:10px; color:#333; margin-top:3px;">
-                            Master sculptor Goden Boulderback receives the Grand Duke's Medal for Artistic Excellence for his platinum statue "The Overseer's Burden" in the Grand Hall.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Latest news list -->
-                <div class="latestBox">
-                    <h3>Latest News</h3>
-                    <ul>
-                        <li data-category="Weather">
-                            <span class="categoryBadge cat-Weather">Weather</span>&nbsp;
-                            <a href="javascript:navigateToArticle('MHH-020')">Geomancer's Annual Report: Year 312 Trending 'Exceptionally Stable'</a>
-                            <span class="cardMeta"> &mdash; Mar 11</span>
-                        </li>
-                        <li data-category="Crime">
-                            <span class="categoryBadge cat-Crime">Crime</span>&nbsp;
-                            <a href="javascript:navigateToArticle('MHH-013')">Rune-Wire Fraud Ring Dismantled; 12 Arrested</a>
-                            <span class="cardMeta"> &mdash; Mar 6</span>
-                        </li>
-                        <li data-category="Economy">
-                            <span class="categoryBadge cat-Economy">Economy</span>&nbsp;
-                            <a href="javascript:navigateToArticle('MHH-014')">Plump Helmet Harvest Forecast Slashed 18% After Cave Mold Infestation</a>
-                            <span class="cardMeta"> &mdash; Mar 9</span>
-                        </li>
-                        <li data-category="Politics">
-                            <span class="categoryBadge cat-Politics">Politics</span>&nbsp;
-                            <a href="javascript:navigateToArticle('MHH-012')">Arcane Council Debates Mandatory Literacy Rune Testing</a>
-                            <span class="cardMeta"> &mdash; Mar 2</span>
-                        </li>
-                        <li data-category="Culture">
-                            <span class="categoryBadge cat-Culture">Culture</span>&nbsp;
-                            <a href="javascript:navigateToArticle('MHH-010')">Grand Duchy Museum Unveils 'Forgotten Beast Collection'</a>
-                            <span class="cardMeta"> &mdash; Feb 21</span>
-                        </li>
-                        <li data-category="Weather">
-                            <span class="categoryBadge cat-Weather">Weather</span>&nbsp;
-                            <a href="javascript:navigateToArticle('MHH-011')">Surface Trade Route Closure Extended Through Mid-March</a>
-                            <span class="cardMeta"> &mdash; Feb 25</span>
-                        </li>
-                        <li data-category="Economy">
-                            <span class="categoryBadge cat-Economy">Economy</span>&nbsp;
-                            <a href="javascript:navigateToArticle('MHH-009')">Armok Holdings LLC Acquires Three Magma Sea Sector Parcels</a>
-                            <span class="cardMeta"> &mdash; Feb 17</span>
-                        </li>
-                        <li data-category="Crime">
-                            <span class="categoryBadge cat-Crime">Crime</span>&nbsp;
-                            <a href="javascript:navigateToArticle('MHH-008')">Headshoots LLC Faces Civil Suit Over Catapult Safety Logs</a>
-                            <span class="cardMeta"> &mdash; Feb 11</span>
-                        </li>
-                    </ul>
-                </div>
+      <!-- Top stories -->
+      <div class="topStoriesBox">
+        <h3>Top Stories</h3>
+        {topStories.map(a => (
+          <div class="articleCard" data-category={a.category}>
+            <img class="cardThumb" src={a.image.replace('/580/', '/80/').replace('/320', '/55')} alt={a.headline} />
+            <div class="cardMeta">
+              <span class={`categoryBadge cat-${a.category}`}>{a.category}</span>&nbsp;
+              {formatDateTime(a.published)}
+              &nbsp;<span class="cardTimeAgo" data-time-ago={a.published}></span>
+              {a.updated && <span style="color:#cc0000;font-size:9px;margin-left:4px;">UPDATED</span>}
             </div>
+            <a href="javascript:void(0)" onclick={`navigateToArticle('${a.id}')`} class="cardHeadline">{a.headline}</a>
+            <div class="cardExcerpt">{a.excerpt}</div>
+          </div>
+        ))}
+      </div>
 
-            <!-- Sidebar -->
-            <div class="sidebarCol">
-                <div class="sidebarBox">
-                    <h4>BREAKING</h4>
-                    <div class="sidebarContent">
-                        <div class="breakingItem">
-                            <strong><a href="javascript:navigateToArticle('MHH-018')">Tavern brawl: 5 hospitalized on Z-Level 28</a></strong>
-                        </div>
-                        <div class="breakingItem">
-                            <strong><a href="javascript:navigateToArticle('MHH-019')">Steelthunder seeks injunction against Koganusan excavation</a></strong>
-                        </div>
-                        <div class="breakingItem">
-                            <strong><a href="javascript:navigateToArticle('MHH-016')">Surface Relations Act passes 2nd reading, 6-3</a></strong>
-                        </div>
-                    </div>
-                </div>
+      <!-- Inline ad -->
+      <div class="adSlot--inline">
+        <AdUnit size="banner" adId="DSN-BAN-001" text="Dwarven Iron Guild &mdash; Quality Forgework Since Year 89" cta="Find a Smith" placement="home_inline" />
+      </div>
 
-                <div class="sidebarBox">
-                    <h4>BY CATEGORY</h4>
-                    <div class="sidebarContent">
-                        <div class="catCount">
-                            <span><a href="javascript:filterCategory('Politics')">Politics</a></span>
-                            <span>4</span>
-                        </div>
-                        <div class="catCount">
-                            <span><a href="javascript:filterCategory('Crime')">Crime</a></span>
-                            <span>4</span>
-                        </div>
-                        <div class="catCount">
-                            <span><a href="javascript:filterCategory('Economy')">Economy</a></span>
-                            <span>5</span>
-                        </div>
-                        <div class="catCount">
-                            <span><a href="javascript:filterCategory('Culture')">Culture</a></span>
-                            <span>3</span>
-                        </div>
-                        <div class="catCount">
-                            <span><a href="javascript:filterCategory('Sports')">Sports</a></span>
-                            <span>2</span>
-                        </div>
-                        <div class="catCount">
-                            <span><a href="javascript:filterCategory('Weather')">Weather</a></span>
-                            <span>3</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sidebarBox">
-                    <h4>ABOUT THE HERALD</h4>
-                    <div class="sidebarContent">
-                        Founded Year 89 by Urist McDwarfquill.
-                        The Grand Duchy's independent record of events since the Third Age of Mining.
-                        <br><br>
-                        <a href="/news/about">Editorial staff &amp; contact &raquo;</a>
-                    </div>
-                </div>
-
-                <div class="sidebarBox">
-                    <h4>ROD RECORDS</h4>
-                    <div class="sidebarContent">
-                        Search property deeds, mortgages, and liens in the Arcane Registry of Deeds.
-                        <br><br>
-                        <a href="/l1/taxes/">Open ROD Records &raquo;</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div style="clear:both;"></div>
-
-        <div class="footerBar">
-            &copy; 2026 Mountainhome Herald | MHH CMS v1.0.2004
-        </div>
-
-        <script is:inline>
-        function navigateToArticle(id) {
-            var hash = Math.random().toString(36).substring(2,15);
-            var payload = 'MHH_v1_Kp9rXm2bQs' +
-                          'XXXNNNXXX' +
-                          'ID=' + encodeURIComponent(id) + '&HASH=' + hash +
-                          'XXXNNNXXX' +
-                          'tR7vYw1hF3dG' +
-                          'XXXNNNXXX';
-            window.location.href = '/news/article?postData=' + encodeURIComponent(payload);
-        }
-
-        function filterCategory(cat) {
-            // Update active tab
-            var links = document.querySelectorAll('#categoryStrip a');
-            for (var i = 0; i < links.length; i++) {
-                links[i].classList.remove('active');
-            }
-            var activeId = cat ? 'cat-' + cat : 'cat-All';
-            var activeEl = document.getElementById(activeId);
-            if (activeEl) activeEl.classList.add('active');
-
-            // Filter article cards
-            var cards = document.querySelectorAll('.articleCard[data-category]');
-            for (var j = 0; j < cards.length; j++) {
-                if (!cat || cards[j].getAttribute('data-category') === cat) {
-                    cards[j].style.display = '';
-                } else {
-                    cards[j].style.display = 'none';
-                }
-            }
-
-            // Filter latest news items
-            var items = document.querySelectorAll('.latestBox li[data-category]');
-            for (var k = 0; k < items.length; k++) {
-                if (!cat || items[k].getAttribute('data-category') === cat) {
-                    items[k].style.display = '';
-                } else {
-                    items[k].style.display = 'none';
-                }
-            }
-        }
-        </script>
+      <!-- Latest news feed -->
+      <div class="latestBox">
+        <h3>Latest News</h3>
+        <ul>
+          {newsFeed.map(a => (
+            <li data-category={a.category}>
+              <span class={`categoryBadge cat-${a.category}`}>{a.category}</span>&nbsp;
+              <a href="javascript:void(0)" onclick={`navigateToArticle('${a.id}')`}>{a.headline}</a>
+              <span class="cardMeta"> &mdash; {formatTime(a.published)}</span>
+              <span class="cardTimeAgo" data-time-ago={a.published}></span>
+              {a.updated && <span style="color:#cc0000;font-size:9px;margin-left:4px;">UPDATED</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
-</body>
-</html>
+
+    <!-- Sidebar -->
+    <div class="sidebarCol">
+      <div class="sidebarBox">
+        <h4>BREAKING</h4>
+        <div class="sidebarContent">
+          {breaking.map(a => (
+            <div class="breakingItem">
+              <strong><a href="javascript:void(0)" onclick={`navigateToArticle('${a.id}')`}>{a.headline}</a></strong>
+              <div class="cardTimeAgo" data-time-ago={a.published}></div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <WeatherWidget />
+
+      <div class="adSlot--inline" style="margin:10px 15px 10px 5px;">
+        <AdUnit size="rectangle" adId="DSN-REC-001" text="Armok Holdings LLC &mdash; Industrial Parcels Now Available at Z-Level 114" cta="View Listings" placement="home_sidebar_1" />
+      </div>
+
+      <div class="sidebarBox">
+        <h4>BY CATEGORY</h4>
+        <div class="sidebarContent">
+          {categories.map(c => (
+            <div class="catCount">
+              <span><a href="javascript:void(0)" onclick={`filterCategory('${c}')`}>{c}</a></span>
+              <span>{categoryCounts[c]}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="sidebarBox">
+        <h4>PHOTO OF THE DAY</h4>
+        <img class="sidebarImg" src="https://picsum.photos/seed/mhh-potd/190/140" alt="The Overseer's Burden statue in the Grand Hall" />
+        <div class="sidebarContent">
+          <strong><a href="javascript:void(0)" onclick="navigateToArticle('MHH-017')">"The Overseer's Burden"</a></strong><br/>
+          Goden Boulderback's award-winning platinum statue in the Grand Hall, Z-Level 1.
+          <a href="javascript:void(0)" onclick="navigateToArticle('MHH-017')">Story &raquo;</a>
+        </div>
+      </div>
+
+      <div class="sidebarBox">
+        <h4>ABOUT THE HERALD</h4>
+        <div class="sidebarContent">
+          Founded Year 89 by Urist McDwarfquill.
+          The Grand Duchy's independent record of events since the Third Age of Mining.
+          <br/><br/>
+          <a href="/l1/news/staff">Editorial staff &raquo;</a><br/>
+          <a href="/l1/news/contact">Contact us &raquo;</a>
+        </div>
+      </div>
+
+      <div class="adSlot--inline" style="margin:10px 15px 10px 5px;">
+        <AdUnit size="rectangle" adId="DSN-REC-002" text="Grand Arena &mdash; FWL Season Tickets On Sale Now" cta="Buy Tickets" placement="home_sidebar_2" />
+      </div>
+
+      <div class="sidebarBox">
+        <h4>SCORETAP LIVE</h4>
+        <div class="sidebarContent">
+          Follow live scores from the Fortress Wrestling League and Z-Level Games.
+          <br/><br/>
+          <a href="/l1/scoretap/">Open ScoreTap &raquo;</a>
+        </div>
+      </div>
+
+      <div class="sidebarBox">
+        <h4>ROD RECORDS</h4>
+        <div class="sidebarContent">
+          Search property deeds, mortgages, and liens in the Arcane Registry of Deeds.
+          <br/><br/>
+          <a href="/l1/taxes/">Open ROD Records &raquo;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="clear:both;"></div>
+
+  <script is:inline>
+  function filterCategory(cat) {
+    var links = document.querySelectorAll('#categoryStrip a');
+    for (var i = 0; i < links.length; i++) links[i].classList.remove('active');
+    var activeId = cat ? 'cat-' + cat : 'cat-All';
+    var el = document.getElementById(activeId);
+    if (el) el.classList.add('active');
+
+    document.querySelectorAll('.articleCard[data-category]').forEach(function(c) {
+      c.style.display = (!cat || c.getAttribute('data-category') === cat) ? '' : 'none';
+    });
+    document.querySelectorAll('.latestBox li[data-category]').forEach(function(li) {
+      li.style.display = (!cat || li.getAttribute('data-category') === cat) ? '' : 'none';
+    });
+  }
+  </script>
+</HeraldShell>
