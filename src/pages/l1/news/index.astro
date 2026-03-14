@@ -1,15 +1,24 @@
 ---
-import HeraldShell from './_components/HeraldShell.astro';
 import AdUnit from './_components/AdUnit.astro';
+import HeraldShell from './_components/HeraldShell.astro';
 import WeatherWidget from './_components/WeatherWidget.astro';
-import { getLatest, getByCategory, getBreaking, categories, formatDateTime, formatTime } from './_data/articles';
+import {
+	categories,
+	formatDateTime,
+	formatTime,
+	getBreaking,
+	getByCategory,
+	getLatest,
+} from './_data/articles';
 
 const latest = getLatest(20);
 const featured = latest[0]; // Most recent by published time
 const topStories = latest.slice(1, 5);
 const newsFeed = latest.slice(5, 13);
 const breaking = getBreaking();
-const categoryCounts = Object.fromEntries(categories.map(c => [c, getByCategory(c).length]));
+const categoryCounts = Object.fromEntries(
+	categories.map((c) => [c, getByCategory(c).length]),
+);
 ---
 
 <HeraldShell title="Home" activePage="home" breadcrumbs={[{ label: 'Home' }]}>

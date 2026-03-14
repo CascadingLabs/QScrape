@@ -1,9 +1,16 @@
 ---
-import HeraldShell from './_components/HeraldShell.astro';
 import AdUnit from './_components/AdUnit.astro';
-import { articles, categories, formatDate, formatDateTime } from './_data/articles';
+import HeraldShell from './_components/HeraldShell.astro';
+import {
+	articles,
+	categories,
+	formatDate,
+	formatDateTime,
+} from './_data/articles';
 
-const sorted = [...articles].sort((a, b) => new Date(b.published).getTime() - new Date(a.published).getTime());
+const sorted = [...articles].sort(
+	(a, b) => new Date(b.published).getTime() - new Date(a.published).getTime(),
+);
 ---
 
 <HeraldShell title="Article Archive" activePage="articles" breadcrumbs={[{ label: 'Home', href: '/l1/news/' }, { label: 'Articles' }]}>

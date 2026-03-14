@@ -12,10 +12,11 @@
 		"astro": "astro",
 		"lint": "biome lint .",
 		"format": "biome format . --write",
-		"check": "biome check --write --no-errors-on-unmatched ."
+		"check": "biome check --write --no-errors-on-unmatched .",
+		"prepare": "husky"
 	},
 	"lint-staged": {
-		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,astro}": [
 			"biome check --write --no-errors-on-unmatched"
 		]
 	},
