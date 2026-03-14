@@ -1,0 +1,14 @@
+---
+interface Props {
+  rating: number;
+  reviewCount: number;
+}
+const { rating, reviewCount } = Astro.props;
+const full = Math.round(rating);
+const empty = 5 - full;
+---
+<span class="starRating">
+  {Array(full).fill(0).map(() => <span class="starFull">&#9733;</span>)}
+  {Array(empty).fill(0).map(() => <span class="starEmpty">&#9734;</span>)}
+  <span class="reviewCount">({reviewCount})</span>
+</span>

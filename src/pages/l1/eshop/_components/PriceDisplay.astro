@@ -1,0 +1,10 @@
+---
+interface Props {
+  price: number;
+  salePrice?: number;
+  id?: string;
+}
+const { price, salePrice, id } = Astro.props;
+---
+{salePrice != null && <span class="originalPrice">{price.toFixed(2)} GS</span>}
+<span class="priceDisplay" id={id}>{(salePrice ?? price).toFixed(2)} Gold Sovereigns</span>

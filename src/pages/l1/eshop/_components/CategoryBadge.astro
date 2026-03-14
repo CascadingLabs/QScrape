@@ -1,0 +1,15 @@
+---
+interface Props {
+  category: string;
+}
+const { category } = Astro.props;
+const classMap: Record<string, string> = {
+  'Mining & Excavation': 'cat-mining',
+  'Forge & Smithing':    'cat-forge',
+  'Food & Brewing':      'cat-food',
+  'Furniture & Housing': 'cat-furniture',
+  'Surface Imports':     'cat-surface',
+};
+const cls = classMap[category] || 'cat-mining';
+---
+<span class={`categoryBadge ${cls}`}>{category}</span>

@@ -1,0 +1,47 @@
+---
+import type { ProductMeta } from '../_data/products';
+import StarRating from './StarRating.astro';
+import CategoryBadge from './CategoryBadge.astro';
+import PriceDisplay from './PriceDisplay.astro';
+
+interface Props {
+  product: ProductMeta;
+}
+const { product } = Astro.props;
+const stockState = !product.inStock ? 'oos'
+  : (product.stock != null && product.stock <= 5) ? 'low'
+  : product.stock != null ? 'tracked'
+  : 'in';
+---
+<div class="product-card" data-sku={product.sku} data-category={product.category} data-promoted={product.isPromoted ? 'true' : undefined}>
+  <div class="product-card-inner">
+    {product.isNew && <span class="newBadge">NEW</span>}
+    {!product.isNew && product.salePrice != null && <span class="saleBadge">SALE</span>}
+    {!product.inStock && <span class="oosBadge">OOS</span>}
+    {product.isPromoted && <span class="promoBadge">SPONSORED</span>}
+    <img
+      src={product.image}
+      alt={product.name}
+      class="product-card-img"
+      width="280"
+      height="200"
+    />
+    <div class="product-card-body">
+      <CategoryBadge category={product.category} />
+      <div class="product-card-name">
+        <a href="javascript:void(0)" onclick={"navigateToProduct('" + product.sku + "')"}>{product.name}</a>
+      </div>
+      <div class="product-card-excerpt">{product.excerpt}</div>
+      <StarRating rating={product.rating} reviewCount={product.reviewCount} />
+      <div class="product-card-price">
+        <PriceDisplay price={product.basePrice} salePrice={product.salePrice} />
+      </div>
+      <div style="margin-top:4px;">
+        {stockState === 'oos'     && <span class="statusOos">Out of Stock</span>}
+        {stockState === 'low'     && <span class="lowStock" data-stock={product.stock}>Only {product.stock} left!</span>}
+        {stockState === 'tracked' && <span class="statusApproved" data-stock={product.stock}>In Stock</span>}
+        {stockState === 'in'      && <span class="statusApproved">In Stock</span>}
+      </div>
+    </div>
+  </div>
+</div>

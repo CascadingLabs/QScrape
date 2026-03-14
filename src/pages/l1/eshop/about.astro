@@ -1,0 +1,130 @@
+---
+import EshopShell from './_components/EshopShell.astro';
+---
+
+<EshopShell
+  title="About VaultMart"
+  activePage="about"
+  breadcrumbs={[
+    { label: 'VaultMart', href: '/l1/eshop/' },
+    { label: 'About' },
+  ]}
+>
+
+  <div class="pageTitle">About VaultMart</div>
+
+  <div style="margin: 0 15px;">
+
+    <div class="infoBox" style="margin: 10px 0;">
+      <strong>VaultMart</strong> &mdash; Your Source for Dwarven Goods &amp; Surface Imports<br>
+      A Division of Koganusan Estates LLC &nbsp;&bull;&nbsp; Founded Year 298 &nbsp;&bull;&nbsp; Z-Level 3, Mountainhome Commercial District
+    </div>
+
+    <!-- Company History -->
+    <h2>Company History</h2>
+    <p>
+      VaultMart was founded in Year 298 by the Koganusan Estates LLC commercial division as a
+      centralised procurement platform for Mountainhome residents and surrounding z-level settlements.
+      Beginning as a single-counter stall on Z-Level 3, VaultMart expanded to its current catalogue
+      of 28 product lines spanning five categories.
+    </p>
+    <p>
+      Our growth tracked the expansion of the Mountainhome fortress itself: as new z-levels opened
+      and the population grew, demand for standardised goods — mining equipment, forge supplies,
+      foodstuffs, furniture, and surface-traded materials — required a reliable fulfilment operation.
+      Today, VaultMart serves over 2,400 registered customer accounts across 14 z-levels.
+    </p>
+
+    <!-- Vendor Partners -->
+    <h2>Vendor Partners</h2>
+    <p>VaultMart sources products from a network of approved vendors operating under Bureau of Deep Works
+    quality standards.</p>
+
+    <table class="aspNetTable">
+      <thead>
+        <tr class="headerRow">
+          <th>Vendor</th>
+          <th>Category</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Dwarven Iron Guild</strong></td>
+          <td>Mining &amp; Excavation; Forge &amp; Smithing</td>
+          <td>Primary supplier for iron/steel ingots, certified tools, and mining equipment. Guild certification required for all Grade A products.</td>
+        </tr>
+        <tr class="alternatingRow">
+          <td><strong>Mountainhome Ale Guild</strong></td>
+          <td>Food &amp; Brewing</td>
+          <td>Sole licensed brewer under Guild Charter Year 89. Supplies all ale and brewing products. See the <a href="/l1/news/">Mountainhome Herald</a> for current batch news.</td>
+        </tr>
+        <tr>
+          <td><strong>Bureau of Subterranean Agriculture</strong></td>
+          <td>Food &amp; Brewing</td>
+          <td>Certifies plump helmet seeds and prepared food products. All food items carry BSA hygiene certification.</td>
+        </tr>
+        <tr class="alternatingRow">
+          <td><strong>Fungiwood Trust</strong></td>
+          <td>Food &amp; Brewing</td>
+          <td>Exclusive supplier of Fungiwood Cavern Biome mushroom wines. Limited-vintage batches. Registry of Deeds property holder; see <a href="/l1/taxes/">ROD Records</a> (CLM-999-FUNGI).</td>
+        </tr>
+        <tr>
+          <td><strong>Headshoots LLC</strong></td>
+          <td>Mining &amp; Excavation (blasting)</td>
+          <td>Licensed manufacturer of blasting charges and siege components. Note: Headshoots LLC is subject to ongoing civil proceedings regarding safety log compliance; all current stock meets Bureau standards. See the <a href="/l1/news/">Herald</a> for coverage.</td>
+        </tr>
+        <tr class="alternatingRow">
+          <td><strong>Bureau of Surface Commerce</strong></td>
+          <td>Surface Imports</td>
+          <td>Authorises all surface-import goods. Trade route disruptions affect surface import availability. Current route advisory in effect through mid-season.</td>
+        </tr>
+        <tr>
+          <td><strong>Human &amp; Elven Trade Partners</strong></td>
+          <td>Surface Imports</td>
+          <td>Various surface trade partners including the Elven Forest Trading Post and human Southern/Eastern Markets. Subject to route availability and diplomatic status.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Shipping Policy -->
+    <h2>Shipping &amp; Delivery Policy</h2>
+    <p>All in-stock items are dispatched from our Z-Level 3 warehouse within one working day of order
+    confirmation. Standard delivery rates apply:</p>
+    <ul>
+      <li>Z-Levels 1–5: Next day, included in order price</li>
+      <li>Z-Levels 6–30: 1–2 working days, 2.00 GS flat fee</li>
+      <li>Z-Levels 31–80: 2–4 working days, 3.50 GS flat fee</li>
+      <li>Z-Levels 81+: 4–7 working days, 5.00 GS flat fee</li>
+      <li>Surface delivery: Subject to route availability; additional charges apply</li>
+    </ul>
+    <p>
+      <strong>Current Advisory:</strong> Surface imports (including Elven Cloth, Surface Lumber,
+      and Human Spice Packs) may be delayed due to blizzard conditions and goblin raiding on the
+      primary surface trade route. The Bureau of Surface Commerce expects restoration by mid-season.
+    </p>
+
+    <!-- Returns Policy -->
+    <h2>Returns &amp; Warranty</h2>
+    <p>VaultMart accepts returns on most items within 14 days of delivery, subject to the following
+    conditions:</p>
+    <ul>
+      <li>Items must be unused and in original packaging</li>
+      <li>Blasting charges and prepared food items are non-returnable once custody transferred</li>
+      <li>Ingot bundles subject to Bureau of Deep Works weight inspection before credit issued</li>
+      <li>Surface imports subject to a 20% restocking fee due to limited supply</li>
+    </ul>
+    <p>Warranty terms follow Guild and Bureau standards as noted on each product listing.</p>
+
+    <!-- Contact -->
+    <h2>Contact</h2>
+    <table class="formTable" style="width:auto; margin:0;">
+      <tr><td class="labelCol"><strong>Address:</strong></td><td>VaultMart Warehouse, Z-Level 3, South Commercial Corridor, Mountainhome</td></tr>
+      <tr><td class="labelCol"><strong>Dispatch Hours:</strong></td><td>1st Bell to 6th Bell, all days</td></tr>
+      <tr><td class="labelCol"><strong>Customer Service:</strong></td><td>vaultmart-cs@koganusan-estates.mh</td></tr>
+      <tr><td class="labelCol"><strong>Corporate:</strong></td><td>Koganusan Estates LLC, Z-Level 55, Deep Sector &mdash; <a href="/l1/taxes/">ROD Records: CLM-304-KOGAN</a></td></tr>
+    </table>
+
+  </div>
+
+</EshopShell>
