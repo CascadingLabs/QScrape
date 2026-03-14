@@ -1,0 +1,133 @@
+---
+import EshopShell from './_components/EshopShell.astro';
+
+// Pre-seeded cart items
+const cartItems = [
+  { sku: 'VM-MIN-001', name: 'Standard Iron Pickaxe',      qty: 2, unitPrice: 14.50 },
+  { sku: 'VM-FDB-002', name: 'Dwarven Ale (6-flagon case)', qty: 1, unitPrice: 18.00 },
+  { sku: 'VM-SRF-001', name: 'Elven Cloth Bolt (5 m)',     qty: 1, unitPrice: 42.00 },
+];
+const subtotal = cartItems.reduce((s, i) => s + i.qty * i.unitPrice, 0);
+const shipping = 3.50;
+const total    = subtotal + shipping;
+const orderNumber = 'VM-ORD-2026-04471';
+const orderDate   = '2026-03-13';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Order",
+  "orderNumber": orderNumber,
+  "orderDate": orderDate,
+  "orderStatus": "https://schema.org/OrderProcessing",
+  "customer": {
+    "@type": "Person",
+    "name": "Urist McShopper",
+    "email": "urist.mcshopper@mountainhome.df"
+  },
+  "seller": {
+    "@type": "Organization",
+    "name": "VaultMart",
+    "url": "https://vaultmart.mh"
+  },
+  "orderedItem": cartItems.map(item => ({
+    "@type": "OrderItem",
+    "orderQuantity": item.qty,
+    "orderItemStatus": "https://schema.org/OrderProcessing",
+    "orderedItem": {
+      "@type": "Product",
+      "name": item.name,
+      "sku": item.sku,
+      "offers": {
+        "@type": "Offer",
+        "price": item.unitPrice.toFixed(2),
+        "priceCurrency": "GS"
+      }
+    }
+  })),
+  "price": total.toFixed(2),
+  "priceCurrency": "GS"
+};
+---
+
+<EshopShell
+  title="Shopping Cart"
+  activePage="cart"
+  breadcrumbs={[
+    { label: 'VaultMart', href: '/l1/eshop/' },
+    { label: 'Shopping Cart' },
+  ]}
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd, null, 2)} />
+
+  <div class="pageTitle">Shopping Cart</div>
+
+  <div class="infoBox" style="margin:10px 15px;">
+    <strong>Order #{orderNumber}</strong> &mdash; Placed {orderDate} &mdash;
+    Status: <span class="statusReview">Processing</span>
+  </div>
+
+  <table class="aspNetTable" id="cartTable">
+    <thead>
+      <tr class="headerRow">
+        <th>SKU</th>
+        <th>Product</th>
+        <th>Unit Price</th>
+        <th>Qty</th>
+        <th>Line Total</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {cartItems.map((item, i) => (
+        <tr class={i % 2 === 1 ? 'alternatingRow' : ''}>
+          <td><span class="aspNetLabel">{item.sku}</span></td>
+          <td>
+            <a href="javascript:void(0)" onclick={"navigateToProduct('" + item.sku + "')"}>{item.name}</a>
+          </td>
+          <td><span class="priceDisplay">{item.unitPrice.toFixed(2)} GS</span></td>
+          <td>{item.qty}</td>
+          <td><span class="cartTotal">{(item.qty * item.unitPrice).toFixed(2)} GS</span></td>
+          <td>
+            <input type="button" value="Remove" class="aspNetButton" disabled
+              title="Cart modification available in the full store" />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4" style="text-align:right;font-weight:bold;">Subtotal:</td>
+        <td id="cart-subtotal"><span class="cartTotal">{subtotal.toFixed(2)} GS</span></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="text-align:right;font-weight:bold;">Shipping &amp; Handling:</td>
+        <td id="cart-shipping"><span class="aspNetLabel">{shipping.toFixed(2)} GS</span></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr class="headerRow">
+        <td colspan="4" style="text-align:right;font-weight:bold;">Order Total:</td>
+        <td id="cart-total"><span class="cartTotal" style="font-size:14px;">{total.toFixed(2)} GS</span></td>
+        <td>&nbsp;</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div style="margin:10px 15px; overflow:hidden;">
+    <div style="float:left;">
+      <a href="/l1/eshop/catalog">&laquo; Continue Shopping</a>
+    </div>
+    <div style="float:right;">
+      <input type="button" value="Proceed to Checkout" class="aspNetButton" disabled
+        title="Checkout available in the full store" />
+      <span class="l2note">Checkout available in the full store.</span>
+    </div>
+  </div>
+
+  <div class="infoBox" style="margin:10px 15px;">
+    <strong>Shipping Notice:</strong> Standard delivery to Mountainhome fortress quarters takes
+    1–2 working days. Surface import items (including Elven Cloth) may be delayed due to
+    current route closures. See <a href="/l1/eshop/about">Shipping Policy</a> for full details.
+  </div>
+
+</EshopShell>

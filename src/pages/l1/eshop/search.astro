@@ -1,0 +1,129 @@
+---
+import EshopShell from './_components/EshopShell.astro';
+import { products, formatPrice } from './_data/products';
+---
+
+<EshopShell
+  title="Search"
+  activePage="search"
+  breadcrumbs={[
+    { label: 'VaultMart', href: '/l1/eshop/' },
+    { label: 'Search' },
+  ]}
+>
+
+  <div class="pageTitle">Product Search</div>
+
+  <!-- Search Form -->
+  <div class="searchBox">
+    <form method="get" action="/l1/eshop/search" id="searchForm">
+      <table border="0" cellpadding="3" cellspacing="0">
+        <tr>
+          <td><strong>Search:</strong></td>
+          <td>
+            <input
+              type="text"
+              name="q"
+              id="searchInput"
+              style="width:280px;"
+              placeholder="e.g. iron, ale, oak..."
+            />
+          </td>
+          <td>
+            <input type="submit" value="Search Products" class="aspNetButton" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+  <!-- Results Info -->
+  <div class="resultsInfo" id="searchResultCount">Enter a search term above.</div>
+
+  <!-- All products pre-rendered with data attributes; JS filters and highlights -->
+  <div style="margin: 0 15px;" id="searchResults">
+    {products.map(p => (
+      <div
+        class="searchResultItem"
+        data-sku={p.sku}
+        data-name={p.name}
+        data-category={p.category}
+        data-excerpt={p.excerpt}
+        data-price={p.basePrice.toFixed(2)}
+        data-image={p.image}
+        style="display:none;"
+      >
+        <img class="searchResultImg" src={p.image} alt={p.name} width="60" height="44" />
+        <div style="overflow:hidden;">
+          <div class="searchResultName">{p.name}</div>
+          <div class="searchResultExcerpt">{p.excerpt}</div>
+          <div class="searchResultPrice">{formatPrice(p.basePrice)}</div>
+          <div style="font-size:10px; margin-top:2px;">
+            <a href="javascript:void(0)" onclick={"navigateToProduct('" + p.sku + "')"}
+              >View Product &rsaquo;</a>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <script is:inline>
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function highlight(text, query) {
+    if (!query) return escHtml(text);
+    // Escape the query for use in a regex, then replace
+    var escapedQ = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    var re       = new RegExp('(' + escapedQ + ')', 'gi');
+    return escHtml(text).replace(re, '<mark>$1</mark>');
+  }
+
+  function runSearch() {
+    var params = new URLSearchParams(window.location.search);
+    var q      = (params.get('q') || '').trim();
+    var qLower = q.toLowerCase();
+
+    // Pre-fill the search box
+    var input = document.getElementById('searchInput');
+    if (input && q) input.value = q;
+
+    var items = document.querySelectorAll('#searchResults .searchResultItem');
+    var count = 0;
+
+    items.forEach(function(item) {
+      var name    = item.getAttribute('data-name')    || '';
+      var excerpt = item.getAttribute('data-excerpt') || '';
+
+      var matches = !q
+        || name.toLowerCase().indexOf(qLower)    !== -1
+        || excerpt.toLowerCase().indexOf(qLower) !== -1;
+
+      if (matches) {
+        item.style.display = '';
+        // Apply <mark> highlighting to name and excerpt
+        item.querySelector('.searchResultName').innerHTML    = highlight(name, q);
+        item.querySelector('.searchResultExcerpt').innerHTML = highlight(excerpt, q);
+        count++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    var countEl = document.getElementById('searchResultCount');
+    if (!q) {
+      countEl.textContent = 'Enter a search term above.';
+    } else {
+      countEl.textContent = count + ' product(s) found for \u201c' + q + '\u201d';
+    }
+  }
+
+  window.addEventListener('load', runSearch);
+  </script>
+
+</EshopShell>

@@ -1,0 +1,71 @@
+---
+import EshopShell from './_components/EshopShell.astro';
+import ProductCard from './_components/ProductCard.astro';
+import { getFeatured, getNew, categories, formatPrice } from './_data/products';
+
+const featured = getFeatured();
+const newArrivals = getNew();
+
+const categoryIcons: Record<string, string> = {
+  'Mining & Excavation': '⛏',
+  'Forge & Smithing':    '🔨',
+  'Food & Brewing':      '🍺',
+  'Furniture & Housing': '🪑',
+  'Surface Imports':     '🌿',
+};
+---
+
+<EshopShell
+  title="Home"
+  activePage="home"
+  breadcrumbs={[{ label: 'VaultMart' }]}
+>
+
+  <!-- Hero Banner -->
+  <div class="heroBanner">
+    <h2>Welcome to VaultMart</h2>
+    <p>
+      Your underground source for mining equipment, forge supplies, foodstuffs, furniture,
+      and rare surface imports. Serving Mountainhome and the surrounding z-level districts
+      since Year 298. All prices in Gold Sovereigns.
+    </p>
+  </div>
+
+  <!-- Featured Products -->
+  <div class="sectionHeader">Featured Products</div>
+  <div class="sectionSub">Hand-selected by our buying team.</div>
+  <div class="product-grid clearfix">
+    {featured.map(p => <ProductCard product={p} />)}
+  </div>
+
+  <!-- Category Tiles -->
+  <div class="sectionHeader">Shop by Category</div>
+  <div class="categoryTileGrid clearfix">
+    {categories.map(cat => (
+      <a
+        class="categoryTile"
+        href={`/l1/eshop/catalog?cat=${encodeURIComponent(cat)}`}
+      >
+        <span class="categoryTileIcon">{categoryIcons[cat]}</span>
+        {cat}
+      </a>
+    ))}
+  </div>
+  <div style="clear:both;"></div>
+
+  <!-- New Arrivals -->
+  <div class="sectionHeader" style="margin-top:10px;">New Arrivals</div>
+  <div class="sectionSub">Recently added to the VaultMart catalogue.</div>
+  <div class="product-grid clearfix">
+    {newArrivals.map(p => <ProductCard product={p} />)}
+  </div>
+
+  <!-- Info Box -->
+  <div class="infoBox" style="margin:10px 15px;">
+    <strong>Trade Route Notice:</strong> Surface imports may experience delays due to ongoing
+    blizzard conditions on the primary route to the Elven Forest Trading Post. See the
+    <a href="/l1/news/article?postData=MHH-011">Mountainhome Herald</a> for current route status.
+    Estimated restocking of affected items: mid-season.
+  </div>
+
+</EshopShell>

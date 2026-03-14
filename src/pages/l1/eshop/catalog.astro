@@ -1,0 +1,147 @@
+---
+import EshopShell from './_components/EshopShell.astro';
+import ProductCard from './_components/ProductCard.astro';
+import { products, categories, getPromoted } from './_data/products';
+const promoted = getPromoted();
+---
+
+<EshopShell
+  title="Catalog"
+  activePage="catalog"
+  breadcrumbs={[
+    { label: 'VaultMart', href: '/l1/eshop/' },
+    { label: 'Catalog' },
+  ]}
+>
+
+  <div class="pageTitle">Product Catalog</div>
+
+  <!-- Sponsored Products Strip -->
+  <div class="sponsoredStrip">
+    <div class="sponsoredLabel">Sponsored Products</div>
+    <div class="product-grid clearfix" style="padding:0;">
+      {promoted.map(p => <ProductCard product={p} />)}
+    </div>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="filterTabBar">
+    <span>Filter:</span>&nbsp;
+    <a href="javascript:void(0)" class="filterTab active" data-filter="all">All Products</a>
+    {categories.map(cat => (
+      <a href="javascript:void(0)" class="filterTab" data-filter={cat}>{cat}</a>
+    ))}
+  </div>
+
+  <!-- Sort Bar (disabled in L1) -->
+  <div class="sortBar">
+    <label for="sortSelect"><strong>Sort by:</strong></label>
+    <select id="sortSelect" disabled title="Sorting available in the full store">
+      <option value="default">Default</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="rating">Top Rated</option>
+    </select>
+    <span class="l2note">Sorting available in the full store.</span>
+    &nbsp;&nbsp;
+    <span id="catalogResultsInfo" class="aspNetLabel">28 product(s)</span>
+  </div>
+
+  <!-- Product Grid (all 28, JS manages visibility) -->
+  <div class="product-grid clearfix" id="catalogGrid" style="padding-top:8px;">
+    {products.map(p => <ProductCard product={p} />)}
+  </div>
+
+  <!-- Pagination -->
+  <div style="margin: 0 15px 10px 15px;">
+    <span class="aspNetLabel" id="pageLabel">Page 1 of 3</span>&nbsp;&nbsp;
+    <span id="pagerLinks"></span>
+  </div>
+
+  <script is:inline>
+  var CATALOG_PAGE_SIZE = 12;
+  var currentCat  = 'all';
+  var currentPage = 1;
+
+  function getFilteredCards() {
+    var all = Array.prototype.slice.call(
+      document.querySelectorAll('#catalogGrid .product-card[data-sku]')
+    );
+    if (currentCat === 'all') return all;
+    return all.filter(function(c) {
+      return c.getAttribute('data-category') === currentCat;
+    });
+  }
+
+  function renderPage() {
+    var all = Array.prototype.slice.call(
+      document.querySelectorAll('#catalogGrid .product-card[data-sku]')
+    );
+    // hide everything first (also hides filtered-out cards)
+    all.forEach(function(c) { c.style.display = 'none'; });
+
+    var visible = getFilteredCards();
+    var start   = (currentPage - 1) * CATALOG_PAGE_SIZE;
+    visible.slice(start, start + CATALOG_PAGE_SIZE).forEach(function(c) {
+      c.style.display = '';
+    });
+
+    document.getElementById('catalogResultsInfo').textContent =
+      visible.length + ' product(s)';
+
+    renderPager(visible.length);
+  }
+
+  function renderPager(total) {
+    var totalPages = Math.max(1, Math.ceil(total / CATALOG_PAGE_SIZE));
+    document.getElementById('pageLabel').textContent =
+      'Page ' + currentPage + ' of ' + totalPages;
+
+    var html = '';
+    for (var i = 1; i <= totalPages; i++) {
+      if (i === currentPage) {
+        html += '<span style="font-weight:bold;">[' + i + ']</span>&nbsp;';
+      } else {
+        html += '<a href="javascript:void(0)" onclick="goPage(' + i + ');return false;">' + i + '</a>&nbsp;';
+      }
+    }
+    document.getElementById('pagerLinks').innerHTML = html;
+  }
+
+  function setFilter(cat) {
+    currentCat  = cat;
+    currentPage = 1;
+
+    document.querySelectorAll('.filterTab').forEach(function(t) {
+      t.classList.toggle('active', t.getAttribute('data-filter') === cat);
+    });
+
+    renderPage();
+  }
+
+  function goPage(n) {
+    currentPage = n;
+    renderPage();
+  }
+
+  // Wire up filter tabs via data attribute (no inline onclick)
+  document.querySelectorAll('.filterTab').forEach(function(t) {
+    t.addEventListener('click', function(e) {
+      e.preventDefault();
+      setFilter(t.getAttribute('data-filter'));
+    });
+  });
+
+  // On load: check ?cat= URL param, then render
+  window.addEventListener('load', function() {
+    var params = new URLSearchParams(window.location.search);
+    var catParam = params.get('cat');
+    if (catParam) {
+      setFilter(catParam);
+    } else {
+      renderPage();
+    }
+  });
+  </script>
+
+</EshopShell>

@@ -1,0 +1,540 @@
+---
+import EshopShell from './_components/EshopShell.astro';
+---
+
+<EshopShell
+  title="Product Detail"
+  activePage="catalog"
+  breadcrumbs={[
+    { label: 'VaultMart', href: '/l1/eshop/' },
+    { label: 'Catalog', href: '/l1/eshop/catalog' },
+    { label: 'Product Detail' },
+  ]}
+>
+
+  <div id="product-content">
+    <!-- Populated by JS from ?item= sentinel param -->
+  </div>
+
+  <div id="product-not-found" style="display:none; margin:15px;">
+    <div class="infoBox">
+      Product not found. <a href="/l1/eshop/catalog">Return to catalog</a>.
+    </div>
+  </div>
+
+  <script is:inline>
+  var productData = {
+    'VM-MIN-001': {
+      sku: 'VM-MIN-001', name: 'Standard Iron Pickaxe', category: 'Mining & Excavation',
+      basePrice: 14.50, stock: 12, image: 'https://picsum.photos/seed/vmmin001/560/400',
+      inStock: true, rating: 4.0, reviewCount: 47,
+      description: 'Reliable forged-iron pickaxe suitable for limestone, sandstone, and upper chalk formations. Standard issue for entry-level miners. Forged at the Koganusan Processing Complex under Dwarven Iron Guild supervision.',
+      specs: { 'Material': 'Forged Iron', 'Head Weight': '1.4 kg', 'Handle': 'Hickory, 90 cm', 'Total Weight': '1.9 kg', 'Warranty': '1 season' },
+      variants: [{ label: 'Material', options: [{ value: 'Iron', priceModifier: 0, inStock: true }, { value: 'Steel', priceModifier: 8.00, inStock: true }, { value: 'Silver', priceModifier: 20.00, inStock: false }] }],
+      reviews: [
+        { author: 'Urist Digdeep', rating: 4, date: '2026-01-15', body: 'Solid pickaxe for the price. Good for upper limestone, struggled a bit in granite.', verified: true },
+        { author: 'Bomrek Stonecleave', rating: 5, date: '2025-12-03', body: 'Bought three of these for my mining team. Two held up well in daily use.', verified: true },
+        { author: 'Meng Tunnelwork', rating: 3, date: '2025-11-20', body: 'Gets the job done but the handle loosened after two weeks. Had to re-wedge it.', verified: false }
+      ],
+      relatedSkus: ['VM-MIN-002', 'VM-MIN-003', 'VM-MIN-005']
+    },
+    'VM-MIN-002': {
+      sku: 'VM-MIN-002', name: 'Masterwork Steel Pickaxe', category: 'Mining & Excavation',
+      basePrice: 45.00, image: 'https://picsum.photos/seed/vmmin002/560/400',
+      inStock: false, rating: 4.9, reviewCount: 23,
+      description: 'Dwarven Iron Guild-certified masterwork pickaxe. Rated for granite, gabbro, and deep-layer igneous formations. The hardened steel head features precision-ground edges that retain sharpness across 800+ strike-cycles.',
+      specs: { 'Material': 'Guild-Certified Steel', 'Head Weight': '1.8 kg', 'Handle': 'Ebony, 95 cm', 'Total Weight': '2.4 kg', 'Certification': 'DIG Grade AA', 'Warranty': '3 seasons' },
+      variants: [{ label: 'Handle', options: [{ value: 'Ebony (Standard)', priceModifier: 0, inStock: false }, { value: 'Ironwood (+15 GS)', priceModifier: 15.00, inStock: false }] }],
+      reviews: [
+        { author: 'Rigoth Hammerfall', rating: 5, date: '2026-02-01', body: 'Best pickaxe I have ever used. Cut through z-level 90 gabbro like chalk.', verified: true },
+        { author: 'Dumed Deepvein', rating: 5, date: '2025-10-14', body: 'Worth every sovereign. Buy one if you can find stock.', verified: true }
+      ],
+      relatedSkus: ['VM-MIN-001', 'VM-FRG-003', 'VM-MIN-006']
+    },
+    'VM-MIN-003': {
+      sku: 'VM-MIN-003', name: 'Stone Chisel Set (5-piece)', category: 'Mining & Excavation',
+      basePrice: 8.75, salePrice: 6.50, image: 'https://picsum.photos/seed/vmmin003/560/400',
+      inStock: true, rating: 3.8, reviewCount: 31,
+      description: 'Five iron chisels in graduated widths: 8 mm, 12 mm, 18 mm, 25 mm, and 32 mm. Suitable for shaping stone blocks and carving furniture blanks. Stored in a canvas roll.',
+      specs: { 'Material': 'Iron (chisels), Canvas (roll)', 'Widths': '8 mm to 32 mm (5 sizes)', 'Handle': 'Ash wood', 'Weight (set)': '0.9 kg' },
+      variants: [{ label: 'Set Size', options: [{ value: '5-piece', priceModifier: 0, inStock: true }, { value: '10-piece', priceModifier: 7.50, inStock: true }] }],
+      reviews: [
+        { author: 'Fikod Carver', rating: 4, date: '2026-01-28', body: 'Good value for a starter set. The 25 mm chisel is excellent.', verified: true },
+        { author: 'Zulban Craftmark', rating: 3, date: '2025-09-11', body: 'Two of the smaller chisels chipped on sandstone after moderate use.', verified: false }
+      ],
+      relatedSkus: ['VM-MIN-001', 'VM-FUR-001', 'VM-FUR-003']
+    },
+    'VM-MIN-004': {
+      sku: 'VM-MIN-004', name: 'Blasting Charge (3-pack)', category: 'Mining & Excavation',
+      basePrice: 22.50, image: 'https://picsum.photos/seed/vmmin004/560/400',
+      inStock: true, rating: 4.2, reviewCount: 18,
+      description: 'Pre-measured obsidian-cased blasting charges for controlled tunnel expansion. Each charge produces a controlled 1.5 z-metre radius blast suitable for standard corridor widening. Requires Excavation Permit Class 2 from the Bureau of Deep Works.',
+      specs: { 'Casing': 'Obsidian', 'Blast Radius': '1.5 z-metre', 'Pack Contents': '3 charges', 'Permit Required': 'Excavation Class 2', 'Net Weight': '0.6 kg per charge' },
+      variants: [{ label: 'Charge Strength', options: [{ value: 'Standard', priceModifier: 0, inStock: true }, { value: 'Heavy (+10 GS)', priceModifier: 10.00, inStock: false }] }],
+      reviews: [
+        { author: 'Urist Blastrock', rating: 4, date: '2026-03-01', body: 'Clean blast pattern, minimal splatter into adjacent tunnels. Good for the price.', verified: true },
+        { author: 'Rimtar Stonehewer', rating: 5, date: '2025-12-20', body: 'Used eight packs on the new Z-55 expansion. Precise and reliable.', verified: true }
+      ],
+      relatedSkus: ['VM-MIN-006', 'VM-MIN-001', 'VM-MIN-005']
+    },
+    'VM-MIN-005': {
+      sku: 'VM-MIN-005', name: 'Cave Torch (12-pack)', category: 'Mining & Excavation',
+      basePrice: 6.00, image: 'https://picsum.photos/seed/vmmin005/560/400',
+      inStock: true, rating: 3.5, reviewCount: 64,
+      description: 'Slow-burning tallow torches in a 12-unit bundle. Approximately 4 hours burn time per torch. Meets Bureau of Deep Works mine illumination standards for single-dwarf tunnels.',
+      specs: { 'Material': 'Tallow, reed core', 'Burn Time': '~4 hours each', 'Pack Size': '12 torches', 'Compliance': 'Bureau of Deep Works Std. 14-C', 'Weight': '60 g each' },
+      variants: [{ label: 'Pack Size', options: [{ value: '12-pack', priceModifier: 0, inStock: true }, { value: '24-pack (+4 GS)', priceModifier: 4.00, inStock: true }] }],
+      reviews: [
+        { author: 'Dumed Coalburn', rating: 3, date: '2026-02-14', body: 'Burns as advertised but the smoke is thick in confined tunnels.', verified: true },
+        { author: 'Moldath Dimlight', rating: 4, date: '2025-11-05', body: 'Reliable and cheap. Buy the 24-pack if you work longer shifts.', verified: false },
+        { author: 'Avar Torchbearer', rating: 3, date: '2025-08-30', body: 'Two out of twelve did not light on first attempt.', verified: true }
+      ],
+      relatedSkus: ['VM-MIN-001', 'VM-MIN-006', 'VM-MIN-004']
+    },
+    'VM-MIN-006': {
+      sku: 'VM-MIN-006', name: 'Iron Ore Cart', category: 'Mining & Excavation',
+      basePrice: 38.00, stock: 6, image: 'https://picsum.photos/seed/vmmin006/560/400',
+      inStock: true, rating: 4.1, reviewCount: 9,
+      description: 'Single-axle ore transport cart with 0.4 cubic z-metre capacity. Rail-compatible with standard Bureau of Deep Works 60 cm gauge track. Includes two spare wheel assemblies and a brass axle pin.',
+      specs: { 'Material': 'Wrought iron, oak base', 'Capacity': '0.4 m³ / approx. 320 kg', 'Track Gauge': '60 cm (standard)', 'Spare Parts': '2 wheel assemblies, 1 axle pin', 'Weight (empty)': '28 kg' },
+      variants: [{ label: 'Capacity', options: [{ value: 'Standard 0.4 m³', priceModifier: 0, inStock: true }, { value: 'Large 0.8 m³ (+18 GS)', priceModifier: 18.00, inStock: true }] }],
+      reviews: [
+        { author: 'Urist McCartwright', rating: 4, date: '2026-03-05', body: 'Fits the standard gauge track perfectly. Welds look solid.', verified: true },
+        { author: 'Bomrek Ironwheel', rating: 4, date: '2026-02-28', body: 'Good cart, newly listed item so not many reviews yet. Very happy with it.', verified: true }
+      ],
+      relatedSkus: ['VM-MIN-001', 'VM-MIN-004', 'VM-FRG-001']
+    },
+    'VM-FRG-001': {
+      sku: 'VM-FRG-001', name: 'Iron Ingot Bundle (10-bar)', category: 'Forge & Smithing',
+      basePrice: 12.00, image: 'https://picsum.photos/seed/vmfrg001/560/400',
+      inStock: true, rating: 4.3, reviewCount: 82,
+      description: 'Ten standard iron ingots, Dwarven Iron Guild grade B. Each bar weighs 1.2 kg and meets Bureau of Deep Works dimensional standards (25×5×5 cm). Suitable for general toolmaking and structural work.',
+      specs: { 'Grade': 'Dwarven Iron Guild Grade B', 'Bar Dimensions': '25 × 5 × 5 cm', 'Weight per bar': '1.2 kg', 'Bundle Weight': '12 kg', 'Origin': 'Koganusan Processing Complex' },
+      variants: [{ label: 'Grade', options: [{ value: 'Grade B (Standard)', priceModifier: 0, inStock: true }, { value: 'Grade A (Premium, +4 GS)', priceModifier: 4.00, inStock: true }] }],
+      reviews: [
+        { author: 'Rigoth Ironsmith', rating: 5, date: '2026-02-10', body: 'Consistent dimensions and good carbon content. My forge standard.', verified: true },
+        { author: 'Fikod Metalhand', rating: 4, date: '2026-01-22', body: 'Grade B is fine for tool work. Would only go Grade A for weapons.', verified: true },
+        { author: 'Zulban Smelter', rating: 4, date: '2025-12-01', body: 'Arrived bundled neatly and dimensions are spot on.', verified: false }
+      ],
+      relatedSkus: ['VM-FRG-002', 'VM-FRG-005', 'VM-MIN-001']
+    },
+    'VM-FRG-002': {
+      sku: 'VM-FRG-002', name: 'Steel Ingot Bundle (10-bar)', category: 'Forge & Smithing',
+      basePrice: 28.50, image: 'https://picsum.photos/seed/vmfrg002/560/400',
+      inStock: true, rating: 4.6, reviewCount: 55,
+      description: 'Ten premium steel ingots, Guild grade A. Carbon content 0.6–0.9%, verified by independent assay. Suitable for weapons, quality tools, and structural components requiring superior tensile strength.',
+      specs: { 'Grade': 'Dwarven Iron Guild Grade A', 'Carbon Content': '0.6–0.9% (assay certified)', 'Bar Dimensions': '25 × 5 × 5 cm', 'Weight per bar': '1.2 kg', 'Bundle Weight': '12 kg' },
+      variants: [{ label: 'Grade', options: [{ value: 'Grade A', priceModifier: 0, inStock: true }, { value: 'Grade AA Master (+12 GS)', priceModifier: 12.00, inStock: false }] }],
+      reviews: [
+        { author: 'Dumed Bladewright', rating: 5, date: '2026-03-08', body: 'Best commercial steel I have found. Took a fine edge on my blades.', verified: true },
+        { author: 'Moldath Armourer', rating: 4, date: '2026-02-05', body: 'Consistent carbon content, no blowholes found in my last 50 bars.', verified: true }
+      ],
+      relatedSkus: ['VM-FRG-001', 'VM-FRG-003', 'VM-FRG-005']
+    },
+    'VM-FRG-003': {
+      sku: 'VM-FRG-003', name: 'Masterwork Smithing Hammer', category: 'Forge & Smithing',
+      basePrice: 55.00, stock: 8, image: 'https://picsum.photos/seed/vmfrg003/560/400',
+      inStock: true, rating: 4.7, reviewCount: 29,
+      description: 'Balanced 2.8 kg cross-peen hammer with precision-hardened steel head and hand-fitted hickory handle. Recommended for finish work, detailed shaping, and peening. Guild-certified tool.',
+      specs: { 'Head': 'Hardened steel, cross-peen', 'Head Weight': '2.8 kg', 'Handle': 'Hickory, 40 cm', 'Total Weight': '3.1 kg', 'Certification': 'DIG Smithing Tool Std. 7' },
+      variants: [{ label: 'Head Weight', options: [{ value: '2.8 kg (Finishing)', priceModifier: 0, inStock: true }, { value: '4.5 kg (Heavy, +12 GS)', priceModifier: 12.00, inStock: true }] }],
+      reviews: [
+        { author: 'Avar Ironhand', rating: 5, date: '2026-01-30', body: 'The balance on this hammer is exceptional. Reduced wrist fatigue noticeably.', verified: true },
+        { author: 'Rimtar Forgemaster', rating: 5, date: '2025-11-18', body: 'Worth every sovereign. My workshop standard for three seasons now.', verified: true }
+      ],
+      relatedSkus: ['VM-FRG-001', 'VM-FRG-005', 'VM-FRG-004']
+    },
+    'VM-FRG-004': {
+      sku: 'VM-FRG-004', name: 'Forge Bellows (Leather)', category: 'Forge & Smithing',
+      basePrice: 16.00, image: 'https://picsum.photos/seed/vmfrg004/560/400',
+      inStock: true, rating: 3.9, reviewCount: 21,
+      description: 'Double-action leather bellows with hardwood frame and iron fittings. Output: 220 litres per minute at full stroke. Compatible with standard charcoal and coke forges.',
+      specs: { 'Construction': 'Tanned leather, hardwood frame, iron fittings', 'Output': '220 L/min (full stroke)', 'Compatible With': 'Charcoal, coke, and coal forges', 'Dimensions': '60 × 30 cm (folded)', 'Weight': '2.1 kg' },
+      variants: [{ label: 'Size', options: [{ value: 'Standard (220 L/min)', priceModifier: 0, inStock: true }, { value: 'Large (380 L/min, +9 GS)', priceModifier: 9.00, inStock: true }] }],
+      reviews: [
+        { author: 'Urist Coalfan', rating: 4, date: '2026-02-22', body: 'Gets the forge to temperature quickly. Stitching quality is solid.', verified: true },
+        { author: 'Bomrek Furnaceman', rating: 3, date: '2025-10-30', body: 'Leather dried out after one season and needed conditioning. Good otherwise.', verified: false }
+      ],
+      relatedSkus: ['VM-FRG-005', 'VM-FRG-006', 'VM-FRG-003']
+    },
+    'VM-FRG-005': {
+      sku: 'VM-FRG-005', name: 'Cast Iron Anvil', category: 'Forge & Smithing',
+      basePrice: 120.00, image: 'https://picsum.photos/seed/vmfrg005/560/400',
+      inStock: false, rating: 4.8, reviewCount: 14,
+      description: 'Single-horn cast iron anvil, 180 kg. Hardened face plate (Brinell hardness 320–360) rated for repeated heavy forming and cutting. Requires reinforced floor mounting; mounting hardware sold separately.',
+      specs: { 'Material': 'Cast iron, hardened face', 'Weight': '180 kg', 'Face Hardness': 'Brinell 320–360', 'Horn Style': 'Single (round)', 'Mounting': 'Not included' },
+      variants: [{ label: 'Weight Class', options: [{ value: '180 kg (Standard)', priceModifier: 0, inStock: false }, { value: '250 kg (Master, +45 GS)', priceModifier: 45.00, inStock: false }] }],
+      reviews: [
+        { author: 'Dumed Forgecrown', rating: 5, date: '2026-01-10', body: 'The 180 kg model is exactly what a professional forge needs. Ringing tone is superb.', verified: true },
+        { author: 'Rigoth Hammerstrike', rating: 5, date: '2025-08-15', body: 'Currently out of stock everywhere. Reserved mine from the last batch — worth the wait.', verified: true }
+      ],
+      relatedSkus: ['VM-FRG-003', 'VM-FRG-001', 'VM-FRG-006']
+    },
+    'VM-FRG-006': {
+      sku: 'VM-FRG-006', name: 'Quench Barrel (Oak)', category: 'Forge & Smithing',
+      basePrice: 24.00, image: 'https://picsum.photos/seed/vmfrg006/560/400',
+      inStock: true, rating: 3.7, reviewCount: 12,
+      description: 'Iron-banded oak barrel, 80-litre capacity, for water or oil quenching. Includes a spigot drain valve and fitted iron lid. Internal surfaces treated with food-grade mineral oil to prevent contamination.',
+      specs: { 'Material': 'Oak stave, iron bands', 'Capacity': '80 litres', 'Fittings': 'Spigot drain, iron lid', 'Internal Treatment': 'Mineral oil', 'Dimensions': '45 cm dia × 60 cm tall' },
+      variants: [{ label: 'Capacity', options: [{ value: '80 L', priceModifier: 0, inStock: true }, { value: '150 L (+14 GS)', priceModifier: 14.00, inStock: true }] }],
+      reviews: [
+        { author: 'Fikod Smithson', rating: 4, date: '2026-03-02', body: 'Good stave construction, no leaks after filling. Spigot a little stiff but works.', verified: true },
+        { author: 'Urist Quencher', rating: 3, date: '2025-07-19', body: 'One of the iron bands was slightly loose on arrival. Tightened easily enough.', verified: true }
+      ],
+      relatedSkus: ['VM-FRG-004', 'VM-FRG-005', 'VM-FRG-003']
+    },
+    'VM-FDB-001': {
+      sku: 'VM-FDB-001', name: 'Plump Helmet Seeds (50-pack)', category: 'Food & Brewing',
+      basePrice: 3.50, image: 'https://picsum.photos/seed/vmfdb001/560/400',
+      inStock: true, rating: 4.4, reviewCount: 108,
+      description: 'Certified plump helmet spore-seeds from Bureau of Subterranean Agriculture registered growers. Germination rate 94% in z-levels 10–50. Each pack contains 50 seeds with moisture-sealed waxed-cloth wrapping.',
+      specs: { 'Contents': '50 spore-seeds', 'Germination Rate': '94% (z-levels 10–50)', 'Optimal z-Level': '15–35', 'Shelf Life': '12 months sealed', 'Certification': 'Bureau of Subterranean Agriculture Reg.' },
+      variants: [{ label: 'Pack Size', options: [{ value: '50-pack', priceModifier: 0, inStock: true }, { value: '100-pack (+5.50 GS)', priceModifier: 5.50, inStock: true }] }],
+      reviews: [
+        { author: 'Bomrek Farmer', rating: 5, date: '2026-02-28', body: 'Excellent germination rate. 48 of 50 sprouted within two days on my growing sector.', verified: true },
+        { author: 'Avar Greenthumb', rating: 4, date: '2026-01-14', body: 'Reliable and cheap. Essential supplies for any farming operation.', verified: true },
+        { author: 'Zulban Grower', rating: 4, date: '2025-11-25', body: 'Good germination but would appreciate larger pack sizes.', verified: false }
+      ],
+      relatedSkus: ['VM-FDB-002', 'VM-FDB-003', 'VM-FDB-004']
+    },
+    'VM-FDB-002': {
+      sku: 'VM-FDB-002', name: 'Dwarven Ale (6-flagon case)', category: 'Food & Brewing',
+      basePrice: 18.00, stock: 4, image: 'https://picsum.photos/seed/vmfdb002/560/400',
+      inStock: true, rating: 4.5, reviewCount: 143,
+      description: "Six flagons of the Mountainhome Ale Guild's seasonal plump helmet ale. 8.4% ABV. Brewed under Guild Charter Year 89 using traditional double-mash method. Best served cold in a stone mug.",
+      specs: { 'Contents': '6 flagons (0.5 L each)', 'ABV': '8.4%', 'Brewer': 'Mountainhome Ale Guild', 'Batch': 'Year 312 Seasonal', 'Best Before': 'Year 313, Month 3' },
+      variants: [{ label: 'Variety', options: [{ value: 'Standard Plump Helmet', priceModifier: 0, inStock: true }, { value: 'Seasonal Blend (+4 GS)', priceModifier: 4.00, inStock: true }, { value: 'Reserve Batch (+12 GS)', priceModifier: 12.00, inStock: false }] }],
+      reviews: [
+        { author: 'Urist Tipsybeard', rating: 5, date: '2026-03-11', body: 'The seasonal batch is outstanding this year. Malty with a hint of cave moss.', verified: true },
+        { author: 'Meng Drinkwell', rating: 5, date: '2026-02-18', body: 'The whole fortress agrees: nothing beats a cold flagon after a long shift.', verified: true },
+        { author: 'Rimtar Brewer', rating: 4, date: '2026-01-05', body: 'Consistent quality year after year. The Guild knows what it is doing.', verified: false }
+      ],
+      relatedSkus: ['VM-FDB-001', 'VM-FDB-005', 'VM-FDB-004']
+    },
+    'VM-FDB-003': {
+      sku: 'VM-FDB-003', name: 'Cave Wheat Flour (10 kg sack)', category: 'Food & Brewing',
+      basePrice: 5.25, image: 'https://picsum.photos/seed/vmfdb003/560/400',
+      inStock: true, rating: 4.0, reviewCount: 67,
+      description: 'Stone-ground cave wheat flour, grade 1. Suitable for bread, dumplings, and standard ration biscuits. Stored in sealed canvas sack. Shelf life 18 months in cool, dry conditions.',
+      specs: { 'Grade': '1 (fine grind)', 'Contents': '10 kg net', 'Grinding': 'Stone-ground', 'Shelf Life': '18 months (sealed, dry)', 'Origin': 'Growing Sector 7, Z-Level 25' },
+      variants: [{ label: 'Weight', options: [{ value: '10 kg sack', priceModifier: 0, inStock: true }, { value: '25 kg sack (+9 GS)', priceModifier: 9.00, inStock: true }] }],
+      reviews: [
+        { author: 'Dumed Baker', rating: 4, date: '2026-02-08', body: 'Fine grind, makes excellent loaves. Buy the 25 kg if you run a kitchen.', verified: true },
+        { author: 'Fikod Doughmaster', rating: 4, date: '2025-10-22', body: 'Consistent grade 1 quality, no grit or husk in the sack I received.', verified: true }
+      ],
+      relatedSkus: ['VM-FDB-001', 'VM-FDB-004', 'VM-FDB-002']
+    },
+    'VM-FDB-004': {
+      sku: 'VM-FDB-004', name: 'Plump Helmet Roast (Prepared)', category: 'Food & Brewing',
+      basePrice: 7.50, salePrice: 5.25, image: 'https://picsum.photos/seed/vmfdb004/560/400',
+      inStock: true, rating: 3.6, reviewCount: 39,
+      description: 'Ready-to-serve plump helmet roast in clay-sealed preservation pot. Serves 4. Prepared under Bureau of Subterranean Agriculture hygiene standards. Reheat over embers for 20 minutes before serving.',
+      specs: { 'Contents': 'Prepared plump helmet roast, serves 4', 'Preservation': 'Clay-sealed pot', 'Heating': '20 min over embers or forge-heat', 'Shelf Life': '6 months sealed', 'Compliance': 'BSA Hygiene Standard 4A' },
+      variants: [{ label: 'Serving Size', options: [{ value: 'Serves 4', priceModifier: 0, inStock: true }, { value: 'Serves 8 (+6 GS)', priceModifier: 6.00, inStock: true }] }],
+      reviews: [
+        { author: 'Urist Hungryminer', rating: 4, date: '2026-01-20', body: 'Convenient for deep-shaft crews who cannot return to the surface canteen.', verified: true },
+        { author: 'Bomrek Rationist', rating: 3, date: '2025-12-15', body: 'Passable taste but nothing like a fresh roast. Useful for emergencies.', verified: true }
+      ],
+      relatedSkus: ['VM-FDB-001', 'VM-FDB-002', 'VM-FDB-003']
+    },
+    'VM-FDB-005': {
+      sku: 'VM-FDB-005', name: 'Mushroom Wine (Vintage 309, 3-bottle)', category: 'Food & Brewing',
+      basePrice: 32.00, stock: 2, image: 'https://picsum.photos/seed/vmfdb005/560/400',
+      inStock: true, rating: 4.7, reviewCount: 17,
+      description: 'Limited vintage 309 mushroom wine from the Fungiwood Cavern Biome. Light body, earthy finish with notes of cave clay and aged oak. 11% ABV. Three-bottle set, wax-sealed.',
+      specs: { 'Vintage': 'Year 309', 'ABV': '11%', 'Region': 'Fungiwood Cavern Biome', 'Contents': '3 bottles (0.75 L each)', 'Closure': 'Wax seal' },
+      variants: [{ label: 'Vintage', options: [{ value: 'Vintage 309 (current)', priceModifier: 0, inStock: true }, { value: 'Vintage 306 (aged, +8 GS)', priceModifier: 8.00, inStock: false }] }],
+      reviews: [
+        { author: 'Rigoth Grapevault', rating: 5, date: '2026-03-09', body: 'Extraordinary terroir. The earthiness of the Fungiwood Biome comes through beautifully.', verified: true },
+        { author: 'Fikod Sommelier', rating: 5, date: '2026-02-14', body: 'Opened a bottle for the mid-season feast. The whole table was impressed.', verified: true }
+      ],
+      relatedSkus: ['VM-FDB-002', 'VM-SRF-003', 'VM-FDB-001']
+    },
+    'VM-FUR-001': {
+      sku: 'VM-FUR-001', name: 'Carved Granite Chair', category: 'Furniture & Housing',
+      basePrice: 22.00, image: 'https://picsum.photos/seed/vmfur001/560/400',
+      inStock: true, rating: 4.1, reviewCount: 26,
+      description: 'Hand-carved granite chair with smooth finish and carved geometric backrest. Meets Bureau of Residential Standards specifications for residential quarters furnishing. Weight 38 kg.',
+      specs: { 'Material': 'Granite', 'Finish': 'Smooth, carved backrest', 'Weight': '38 kg', 'Dimensions': '45 × 50 × 90 cm (W×D×H)', 'Compliance': 'BRS Standard 3B' },
+      variants: [{ label: 'Stone', options: [{ value: 'Granite', priceModifier: 0, inStock: true }, { value: 'Marble (+10 GS)', priceModifier: 10.00, inStock: true }, { value: 'Obsidian (+25 GS)', priceModifier: 25.00, inStock: false }] }],
+      reviews: [
+        { author: 'Meng Stonesit', rating: 4, date: '2026-02-24', body: 'Sturdy and looks good in my quarters. Not the most comfortable for long sessions.', verified: true },
+        { author: 'Dumed Carvechair', rating: 4, date: '2026-01-18', body: 'Solid craftsmanship. The geometric backrest carving is well executed.', verified: false }
+      ],
+      relatedSkus: ['VM-FUR-003', 'VM-FUR-005', 'VM-MIN-003']
+    },
+    'VM-FUR-002': {
+      sku: 'VM-FUR-002', name: 'Surface Oak Door', category: 'Furniture & Housing',
+      basePrice: 34.00, image: 'https://picsum.photos/seed/vmfur002/560/400',
+      inStock: true, rating: 4.3, reviewCount: 18,
+      description: 'Solid oak door with iron hinges and latch, sourced from surface trade routes via the Bureau of Surface Commerce. Standard fortress door frame compatible (78×195 cm). Pre-hung on adjustable iron frame.',
+      specs: { 'Material': 'Surface oak, iron fittings', 'Dimensions': '78 × 195 cm (door)', 'Frame': 'Adjustable iron, pre-hung', 'Fittings': 'Iron hinges (×3), iron latch', 'Origin': 'Surface trade — Bureau certified' },
+      variants: [{ label: 'Wood', options: [{ value: 'Pine (-8 GS)', priceModifier: -8.00, inStock: true }, { value: 'Oak (Standard)', priceModifier: 0, inStock: true }, { value: 'Elven Hardwood (+22 GS)', priceModifier: 22.00, inStock: false }] }],
+      reviews: [
+        { author: 'Urist Wooddoor', rating: 5, date: '2026-03-07', body: 'Much better than the old stone slab. Oak grain looks excellent with iron fittings.', verified: true },
+        { author: 'Bomrek Doorhinge', rating: 4, date: '2026-01-30', body: 'Arrived pre-hung and fitted the frame with minor adjustment. Good quality.', verified: true }
+      ],
+      relatedSkus: ['VM-FUR-001', 'VM-SRF-002', 'VM-FUR-003']
+    },
+    'VM-FUR-003': {
+      sku: 'VM-FUR-003', name: 'Gabbro Table (Large)', category: 'Furniture & Housing',
+      basePrice: 48.00, image: 'https://picsum.photos/seed/vmfur003/560/400',
+      inStock: true, rating: 4.6, reviewCount: 11,
+      description: 'Large gabbro dining table, seats six. Polished top surface with carved apron and four turned legs. Suitable for great halls and official dining chambers. Delivered assembled.',
+      specs: { 'Material': 'Gabbro', 'Finish': 'Polished top, carved apron', 'Seats': '6 (standard)', 'Dimensions': '180 × 90 × 76 cm (L×W×H)', 'Weight': '210 kg' },
+      variants: [{ label: 'Stone', options: [{ value: 'Gabbro', priceModifier: 0, inStock: true }, { value: 'Diorite (+6 GS)', priceModifier: 6.00, inStock: true }] }],
+      reviews: [
+        { author: 'Rigoth Tableset', rating: 5, date: '2026-02-20', body: 'Magnificent piece. Dominates our great hall in exactly the right way.', verified: true },
+        { author: 'Fikod Stonedine', rating: 4, date: '2025-12-28', body: 'Very heavy but the delivery team handled it competently. Beautiful finish.', verified: true }
+      ],
+      relatedSkus: ['VM-FUR-001', 'VM-FUR-004', 'VM-FUR-005']
+    },
+    'VM-FUR-004': {
+      sku: 'VM-FUR-004', name: 'Obsidian Display Cabinet', category: 'Furniture & Housing',
+      basePrice: 85.00, image: 'https://picsum.photos/seed/vmfur004/560/400',
+      inStock: true, rating: 4.4, reviewCount: 7,
+      description: 'Three-shelf obsidian display cabinet with iron frame. Mirror-polished obsidian panels. Used for trophy display, gemstone collections, or valued goods storage. Includes iron lock on lower compartment.',
+      specs: { 'Material': 'Obsidian panels, iron frame', 'Shelves': '3', 'Finish': 'Mirror-polished obsidian', 'Lock': 'Iron (lower compartment)', 'Dimensions': '60 × 35 × 140 cm (W×D×H)' },
+      variants: [{ label: 'Shelves', options: [{ value: '3-shelf (standard)', priceModifier: 0, inStock: true }, { value: '5-shelf (+20 GS)', priceModifier: 20.00, inStock: true }] }],
+      reviews: [
+        { author: 'Zulban Collector', rating: 5, date: '2026-03-10', body: 'The obsidian panels look stunning. My gem collection has never been displayed so well.', verified: true },
+        { author: 'Moldath Showcase', rating: 4, date: '2026-03-02', body: 'Newly listed product, excellent quality. Lock feels solid.', verified: false }
+      ],
+      relatedSkus: ['VM-FUR-001', 'VM-FUR-003', 'VM-SRF-004']
+    },
+    'VM-FUR-005': {
+      sku: 'VM-FUR-005', name: 'Rope Bed (Basic)', category: 'Furniture & Housing',
+      basePrice: 14.00, salePrice: 9.50, image: 'https://picsum.photos/seed/vmfur005/560/400',
+      inStock: true, rating: 3.2, reviewCount: 94,
+      description: 'Standard-issue rope bed with hardwood frame and woven rope support. Meets Bureau of Residential Standards minimum specification for sleeping quarters. Sold without mattress.',
+      specs: { 'Material': 'Hardwood frame, hemp rope', 'Compliance': 'BRS Minimum Standard 1A', 'Dimensions': '90 × 200 cm (sleeping surface)', 'Weight': '11 kg', 'Mattress': 'Not included' },
+      variants: [{ label: 'Frame', options: [{ value: 'Pine (budget)', priceModifier: 0, inStock: true }, { value: 'Oak (+8 GS)', priceModifier: 8.00, inStock: true }] }],
+      reviews: [
+        { author: 'Urist Sleeper', rating: 3, date: '2026-03-01', body: 'Does the job. Nothing fancy but meets the Residential Standards requirement.', verified: true },
+        { author: 'Bomrek Dormitory', rating: 2, date: '2026-01-12', body: 'The rope sags within a month. Fine for barracks use but not for personal quarters.', verified: true },
+        { author: 'Rigoth Resting', rating: 4, date: '2025-09-05', body: 'Cheap, sturdy frame. Better than sleeping on stone, at any rate.', verified: false }
+      ],
+      relatedSkus: ['VM-FUR-001', 'VM-FUR-003', 'VM-FUR-002']
+    },
+    'VM-SRF-001': {
+      sku: 'VM-SRF-001', name: 'Elven Cloth Bolt (5 m)', category: 'Surface Imports',
+      basePrice: 42.00, stock: 5, image: 'https://picsum.photos/seed/vmsrf001/560/400',
+      inStock: true, rating: 4.5, reviewCount: 33,
+      description: 'Five-metre bolt of fine elven woven cloth from the Elven Forest Trading Post. Lightweight (80 g/m²), colourfast, and suitable for formal garments and ceremonial use. Supply currently limited due to primary route closure.',
+      specs: { 'Origin': 'Elven Forest Trading Post', 'Weight': '80 g/m²', 'Width': '150 cm', 'Length': '5 m', 'Care': 'Hand wash, air dry' },
+      variants: [{ label: 'Colour', options: [{ value: 'Natural Cream', priceModifier: 0, inStock: true }, { value: 'Dyed Blue (+5 GS)', priceModifier: 5.00, inStock: true }, { value: 'Dyed Crimson (+5 GS)', priceModifier: 5.00, inStock: false }] }],
+      reviews: [
+        { author: 'Fikod Tailor', rating: 5, date: '2026-02-15', body: 'Exquisite cloth. The elves truly know their craft. Worth the premium price.', verified: true },
+        { author: 'Dumed Seamstress', rating: 4, date: '2026-01-08', body: 'Very fine weave, takes dye beautifully. Colourfast even after repeated washing.', verified: true }
+      ],
+      relatedSkus: ['VM-SRF-004', 'VM-SRF-005', 'VM-FUR-002']
+    },
+    'VM-SRF-002': {
+      sku: 'VM-SRF-002', name: 'Surface Pine Lumber (10-plank bundle)', category: 'Surface Imports',
+      basePrice: 19.50, stock: 3, image: 'https://picsum.photos/seed/vmsrf002/560/400',
+      inStock: true, rating: 4.0, reviewCount: 44,
+      description: 'Ten planks of kiln-dried surface pine (2 m × 20 cm × 4 cm). Used for furniture-making, shelving, and door frames. Certified by Bureau of Surface Commerce as kiln-dried, free from bark beetle.',
+      specs: { 'Species': 'Surface pine', 'Treatment': 'Kiln-dried', 'Plank Dimensions': '2 m × 20 cm × 4 cm', 'Quantity': '10 planks', 'Certification': 'Bureau of Surface Commerce certified' },
+      variants: [{ label: 'Plank Width', options: [{ value: '20 cm (standard)', priceModifier: 0, inStock: true }, { value: '30 cm (+6 GS)', priceModifier: 6.00, inStock: true }] }],
+      reviews: [
+        { author: 'Meng Carpenter', rating: 4, date: '2026-02-26', body: 'Good straight grain, well dried. Used half the bundle for shelving in my workshop.', verified: true },
+        { author: 'Urist Woodwork', rating: 4, date: '2026-01-19', body: 'Useful surface material. Consistent dimensions across the bundle.', verified: false }
+      ],
+      relatedSkus: ['VM-FUR-002', 'VM-FUR-005', 'VM-SRF-001']
+    },
+    'VM-SRF-003': {
+      sku: 'VM-SRF-003', name: 'Human Spice Pack (Mixed)', category: 'Surface Imports',
+      basePrice: 11.00, salePrice: 8.00, image: 'https://picsum.photos/seed/vmsrf003/560/400',
+      inStock: true, rating: 4.2, reviewCount: 56,
+      description: 'Assorted surface spices from human trade contacts in the Southern Markets. Includes cumin, black pepper, dried chilli, and cinnamon. 200 g net weight per spice in individual cloth pouches.',
+      specs: { 'Contents': 'Cumin, black pepper, dried chilli, cinnamon (200 g each)', 'Origin': 'Human Southern Markets', 'Packaging': 'Individual cloth pouches', 'Net Weight': '800 g (4 × 200 g)' },
+      variants: [{ label: 'Variety', options: [{ value: 'Standard Mixed', priceModifier: 0, inStock: true }, { value: 'Premium Mixed (+5 GS)', priceModifier: 5.00, inStock: true }] }],
+      reviews: [
+        { author: 'Rigoth Spicebeard', rating: 5, date: '2026-02-06', body: 'Transformed our fortress canteen. The dwarves have stopped complaining about bland food.', verified: true },
+        { author: 'Bomrek Cookfire', rating: 4, date: '2026-01-11', body: 'The black pepper is particularly good quality. All four spices are fresh.', verified: true }
+      ],
+      relatedSkus: ['VM-FDB-002', 'VM-FDB-004', 'VM-SRF-006']
+    },
+    'VM-SRF-004': {
+      sku: 'VM-SRF-004', name: 'Silver Thread Spool', category: 'Surface Imports',
+      basePrice: 28.00, image: 'https://picsum.photos/seed/vmsrf004/560/400',
+      inStock: true, rating: 4.6, reviewCount: 8,
+      description: 'One spool (50 m) of fine silver thread, imported via human trade contacts in the Eastern Workshops. Suitable for embroidery, ceremonial garments, rune-marking on cloth, and decorative inlay work.',
+      specs: { 'Material': 'Sterling silver wire, drawn fine', 'Thread Weight': '0.3 mm diameter', 'Length': '50 m', 'Origin': 'Human Eastern Workshops', 'Spool': 'Hardwood spool, iron core' },
+      variants: [{ label: 'Length', options: [{ value: '50 m (standard)', priceModifier: 0, inStock: true }, { value: '100 m (+24 GS)', priceModifier: 24.00, inStock: true }] }],
+      reviews: [
+        { author: 'Fikod Embroiderer', rating: 5, date: '2026-03-08', body: 'Excellent quality silver thread. Used it for rune-marking the Grand Duke\'s ceremonial robe.', verified: true },
+        { author: 'Zulban Craftweave', rating: 4, date: '2026-02-20', body: 'Newly listed and already my go-to for fine thread work.', verified: true }
+      ],
+      relatedSkus: ['VM-SRF-001', 'VM-SRF-005', 'VM-FUR-004']
+    },
+    'VM-SRF-005': {
+      sku: 'VM-SRF-005', name: 'Exotic Feather Bundle', category: 'Surface Imports',
+      basePrice: 16.75, image: 'https://picsum.photos/seed/vmsrf005/560/400',
+      inStock: true, rating: 3.9, reviewCount: 14,
+      description: 'Bundle of 30 assorted surface-bird feathers (quill length 25–40 cm). Sourced from human trade partners. Used in decorative applications, quill-pen crafting, hat-making, and ceremonial headwear.',
+      specs: { 'Contents': '30 mixed feathers', 'Quill Length': '25–40 cm', 'Origin': 'Human trade — mixed surface species', 'Treatment': 'Cleaned and dried', 'Packaging': 'Paper-wrapped bundle' },
+      variants: [{ label: 'Selection', options: [{ value: 'Mixed Assorted', priceModifier: 0, inStock: true }, { value: 'Peacock Only (+12 GS)', priceModifier: 12.00, inStock: false }] }],
+      reviews: [
+        { author: 'Meng Milliner', rating: 4, date: '2026-03-06', body: 'Good variety of feathers. A few shorter ones in the bundle but overall well worth it.', verified: true },
+        { author: 'Dumed Penwright', rating: 4, date: '2026-01-25', body: 'Excellent quill-pen feathers. Good stiff quills in the longer specimens.', verified: false }
+      ],
+      relatedSkus: ['VM-SRF-001', 'VM-SRF-004', 'VM-SRF-006']
+    },
+    'VM-SRF-006': {
+      sku: 'VM-SRF-006', name: 'Coloured Glass Beads (Assorted)', category: 'Surface Imports',
+      basePrice: 9.00, salePrice: 6.50, image: 'https://picsum.photos/seed/vmsrf006/560/400',
+      inStock: true, rating: 3.7, reviewCount: 29,
+      description: 'Two hundred assorted glass beads in six colours (clear, cobalt blue, amber, forest green, ruby red, and white), sourced from human artisan trade. Used in jewellery, mosaics, and decorative inlay work.',
+      specs: { 'Contents': '200 beads (approx. 33 per colour)', 'Colours': 'Clear, cobalt blue, amber, forest green, ruby red, white', 'Bead Size': '6–8 mm diameter', 'Origin': 'Human artisan trade' },
+      variants: [{ label: 'Quantity', options: [{ value: '200-piece', priceModifier: 0, inStock: true }, { value: '500-piece (+18 GS)', priceModifier: 18.00, inStock: true }] }],
+      reviews: [
+        { author: 'Urist Beadcrafter', rating: 4, date: '2026-02-12', body: 'Good assortment of colours. The cobalt blue ones are particularly vivid.', verified: true },
+        { author: 'Rigoth Mosaicist', rating: 3, date: '2025-11-30', body: 'Some colour inconsistency within the same hue group. Fine for craft work.', verified: true }
+      ],
+      relatedSkus: ['VM-SRF-005', 'VM-SRF-004', 'VM-SRF-003']
+    }
+  };
+
+  function stars(rating) {
+    var full  = Math.round(rating);
+    var empty = 5 - full;
+    return '&#9733;'.repeat(full) + '&#9734;'.repeat(empty);
+  }
+
+  function catBadgeClass(cat) {
+    var map = {
+      'Mining & Excavation': 'cat-mining',
+      'Forge & Smithing':    'cat-forge',
+      'Food & Brewing':      'cat-food',
+      'Furniture & Housing': 'cat-furniture',
+      'Surface Imports':     'cat-surface'
+    };
+    return map[cat] || 'cat-mining';
+  }
+
+  function decodeItemParam(raw) {
+    try {
+      var decoded = decodeURIComponent(raw);
+      var parts   = decoded.split('XXXEEEXXX');
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i].indexOf('SKU=') !== -1) {
+          var m = parts[i].match(/SKU=([^&]+)/);
+          if (m) return decodeURIComponent(m[1]);
+        }
+      }
+    } catch(e) {}
+    return null;
+  }
+
+  function buildProductPage(p) {
+    // Update page title + breadcrumb
+    document.title = p.name + ' — VaultMart';
+    var crumb = document.getElementById('crumb-current');
+    if (crumb) crumb.textContent = p.name;
+
+    // Specs rows
+    var specRows = Object.keys(p.specs).map(function(k) {
+      return '<tr><td style="font-weight:bold;width:35%;">' + k + '</td><td>' + p.specs[k] + '</td></tr>';
+    }).join('');
+
+    // Variant selects (disabled — L1; full interaction in L2)
+    var variantHtml = p.variants.map(function(v, vi) {
+      var opts = v.options.map(function(o) {
+        var label = o.value;
+        if (o.priceModifier > 0)  label += ' (+' + o.priceModifier.toFixed(2) + ' GS)';
+        if (o.priceModifier < 0)  label += ' (' + o.priceModifier.toFixed(2) + ' GS)';
+        if (!o.inStock) label += ' [Out of Stock]';
+        return '<option value="' + o.value + '"' +
+               ' data-price-mod="' + o.priceModifier + '"' +
+               ' data-in-stock="' + o.inStock + '">' + label + '</option>';
+      }).join('');
+      return '<div class="variantRow">' +
+        '<label for="variant-' + vi + '">' + v.label + '</label>' +
+        '<select id="variant-' + vi + '" disabled style="opacity:0.5;">' + opts + '</select>' +
+        '</div>';
+    }).join('');
+
+    // Reviews
+    var reviewHtml = p.reviews.map(function(r) {
+      return '<div class="reviewItem">' +
+        '<div><span class="reviewAuthor">' + r.author + '</span>' +
+        '<span class="reviewDate">' + r.date + '</span>' +
+        (r.verified ? '<span class="verifiedBadge">VERIFIED</span>' : '') +
+        '&nbsp;<span style="color:#cc7700;">' + '&#9733;'.repeat(Math.round(r.rating)) + '&#9734;'.repeat(5 - Math.round(r.rating)) + '</span>' +
+        '</div>' +
+        '<div class="reviewBody">' + r.body + '</div>' +
+        '</div>';
+    }).join('');
+
+    // Related products
+    var relatedHtml = p.relatedSkus.map(function(sku) {
+      var rel = productData[sku];
+      if (!rel) return '';
+      return '<div style="margin-bottom:4px;">' +
+        '<a href="javascript:void(0)" onclick="navigateToProduct(\'' + sku + '\');return false;">' + rel.name + '</a>' +
+        '<span style="color:#cc0000;font-size:10px;"> &mdash; ' + rel.basePrice.toFixed(2) + ' GS</span>' +
+        '</div>';
+    }).join('');
+
+    var stockBadge;
+    if (!p.inStock) {
+      stockBadge = '<span class="statusOos">Out of Stock</span>';
+    } else if (p.stock !== undefined && p.stock <= 5) {
+      stockBadge = '<span class="lowStock" data-stock="' + p.stock + '">Only ' + p.stock + ' left!</span>';
+    } else if (p.stock !== undefined) {
+      stockBadge = '<span class="statusApproved" data-stock="' + p.stock + '">In Stock</span>';
+    } else {
+      stockBadge = '<span class="statusApproved">In Stock</span>';
+    }
+
+    var priceHtml = p.salePrice
+      ? '<span style="color:#999;text-decoration:line-through;font-size:10px;">' + p.basePrice.toFixed(2) + ' GS</span> ' +
+        '<span id="product-price" class="priceDisplay">' + p.salePrice.toFixed(2) + ' Gold Sovereigns</span>'
+      : '<span id="product-price" class="priceDisplay">' + p.basePrice.toFixed(2) + ' Gold Sovereigns</span>';
+
+    var html =
+      '<div class="productDetailWrap clearfix">' +
+        '<div class="productMainCol">' +
+          '<div class="productTitle">' + p.name + '</div>' +
+          '<div class="productImage"><img src="' + p.image + '" alt="' + p.name + '"></div>' +
+          '<p class="productDesc">' + p.description + '</p>' +
+          '<table class="productSpecs">' +
+            '<thead><tr><th colspan="2">Specifications</th></tr></thead>' +
+            '<tbody>' + specRows + '</tbody>' +
+          '</table>' +
+          '<div class="sectionHeader" style="margin:8px 0 0 0;">Customer Reviews</div>' +
+          '<div style="padding:0 0 8px 0;">' + reviewHtml + '</div>' +
+        '</div>' +
+        '<div class="productSideCol">' +
+          '<div class="sideSku">SKU: ' + p.sku + '</div>' +
+          '<div class="sideStock">' + stockBadge + '</div>' +
+          '<div class="sidePrice">' + priceHtml + '</div>' +
+          variantHtml +
+          '<div class="variantNote">Variant selection available in the full store.</div>' +
+          '<input type="button" value="Add to Cart" class="aspNetButton addToCartBtn" disabled>' +
+          '<div class="variantNote" style="margin-top:4px;">Online ordering available in the full store.</div>' +
+          '<hr>' +
+          '<div style="font-size:10px;font-weight:bold;margin-bottom:4px;color:#003366;">Related Products</div>' +
+          relatedHtml +
+          '<hr>' +
+          '<div style="font-size:10px;"><a href="/l1/eshop/catalog">&#171; Back to Catalog</a></div>' +
+        '</div>' +
+      '</div>';
+
+    document.getElementById('product-content').innerHTML = html;
+  }
+
+  var params    = new URLSearchParams(window.location.search);
+  var itemParam = params.get('item');
+  var sku       = itemParam ? decodeItemParam(itemParam) : null;
+  var product   = sku ? productData[sku] : null;
+
+  if (product) {
+    buildProductPage(product);
+  } else {
+    document.getElementById('product-not-found').style.display = 'block';
+  }
+  </script>
+
+</EshopShell>
