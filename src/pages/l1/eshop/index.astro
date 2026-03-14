@@ -1,17 +1,17 @@
 ---
 import EshopShell from './_components/EshopShell.astro';
 import ProductCard from './_components/ProductCard.astro';
-import { getFeatured, getNew, categories, formatPrice } from './_data/products';
+import { categories, formatPrice, getFeatured, getNew } from './_data/products';
 
 const featured = getFeatured();
 const newArrivals = getNew();
 
 const categoryIcons: Record<string, string> = {
-  'Mining & Excavation': '⛏',
-  'Forge & Smithing':    '🔨',
-  'Food & Brewing':      '🍺',
-  'Furniture & Housing': '🪑',
-  'Surface Imports':     '🌿',
+	'Mining & Excavation': '⛏',
+	'Forge & Smithing': '🔨',
+	'Food & Brewing': '🍺',
+	'Furniture & Housing': '🪑',
+	'Surface Imports': '🌿',
 };
 ---
 

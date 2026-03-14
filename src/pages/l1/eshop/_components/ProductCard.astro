@@ -1,17 +1,20 @@
 ---
 import type { ProductMeta } from '../_data/products';
-import StarRating from './StarRating.astro';
 import CategoryBadge from './CategoryBadge.astro';
 import PriceDisplay from './PriceDisplay.astro';
+import StarRating from './StarRating.astro';
 
 interface Props {
-  product: ProductMeta;
+	product: ProductMeta;
 }
 const { product } = Astro.props;
-const stockState = !product.inStock ? 'oos'
-  : (product.stock != null && product.stock <= 5) ? 'low'
-  : product.stock != null ? 'tracked'
-  : 'in';
+const stockState = !product.inStock
+	? 'oos'
+	: product.stock != null && product.stock <= 5
+		? 'low'
+		: product.stock != null
+			? 'tracked'
+			: 'in';
 ---
 <div class="product-card" data-sku={product.sku} data-category={product.category} data-promoted={product.isPromoted ? 'true' : undefined}>
   <div class="product-card-inner">

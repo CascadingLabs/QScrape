@@ -1,15 +1,11 @@
 ---
 interface Props {
-  title: string;
-  activePage?: 'home' | 'catalog' | 'cart' | 'search' | 'about';
-  breadcrumbs?: Array<{ label: string; href?: string }>;
+	title: string;
+	activePage?: 'home' | 'catalog' | 'cart' | 'search' | 'about';
+	breadcrumbs?: Array<{ label: string; href?: string }>;
 }
 
-const {
-  title,
-  activePage = 'home',
-  breadcrumbs = [],
-} = Astro.props;
+const { title, activePage = 'home', breadcrumbs = [] } = Astro.props;
 ---
 
 <!DOCTYPE html>
