@@ -1,4 +1,4 @@
-import { type ArticleMeta, getLatest, getByCategory } from './articles';
+import { type ArticleMeta, getByCategory, getLatest } from './articles';
 
 const CHANNEL_STATIC = {
 	language: 'en',
@@ -20,11 +20,14 @@ function escapeXml(s: string): string {
 
 /** Build a sentinel-encoded article URL identical to navigateToArticle() in HeraldShell */
 function articleUrl(site: string, a: ArticleMeta): string {
-	const hash = a.id.replace(/-/g, '').toLowerCase() + 'rss';
+	const hash = `${a.id.replace(/-/g, '').toLowerCase()}rss`;
 	const payload =
 		'MHH_v1_Kp9rXm2bQs' +
 		'XXXNNNXXX' +
-		'ID=' + encodeURIComponent(a.id) + '&HASH=' + hash +
+		'ID=' +
+		encodeURIComponent(a.id) +
+		'&HASH=' +
+		hash +
 		'XXXNNNXXX' +
 		'tR7vYw1hF3dG' +
 		'XXXNNNXXX';
@@ -103,7 +106,8 @@ export function categoryFeed(site: string, category: string): string {
 	const descriptions: Record<string, string> = {
 		Politics:
 			'Arcane Council proceedings, legislation, diplomatic relations, and Grand Duchy governance',
-		Crime: 'Fortress Guard reports, criminal cases, civil suits, and public safety incidents',
+		Crime:
+			'Fortress Guard reports, criminal cases, civil suits, and public safety incidents',
 		Economy:
 			'Commodity markets, property transactions, guild reports, and commercial development',
 		Culture:
@@ -115,8 +119,7 @@ export function categoryFeed(site: string, category: string): string {
 	};
 	const slug = category.toLowerCase();
 	const items = getByCategory(category).sort(
-		(a, b) =>
-			new Date(b.published).getTime() - new Date(a.published).getTime(),
+		(a, b) => new Date(b.published).getTime() - new Date(a.published).getTime(),
 	);
 	return buildFeed({
 		site,

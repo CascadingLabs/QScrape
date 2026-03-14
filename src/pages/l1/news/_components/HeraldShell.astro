@@ -1,35 +1,61 @@
 ---
+import { formatDateTime, getBreaking } from '../_data/articles';
 import AdUnit from './AdUnit.astro';
-import { getBreaking, formatDateTime } from '../_data/articles';
 
 interface Props {
-  title: string;
-  activePage?: 'home' | 'articles' | 'about' | 'staff' | 'contact';
-  breadcrumbs?: Array<{ label: string; href?: string }>;
-  showAds?: boolean;
+	title: string;
+	activePage?: 'home' | 'articles' | 'about' | 'staff' | 'contact';
+	breadcrumbs?: Array<{ label: string; href?: string }>;
+	showAds?: boolean;
 }
 
 const {
-  title,
-  activePage = 'home',
-  breadcrumbs = [],
-  showAds = true,
+	title,
+	activePage = 'home',
+	breadcrumbs = [],
+	showAds = true,
 } = Astro.props;
 
 const breakingArticles = getBreaking();
 const lastUpdated = formatDateTime('2026-03-11T20:15:00');
 
 const leaderboardAds = [
-  { adId: 'DSN-LB-001', text: 'Mountainhome Ale Guild \u2014 Finest Plump Helmet Ale Since Year 89', cta: 'Order Now', placement: 'header_leaderboard' },
-  { adId: 'DSN-LB-002', text: 'Registry of Deeds \u2014 Search Deeds, Mortgages & Liens Online', cta: 'Search Records', placement: 'header_leaderboard' },
-  { adId: 'DSN-LB-003', text: 'Headshoots LLC \u2014 Siege Equipment Specialists Since Year 270', cta: 'View Catalog', placement: 'header_leaderboard' },
+	{
+		adId: 'DSN-LB-001',
+		text: 'Mountainhome Ale Guild \u2014 Finest Plump Helmet Ale Since Year 89',
+		cta: 'Order Now',
+		placement: 'header_leaderboard',
+	},
+	{
+		adId: 'DSN-LB-002',
+		text: 'Registry of Deeds \u2014 Search Deeds, Mortgages & Liens Online',
+		cta: 'Search Records',
+		placement: 'header_leaderboard',
+	},
+	{
+		adId: 'DSN-LB-003',
+		text: 'Headshoots LLC \u2014 Siege Equipment Specialists Since Year 270',
+		cta: 'View Catalog',
+		placement: 'header_leaderboard',
+	},
 ];
 const footerAds = [
-  { adId: 'DSN-LB-004', text: 'Bureau of Surface Commerce \u2014 Trade Permits & Route Information', cta: 'Apply Today', placement: 'footer_leaderboard' },
-  { adId: 'DSN-LB-005', text: 'Dwarven Iron Guild \u2014 Quality Forgework at Fair Prices', cta: 'Find a Smith', placement: 'footer_leaderboard' },
+	{
+		adId: 'DSN-LB-004',
+		text: 'Bureau of Surface Commerce \u2014 Trade Permits & Route Information',
+		cta: 'Apply Today',
+		placement: 'footer_leaderboard',
+	},
+	{
+		adId: 'DSN-LB-005',
+		text: 'Dwarven Iron Guild \u2014 Quality Forgework at Fair Prices',
+		cta: 'Find a Smith',
+		placement: 'footer_leaderboard',
+	},
 ];
 
-const headerAd = leaderboardAds[Math.floor(Math.random() * leaderboardAds.length)];
+const headerAd =
+	leaderboardAds[Math.floor(Math.random() * leaderboardAds.length)];
 const footerAd = footerAds[Math.floor(Math.random() * footerAds.length)];
 ---
 

@@ -1,20 +1,30 @@
 ---
 interface Props {
-  size: 'leaderboard' | 'rectangle' | 'skyscraper' | 'banner';
-  adId: string;
-  text?: string;
-  cta?: string;
-  campaign?: string;
-  placement?: string;
+	size: 'leaderboard' | 'rectangle' | 'skyscraper' | 'banner';
+	adId: string;
+	text?: string;
+	cta?: string;
+	campaign?: string;
+	placement?: string;
 }
 
-const { size, adId, text = 'Your Ad Here', cta = 'Learn More', campaign = 'DSN-CAM-2026-Q1', placement = 'run-of-site' } = Astro.props;
+const {
+	size,
+	adId,
+	text = 'Your Ad Here',
+	cta = 'Learn More',
+	campaign = 'DSN-CAM-2026-Q1',
+	placement = 'run-of-site',
+} = Astro.props;
 
-const dims: Record<string, { w: number; h: number; fontSize: number; ctaSize: number }> = {
-  leaderboard: { w: 728, h: 90, fontSize: 16, ctaSize: 10 },
-  rectangle:   { w: 300, h: 250, fontSize: 16, ctaSize: 11 },
-  skyscraper:  { w: 160, h: 600, fontSize: 13, ctaSize: 10 },
-  banner:      { w: 468, h: 60, fontSize: 13, ctaSize: 9 },
+const dims: Record<
+	string,
+	{ w: number; h: number; fontSize: number; ctaSize: number }
+> = {
+	leaderboard: { w: 728, h: 90, fontSize: 16, ctaSize: 10 },
+	rectangle: { w: 300, h: 250, fontSize: 16, ctaSize: 11 },
+	skyscraper: { w: 160, h: 600, fontSize: 13, ctaSize: 10 },
+	banner: { w: 468, h: 60, fontSize: 13, ctaSize: 9 },
 };
 
 const d = dims[size];
