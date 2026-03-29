@@ -1,0 +1,49 @@
+/* @qscrape L2 / design-tokens / news — Mountainhome Herald */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap");
+
+:root {
+	--hn-bg: #fafaf8;
+	--hn-surface: #ffffff;
+	--hn-text: #1a1a1a;
+	--hn-muted: #666666;
+	--hn-accent: #c0392b;
+	--hn-accent-hover: #a93226;
+	--hn-border: #e5e5e5;
+	--hn-masthead-bg: #1a1a1a;
+	--hn-masthead-text: #ffffff;
+	--hn-font-display: "Playfair Display", Georgia, serif;
+	--hn-font-body: "Lora", Georgia, serif;
+	--hn-font-ui: system-ui, -apple-system, sans-serif;
+	--hn-max-reading: 680px;
+	--hn-radius: 2px;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: var(--hn-bg);
+	color: var(--hn-text);
+	font-family: var(--hn-font-body);
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+a {
+	color: var(--hn-accent);
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}

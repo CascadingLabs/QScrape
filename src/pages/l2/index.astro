@@ -9,15 +9,67 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 		</div>
 		<div class="logo">Level 2</div>
 		<div class="tagline">
-			Modern web frameworks — Lit, Svelte, React, Vue
+			Modern web frameworks — Svelte, React, Vue
 		</div>
 	</header>
 
-	<section class="stub-notice">
-		<h2>Coming Soon</h2>
+	<section>
 		<p>
-			Level 2 sites are not available yet. When launched, L2 will feature sites built with modern web frameworks like <a href="https://lit.dev/" target="_blank" rel="noopener">Lit</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, and <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>. These will test scrapers against typical DOM-level changes seen in the wild — shadow DOM, client-side rendering, hydration, and dynamic state.
+			Level 2 sites are built with <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>, and <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a> — all mounted via <code>client:only</code> so the DOM is empty without JavaScript. Each site is a full client-side SPA sharing data with its L1 counterpart.
 		</p>
-		<a href="/" class="stub-back">← Back to QScrape</a>
+	</section>
+
+	<section>
+		<h2>Sites</h2>
+		<ul class="nav-links">
+			<li>
+				<a class="nav-path" href="/l2/react/news/">/ l2 / react / news</a>
+				<span class="nav-name">Mountainhome Herald — React</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/react/eshop/">/ l2 / react / eshop</a>
+				<span class="nav-name">VaultMart — React</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/react/scoretap/">/ l2 / react / scoretap</a>
+				<span class="nav-name">ScoreTap — React</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/react/taxes/">/ l2 / react / taxes</a>
+				<span class="nav-name">Eldoria Registry of Deeds — React</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/vue/news/">/ l2 / vue / news</a>
+				<span class="nav-name">Mountainhome Herald — Vue</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/vue/eshop/">/ l2 / vue / eshop</a>
+				<span class="nav-name">VaultMart — Vue</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/vue/scoretap/">/ l2 / vue / scoretap</a>
+				<span class="nav-name">ScoreTap — Vue</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/vue/taxes/">/ l2 / vue / taxes</a>
+				<span class="nav-name">Eldoria Registry of Deeds — Vue</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/svelte/news/">/ l2 / svelte / news</a>
+				<span class="nav-name">Mountainhome Herald — Svelte</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/svelte/eshop/">/ l2 / svelte / eshop</a>
+				<span class="nav-name">VaultMart — Svelte</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/svelte/scoretap/">/ l2 / svelte / scoretap</a>
+				<span class="nav-name">ScoreTap — Svelte</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/svelte/taxes/">/ l2 / svelte / taxes</a>
+				<span class="nav-name">Eldoria Registry of Deeds — Svelte</span>
+			</li>
+		</ul>
 	</section>
 </QScrapeLayout>

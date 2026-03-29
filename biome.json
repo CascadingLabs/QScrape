@@ -70,6 +70,34 @@
 					}
 				}
 			}
+		},
+		{
+			"includes": ["src/components/l2/**"],
+			"linter": {
+				"rules": {
+					"a11y": {
+						"useSemanticElements": "off",
+						"useValidAnchor": "off",
+						"noLabelWithoutControl": "off",
+						"useAriaPropsSupportedByRole": "off",
+						"noStaticElementInteractions": "off",
+						"useKeyWithClickEvents": "off"
+					},
+					"security": {
+						"noDangerouslySetInnerHtml": "off"
+					},
+					"suspicious": {
+						"noArrayIndexKey": "off",
+						"noExplicitAny": "off"
+					},
+					"style": {
+						"noNonNullAssertion": "off"
+					},
+					"correctness": {
+						"noUnusedFunctionParameters": "off"
+					}
+				}
+			}
 		}
 	]
 }

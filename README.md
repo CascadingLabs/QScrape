@@ -15,7 +15,19 @@ Made by [Cascading Labs](https://cascadinglabs.com), used for [Yosoi](https://gi
 | L1 | `/l1/news/` | Mountainhome Herald — news portal | live |
 | L1 | `/l1/scoretap/` | ScoreTap — esports scores | live |
 | L1 | `/l1/taxes/` | Eldoria Registry of Deeds — tax records | live |
-| L2 | `/l2/` | Modern web frameworks (Lit, Svelte, React, Vue) | planned |
+| L1 | `/l1/eshop/` | VaultMart — e-commerce catalogue | live |
+| L2 | `/l2/react/news/` | Mountainhome Herald — React | live |
+| L2 | `/l2/react/eshop/` | VaultMart — React | live |
+| L2 | `/l2/react/scoretap/` | ScoreTap — React | live |
+| L2 | `/l2/react/taxes/` | Eldoria Registry of Deeds — React | live |
+| L2 | `/l2/vue/news/` | Mountainhome Herald — Vue | live |
+| L2 | `/l2/vue/eshop/` | VaultMart — Vue | live |
+| L2 | `/l2/vue/scoretap/` | ScoreTap — Vue | live |
+| L2 | `/l2/vue/taxes/` | Eldoria Registry of Deeds — Vue | live |
+| L2 | `/l2/svelte/news/` | Mountainhome Herald — Svelte | live |
+| L2 | `/l2/svelte/eshop/` | VaultMart — Svelte | live |
+| L2 | `/l2/svelte/scoretap/` | ScoreTap — Svelte | live |
+| L2 | `/l2/svelte/taxes/` | Eldoria Registry of Deeds — Svelte | live |
 | L3 | `/l3/` | Anti-bot sites | planned |
 
 ## Dev

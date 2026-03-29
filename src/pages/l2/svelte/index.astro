@@ -1,0 +1,72 @@
+---
+import QScrapeLayout from '../../../layouts/QScrapeLayout.astro';
+---
+
+<QScrapeLayout title="L2 Svelte — QScrape">
+	<header>
+		<div class="breadcrumb">
+			<a href="/">QScrape</a> / <a href="/l2/">L2</a> / Svelte
+		</div>
+		<div class="logo">L2 — Svelte</div>
+		<div class="tagline">
+			Four sites, client-side only, mounted with <code>client:only="svelte"</code>
+		</div>
+	</header>
+
+	<section>
+		<h2>About</h2>
+		<p>
+			All Svelte L2 sites are single-page applications. The HTML shell is empty — all content is rendered by Svelte after JavaScript executes. Scrapers must run JS to see any data.
+		</p>
+	</section>
+
+	<section>
+		<h2>Sites</h2>
+		<ul class="card-list">
+			<li>
+				<a class="card-item" href="/l2/svelte/news/">
+					<div class="card-header">
+						<span class="card-label">/l2/svelte/news</span>
+						<span class="badge-live">LIVE</span>
+						<span class="card-arrow">↗</span>
+					</div>
+					<div class="card-name">Mountainhome Herald</div>
+					<div class="card-desc">News portal SPA. Breaking ticker, category tabs, article detail, staff page.</div>
+				</a>
+			</li>
+			<li>
+				<a class="card-item" href="/l2/svelte/eshop/">
+					<div class="card-header">
+						<span class="card-label">/l2/svelte/eshop</span>
+						<span class="badge-live">LIVE</span>
+						<span class="card-arrow">↗</span>
+					</div>
+					<div class="card-name">VaultMart</div>
+					<div class="card-desc">E-commerce SPA. Product catalogue, cart with JSON-LD, search with &lt;mark&gt; highlighting.</div>
+				</a>
+			</li>
+			<li>
+				<a class="card-item" href="/l2/svelte/scoretap/">
+					<div class="card-header">
+						<span class="card-label">/l2/svelte/scoretap</span>
+						<span class="badge-live">LIVE</span>
+						<span class="card-arrow">↗</span>
+					</div>
+					<div class="card-name">ScoreTap</div>
+					<div class="card-desc">Esports scores SPA. Live score ticker updates every 8s. Game filter tabs.</div>
+				</a>
+			</li>
+			<li>
+				<a class="card-item" href="/l2/svelte/taxes/">
+					<div class="card-header">
+						<span class="card-label">/l2/svelte/taxes</span>
+						<span class="badge-live">LIVE</span>
+						<span class="card-arrow">↗</span>
+					</div>
+					<div class="card-name">Eldoria Registry of Deeds</div>
+					<div class="card-desc">Gov records SPA. ASP.NET-style form IDs, search, PDF viewer.</div>
+				</a>
+			</li>
+		</ul>
+	</section>
+</QScrapeLayout>

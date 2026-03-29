@@ -1,0 +1,51 @@
+/* @qscrape L2 / design-tokens / taxes — Eldoria Registry of Deeds */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+	--er-bg: #f8f9fa;
+	--er-surface: #ffffff;
+	--er-text: #212529;
+	--er-muted: #6c757d;
+	--er-primary: #1d4ed8;
+	--er-primary-hover: #1e40af;
+	--er-border: #ced4da;
+	--er-focus: #3b82f6;
+	--er-recorded: #166534;
+	--er-recorded-bg: #dcfce7;
+	--er-satisfied: #1e3a5f;
+	--er-satisfied-bg: #dbeafe;
+	--er-delinquent: #7c2d12;
+	--er-delinquent-bg: #fee2e2;
+	--er-font: "IBM Plex Sans", system-ui, sans-serif;
+	--er-radius: 4px;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: var(--er-bg);
+	color: var(--er-text);
+	font-family: var(--er-font);
+	font-size: 15px;
+	line-height: 1.6;
+}
+
+a {
+	color: var(--er-primary);
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}

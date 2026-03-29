@@ -1,0 +1,72 @@
+---
+import QScrapeLayout from '../../../layouts/QScrapeLayout.astro';
+---
+
+<QScrapeLayout title="L2 React — QScrape">
+	<header>
+		<div class="breadcrumb">
+			<a href="/">QScrape</a> / <a href="/l2/">L2</a> / React
+		</div>
+		<div class="logo">L2 — React</div>
+		<div class="tagline">
+			Four sites, client-side only, mounted with <code>client:only="react"</code>
+		</div>
+	</header>
+
+	<section>
+		<h2>About</h2>
+		<p>
+			All React L2 sites are single-page applications. The HTML shell is empty — all content is rendered by React after JavaScript executes. Scrapers must run JS to see any data.
+		</p>
+	</section>
+
+	<section>
+		<h2>Sites</h2>
+		<ul class="card-list">
+			<li>
+				<a class="card-item" href="/l2/react/news/">
+					<div class="card-header">
+						<span class="card-label">/l2/react/news</span>
+						<span class="badge-live">LIVE</span>
+						<span class="card-arrow">↗</span>
+					</div>
+					<div class="card-name">Mountainhome Herald</div>
+					<div class="card-desc">News portal SPA. Breaking ticker, category tabs, article detail, staff page.</div>
+				</a>
+			</li>
+			<li>
+				<a class="card-item" href="/l2/react/eshop/">
+					<div class="card-header">
+						<span class="card-label">/l2/react/eshop</span>
+						<span class="badge-live">LIVE</span>
+						<span class="card-arrow">↗</span>
+					</div>
+					<div class="card-name">VaultMart</div>
+					<div class="card-desc">E-commerce SPA. Product catalogue, cart with JSON-LD, search with &lt;mark&gt; highlighting.</div>
+				</a>
+			</li>
+			<li>
+				<a class="card-item" href="/l2/react/scoretap/">
+					<div class="card-header">
+						<span class="card-label">/l2/react/scoretap</span>
+						<span class="badge-live">LIVE</span>
+						<span class="card-arrow">↗</span>
+					</div>
+					<div class="card-name">ScoreTap</div>
+					<div class="card-desc">Esports scores SPA. Live score ticker updates every 8s. Game filter tabs.</div>
+				</a>
+			</li>
+			<li>
+				<a class="card-item" href="/l2/react/taxes/">
+					<div class="card-header">
+						<span class="card-label">/l2/react/taxes</span>
+						<span class="badge-live">LIVE</span>
+						<span class="card-arrow">↗</span>
+					</div>
+					<div class="card-name">Eldoria Registry of Deeds</div>
+					<div class="card-desc">Gov records SPA. ASP.NET-style form IDs, search, PDF viewer.</div>
+				</a>
+			</li>
+		</ul>
+	</section>
+</QScrapeLayout>
