@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/favicon.svg" width="64" height="64" alt="QScrape" />
+</p>
+
 # QScrape
 
 Web scraper evaluation suite. Fictional test sites across three difficulty levels for benchmarking scraper capabilities.
