@@ -1,132 +1,212 @@
 ---
-
+import QScrapeLayout from '../layouts/QScrapeLayout.astro';
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>QScrape - Web Scraper Test Suite</title>
-        <link rel="stylesheet" href="/qscrape.css" />
-    </head>
-    <body>
-        <div class="container">
-            <header>
-                <div class="logo">QScrape</div>
-                <div class="tagline">Web scraper evaluation suite</div>
-            </header>
+<QScrapeLayout
+	title="QScrape — Open-Source Web Scraper Test Suite | Cascading Labs"
+	description="QScrape is a free, open-source web scraper evaluation suite. Benchmark your scraper against realistic test sites across three difficulty levels — static HTML, modern frameworks, and anti-bot defences."
+>
+	<Fragment slot="head">
+		<meta name="keywords" content="web scraper test, scraper benchmark, web scraping evaluation, test sites for scrapers, scraper difficulty levels, open source scraper testing" />
+		<link rel="canonical" href="https://qscrape.dev/" />
 
-            <section>
-                <h2>About</h2>
-                <p>
-                    Test sites for web scrapers. Three difficulty levels target
-                    different scraper capabilities. Made by <a
-                        href="https://cascadinglabs.com"
-                        target="_blank"
-                        rel="noopener">Cascading Labs</a
-                    >
-                    , used for <a
-                        href="https://github.com/CascadingLabs/Yosoi"
-                        target="_blank"
-                        rel="noopener">Yosoi</a
-                    >.
-                </p>
-            </section>
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://qscrape.dev/" />
+		<meta property="og:title" content="QScrape — Open-Source Web Scraper Test Suite" />
+		<meta property="og:description" content="Benchmark your web scraper against realistic test sites across three difficulty levels. Free and open-source from Cascading Labs." />
+		<meta property="og:site_name" content="QScrape" />
 
-            <section>
-                <h2>Levels</h2>
-                <ul class="card-list">
-                    <li>
-                        <div class="card-item">
-                            <div class="card-header">
-                                <span class="card-label">L1</span>
-                                <span class="badge-live">LIVE</span>
-                                <a class="card-arrow" href="/l1/" title="Go to L1">↗</a>
-                            </div>
-                            <span class="card-desc">
-                                <strong>Standard HTML/CSS/JS.</strong> No dynamic data, no web frameworks. Built with <a href="https://astro.build/" target="_blank" rel="noopener">Astro</a> for multi-site management.
-                            </span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card-item">
-                            <div class="card-header">
-                                <span class="card-label">L2</span>
-                                <span class="badge-soon">soon</span>
-                                <a class="card-arrow" href="/l2/" title="Go to L2">↗</a>
-                            </div>
-                            <span class="card-desc">
-                                <strong>Modern Web Frameworks.</strong> <a href="https://lit.dev/" target="_blank" rel="noopener">Lit</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>. Covers typical DOM-level changes in the wild.
-                            </span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card-item">
-                            <div class="card-header">
-                                <span class="card-label">L3</span>
-                                <span class="badge-soon">soon</span>
-                                <a class="card-arrow" href="/l3/" title="Go to L3">↗</a>
-                            </div>
-                            <span class="card-desc">
-                                <strong>Anti-Bot Sites.</strong> No recaptchas or challenge puzzles (defined as unattainable without anti-captcha APIs).
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-            </section>
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="QScrape — Open-Source Web Scraper Test Suite" />
+		<meta name="twitter:description" content="Benchmark your web scraper against realistic test sites across three difficulty levels. Free and open-source from Cascading Labs." />
 
-            <section>
-                <h2>Sites</h2>
-                <ul class="nav-links">
-                    <li>
-                        <a class="nav-path" href="/l1/news/">/ l1 / news</a>
-                        <span class="nav-name"
-                            >Mountainhome Herald (news portal)</span
-                        >
-                    </li>
-                    <li>
-                        <a class="nav-path" href="/l1/scoretap/"
-                            >/ l1 / scoretap</a
-                        >
-                        <span class="nav-name">ScoreTap (esports scores)</span>
-                    </li>
-                    <li>
-                        <a class="nav-path" href="/l1/taxes/">/ l1 / taxes</a>
-                        <span class="nav-name"
-                            >Eldoria Registry of Deeds (tax records)</span
-                        >
-                    </li>
-                    <li>
-                        <a class="nav-path" href="/l1/eshop/">/ l1 / eshop</a>
-                        <span class="nav-name">VaultMart (e-commerce catalogue)</span>
-                    </li>
-                </ul>
-            </section>
+		<!-- JSON-LD: WebSite -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "QScrape",
+			"alternateName": "QScrape Web Scraper Test Suite",
+			"url": "https://qscrape.dev/",
+			"description": "A free, open-source web scraper evaluation suite with realistic test sites across three difficulty levels.",
+			"publisher": {
+				"@type": "Organization",
+				"name": "Cascading Labs",
+				"url": "https://cascadinglabs.com"
+			}
+		})} />
 
-            <section>
-                <h2>Resources</h2>
-                <div class="resources">
-                    <div class="resource-row">
-                        <span>sitemap</span>
-                        <a
-                            href="https://qscrape.dev/sitemap-0.xml"
-                            target="_blank"
-                            rel="noopener">qscrape.dev/sitemap-0.xml</a
-                        >
-                    </div>
-                    <div class="resource-row">
-                        <span>github</span>
-                        <a
-                            href="https://github.com/CascadingLabs/QScrape"
-                            target="_blank"
-                            rel="noopener">github.com/CascadingLabs/QScrape</a
-                        >
-                    </div>
-                </div>
-            </section>
-        </div>
-    </body>
-</html>
+		<!-- JSON-LD: SoftwareApplication -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "SoftwareApplication",
+			"name": "QScrape",
+			"applicationCategory": "DeveloperApplication",
+			"operatingSystem": "Web",
+			"url": "https://qscrape.dev/",
+			"offers": {
+				"@type": "Offer",
+				"price": "0",
+				"priceCurrency": "USD"
+			},
+			"author": {
+				"@type": "Organization",
+				"name": "Cascading Labs",
+				"url": "https://cascadinglabs.com"
+			},
+			"codeRepository": "https://github.com/CascadingLabs/QScrape",
+			"license": "https://opensource.org/licenses/MIT"
+		})} />
+
+		<!-- JSON-LD: FAQPage (AEO) -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "FAQPage",
+			"mainEntity": [
+				{
+					"@type": "Question",
+					"name": "What is QScrape?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "QScrape is a free, open-source web scraper evaluation suite built by Cascading Labs. It provides realistic test websites across three difficulty levels so developers can benchmark and validate their web scrapers before deploying them against production targets."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "What are QScrape's difficulty levels?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "Level 1 (L1) uses standard HTML, CSS, and JavaScript with no frameworks or anti-bot measures. Level 2 (L2) uses modern web frameworks like Lit, Svelte, React, and Vue. Level 3 (L3) adds anti-bot defences without unsolvable CAPTCHAs."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "How does QScrape relate to Yosoi?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "QScrape provides the test sites that Yosoi uses for scraper evaluation. Yosoi is the scraping framework by Cascading Labs, and QScrape serves as its official benchmark suite."
+					}
+				}
+			]
+		})} />
+	</Fragment>
+
+	<!-- Hero -->
+	<header class="hero" role="banner">
+		<div class="hero-brand">
+			<img src="/favicon.svg" alt="QScrape logo" class="hero-logo" width="64" height="64" />
+			<div>
+				<h1 class="hero-title">QScrape</h1>
+				<p class="hero-tagline">Open-source web scraper evaluation suite</p>
+			</div>
+		</div>
+		<p class="hero-description">
+			Benchmark your web scraper against realistic test sites across <strong>three difficulty levels</strong> — static HTML, modern frameworks, and anti-bot defences. Free and open-source from <a href="https://cascadinglabs.com" target="_blank" rel="noopener">Cascading Labs</a>.
+		</p>
+		<nav class="hero-links" aria-label="Quick links">
+			<a href="/l1/" class="hero-cta">Browse L1 Sites</a>
+			<a href="https://cascadinglabs.com/yosoi" target="_blank" rel="noopener" class="hero-link">Yosoi Docs</a>
+			<a href="https://github.com/CascadingLabs/QScrape" target="_blank" rel="noopener" class="hero-link">GitHub</a>
+		</nav>
+	</header>
+
+	<!-- AEO: direct-answer block for AI/search engines -->
+	<section aria-label="What is QScrape">
+		<h2>What is QScrape?</h2>
+		<p>
+			QScrape is a free, open-source web scraper evaluation suite. It hosts fictional but realistic test websites so developers can benchmark scrapers before deploying them in production. Built with <a href="https://astro.build/" target="_blank" rel="noopener">Astro</a>, made by <a href="https://cascadinglabs.com" target="_blank" rel="noopener">Cascading Labs</a>, and used as the official benchmark for <a href="https://github.com/CascadingLabs/Yosoi" target="_blank" rel="noopener">Yosoi</a>.
+		</p>
+	</section>
+
+	<section>
+		<h2>Levels</h2>
+		<ul class="card-list">
+			<li>
+				<div class="card-item">
+					<div class="card-header">
+						<span class="card-label">L1</span>
+						<span class="badge-live">LIVE</span>
+						<a class="card-arrow" href="/l1/" title="Go to L1">↗</a>
+					</div>
+					<span class="card-desc">
+						<strong>Standard HTML/CSS/JS.</strong> No dynamic data, no web frameworks. Built with <a href="https://astro.build/" target="_blank" rel="noopener">Astro</a> for multi-site management.
+					</span>
+				</div>
+			</li>
+			<li>
+				<div class="card-item">
+					<div class="card-header">
+						<span class="card-label">L2</span>
+						<span class="badge-soon">soon</span>
+						<a class="card-arrow" href="/l2/" title="Go to L2">↗</a>
+					</div>
+					<span class="card-desc">
+						<strong>Modern Web Frameworks.</strong> <a href="https://lit.dev/" target="_blank" rel="noopener">Lit</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>. Covers typical DOM-level changes in the wild.
+					</span>
+				</div>
+			</li>
+			<li>
+				<div class="card-item">
+					<div class="card-header">
+						<span class="card-label">L3</span>
+						<span class="badge-soon">soon</span>
+						<a class="card-arrow" href="/l3/" title="Go to L3">↗</a>
+					</div>
+					<span class="card-desc">
+						<strong>Anti-Bot Sites.</strong> No recaptchas or challenge puzzles (defined as unattainable without anti-captcha APIs).
+					</span>
+				</div>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Sites</h2>
+		<ul class="nav-links">
+			<li>
+				<a class="nav-path" href="/l1/news/">/ l1 / news</a>
+				<span class="nav-name">Mountainhome Herald (news portal)</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l1/scoretap/">/ l1 / scoretap</a>
+				<span class="nav-name">ScoreTap (esports scores)</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l1/taxes/">/ l1 / taxes</a>
+				<span class="nav-name">Eldoria Registry of Deeds (tax records)</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l1/eshop/">/ l1 / eshop</a>
+				<span class="nav-name">VaultMart (e-commerce catalogue)</span>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Resources</h2>
+		<div class="resources">
+			<div class="resource-row">
+				<span>docs</span>
+				<a
+					href="https://cascadinglabs.com/yosoi"
+					target="_blank"
+					rel="noopener">cascadinglabs.com/yosoi</a>
+			</div>
+			<div class="resource-row">
+				<span>sitemap</span>
+				<a
+					href="https://qscrape.dev/sitemap-0.xml"
+					target="_blank"
+					rel="noopener">qscrape.dev/sitemap-0.xml</a>
+			</div>
+			<div class="resource-row">
+				<span>github</span>
+				<a
+					href="https://github.com/CascadingLabs/QScrape"
+					target="_blank"
+					rel="noopener">github.com/CascadingLabs/QScrape</a>
+			</div>
+		</div>
+	</section>
+</QScrapeLayout>
