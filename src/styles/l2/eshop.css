@@ -1,0 +1,71 @@
+/* @qscrape L2 / design-tokens / eshop — VaultMart */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+	--vm-bg: #ffffff;
+	--vm-surface: #f9fafb;
+	--vm-text: #111111;
+	--vm-muted: #6b7280;
+	--vm-primary: #2563eb;
+	--vm-primary-hover: #1d4ed8;
+	--vm-cta: #16a34a;
+	--vm-cta-hover: #15803d;
+	--vm-border: #e4e4e7;
+	--vm-sale: #dc2626;
+	--vm-font: "DM Sans", system-ui, -apple-system, sans-serif;
+	--vm-radius: 6px;
+	--vm-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+	--vm-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: var(--vm-bg);
+	color: var(--vm-text);
+	font-family: var(--vm-font);
+	font-size: 15px;
+	line-height: 1.5;
+}
+
+a {
+	color: var(--vm-primary);
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+/* ── Dark mode token overrides ───────────────────────── */
+[data-theme="dark"] {
+	--vm-bg: #111111;
+	--vm-surface: #1a1a1a;
+	--vm-text: #f0f0f0;
+	--vm-muted: #888888;
+	--vm-border: #2a2a2a;
+	--vm-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+	--vm-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--vm-bg: #111111;
+		--vm-surface: #1a1a1a;
+		--vm-text: #f0f0f0;
+		--vm-muted: #888888;
+		--vm-border: #2a2a2a;
+		--vm-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+		--vm-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
+	}
+}

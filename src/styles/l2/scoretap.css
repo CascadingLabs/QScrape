@@ -1,0 +1,71 @@
+/* @qscrape L2 / design-tokens / scoretap — ScoreTap */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;600;700&display=swap");
+
+:root {
+	--st-bg: #0f1117;
+	--st-surface: #1a1d27;
+	--st-surface2: #21253a;
+	--st-text: #e8e8f0;
+	--st-muted: #6b7280;
+	--st-live: #22c55e;
+	--st-live-dim: rgba(34, 197, 94, 0.15);
+	--st-border: #2d3148;
+	--st-font-ui: "Inter", system-ui, sans-serif;
+	--st-font-score: "Roboto Mono", monospace;
+	--st-radius: 6px;
+	--st-cs2: #f0a500;
+	--st-valorant: #ff4655;
+	--st-lol: #c69b3a;
+	--st-dota2: #a5373c;
+	--st-rl: #5b9cf6;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: var(--st-bg);
+	color: var(--st-text);
+	font-family: var(--st-font-ui);
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+a {
+	color: var(--st-text);
+	text-decoration: none;
+}
+a:hover {
+	color: #fff;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+/* ── Light mode token overrides ──────────────────────── */
+[data-theme="light"] {
+	--st-bg: #f0f2f5;
+	--st-surface: #ffffff;
+	--st-surface2: #f5f7fa;
+	--st-text: #111827;
+	--st-muted: #6b7280;
+	--st-border: #d1d5db;
+}
+@media (prefers-color-scheme: light) {
+	:root:not([data-theme]) {
+		--st-bg: #f0f2f5;
+		--st-surface: #ffffff;
+		--st-surface2: #f5f7fa;
+		--st-text: #111827;
+		--st-muted: #6b7280;
+		--st-border: #d1d5db;
+	}
+}

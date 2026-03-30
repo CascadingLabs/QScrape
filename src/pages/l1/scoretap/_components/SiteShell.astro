@@ -1,4 +1,6 @@
 ---
+import ThemeInit from '../../../../components/ThemeInit.astro';
+
 interface Props {
 	title: string;
 	activePage?: string;
@@ -538,16 +540,14 @@ const { title, activePage } = Astro.props;
     }
     .footer-logo span { color: var(--accent); }
   </style>
+  <ThemeInit />
 </head>
 <body>
 
   <header style="position:sticky;top:0;z-index:200;">
   <!-- Utility bar -->
   <div id="utility-bar">
-    <span>
-      <span class="live-dot"></span>
-      <span id="live-count" style="color:#8888a0;">3 MATCHES LIVE NOW</span>
-    </span>
+    <span></span>
     <span class="util-links">
       <a href="#" tabindex="-1" data-tooltip="Level 1 doesn't have sign in, register or settings options">Sign In</a>
       <a href="#" tabindex="-1" data-tooltip="Level 1 doesn't have sign in, register or settings options">Register</a>

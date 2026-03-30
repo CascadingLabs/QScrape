@@ -1,0 +1,102 @@
+/* TaxesSearchForm — L3 React island */
+.loading {
+	display: flex;
+	align-items: center;
+	min-height: 120px;
+	color: var(--er3-muted);
+	font-family: var(--er3-font);
+	font-size: 14px;
+}
+
+.root {
+	background: var(--er3-surface);
+	border: 1px solid var(--er3-border);
+	border-radius: var(--er3-radius);
+	padding: 24px;
+}
+
+.heading {
+	font-family: var(--er3-font);
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--er3-text);
+	margin: 0 0 20px;
+	padding-bottom: 12px;
+	border-bottom: 2px solid var(--er3-primary);
+	letter-spacing: -0.2px;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.fieldGroup {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.label {
+	font-family: var(--er3-font);
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--er3-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.input,
+.select {
+	font-family: var(--er3-font-mono);
+	font-size: 13px;
+	color: var(--er3-text);
+	background: var(--er3-surface2);
+	border: 1px solid var(--er3-border);
+	border-radius: var(--er3-radius);
+	padding: 9px 12px;
+	outline: none;
+	width: 100%;
+}
+.input::placeholder {
+	color: var(--er3-muted);
+	opacity: 0.6;
+}
+.input:focus,
+.select:focus {
+	border-color: var(--er3-primary);
+	box-shadow: 0 0 0 3px var(--er3-focus);
+}
+
+.actions {
+	padding-top: 4px;
+}
+
+.btn {
+	font-family: var(--er3-font);
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--er3-bg);
+	background: var(--er3-primary);
+	border: none;
+	border-radius: var(--er3-radius);
+	padding: 10px 20px;
+	cursor: pointer;
+	letter-spacing: 0.02em;
+	transition: background 0.15s;
+}
+.btn:hover {
+	background: var(--er3-primary-hover);
+}
+
+/* Anti-bot: CSS-assembled text */
+.assembled {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.25em;
+	align-items: baseline;
+}
+.assembledWord {
+	display: inline;
+}

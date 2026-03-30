@@ -133,7 +133,7 @@ import SiteShell from './_components/SiteShell.astro';
       document.getElementById('breadcrumb-match').textContent = m.team1.name + ' vs ' + m.team2.name;
 
       var statusHtml = m.status === 'LIVE'
-        ? '<span class="live-pill">LIVE</span> ' + m.statusNote
+        ? m.statusNote
         : m.status;
 
       // Map rows

@@ -1,0 +1,57 @@
+/* EshopCategoryNav — React island, CSS-assembled text anti-bot */
+
+.loading {
+	min-height: 48px;
+	display: flex;
+	align-items: center;
+	color: var(--vm3-muted);
+	font-family: var(--vm3-font);
+	font-size: 14px;
+}
+
+.root {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 0 0 16px;
+	border-bottom: 1px solid var(--vm3-border);
+	margin-bottom: 20px;
+}
+
+.tab {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 14px;
+	background: var(--vm3-surface);
+	border: 1px solid var(--vm3-border);
+	border-radius: var(--vm3-radius);
+	font-family: var(--vm3-font);
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--vm3-muted);
+	text-decoration: none;
+	transition:
+		border-color 0.15s,
+		color 0.15s;
+}
+.tab:hover {
+	border-color: var(--vm3-border-hover);
+	color: var(--vm3-text);
+}
+
+.tabActive {
+	background: var(--vm3-primary);
+	border-color: var(--vm3-primary);
+	color: #fff;
+}
+
+/* Anti-bot: CSS-assembled text container */
+.assembled {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.25em;
+}
+
+.assembledWord {
+	display: inline-block;
+}

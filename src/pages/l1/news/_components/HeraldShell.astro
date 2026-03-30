@@ -1,4 +1,5 @@
 ---
+import ThemeInit from '../../../../components/ThemeInit.astro';
 import { formatDateTime, getBreaking } from '../_data/articles';
 import AdUnit from './AdUnit.astro';
 
@@ -67,6 +68,7 @@ const footerAd = footerAds[Math.floor(Math.random() * footerAds.length)];
   <title>{title} - Mountainhome Herald</title>
   <link rel="stylesheet" href="/global.css">
   <link rel="alternate" type="application/rss+xml" title="Mountainhome Herald — All Stories" href="/l1/news/rss/all.xml">
+  <ThemeInit />
 </head>
 <body>
   <div id="container">

@@ -77,7 +77,7 @@ import QScrapeLayout from '../layouts/QScrapeLayout.astro';
 					"name": "What are QScrape's difficulty levels?",
 					"acceptedAnswer": {
 						"@type": "Answer",
-						"text": "Level 1 (L1) uses standard HTML, CSS, and JavaScript with no frameworks or anti-bot measures. Level 2 (L2) uses modern web frameworks like Lit, Svelte, React, and Vue. Level 3 (L3) adds anti-bot defences without unsolvable CAPTCHAs."
+						"text": "Level 1 (L1) uses standard HTML, CSS, and JavaScript with no frameworks or anti-bot measures. Level 2 (L2) uses modern web frameworks like Svelte, React, and Vue as client-side SPAs. Level 3 (L3) uses Astro Islands — each page splits data across four independent framework islands (React, Vue, Svelte, Solid), each using a distinct data-obfuscation technique. No unsolvable CAPTCHAs at any level."
 					}
 				},
 				{
@@ -95,7 +95,7 @@ import QScrapeLayout from '../layouts/QScrapeLayout.astro';
 	<!-- Hero -->
 	<header class="hero" role="banner">
 		<div class="hero-brand">
-			<img src="/favicon.svg" alt="QScrape logo" class="hero-logo" width="64" height="64" />
+			<img data-src-dark="/favicon.svg" data-src-light="/favicon-light.svg" alt="QScrape logo" class="hero-logo themed-img" width="64" height="64" />
 			<div>
 				<h1 class="hero-title">QScrape</h1>
 				<p class="hero-tagline">Open-source web scraper evaluation suite</p>
@@ -126,7 +126,7 @@ import QScrapeLayout from '../layouts/QScrapeLayout.astro';
 				<div class="card-item">
 					<div class="card-header">
 						<span class="card-label">L1</span>
-						<span class="badge-live">LIVE</span>
+
 						<a class="card-arrow" href="/l1/" title="Go to L1">↗</a>
 					</div>
 					<span class="card-desc">
@@ -138,11 +138,11 @@ import QScrapeLayout from '../layouts/QScrapeLayout.astro';
 				<div class="card-item">
 					<div class="card-header">
 						<span class="card-label">L2</span>
-						<span class="badge-soon">soon</span>
+
 						<a class="card-arrow" href="/l2/" title="Go to L2">↗</a>
 					</div>
 					<span class="card-desc">
-						<strong>Modern Web Frameworks.</strong> <a href="https://lit.dev/" target="_blank" rel="noopener">Lit</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>. Covers typical DOM-level changes in the wild.
+						<strong>Modern Web Frameworks.</strong> <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>. Covers typical DOM-level changes in the wild.
 					</span>
 				</div>
 			</li>
@@ -150,11 +150,11 @@ import QScrapeLayout from '../layouts/QScrapeLayout.astro';
 				<div class="card-item">
 					<div class="card-header">
 						<span class="card-label">L3</span>
-						<span class="badge-soon">soon</span>
+
 						<a class="card-arrow" href="/l3/" title="Go to L3">↗</a>
 					</div>
 					<span class="card-desc">
-						<strong>Anti-Bot Sites.</strong> No recaptchas or challenge puzzles (defined as unattainable without anti-captcha APIs).
+						<strong>Anti-Bot Islands.</strong> <a href="https://docs.astro.build/en/concepts/islands/" target="_blank" rel="noopener">Astro Islands</a> with <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, and <a href="https://www.solidjs.com/" target="_blank" rel="noopener">Solid</a> — each island owns a different data slice and uses a distinct obfuscation technique. No unsolvable CAPTCHAs.
 					</span>
 				</div>
 			</li>
@@ -165,20 +165,67 @@ import QScrapeLayout from '../layouts/QScrapeLayout.astro';
 		<h2>Sites</h2>
 		<ul class="nav-links">
 			<li>
+				<span class="nav-name nav-name--group">Mountainhome Herald — news portal</span>
+			</li>
+			<li class="nav-indent">
 				<a class="nav-path" href="/l1/news/">/ l1 / news</a>
-				<span class="nav-name">Mountainhome Herald (news portal)</span>
+				<span class="nav-name">Static HTML</span>
 			</li>
-			<li>
-				<a class="nav-path" href="/l1/scoretap/">/ l1 / scoretap</a>
-				<span class="nav-name">ScoreTap (esports scores)</span>
+			<li class="nav-indent">
+				<a class="nav-path" href="/l2/news/">/ l2 / news</a>
+				<span class="nav-name">React · Vue · Svelte</span>
 			</li>
-			<li>
-				<a class="nav-path" href="/l1/taxes/">/ l1 / taxes</a>
-				<span class="nav-name">Eldoria Registry of Deeds (tax records)</span>
+			<li class="nav-indent">
+				<a class="nav-path" href="/l3/news/">/ l3 / news</a>
+				<span class="nav-name">React · Vue · Svelte · Solid islands</span>
 			</li>
+
 			<li>
+				<span class="nav-name nav-name--group">VaultMart — e-commerce catalogue</span>
+			</li>
+			<li class="nav-indent">
 				<a class="nav-path" href="/l1/eshop/">/ l1 / eshop</a>
-				<span class="nav-name">VaultMart (e-commerce catalogue)</span>
+				<span class="nav-name">Static HTML</span>
+			</li>
+			<li class="nav-indent">
+				<a class="nav-path" href="/l2/eshop/">/ l2 / eshop</a>
+				<span class="nav-name">React · Vue · Svelte</span>
+			</li>
+			<li class="nav-indent">
+				<a class="nav-path" href="/l3/eshop/">/ l3 / eshop</a>
+				<span class="nav-name">React · Vue · Svelte · Solid islands</span>
+			</li>
+
+			<li>
+				<span class="nav-name nav-name--group">ScoreTap — esports scores</span>
+			</li>
+			<li class="nav-indent">
+				<a class="nav-path" href="/l1/scoretap/">/ l1 / scoretap</a>
+				<span class="nav-name">Static HTML</span>
+			</li>
+			<li class="nav-indent">
+				<a class="nav-path" href="/l2/scoretap/">/ l2 / scoretap</a>
+				<span class="nav-name">React · Vue · Svelte</span>
+			</li>
+			<li class="nav-indent">
+				<a class="nav-path" href="/l3/scoretap/">/ l3 / scoretap</a>
+				<span class="nav-name">React · Vue · Svelte · Solid islands</span>
+			</li>
+
+			<li>
+				<span class="nav-name nav-name--group">Eldoria Registry of Deeds — tax records</span>
+			</li>
+			<li class="nav-indent">
+				<a class="nav-path" href="/l1/taxes/">/ l1 / taxes</a>
+				<span class="nav-name">Static HTML</span>
+			</li>
+			<li class="nav-indent">
+				<a class="nav-path" href="/l2/taxes/">/ l2 / taxes</a>
+				<span class="nav-name">React · Vue · Svelte</span>
+			</li>
+			<li class="nav-indent">
+				<a class="nav-path" href="/l3/taxes/">/ l3 / taxes</a>
+				<span class="nav-name">React · Vue · Svelte · Solid islands</span>
 			</li>
 		</ul>
 	</section>

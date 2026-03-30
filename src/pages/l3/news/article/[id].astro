@@ -1,0 +1,119 @@
+---
+import NewsArticleHeader from '../../../../components/l3/react/news/NewsArticleHeader';
+import NewsAuthorBio from '../../../../components/l3/solid/news/NewsAuthorBio';
+import NewsArticleImage from '../../../../components/l3/svelte/news/NewsArticleImage.svelte';
+import NewsArticleBody from '../../../../components/l3/vue/news/NewsArticleBody.vue';
+import { type ArticleMeta, articles } from '../../../../data/news/articles';
+import '../../../../styles/l3/news.css';
+import ThemeInit from '../../../../components/ThemeInit.astro';
+
+export async function getStaticPaths() {
+	return articles.map((a) => ({
+		params: { id: a.id },
+		props: { article: a },
+	}));
+}
+
+interface Props {
+	article: ArticleMeta;
+}
+const { article } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{article.headline} — Mountainhome Herald L3</title>
+    <ThemeInit />
+  </head>
+  <body>
+    <header class="hn3-masthead">
+      <div class="hn3-masthead-inner">
+        <span></span>
+        <a href="/l3/news/" class="hn3-title-link">
+          <span class="hn3-title-main">Mountainhome Herald</span>
+          <span class="hn3-tagline">The Voice of the Deep</span>
+        </a>
+        <span></span>
+      </div>
+      <nav class="hn3-nav">
+        <div class="hn3-nav-inner">
+          <a href="/l3/news/" class="hn3-nav-item">Home</a>
+          <a href="/l3/news/articles/" class="hn3-nav-item">Articles</a>
+          <a href="/l3/" class="hn3-nav-item">← L3</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="hn3-main">
+      <div class="hn3-article-layout">
+        <div class="hn3-article-primary">
+          <NewsArticleHeader client:only="react" article={article} />
+          <NewsArticleImage client:only="svelte" articleId={article.id} />
+          <NewsArticleBody client:only="vue" articleId={article.id} />
+        </div>
+        <aside class="hn3-article-sidebar">
+          <NewsAuthorBio client:only="solid-js" articleId={article.id} />
+        </aside>
+      </div>
+    </main>
+
+    <footer class="hn3-footer">
+      <div class="hn3-footer-inner">
+        <span>© 2026 Mountainhome Herald</span>
+        <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--hn3-bg);
+    color: var(--hn3-text);
+    font-family: var(--hn3-font-body);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .hn3-masthead { background: var(--hn3-masthead-bg); color: var(--hn3-masthead-text); }
+  .hn3-masthead-inner {
+    max-width: 1100px; margin: 0 auto; padding: 18px 24px;
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px;
+  }
+  .hn3-title-link { text-align: center; text-decoration: none; color: inherit; display: block; }
+  .hn3-title-main {
+    display: block; font-family: var(--hn3-font-display);
+    font-size: clamp(22px, 3.5vw, 40px); font-weight: 700; letter-spacing: -0.5px; line-height: 1.1;
+    color: var(--hn3-masthead-text);
+  }
+  .hn3-tagline {
+    display: block; font-size: 11px; color: #777; margin-top: 3px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .hn3-nav { border-bottom: 2px solid var(--hn3-accent); background: #1a1a1a; }
+  .hn3-nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; }
+  .hn3-nav-item {
+    padding: 11px 16px; font-family: var(--hn3-font-body); font-size: 13px; font-weight: 500;
+    color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none;
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+  }
+  .hn3-nav-item:hover { color: #fff; }
+
+  .hn3-main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  .hn3-article-layout { display: grid; grid-template-columns: 1fr 280px; gap: 40px; }
+  @media (max-width: 768px) { .hn3-article-layout { grid-template-columns: 1fr; } }
+  .hn3-article-primary { display: flex; flex-direction: column; gap: 24px; }
+  .hn3-article-sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+  .hn3-footer { border-top: 1px solid var(--hn3-border); background: var(--hn3-masthead-bg); margin-top: 48px; }
+  .hn3-footer-inner {
+    max-width: 1100px; margin: 0 auto; padding: 16px 24px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    font-family: var(--hn3-font-body); font-size: 12px; color: #666;
+  }
+</style>

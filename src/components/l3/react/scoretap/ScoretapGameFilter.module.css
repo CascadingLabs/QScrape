@@ -1,0 +1,57 @@
+/* ScoretapGameFilter — L3 React island */
+.loading {
+	display: flex;
+	align-items: center;
+	min-height: 48px;
+	color: var(--st3-muted);
+	font-family: var(--st3-font-ui);
+	font-size: 14px;
+}
+
+.root {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	padding: 0 0 16px;
+	border-bottom: 1px solid var(--st3-border);
+	margin-bottom: 20px;
+}
+
+.tab {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 14px;
+	border-radius: var(--st3-radius);
+	background: var(--st3-surface2);
+	border: 1px solid var(--st3-border);
+	color: var(--st3-muted);
+	font-family: var(--st3-font-ui);
+	font-size: 13px;
+	font-weight: 500;
+	text-decoration: none;
+	transition:
+		background 0.15s,
+		color 0.15s,
+		border-color 0.15s;
+}
+.tab:hover {
+	background: var(--st3-surface);
+	color: var(--st3-text);
+}
+
+.tabActive {
+	background: var(--st3-live-dim);
+	border-color: var(--st3-live);
+	color: var(--st3-live);
+}
+
+/* Anti-bot: CSS-assembled text */
+.assembled {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.25em;
+	align-items: baseline;
+}
+.assembledWord {
+	display: inline;
+}

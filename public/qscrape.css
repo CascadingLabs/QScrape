@@ -1,53 +1,84 @@
 /* QScrape Index Pages — CL Design System */
 
+/* ── Theme transition ───────────────────────────────── */
+*,
+*::before,
+*::after {
+	transition:
+		background-color 0.4s ease,
+		color 0.4s ease,
+		border-color 0.4s ease,
+		box-shadow 0.4s ease,
+		fill 0.4s ease,
+		stroke 0.4s ease;
+}
+
 /* ── Theme tokens ────────────────────────────────────── */
 :root {
 	/* Dark default */
-	--cl-bg: #0a0a0a;
-	--cl-bg-subtle: #0f0f0f;
-	--cl-text: #e0e0e0;
-	--cl-text-muted: #b0b0b0;
-	--cl-text-dim: #808080;
-	--cl-text-marker: #555555;
-	--cl-border: #2a2a2a;
+	--qs-bg: #0a0a0a;
+	--qs-bg-subtle: #0f0f0f;
+	--qs-text: #e0e0e0;
+	--qs-text-muted: #b0b0b0;
+	--qs-text-dim: #808080;
+	--qs-text-marker: #555555;
+	--qs-border: #2a2a2a;
+	--qs-accent: #3d1414;
+	--qs-accent-text: #ef6464;
+	--qs-accent-pale: #e8b4b4;
+	--qs-link-hover-bg: color-mix(in srgb, #3d1414 15%, transparent);
+	--qs-edge-shadow: none;
+
+	/* CascadingLabs accent — dark blue */
 	--cl-accent: #1e3a5f;
-	--cl-accent-text: #5b8cc7;
+	--cl-accent-text: #5ba4cf;
 	--cl-accent-pale: #90b8e0;
 	--cl-link-hover-bg: color-mix(in srgb, #1e3a5f 15%, transparent);
-	--cl-edge-shadow: none;
 }
 
 /* Light mode */
 [data-theme='light'] {
-	--cl-bg: #ffffff;
-	--cl-bg-subtle: #f5f5f5;
-	--cl-text: #0a0a0a;
-	--cl-text-muted: #555555;
-	--cl-text-dim: #808080;
-	--cl-text-marker: #b0b0b0;
-	--cl-border: #d0d0d0;
+	--qs-bg: #ffffff;
+	--qs-bg-subtle: #f5f5f5;
+	--qs-text: #0a0a0a;
+	--qs-text-muted: #555555;
+	--qs-text-dim: #808080;
+	--qs-text-marker: #b0b0b0;
+	--qs-border: #d0d0d0;
+	--qs-accent: #3d1414;
+	--qs-accent-text: #c23232;
+	--qs-accent-pale: #f7e0e0;
+	--qs-link-hover-bg: color-mix(in srgb, #3d1414 10%, transparent);
+	--qs-edge-shadow: none;
+
+	/* CascadingLabs accent — dark blue */
 	--cl-accent: #1e3a5f;
 	--cl-accent-text: #2c5282;
 	--cl-accent-pale: #d4e5f7;
 	--cl-link-hover-bg: color-mix(in srgb, #1e3a5f 10%, transparent);
-	--cl-edge-shadow: none;
 }
 
 /* Light mode — no-JS fallback */
 @media (prefers-color-scheme: light) {
 	:root:not([data-theme]) {
-		--cl-bg: #ffffff;
-		--cl-bg-subtle: #f5f5f5;
-		--cl-text: #0a0a0a;
-		--cl-text-muted: #555555;
-		--cl-text-dim: #808080;
-		--cl-text-marker: #b0b0b0;
-		--cl-border: #d0d0d0;
+		--qs-bg: #ffffff;
+		--qs-bg-subtle: #f5f5f5;
+		--qs-text: #0a0a0a;
+		--qs-text-muted: #555555;
+		--qs-text-dim: #808080;
+		--qs-text-marker: #b0b0b0;
+		--qs-border: #d0d0d0;
+		--qs-accent: #3d1414;
+		--qs-accent-text: #c23232;
+		--qs-accent-pale: #f7e0e0;
+		--qs-link-hover-bg: color-mix(in srgb, #3d1414 10%, transparent);
+		--qs-edge-shadow: none;
+
+		/* CascadingLabs accent — dark blue */
 		--cl-accent: #1e3a5f;
 		--cl-accent-text: #2c5282;
 		--cl-accent-pale: #d4e5f7;
 		--cl-link-hover-bg: color-mix(in srgb, #1e3a5f 10%, transparent);
-		--cl-edge-shadow: none;
 	}
 }
 
@@ -73,7 +104,7 @@ body::after {
 	inset: 0;
 	pointer-events: none;
 	z-index: 10000;
-	box-shadow: var(--cl-edge-shadow);
+	box-shadow: var(--qs-edge-shadow);
 }
 
 @media (max-width: 50rem) {
@@ -83,15 +114,15 @@ body::after {
 }
 
 ::selection {
-	background: var(--cl-accent);
+	background: var(--qs-accent);
 	color: #fff;
 }
 
 /* ── Base typography ─────────────────────────────────── */
 
 body {
-	background: var(--cl-bg);
-	color: var(--cl-text);
+	background: var(--qs-bg);
+	color: var(--qs-text);
 	font-family: "DM Mono", monospace;
 	font-size: 16px;
 	line-height: 1.6;
@@ -105,7 +136,7 @@ body {
 
 header {
 	margin-bottom: 3rem;
-	border-bottom: 1px solid var(--cl-border);
+	border-bottom: 1px solid var(--qs-border);
 	padding-bottom: 2rem;
 }
 
@@ -113,12 +144,12 @@ header {
 	font-family: "DM Mono", monospace;
 	font-size: 2.5rem;
 	font-weight: 700;
-	color: var(--cl-text);
+	color: var(--qs-text);
 	letter-spacing: -0.5px;
 }
 
 .tagline {
-	color: var(--cl-text-dim);
+	color: var(--qs-text-dim);
 	margin-top: 0.4rem;
 	font-size: 0.95rem;
 }
@@ -145,26 +176,26 @@ header {
 	font-family: "DM Mono", monospace;
 	font-size: 2.5rem;
 	font-weight: 700;
-	color: var(--cl-text);
+	color: var(--qs-text);
 	letter-spacing: -0.5px;
 	line-height: 1.1;
 }
 
 .hero-tagline {
-	color: var(--cl-text-dim);
+	color: var(--qs-text-dim);
 	margin-top: 0.2rem;
 	font-size: 0.95rem;
 }
 
 .hero-description {
-	color: var(--cl-text-muted);
+	color: var(--qs-text-muted);
 	max-width: 60ch;
 	font-size: 1rem;
 	line-height: 1.7;
 }
 
 .hero-description strong {
-	color: var(--cl-accent-text);
+	color: var(--qs-accent-text);
 }
 
 .hero-links {
@@ -179,20 +210,20 @@ header {
 	font-size: 0.85rem;
 	font-weight: 600;
 	color: #fff;
-	background: var(--cl-accent);
+	background: var(--qs-accent);
 	padding: 0.45em 1.1em;
 	text-decoration: none;
 	transition: background-color 0.15s;
 }
 
 .hero-cta:hover {
-	background: color-mix(in srgb, var(--cl-accent) 80%, white);
+	background: color-mix(in srgb, var(--qs-accent) 80%, white);
 	text-decoration: none;
 }
 
 .hero-link {
 	font-size: 0.85rem;
-	color: var(--cl-accent-text);
+	color: var(--qs-accent-text);
 	text-decoration: none;
 }
 
@@ -210,17 +241,17 @@ h2 {
 	font-size: 0.75rem;
 	text-transform: uppercase;
 	letter-spacing: 0.12em;
-	color: var(--cl-text-dim);
+	color: var(--qs-text-dim);
 	margin-bottom: 1rem;
 }
 
 p {
-	color: var(--cl-text-muted);
+	color: var(--qs-text-muted);
 	max-width: 60ch;
 }
 
 a {
-	color: var(--cl-accent-text);
+	color: var(--qs-accent-text);
 	text-decoration: none;
 }
 
@@ -233,12 +264,12 @@ a:hover {
 .breadcrumb {
 	font-family: "DM Mono", monospace;
 	font-size: 0.85rem;
-	color: var(--cl-text-marker);
+	color: var(--qs-text-marker);
 	margin-bottom: 0.75rem;
 }
 
 .breadcrumb a {
-	color: var(--cl-accent-text);
+	color: var(--qs-accent-text);
 	text-decoration: none;
 }
 
@@ -267,8 +298,8 @@ a:hover {
 }
 
 .card-item:hover {
-	background-color: var(--cl-bg-subtle);
-	border-color: var(--cl-border);
+	background-color: var(--qs-bg-subtle);
+	border-color: var(--qs-border);
 	text-decoration: none;
 }
 
@@ -281,7 +312,7 @@ a:hover {
 
 .card-arrow {
 	margin-left: auto;
-	color: var(--cl-text-marker);
+	color: var(--qs-text-marker);
 	text-decoration: none;
 	font-size: 0.85rem;
 	line-height: 1;
@@ -289,30 +320,30 @@ a:hover {
 }
 
 .card-item:hover .card-arrow {
-	color: var(--cl-accent-text);
+	color: var(--qs-accent-text);
 }
 
 .card-label {
 	font-family: "DM Mono", monospace;
 	font-size: 0.8rem;
 	font-weight: 600;
-	color: var(--cl-text);
+	color: var(--qs-text);
 	white-space: nowrap;
 }
 
 .card-name {
-	color: var(--cl-text-muted);
+	color: var(--qs-text-muted);
 	font-size: 0.9rem;
 	font-weight: 500;
 }
 
 .card-desc {
-	color: var(--cl-text-dim);
+	color: var(--qs-text-dim);
 	font-size: 0.9rem;
 }
 
 .card-desc strong {
-	color: var(--cl-text-muted);
+	color: var(--qs-text-muted);
 	font-weight: 500;
 }
 
@@ -334,7 +365,7 @@ a:hover {
 	font-size: 0.65rem;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
-	color: var(--cl-text-marker);
+	color: var(--qs-text-marker);
 	white-space: nowrap;
 }
 
@@ -371,7 +402,7 @@ a:hover {
 .nav-path {
 	font-family: "DM Mono", monospace;
 	font-size: 0.85rem;
-	color: var(--cl-accent-text);
+	color: var(--qs-accent-text);
 	min-width: 14ch;
 }
 
@@ -380,8 +411,23 @@ a:hover {
 }
 
 .nav-name {
-	color: var(--cl-text-dim);
+	color: var(--qs-text-dim);
 	font-size: 0.9rem;
+}
+
+.nav-name--group {
+	color: var(--qs-text);
+	font-size: 0.85rem;
+	font-weight: 500;
+	padding-top: 0.5rem;
+}
+
+.nav-links li:first-child .nav-name--group {
+	padding-top: 0;
+}
+
+.nav-indent {
+	padding-left: 1.5rem;
 }
 
 /* ── Resources section ───────────────────────────────── */
@@ -394,12 +440,12 @@ a:hover {
 
 .resource-row {
 	font-size: 0.85rem;
-	color: var(--cl-text-dim);
+	color: var(--qs-text-dim);
 }
 
 .resource-row span {
 	font-family: "DM Mono", monospace;
-	color: var(--cl-text-marker);
+	color: var(--qs-text-marker);
 	margin-right: 0.5rem;
 }
 
@@ -412,9 +458,9 @@ a:hover {
 .stub-back {
 	display: inline-block;
 	font-size: 0.9rem;
-	color: var(--cl-accent-text);
+	color: var(--qs-accent-text);
 	text-decoration: none;
-	border: 1px solid var(--cl-border);
+	border: 1px solid var(--qs-border);
 	padding: 0.4em 1em;
 	transition:
 		background-color 0.15s,
@@ -422,7 +468,7 @@ a:hover {
 }
 
 .stub-back:hover {
-	background: var(--cl-bg-subtle);
-	border-color: var(--cl-accent-text);
+	background: var(--qs-bg-subtle);
+	border-color: var(--qs-accent-text);
 	text-decoration: none;
 }

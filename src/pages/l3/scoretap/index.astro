@@ -1,0 +1,172 @@
+---
+import ScoretapGameFilter from '../../../components/l3/react/scoretap/ScoretapGameFilter';
+import ScoretapStandings from '../../../components/l3/solid/scoretap/ScoretapStandings';
+import ScoretapLiveTicker from '../../../components/l3/svelte/scoretap/ScoretapLiveTicker.svelte';
+import ScoretapEvents from '../../../components/l3/vue/scoretap/ScoretapEvents.vue';
+import '../../../styles/l3/scoretap.css';
+import ThemeInit from '../../../components/ThemeInit.astro';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ScoreTap — L3</title>
+    <meta name="description" content="ScoreTap esports scores — QScrape L3 islands test site." />
+    <ThemeInit />
+  </head>
+  <body>
+    <header class="st3-masthead">
+      <div class="st3-masthead-inner">
+        <a href="/l3/scoretap/" class="st3-logo-link">
+          <span class="st3-logo">Score<span class="st3-logo-accent">Tap</span></span>
+        </a>
+        <nav class="st3-nav" aria-label="Main navigation">
+          <a href="/l3/scoretap/" class="st3-nav-item st3-nav-active">Home</a>
+          <a href="/l3/scoretap/teams/" class="st3-nav-item">Teams</a>
+          <a href="/l3/" class="st3-nav-item st3-nav-back">← L3</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="st3-main">
+      <div class="st3-layout">
+        <section class="st3-primary">
+          <ScoretapGameFilter client:only="react" />
+          <ScoretapEvents client:only="vue" />
+        </section>
+        <aside class="st3-sidebar-col">
+          <ScoretapLiveTicker client:only="svelte" />
+          <ScoretapStandings client:only="solid-js" />
+        </aside>
+      </div>
+    </main>
+
+    <footer class="st3-footer">
+      <div class="st3-footer-inner">
+        <span>© 2026 ScoreTap</span>
+        <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--st3-bg);
+    color: var(--st3-text);
+    font-family: var(--st3-font-ui);
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .st3-masthead {
+    background: var(--st3-surface);
+    border-bottom: 1px solid var(--st3-border);
+  }
+  .st3-masthead-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .st3-logo-link {
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .st3-logo {
+    font-family: var(--st3-font-ui);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--st3-text);
+    letter-spacing: -0.5px;
+  }
+  .st3-logo-accent {
+    color: var(--st3-live);
+  }
+
+  .st3-nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: auto;
+  }
+  .st3-nav-item {
+    padding: 7px 14px;
+    font-family: var(--st3-font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--st3-muted);
+    text-decoration: none;
+    border-radius: var(--st3-radius);
+    transition: background 0.15s, color 0.15s;
+  }
+  .st3-nav-item:hover {
+    background: var(--st3-surface2);
+    color: var(--st3-text);
+  }
+  .st3-nav-active {
+    color: var(--st3-text);
+    background: var(--st3-surface2);
+  }
+  .st3-nav-back {
+    margin-left: 8px;
+    border-left: 1px solid var(--st3-border);
+    border-radius: 0;
+    padding-left: 16px;
+  }
+
+  .st3-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 24px 48px;
+  }
+
+  .st3-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 28px;
+  }
+  @media (max-width: 768px) {
+    .st3-layout { grid-template-columns: 1fr; }
+  }
+
+  .st3-primary {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+  }
+
+  .st3-sidebar-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+  }
+
+  .st3-footer {
+    border-top: 1px solid var(--st3-border);
+    background: var(--st3-surface);
+    margin-top: auto;
+  }
+  .st3-footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--st3-font-ui);
+    font-size: 12px;
+    color: var(--st3-muted);
+  }
+</style>

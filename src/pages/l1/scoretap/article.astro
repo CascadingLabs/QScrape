@@ -335,10 +335,10 @@ import SiteShell from './_components/SiteShell.astro';
           <span class="widget-title">Top Events</span>
           <a class="widget-link" href="/l1/scoretap/events">All Events</a>
         </div>
-        <div class="event-row"><div class="event-name">IEM Katowice 2026</div><div style="text-align:right;"><span class="game-tag cs2">CS2</span><div class="event-dates">Mar 5&ndash;15</div></div><span class="event-badge live">LIVE</span></div>
-        <div class="event-row"><div class="event-name">VCT Americas 2026</div><div style="text-align:right;"><span class="game-tag valorant">VAL</span><div class="event-dates">Mar 1&ndash;20</div></div><span class="event-badge live">LIVE</span></div>
-        <div class="event-row"><div class="event-name">RLCS 2026 Spring</div><div style="text-align:right;"><span class="game-tag rl">RL</span><div class="event-dates">Mar 8&ndash;22</div></div><span class="event-badge live">LIVE</span></div>
-        <div class="event-row"><div class="event-name">LCK Spring 2026</div><div style="text-align:right;"><span class="game-tag lol">LOL</span><div class="event-dates">Feb 15&ndash;Apr 5</div></div><span class="event-badge live">LIVE</span></div>
+        <div class="event-row"><div class="event-name">IEM Katowice 2026</div><div style="text-align:right;"><span class="game-tag cs2">CS2</span><div class="event-dates">Mar 5&ndash;15</div></div></div>
+        <div class="event-row"><div class="event-name">VCT Americas 2026</div><div style="text-align:right;"><span class="game-tag valorant">VAL</span><div class="event-dates">Mar 1&ndash;20</div></div></div>
+        <div class="event-row"><div class="event-name">RLCS 2026 Spring</div><div style="text-align:right;"><span class="game-tag rl">RL</span><div class="event-dates">Mar 8&ndash;22</div></div></div>
+        <div class="event-row"><div class="event-name">LCK Spring 2026</div><div style="text-align:right;"><span class="game-tag lol">LOL</span><div class="event-dates">Feb 15&ndash;Apr 5</div></div></div>
         <div class="event-row"><div class="event-name">ESL One Stockholm 2026</div><div style="text-align:right;"><span class="game-tag dota2">DOTA</span><div class="event-dates">Mar 20&ndash;30</div></div><span class="event-badge upcoming">UPCOMING</span></div>
       </div>
     </div>
@@ -1077,7 +1077,7 @@ import SiteShell from './_components/SiteShell.astro';
           '<div class="article-header-top">',
             '<div class="article-meta-top">',
               gameTagHTML(article.game),
-              '<span class="event-badge live" style="font-size:9px;">' + article.event + '</span>',
+              '<span class="event-badge" style="font-size:9px;">' + article.event + '</span>',
             '</div>',
             '<div class="article-title">' + article.title + '</div>',
           '</div>',

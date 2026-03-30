@@ -9,15 +9,35 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 		</div>
 		<div class="logo">Level 2</div>
 		<div class="tagline">
-			Modern web frameworks — Lit, Svelte, React, Vue
+			Modern web frameworks — Svelte, React, Vue
 		</div>
 	</header>
 
-	<section class="stub-notice">
-		<h2>Coming Soon</h2>
+	<section>
 		<p>
-			Level 2 sites are not available yet. When launched, L2 will feature sites built with modern web frameworks like <a href="https://lit.dev/" target="_blank" rel="noopener">Lit</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, and <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>. These will test scrapers against typical DOM-level changes seen in the wild — shadow DOM, client-side rendering, hydration, and dynamic state.
+			Level 2 sites are built with <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>, and <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a> — all mounted via <code>client:only</code> so the DOM is empty without JavaScript. Each site is a full client-side SPA sharing data with its L1 counterpart.
 		</p>
-		<a href="/" class="stub-back">← Back to QScrape</a>
+	</section>
+
+	<section>
+		<h2>Sites</h2>
+		<ul class="nav-links">
+			<li>
+				<a class="nav-path" href="/l2/news/">/ l2 / news</a>
+				<span class="nav-name">Mountainhome Herald</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/eshop/">/ l2 / eshop</a>
+				<span class="nav-name">VaultMart</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/scoretap/">/ l2 / scoretap</a>
+				<span class="nav-name">ScoreTap</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l2/taxes/">/ l2 / taxes</a>
+				<span class="nav-name">Eldoria Registry of Deeds</span>
+			</li>
+		</ul>
 	</section>
 </QScrapeLayout>
