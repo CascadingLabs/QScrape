@@ -504,6 +504,20 @@ const { title, description } = Astro.props;
 
         // Sync images on initial load (data-theme already set by ThemeInit)
         syncThemedImages(document.documentElement.dataset.theme || "dark");
+
+        // Cross-site sync: decorate outbound links to cascadinglabs.com with theme, lang, utm
+        document.addEventListener("click", function (e) {
+            var link = e.target.closest('a[href*="cascadinglabs.com"]');
+            if (!link) return;
+            try {
+                var u = new URL(link.href);
+                u.searchParams.set("cl-theme", getStored());
+                var lang = getCookie("cl-lang");
+                if (lang) u.searchParams.set("cl-lang", lang);
+                if (!u.searchParams.has("utm_source")) u.searchParams.set("utm_source", "qscrape");
+                link.href = u.toString();
+            } catch (_) {}
+        }, true);
     })();
 </script>
 
