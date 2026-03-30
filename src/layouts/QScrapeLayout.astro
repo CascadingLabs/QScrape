@@ -12,7 +12,7 @@ const { title, description } = Astro.props;
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
@@ -71,18 +71,10 @@ const { title, description } = Astro.props;
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <img
-                            src="/cl-favicon.svg"
-                            alt="Cascading Labs"
-                            class="nav-icon"
-                        />
+                        <img data-src-dark="/cl-favicon.svg" data-src-light="/cl-favicon-light.svg" alt="Cascading Labs" class="nav-icon themed-img" width="26" height="26" />
                     </a>
                     <a href="/" class="nav-icon-link" title="QScrape">
-                        <img
-                            src="/favicon.svg"
-                            alt="QScrape"
-                            class="nav-icon qs-active"
-                        />
+                        <img data-src-dark="/favicon.svg" data-src-light="/favicon-light.svg" alt="QScrape" class="nav-icon themed-img qs-active" width="26" height="26" />
                     </a>
                     <a
                         href="https://cascadinglabs.com/yosoi"
@@ -91,22 +83,27 @@ const { title, description } = Astro.props;
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <img
-                            src="/yosoi-favicon.svg"
-                            alt="Yosoi"
-                            class="nav-icon"
-                        />
+                        <img data-src-dark="/yosoi-favicon.svg" data-src-light="/yosoi-favicon-light.svg" alt="Yosoi" class="nav-icon themed-img" width="26" height="26" />
                     </a>
                 </div>
+                <script is:inline>
+                    (function() {
+                        var t = document.documentElement.dataset.theme || 'dark';
+                        var k = t === 'light' ? 'srcLight' : 'srcDark';
+                        document.querySelectorAll('.themed-img').forEach(function(img) {
+                            if (img.dataset[k]) img.src = img.dataset[k];
+                        });
+                    })();
+                </script>
 
                 <div class="qs-nav-actions">
                     <a
-                        href="https://discord.gg/7jgEzfbTWY"
+                        href="https://discord.gg/5WZNzFZtgb"
                         class="qs-discord-link"
                         title="Discord"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Join Yosoi on Discord"></a>
+                        aria-label="Join QScrape on Discord"></a>
                     <a
                         href="https://github.com/CascadingLabs/QScrape"
                         class="qs-github-link"
@@ -461,6 +458,14 @@ const { title, description } = Astro.props;
             return s === "light" || s === "dark" ? s : "auto";
         }
 
+        function syncThemedImages(resolved) {
+            var key = resolved === "light" ? "srcLight" : "srcDark";
+            document.querySelectorAll(".themed-img").forEach(function (img) {
+                var src = img.dataset[key];
+                if (src && img.getAttribute("src") !== src) img.setAttribute("src", src);
+            });
+        }
+
         function apply(pref) {
             var resolved =
                 pref === "auto"
@@ -470,6 +475,7 @@ const { title, description } = Astro.props;
                     : pref;
             document.documentElement.dataset.theme = resolved;
             document.documentElement.dataset.themePreference = pref;
+            syncThemedImages(resolved);
             var val = pref === "light" || pref === "dark" ? pref : "auto";
             document.cookie = "cl-theme=" + val + "; path=/; max-age=31536000; SameSite=Lax";
             localStorage.setItem(
@@ -495,6 +501,9 @@ const { title, description } = Astro.props;
         window.addEventListener("storage", function (e) {
             if (e.key === "starlight-theme") apply(getStored());
         });
+
+        // Sync images on initial load (data-theme already set by ThemeInit)
+        syncThemedImages(document.documentElement.dataset.theme || "dark");
     })();
 </script>
 
