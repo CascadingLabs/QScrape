@@ -1,4 +1,61 @@
 /* Global Legacy IE6/ASP.NET Web Forms Styling */
+
+/* ── Theme tokens ────────────────────────────────────── */
+:root {
+	/* Light default — ASP.NET Luna palette */
+	--l1-bg: #ffffff;
+	--l1-surface: #f0f0f0;
+	--l1-surface-luna: #ece9d8;
+	--l1-surface-info: #ffffcc;
+	--l1-text: #000000;
+	--l1-text-muted: #666666;
+	--l1-primary: #003366;
+	--l1-primary-button: #003c74;
+	--l1-border: #999999;
+	--l1-border-light: #cccccc;
+	--l1-input-border: #7f9db9;
+	--l1-link: #0000ff;
+	--l1-link-visited: #800080;
+	--l1-header-text: #ffffff;
+}
+
+[data-theme='dark'] {
+	--l1-bg: #1a1a1a;
+	--l1-surface: #222222;
+	--l1-surface-luna: #2a2a2a;
+	--l1-surface-info: #1e1e1e;
+	--l1-text: #d8d8d8;
+	--l1-text-muted: #888888;
+	--l1-primary: #162040;
+	--l1-primary-button: #555555;
+	--l1-border: #3a3a3a;
+	--l1-border-light: #333333;
+	--l1-input-border: #555555;
+	--l1-link: #7ea8e8;
+	--l1-link-visited: #a07ec8;
+	--l1-header-text: #e0e0e0;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--l1-bg: #1a1a1a;
+		--l1-surface: #222222;
+		--l1-surface-luna: #2a2a2a;
+		--l1-surface-info: #1e1e1e;
+		--l1-text: #d8d8d8;
+		--l1-text-muted: #888888;
+		--l1-primary: #162040;
+		--l1-primary-button: #555555;
+		--l1-border: #3a3a3a;
+		--l1-border-light: #333333;
+		--l1-input-border: #555555;
+		--l1-link: #7ea8e8;
+		--l1-link-visited: #a07ec8;
+		--l1-header-text: #e0e0e0;
+	}
+}
+
+/* ── Base ────────────────────────────────────────────── */
 * {
     box-sizing: border-box;
 }
@@ -11,8 +68,8 @@ html, body {
 body {
     font-family: Tahoma, Verdana, Arial, sans-serif;
     font-size: 11px;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--l1-bg);
+    color: var(--l1-text);
     margin: 20px;
 }
 
@@ -21,22 +78,23 @@ body {
     margin: 0 auto;
 }
 
+/* ── Layout components ───────────────────────────────── */
 .headerBar {
-    background-color: #003366;
-    color: #ffffff;
+    background-color: var(--l1-primary);
+    color: var(--l1-header-text);
     padding: 8px 15px;
     font-size: 14px;
     font-weight: bold;
 }
 
 .navBar {
-    background-color: #ece9d8;
+    background-color: var(--l1-surface-luna);
     padding: 5px 15px;
-    border-bottom: 1px solid #999999;
+    border-bottom: 1px solid var(--l1-border);
 }
 
 .navBar a {
-    color: #003366;
+    color: var(--l1-primary);
     text-decoration: none;
     margin-right: 15px;
 }
@@ -47,61 +105,62 @@ body {
 
 .breadcrumbs {
     padding: 5px 15px;
-    background-color: #ffffcc;
-    border-bottom: 1px solid #cccccc;
-    color: #666666;
+    background-color: var(--l1-surface-info);
+    border-bottom: 1px solid var(--l1-border-light);
+    color: var(--l1-text-muted);
 }
 
 .breadcrumbs a {
-    color: #003366;
+    color: var(--l1-primary);
 }
 
 .pageTitle {
     font-size: 16px;
     font-weight: bold;
-    color: #003366;
+    color: var(--l1-primary);
     margin: 15px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid var(--l1-border-light);
 }
 
 .searchBox {
-    background-color: #f0f0f0;
-    border: 1px solid #999999;
+    background-color: var(--l1-surface);
+    border: 1px solid var(--l1-border);
     padding: 15px;
     margin: 15px;
 }
 
+/* ── Tables ──────────────────────────────────────────── */
 table {
     border-collapse: collapse;
 }
 
 table.aspNetTable {
     border-collapse: collapse;
-    border: 1px solid #999999;
-    background-color: #f0f0f0;
+    border: 1px solid var(--l1-border);
+    background-color: var(--l1-surface);
     width: 95%;
     margin: 15px;
 }
 
 table.aspNetTable td {
     padding: 4px 8px;
-    border: 1px solid #cccccc;
-    background-color: #ffffff;
+    border: 1px solid var(--l1-border-light);
+    background-color: var(--l1-bg);
 }
 
 table.aspNetTable th {
     padding: 4px 8px;
-    border: 1px solid #cccccc;
-    background-color: #003366;
-    color: #ffffff;
+    border: 1px solid var(--l1-border-light);
+    background-color: var(--l1-primary);
+    color: var(--l1-header-text);
     font-weight: bold;
     text-align: left;
 }
 
 .headerRow {
-    background-color: #003366;
-    color: #ffffff;
+    background-color: var(--l1-primary);
+    color: var(--l1-header-text);
     font-weight: bold;
 }
 
@@ -109,40 +168,46 @@ table.aspNetTable th {
     background-color: #fcfcfc;
 }
 
-.aspNetHidden {
-    display: none;
-}
-
-.aspNetLabel {
-    font-family: Tahoma, Verdana, sans-serif;
+table.grid-view {
+    border-collapse: collapse;
+    margin: 15px;
+    width: 95%;
     font-size: 11px;
-    color: #000000;
 }
 
-.aspNetLabelBold {
-    font-family: Tahoma, Verdana, sans-serif;
-    font-size: 11px;
-    font-weight: bold;
-    color: #000000;
+table.grid-view th {
+    background-color: var(--l1-primary);
+    color: var(--l1-header-text);
+    padding: 4px 8px;
+    text-align: left;
+    border: 1px solid var(--l1-border);
 }
 
-input[type="text"], 
+table.grid-view td {
+    padding: 4px 8px;
+    border: 1px solid var(--l1-border-light);
+}
+
+/* ── Forms ───────────────────────────────────────────── */
+input[type="text"],
 input.aspNetTextBox,
 select {
-    border: 1px solid #7f9db9;
+    border: 1px solid var(--l1-input-border);
     font-family: Tahoma, Verdana, sans-serif;
     font-size: 11px;
     padding: 2px;
     width: 250px;
     border-radius: 0;
+    background-color: var(--l1-bg);
+    color: var(--l1-text);
 }
 
 .aspNetButton,
 input[type="submit"] {
-    background-color: #ece9d8;
-    border: 1px solid #003c74;
-    border-left-color: #003c74;
-    border-top-color: #003c74;
+    background-color: var(--l1-surface-luna);
+    border: 1px solid var(--l1-primary-button);
+    border-left-color: var(--l1-primary-button);
+    border-top-color: var(--l1-primary-button);
     border-right-color: #ffffff;
     border-bottom-color: #ffffff;
     padding: 2px 8px;
@@ -150,12 +215,69 @@ input[type="submit"] {
     font-size: 11px;
     cursor: pointer;
     border-radius: 0;
+    color: var(--l1-text);
 }
 
 .aspNetButton:hover {
     background-color: #d4d0c0;
 }
 
+.formSection {
+    background-color: var(--l1-surface);
+    border: 1px solid var(--l1-border);
+    padding: 15px;
+    margin: 15px;
+}
+
+.formSection table td {
+    padding: 4px;
+}
+
+table.formTable {
+    width: 100%;
+    margin: 15px;
+}
+
+table.formTable td {
+    padding: 5px;
+    vertical-align: top;
+    color: var(--l1-text);
+}
+
+table.formTable td.labelCol {
+    width: 150px;
+    font-weight: bold;
+    color: var(--l1-text);
+}
+
+.actionButtons {
+    margin: 15px;
+    padding-top: 10px;
+}
+
+.actionButtons input {
+    margin-right: 10px;
+}
+
+/* ── Labels ──────────────────────────────────────────── */
+.aspNetHidden {
+    display: none;
+}
+
+.aspNetLabel {
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 11px;
+    color: var(--l1-text);
+}
+
+.aspNetLabelBold {
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--l1-text);
+}
+
+/* ── Status badges ───────────────────────────────────── */
 .statusApproved {
     background-color: #c6f6d5;
     color: #22543d;
@@ -180,51 +302,17 @@ input[type="submit"] {
     font-weight: bold;
 }
 
-.actionLink {
-    color: #0000ff;
-    text-decoration: underline;
-    cursor: pointer;
+[data-theme='dark'] .statusApproved { background-color: #143a22; color: #6fcf8a; }
+[data-theme='dark'] .statusPending  { background-color: #3a2810; color: #e0a85a; }
+[data-theme='dark'] .statusReview   { background-color: #102038; color: #7ab0e8; }
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) .statusApproved { background-color: #143a22; color: #6fcf8a; }
+	:root:not([data-theme]) .statusPending  { background-color: #3a2810; color: #e0a85a; }
+	:root:not([data-theme]) .statusReview   { background-color: #102038; color: #7ab0e8; }
 }
 
-.footerBar {
-    background-color: #003366;
-    color: #ffffff;
-    padding: 10px 15px;
-    text-align: center;
-    margin-top: 30px;
-    font-size: 10px;
-}
-
-a {
-    color: #0000ff;
-    text-decoration: underline;
-}
-
-a:visited {
-    color: #800080;
-}
-
-a:hover {
-    color: #0000ff;
-}
-
-.resultsInfo {
-    margin: 15px;
-    color: #666666;
-    font-size: 11px;
-}
-
-.formSection {
-    background-color: #f0f0f0;
-    border: 1px solid #999999;
-    padding: 15px;
-    margin: 15px;
-}
-
-.formSection table td {
-    padding: 4px;
-}
-
+/* ── Messages ────────────────────────────────────────── */
 .requiredField {
     color: #ff0000;
     font-weight: bold;
@@ -232,7 +320,7 @@ a:hover {
 
 .errorMessage {
     color: #ff0000;
-    background-color: #ffffcc;
+    background-color: var(--l1-surface-info);
     border: 1px solid #ff0000;
     padding: 5px;
     margin: 10px 15px;
@@ -247,15 +335,64 @@ a:hover {
 }
 
 .infoBox {
-    background-color: #ffffcc;
-    border: 1px solid #cccccc;
+    background-color: var(--l1-surface-info);
+    border: 1px solid var(--l1-border-light);
     padding: 10px;
     margin: 15px;
 }
 
+.validationSummary {
+    background-color: var(--l1-surface-info);
+    border: 1px solid #ff0000;
+    padding: 10px;
+    margin: 15px;
+}
+
+.validationSummary ul {
+    margin: 5px 0;
+    padding-left: 20px;
+}
+
+[data-theme='dark'] .errorMessage  { background-color: #2a1010; border-color: #a03030; color: #f08080; }
+[data-theme='dark'] .successMessage { background-color: #102a10; border-color: #308030; color: #80c880; }
+[data-theme='dark'] .infoBox       { color: var(--l1-text-muted); }
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) .errorMessage   { background-color: #2a1010; border-color: #a03030; color: #f08080; }
+	:root:not([data-theme]) .successMessage { background-color: #102a10; border-color: #308030; color: #80c880; }
+	:root:not([data-theme]) .infoBox        { color: var(--l1-text-muted); }
+}
+
+/* ── Links & misc ────────────────────────────────────── */
+.actionLink {
+    color: var(--l1-link);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+a {
+    color: var(--l1-link);
+    text-decoration: underline;
+}
+
+a:visited {
+    color: var(--l1-link-visited);
+}
+
+a:hover {
+    color: var(--l1-link);
+}
+
+.resultsInfo {
+    margin: 15px;
+    color: var(--l1-text-muted);
+    font-size: 11px;
+}
+
+/* ── Typography ──────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
     font-family: Tahoma, Verdana, Arial, sans-serif;
-    color: #003366;
+    color: var(--l1-primary);
 }
 
 h1 { font-size: 18px; }
@@ -279,127 +416,16 @@ li {
 
 hr {
     border: none;
-    border-top: 1px solid #cccccc;
+    border-top: 1px solid var(--l1-border-light);
     margin: 15px 0;
 }
 
-table.formTable {
-    width: 100%;
-    margin: 15px;
-}
-
-table.formTable td {
-    padding: 5px;
-    vertical-align: top;
-}
-
-table.formTable td.labelCol {
-    width: 150px;
-    font-weight: bold;
-}
-
-.validationSummary {
-    background-color: #ffffcc;
-    border: 1px solid #ff0000;
-    padding: 10px;
-    margin: 15px;
-}
-
-.validationSummary ul {
-    margin: 5px 0;
-    padding-left: 20px;
-}
-
-.actionButtons {
-    margin: 15px;
-    padding-top: 10px;
-}
-
-.actionButtons input {
-    margin-right: 10px;
-}
-
-table.grid-view {
-    border-collapse: collapse;
-    margin: 15px;
-    width: 95%;
-    font-size: 11px;
-}
-table.grid-view th {
-    background-color: #003366;
-    color: #ffffff;
-    padding: 4px 8px;
-    text-align: left;
-    border: 1px solid #999999;
-}
-table.grid-view td {
-    padding: 4px 8px;
-    border: 1px solid #cccccc;
-}
-
-/* ── Dark mode overrides ─────────────────────────────── */
-[data-theme='dark'] body { background-color: #1a1a1a; color: #d8d8d8; }
-[data-theme='dark'] .headerBar { background-color: #162040; color: #e0e0e0; }
-[data-theme='dark'] .footerBar { background-color: #162040; color: #aaaaaa; }
-[data-theme='dark'] .navBar { background-color: #242424; border-bottom-color: #3a3a3a; }
-[data-theme='dark'] .navBar a { color: #7ea8e8; }
-[data-theme='dark'] .breadcrumbs { background-color: #1e1e1e; border-bottom-color: #333; color: #888; }
-[data-theme='dark'] .breadcrumbs a { color: #7ea8e8; }
-[data-theme='dark'] .pageTitle { color: #7ea8e8; border-bottom-color: #333; }
-[data-theme='dark'] h1, [data-theme='dark'] h2, [data-theme='dark'] h3,
-[data-theme='dark'] h4, [data-theme='dark'] h5, [data-theme='dark'] h6 { color: #7ea8e8; }
-[data-theme='dark'] a { color: #7ea8e8; }
-[data-theme='dark'] a:visited { color: #a07ec8; }
-[data-theme='dark'] hr { border-top-color: #333; }
-[data-theme='dark'] .searchBox { background-color: #222; border-color: #444; }
-[data-theme='dark'] .formSection { background-color: #222; border-color: #444; }
-[data-theme='dark'] .infoBox { background-color: #1e1e1e; border-color: #333; color: #aaa; }
-[data-theme='dark'] .errorMessage { background-color: #2a1010; border-color: #a03030; color: #f08080; }
-[data-theme='dark'] .successMessage { background-color: #102a10; border-color: #308030; color: #80c880; }
-[data-theme='dark'] .resultsInfo { color: #888; }
-[data-theme='dark'] table.aspNetTable { background-color: #1a1a1a; border-color: #444; }
-[data-theme='dark'] table.aspNetTable td { background-color: #222; border-color: #333; color: #d8d8d8; }
-[data-theme='dark'] table.aspNetTable th { background-color: #162040; border-color: #333; color: #e0e0e0; }
-[data-theme='dark'] .headerRow { background-color: #162040; color: #e0e0e0; }
-[data-theme='dark'] .alternatingRow { background-color: #1e1e1e; }
-[data-theme='dark'] table.grid-view th { background-color: #162040; border-color: #444; color: #e0e0e0; }
-[data-theme='dark'] table.grid-view td { border-color: #333; }
-[data-theme='dark'] input[type="text"],
-[data-theme='dark'] input.aspNetTextBox,
-[data-theme='dark'] select { background-color: #222; border-color: #555; color: #d8d8d8; }
-[data-theme='dark'] .aspNetButton,
-[data-theme='dark'] input[type="submit"] { background-color: #2a2a2a; border-color: #555; color: #d8d8d8; }
-[data-theme='dark'] .statusApproved { background-color: #143a22; color: #6fcf8a; }
-[data-theme='dark'] .statusPending { background-color: #3a2810; color: #e0a85a; }
-[data-theme='dark'] .statusReview { background-color: #102038; color: #7ab0e8; }
-[data-theme='dark'] .aspNetLabel { color: #d8d8d8; }
-[data-theme='dark'] .aspNetLabelBold { color: #d8d8d8; }
-[data-theme='dark'] .pageTitle { color: #7ea8e8; border-bottom-color: #333; }
-[data-theme='dark'] table.formTable td { color: #d8d8d8; }
-[data-theme='dark'] table.formTable td.labelCol { color: #d8d8d8; }
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) body { background-color: #1a1a1a; color: #d8d8d8; }
-    :root:not([data-theme]) .headerBar { background-color: #162040; color: #e0e0e0; }
-    :root:not([data-theme]) .footerBar { background-color: #162040; color: #aaaaaa; }
-    :root:not([data-theme]) .navBar { background-color: #242424; border-bottom-color: #3a3a3a; }
-    :root:not([data-theme]) .navBar a { color: #7ea8e8; }
-    :root:not([data-theme]) .breadcrumbs { background-color: #1e1e1e; border-bottom-color: #333; color: #888; }
-    :root:not([data-theme]) .breadcrumbs a { color: #7ea8e8; }
-    :root:not([data-theme]) .pageTitle { color: #7ea8e8; border-bottom-color: #333; }
-    :root:not([data-theme]) h1, :root:not([data-theme]) h2, :root:not([data-theme]) h3 { color: #7ea8e8; }
-    :root:not([data-theme]) a { color: #7ea8e8; }
-    :root:not([data-theme]) a:visited { color: #a07ec8; }
-    :root:not([data-theme]) .searchBox { background-color: #222; border-color: #444; }
-    :root:not([data-theme]) table.aspNetTable { background-color: #1a1a1a; border-color: #444; }
-    :root:not([data-theme]) table.aspNetTable td { background-color: #222; border-color: #333; color: #d8d8d8; }
-    :root:not([data-theme]) table.aspNetTable th { background-color: #162040; border-color: #333; color: #e0e0e0; }
-    :root:not([data-theme]) table.grid-view th { background-color: #162040; border-color: #444; color: #e0e0e0; }
-    :root:not([data-theme]) table.grid-view td { border-color: #333; }
-    :root:not([data-theme]) input[type="text"],
-    :root:not([data-theme]) select { background-color: #222; border-color: #555; color: #d8d8d8; }
-    :root:not([data-theme]) .aspNetLabel { color: #d8d8d8; }
-    :root:not([data-theme]) .aspNetLabelBold { color: #d8d8d8; }
-    :root:not([data-theme]) table.formTable td { color: #d8d8d8; }
-    :root:not([data-theme]) table.formTable td.labelCol { color: #d8d8d8; }
+/* ── Footer ──────────────────────────────────────────── */
+.footerBar {
+    background-color: var(--l1-primary);
+    color: var(--l1-header-text);
+    padding: 10px 15px;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 10px;
 }
