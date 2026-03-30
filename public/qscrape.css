@@ -18,7 +18,7 @@
 
 	/* CascadingLabs accent — dark blue */
 	--cl-accent: #1e3a5f;
-	--cl-accent-text: #5b8cc7;
+	--cl-accent-text: #5ba4cf;
 	--cl-accent-pale: #90b8e0;
 	--cl-link-hover-bg: color-mix(in srgb, #1e3a5f 15%, transparent);
 }
