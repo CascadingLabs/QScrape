@@ -47,3 +47,25 @@ img {
 	height: auto;
 	display: block;
 }
+
+/* ── Dark mode token overrides ───────────────────────── */
+[data-theme="dark"] {
+	--vm-bg: #111111;
+	--vm-surface: #1a1a1a;
+	--vm-text: #f0f0f0;
+	--vm-muted: #888888;
+	--vm-border: #2a2a2a;
+	--vm-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+	--vm-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--vm-bg: #111111;
+		--vm-surface: #1a1a1a;
+		--vm-text: #f0f0f0;
+		--vm-muted: #888888;
+		--vm-border: #2a2a2a;
+		--vm-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+		--vm-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
+	}
+}

@@ -11,3 +11,19 @@ export function fakeGet<T>(data: T): Promise<T> {
 		setTimeout(() => resolve(data), BASE_MS + Math.random() * JITTER_MS),
 	);
 }
+
+/**
+ * L3 variant — resolves with `data` after a custom delay.
+ * Each L3 framework island uses different values to create staggered hydration.
+ * @param baseMs  Minimum delay in milliseconds.
+ * @param jitterMs  Max random jitter added on top.
+ */
+export function fakeGetMs<T>(
+	data: T,
+	baseMs: number,
+	jitterMs: number,
+): Promise<T> {
+	return new Promise((resolve) =>
+		setTimeout(() => resolve(data), baseMs + Math.random() * jitterMs),
+	);
+}

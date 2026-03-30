@@ -780,7 +780,7 @@ import SiteShell from './_components/SiteShell.astro';
       if (ev.format) {
         var stageRows = ev.format.stages.map(function(s) {
           var stageStatusClass = s.status === 'live' ? 'stage-live' : (s.status === 'done' ? 'stage-done' : 'stage-upcoming');
-          var stageLabel = s.status === 'live' ? 'LIVE' : (s.status === 'done' ? 'Completed' : 'Upcoming');
+          var stageLabel = s.status === 'live' ? 'In Progress' : (s.status === 'done' ? 'Completed' : 'Upcoming');
           return '<tr>' +
             '<td style="font-weight:700;color:var(--text-bright);">' + s.name + '</td>' +
             '<td>' + s.format + '</td>' +

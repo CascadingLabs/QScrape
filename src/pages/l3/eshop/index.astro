@@ -1,0 +1,156 @@
+---
+import EshopCategoryNav from '../../../components/l3/react/eshop/EshopCategoryNav';
+import EshopFeaturedBanner from '../../../components/l3/solid/eshop/EshopFeaturedBanner';
+import EshopPriceBadges from '../../../components/l3/svelte/eshop/EshopPriceBadges.svelte';
+import EshopProductGrid from '../../../components/l3/vue/eshop/EshopProductGrid.vue';
+import '../../../styles/l3/eshop.css';
+import ThemeInit from '../../../components/ThemeInit.astro';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VaultMart — L3</title>
+    <meta name="description" content="VaultMart — QScrape L3 islands test site." />
+    <ThemeInit />
+  </head>
+  <body>
+    <header class="vm3-masthead">
+      <div class="vm3-masthead-inner">
+        <a href="/l3/eshop/" class="vm3-logo">VaultMart</a>
+        <nav class="vm3-nav">
+          <a href="/l3/eshop/" class="vm3-nav-item vm3-nav-active">Home</a>
+          <a href="/l3/eshop/?cart" class="vm3-nav-item">Cart</a>
+          <a href="/l3/" class="vm3-nav-item">← L3</a>
+        </nav>
+        <span class="vm3-edition">L3 · Islands Edition</span>
+      </div>
+    </header>
+
+    <main class="vm3-main">
+      <div class="vm3-layout">
+        <section class="vm3-primary">
+          <EshopCategoryNav client:only="react" />
+          <EshopProductGrid client:only="vue" />
+        </section>
+        <aside class="vm3-sidebar-col">
+          <EshopPriceBadges client:only="svelte" />
+          <EshopFeaturedBanner client:only="solid-js" />
+        </aside>
+      </div>
+    </main>
+
+    <footer class="vm3-footer">
+      <div class="vm3-footer-inner">
+        <span>© 2026 VaultMart</span>
+        <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--vm3-bg);
+    color: var(--vm3-text);
+    font-family: var(--vm3-font);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .vm3-masthead {
+    background: var(--vm3-surface);
+    border-bottom: 1px solid var(--vm3-border);
+  }
+  .vm3-masthead-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .vm3-logo {
+    font-family: var(--vm3-font);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--vm3-primary);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+    margin-right: auto;
+  }
+
+  .vm3-nav {
+    display: flex;
+    gap: 4px;
+  }
+  .vm3-nav-item {
+    padding: 7px 14px;
+    font-family: var(--vm3-font);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--vm3-muted);
+    text-decoration: none;
+    border-radius: var(--vm3-radius);
+    transition: color 0.15s, background 0.15s;
+  }
+  .vm3-nav-item:hover { color: var(--vm3-text); background: var(--vm3-surface2); }
+  .vm3-nav-active { color: var(--vm3-text); }
+
+  .vm3-edition {
+    font-family: var(--vm3-font);
+    font-size: 11px;
+    color: var(--vm3-muted);
+    font-style: italic;
+  }
+
+  .vm3-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  .vm3-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 32px;
+  }
+  @media (max-width: 900px) {
+    .vm3-layout { grid-template-columns: 1fr; }
+  }
+
+  .vm3-primary {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+  }
+
+  .vm3-sidebar-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .vm3-footer {
+    border-top: 1px solid var(--vm3-border);
+    background: var(--vm3-surface);
+    margin-top: 48px;
+  }
+  .vm3-footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--vm3-font);
+    font-size: 12px;
+    color: var(--vm3-muted);
+  }
+</style>

@@ -9,15 +9,57 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 		</div>
 		<div class="logo">Level 3</div>
 		<div class="tagline">
-			Anti-bot sites — no unsolvable CAPTCHAs
+			Anti-bot sites — Astro islands · React · Vue · Svelte · Solid
 		</div>
 	</header>
 
-	<section class="stub-notice">
-		<h2>Coming Soon</h2>
+	<section>
 		<p>
-			Level 3 sites are not available yet. When launched, L3 will feature sites with anti-bot defences — fingerprinting, rate limiting, header validation, and behavioural checks. No recaptchas or challenge puzzles that require anti-captcha APIs.
+			Level 3 sites use <a href="https://docs.astro.build/en/concepts/islands/" target="_blank" rel="noopener">Astro Islands</a> to split each page across four independent framework components — <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, and <a href="https://www.solidjs.com/" target="_blank" rel="noopener">Solid</a> — each owning a different slice of the data. On top of that, each framework island uses a distinct data-obfuscation technique to frustrate scrapers. A scraper must hydrate all four runtimes, wait for four staggered async gates, and defeat four different anti-bot tricks to reconstruct a complete record.
 		</p>
-		<a href="/" class="stub-back">← Back to QScrape</a>
+	</section>
+
+	<section>
+		<h2>Anti-Bot Techniques</h2>
+		<ul class="nav-links">
+			<li>
+				<span class="nav-path">React</span>
+				<span class="nav-name">CSS-assembled text — words split into spans, DOM order shuffled, CSS <code>flex order</code> restores visual order; <code>textContent</code> returns scrambled words</span>
+			</li>
+			<li>
+				<span class="nav-path">Vue</span>
+				<span class="nav-name">Pseudo-element content — data rendered via <code>::before &#123; content: attr(data-x) &#125;</code>; <code>textContent</code> returns empty string</span>
+			</li>
+			<li>
+				<span class="nav-path">Svelte</span>
+				<span class="nav-name">Decoy overlay — real value at z-index 1, fake value at z-index 2 with <code>color: transparent</code>; DOM has both, scraper must resolve z-order</span>
+			</li>
+			<li>
+				<span class="nav-path">Solid</span>
+				<span class="nav-name">Canvas-rendered text — numbers and IDs drawn via <code>ctx.fillText()</code>; not present in the DOM at all</span>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2>Sites</h2>
+		<ul class="nav-links">
+			<li>
+				<a class="nav-path" href="/l3/news/">/ l3 / news</a>
+				<span class="nav-name">Mountainhome Herald — news portal</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l3/eshop/">/ l3 / eshop</a>
+				<span class="nav-name">VaultMart — e-commerce catalogue</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l3/scoretap/">/ l3 / scoretap</a>
+				<span class="nav-name">ScoreTap — esports scores &amp; standings</span>
+			</li>
+			<li>
+				<a class="nav-path" href="/l3/taxes/">/ l3 / taxes</a>
+				<span class="nav-name">Eldoria Registry of Deeds — tax records</span>
+			</li>
+		</ul>
 	</section>
 </QScrapeLayout>

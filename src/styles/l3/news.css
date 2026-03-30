@@ -1,0 +1,42 @@
+/* @qscrape L3 / design-tokens / news — Mountainhome Herald */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+	--hn3-bg: #f0f0ee;
+	--hn3-surface: #fafaf8;
+	--hn3-surface2: #ffffff;
+	--hn3-text: #141414;
+	--hn3-muted: #5c5c5c;
+	--hn3-accent: #b83228;
+	--hn3-accent-hover: #9b2921;
+	--hn3-accent-dim: rgba(184, 50, 40, 0.08);
+	--hn3-border: #dcdcda;
+	--hn3-masthead-bg: #0f0f0f;
+	--hn3-masthead-text: #f0f0ee;
+	--hn3-font-display: "Playfair Display", Georgia, serif;
+	--hn3-font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+	--hn3-max-reading: 680px;
+	--hn3-radius: 3px;
+}
+
+/* Island scope — no body/global resets here, those live in the shell */
+
+/* ── Dark mode token overrides ───────────────────────── */
+[data-theme="dark"] {
+	--hn3-bg: #141412;
+	--hn3-surface: #1c1c1a;
+	--hn3-surface2: #222220;
+	--hn3-text: #e8e8e6;
+	--hn3-muted: #999999;
+	--hn3-border: #2c2c2a;
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--hn3-bg: #141412;
+		--hn3-surface: #1c1c1a;
+		--hn3-surface2: #222220;
+		--hn3-text: #e8e8e6;
+		--hn3-muted: #999999;
+		--hn3-border: #2c2c2a;
+	}
+}

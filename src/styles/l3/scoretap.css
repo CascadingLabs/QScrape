@@ -1,0 +1,48 @@
+/* @qscrape L3 / design-tokens / scoretap — ScoreTap */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;600;700&display=swap");
+
+:root {
+	--st3-bg: #080b10;
+	--st3-surface: #0f1520;
+	--st3-surface2: #172030;
+	--st3-glass: rgba(15, 21, 32, 0.7);
+	--st3-text: #eaeef5;
+	--st3-muted: #5a6478;
+	--st3-live: #22c55e;
+	--st3-live-glow: rgba(34, 197, 94, 0.25);
+	--st3-live-dim: rgba(34, 197, 94, 0.12);
+	--st3-border: #1e2a3a;
+	--st3-font-ui: "Inter", system-ui, sans-serif;
+	--st3-font-score: "Roboto Mono", monospace;
+	--st3-radius: 8px;
+	/* Game accent colours (same as L2 for brand consistency) */
+	--st3-cs2: #f0a500;
+	--st3-valorant: #ff4655;
+	--st3-lol: #c69b3a;
+	--st3-dota2: #a5373c;
+	--st3-rl: #5b9cf6;
+}
+
+/* Island scope — no body/global resets here, those live in the shell */
+
+/* ── Light mode token overrides ──────────────────────── */
+[data-theme="light"] {
+	--st3-bg: #f0f2f5;
+	--st3-surface: #ffffff;
+	--st3-surface2: #f5f7fa;
+	--st3-glass: rgba(255, 255, 255, 0.8);
+	--st3-text: #111827;
+	--st3-muted: #6b7280;
+	--st3-border: #d1d5db;
+}
+@media (prefers-color-scheme: light) {
+	:root:not([data-theme]) {
+		--st3-bg: #f0f2f5;
+		--st3-surface: #ffffff;
+		--st3-surface2: #f5f7fa;
+		--st3-glass: rgba(255, 255, 255, 0.8);
+		--st3-text: #111827;
+		--st3-muted: #6b7280;
+		--st3-border: #d1d5db;
+	}
+}

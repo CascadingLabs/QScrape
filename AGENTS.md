@@ -9,7 +9,7 @@ QScrape is a web scraper evaluation suite. It hosts fictional test sites across 
 |-------|--------|-------------|
 | L1 | Live | Standard HTML/CSS/JS. Static Astro build. No frameworks, no anti-bot measures. |
 | L2 | Live | Modern web frameworks (React, Vue, Svelte). All content client-side only (`client:only`). Scrapers must execute JS. |
-| L3 | Planned | Anti-bot sites. No recaptchas or unsolvable challenge puzzles. |
+| L3 | Live | Anti-bot sites. Astro islands (React + Vue + Svelte + Solid). No recaptchas or unsolvable challenge puzzles. |
 
 ## Index Pages
 
@@ -83,13 +83,119 @@ The Astro shells at each sub-URL also mount the same SPA component (`client:only
 | Vue | `src/components/l2/vue/news/NewsApp.vue` | `…/eshop/EshopApp.vue` | `…/scoretap/ScoretapApp.vue` | `…/taxes/TaxesApp.vue` |
 | Svelte | `src/components/l2/svelte/news/NewsApp.svelte` | `…/eshop/EshopApp.svelte` | `…/scoretap/ScoretapApp.svelte` | `…/taxes/TaxesApp.svelte` |
 
+## L3 Sites
+
+L3 uses Astro Islands architecture. Each page composes four independent `client:only` islands — one per framework — each owning a different slice of the page data. Scrapers must hydrate all four runtimes and wait for four staggered async gates to reconstruct a complete record. Navigation between routes is full page loads (not SPA routing). Solid.js is used here for the first time in the project.
+
+### L3 anti-bot techniques (per framework)
+
+| Framework | Technique | How to defeat |
+|-----------|-----------|---------------|
+| React | CSS-assembled text — words split into `<span>` elements, DOM order shuffled, CSS `flex order` restores visual order | Must read `order` style on each span, sort by it, then join |
+| Vue | Pseudo-element content — key data set as `data-x` attribute, rendered via `::before { content: attr(data-x) }` | Must use `getComputedStyle(el, '::before').content` |
+| Svelte | Decoy overlay — real value at z-index 1, visually-identical fake value at z-index 2 with `color: transparent; position: absolute` | Must resolve z-index stacking to identify the real value |
+| Solid | Canvas-rendered text — numbers and IDs drawn via `ctx.fillText()` to `<canvas>`; nothing in DOM | Must render canvas and OCR or use accessibility label (`aria-label`) |
+
+### L3 async loading gates (`fakeGetMs`)
+
+Every L3 island calls `fakeGetMs(data, baseMs, jitterMs)` from `src/data/api.ts` on mount. Delays are staggered so all four islands finish at different times (worst case ~1050ms total):
+
+| Framework | Base delay | Jitter | Resolves after |
+|-----------|-----------|--------|---------------|
+| Solid | 300ms | ±200ms | 300–500ms |
+| React | 400ms | ±250ms | 400–650ms |
+| Vue | 600ms | ±250ms | 600–850ms |
+| Svelte | 800ms | ±250ms | 800–1050ms |
+
+Until the promise resolves, each island renders a plain `Loading…` div. Scrapers must wait for all four islands to settle.
+
+### L3 sites
+
+| Route | Site Name |
+|-------|-----------|
+| `/l3/news/` | Mountainhome Herald (news portal) |
+| `/l3/eshop/` | VaultMart (e-commerce catalogue) |
+| `/l3/scoretap/` | ScoreTap (esports scores) |
+| `/l3/taxes/` | Eldoria Registry of Deeds (tax records) |
+
+### L3 island data split
+
+Each page's data is split across four islands. A complete record requires all four.
+
+**News — Mountainhome Herald**
+
+| Route | React | Vue | Svelte | Solid |
+|-------|-------|-----|--------|-------|
+| `/l3/news/` | Breaking ticker + top 3 headlines | Article feed (title + excerpt + category) | Category sidebar | Staff spotlight panel |
+| `/l3/news/articles/` | Category filter tabs | Article card grid | Pagination controls | Tag cloud |
+| `/l3/news/article/[id]/` | Headline + byline + date | Article body text | Article image + caption + credit | Author bio + related links |
+
+**Eshop — VaultMart**
+
+| Route | React | Vue | Svelte | Solid |
+|-------|-------|-----|--------|-------|
+| `/l3/eshop/` | Category nav + sort controls | Product cards (image + name) | Price + stock badges (joined via `data-sku`) | Featured/promoted banner |
+| `/l3/eshop/product/[sku]/` | Product image | Product name + category | Price + availability + add-to-cart | Rating + review count + related products |
+
+**ScoreTap**
+
+| Route | React | Vue | Svelte | Solid |
+|-------|-------|-----|--------|-------|
+| `/l3/scoretap/` | Game filter header tabs | Events list (teams, time, game) | Live scores ticker | Standings/leaderboard |
+| `/l3/scoretap/teams/` | Team search input | Team cards (name, game, abbreviation) | Win/loss record per team | Top performers stats |
+
+**Taxes — Eldoria Registry of Deeds**
+
+| Route | React | Vue | Svelte | Solid |
+|-------|-------|-----|--------|-------|
+| `/l3/taxes/` | Search form (submits GET `?q=`) | Results list (reads `?q=` on mount) | Pagination + result count | Recent records sidebar |
+| `/l3/taxes/viewer/[id]/` | Document header (parcel ID, type, date) | Owner name + address + assessed value | PDF download link + doc type badge | Related documents + recording fees |
+
+### L3 CSS design tokens
+
+| File | Site | Token prefix |
+|------|------|-------------|
+| `src/styles/l3/news.css` | Mountainhome Herald | `--hn3-` |
+| `src/styles/l3/eshop.css` | VaultMart | `--vm3-` |
+| `src/styles/l3/scoretap.css` | ScoreTap | `--st3-` |
+| `src/styles/l3/taxes.css` | Eldoria Registry | `--er3-` |
+
+L3 CSS token files do **not** contain `body {}` or `* {}` global resets — those live in each shell's `<style>` block, because all four islands share the same page.
+
+### L3 component locations
+
+| Framework | News | Eshop | ScoreTap | Taxes |
+|-----------|------|-------|----------|-------|
+| React | `src/components/l3/react/news/` | `…/eshop/` | `…/scoretap/` | `…/taxes/` |
+| Vue | `src/components/l3/vue/news/` | `…/eshop/` | `…/scoretap/` | `…/taxes/` |
+| Svelte | `src/components/l3/svelte/news/` | `…/eshop/` | `…/scoretap/` | `…/taxes/` |
+| Solid | `src/components/l3/solid/news/` | `…/eshop/` | `…/scoretap/` | `…/taxes/` |
+
+### L3 dynamic routes
+
+Dynamic routes use `getStaticPaths()` — resolved at build time with props passed to each island:
+
+| Route | Param | Data source |
+|-------|-------|-------------|
+| `/l3/news/article/[id]/` | `id` | `src/data/news/articles.ts` |
+| `/l3/eshop/product/[sku]/` | `sku` | `src/data/eshop/products.ts` |
+| `/l3/taxes/viewer/[id]/` | `id` | `src/data/taxes/deeds.ts` |
+
+### L3 implementation notes
+
+- Solid directive is `client:only="solid-js"` (not `"solid"`)
+- React and Solid both process `.tsx` — `astro.config.mjs` uses `include` scoping to prevent JSX transform conflict: `react({ include: ['**/l2/react/**', '**/l3/react/**'] })` and `solid({ include: ['**/l3/solid/**'] })`
+- Each island has a `data-island="…"` attribute on its root element for scraper targeting
+- Shared data layer is identical to L1/L2 — no new data files
+
 ## CSS Architecture
 
 | File | Used By |
 |------|---------|
-| `public/qscrape.css` | Root and level index pages (`/`, `/l1/`, `/l2/`) |
+| `public/qscrape.css` | Root and level index pages (`/`, `/l1/`, `/l2/`, `/l3/`) |
 | `public/global.css` | L1 site pages (taxes, news) — legacy ASP.NET Web Forms style |
 | `src/styles/l2/*.css` | L2 components — design tokens per site, shared across all 3 frameworks |
+| `src/styles/l3/*.css` | L3 islands — design tokens per site, no global resets |
 
 ## Project Structure
 
@@ -127,11 +233,33 @@ src/data/
   taxes/deeds.ts           — Shared taxes data
 src/styles/l2/
   news.css / eshop.css / scoretap.css / taxes.css  — Design tokens
+src/styles/l3/
+  news.css / eshop.css / scoretap.css / taxes.css  — Design tokens (no global resets)
 public/
   qscrape.css              — Shared dark theme for index pages
   global.css               — Legacy ASP.NET style for L1 site pages
   *.pdf                    — Tax record PDFs (15 deed/mortgage/lien files)
   how-to/                  — How-to guide PDFs (8 files, one per index type)
+  l3/
+    index.astro            — L3 level index
+    news/
+      index.astro          — News home (4 islands)
+      articles/index.astro — Articles listing (4 islands)
+      article/[id].astro   — Article detail (4 islands, getStaticPaths)
+    eshop/
+      index.astro          — Eshop home (4 islands)
+      product/[sku].astro  — Product detail (4 islands, getStaticPaths)
+    scoretap/
+      index.astro          — ScoreTap home (4 islands)
+      teams/index.astro    — Teams listing (4 islands)
+    taxes/
+      index.astro          — Taxes home (4 islands)
+      viewer/[id].astro    — Deed viewer (4 islands, getStaticPaths)
+src/components/l3/
+  react/{news,eshop,scoretap,taxes}/   — React islands (CSS-assembled text)
+  vue/{news,eshop,scoretap,taxes}/     — Vue islands (pseudo-element content)
+  svelte/{news,eshop,scoretap,taxes}/  — Svelte islands (decoy overlay)
+  solid/{news,eshop,scoretap,taxes}/   — Solid islands (canvas-rendered text)
 src/
   middleware.ts            — Alias/resolver middleware for URL routes
 ```

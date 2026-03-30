@@ -1,0 +1,64 @@
+/* NewsCategoryFilter — L3 React island */
+.loading {
+	min-height: 48px;
+	display: flex;
+	align-items: center;
+	color: var(--hn3-muted);
+	font-family: var(--hn3-font-body);
+	font-size: 14px;
+}
+
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.label {
+	font-family: var(--hn3-font-body);
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--hn3-muted);
+}
+
+.tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.tab {
+	display: inline-block;
+	padding: 6px 14px;
+	border: 1px solid var(--hn3-border);
+	border-radius: var(--hn3-radius);
+	font-family: var(--hn3-font-body);
+	font-size: 13px;
+	color: var(--hn3-text);
+	text-decoration: none;
+	transition:
+		border-color 0.15s,
+		color 0.15s;
+}
+.tab:hover {
+	border-color: var(--hn3-accent);
+	color: var(--hn3-accent);
+}
+.tabActive {
+	background: var(--hn3-accent);
+	border-color: var(--hn3-accent);
+	color: #fff;
+}
+
+/* Anti-bot: CSS-assembled text */
+.assembled {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.2em;
+	align-items: baseline;
+}
+.assembledWord {
+	display: inline;
+}

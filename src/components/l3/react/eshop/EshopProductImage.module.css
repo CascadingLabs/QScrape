@@ -1,0 +1,85 @@
+/* EshopProductImage — React island, CSS-assembled text anti-bot on product name */
+
+.loading {
+	min-height: 200px;
+	display: flex;
+	align-items: center;
+	color: var(--vm3-muted);
+	font-family: var(--vm3-font);
+	font-size: 14px;
+}
+
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.imageWrap {
+	position: relative;
+	border-radius: var(--vm3-radius);
+	overflow: hidden;
+	background: var(--vm3-surface);
+}
+
+.image {
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	display: block;
+}
+
+.badges {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.badge {
+	display: inline-block;
+	padding: 3px 8px;
+	border-radius: 4px;
+	font-family: var(--vm3-font);
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.badgeNew {
+	background: var(--vm3-primary);
+	color: #fff;
+}
+
+.badgeSale {
+	background: var(--vm3-sale);
+	color: #fff;
+}
+
+.badgeOos {
+	background: #333;
+	color: var(--vm3-muted);
+}
+
+.name {
+	font-family: var(--vm3-font);
+	font-size: 18px;
+	font-weight: 700;
+	color: var(--vm3-text);
+	line-height: 1.3;
+	margin: 0;
+}
+
+/* Anti-bot: CSS-assembled text container */
+.assembled {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.25em;
+}
+
+.assembledWord {
+	display: inline-block;
+}

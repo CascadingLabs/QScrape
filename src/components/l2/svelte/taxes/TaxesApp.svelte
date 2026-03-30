@@ -52,9 +52,9 @@ let _ready = false;
 let _current: Page = 'home';
 
 // Search state
-let fLastFirm = '';
-let fFirst = '';
-let fIndex = 'ALL';
+const fLastFirm = '';
+const fFirst = '';
+const fIndex = 'ALL';
 let searchResults: DeedRecord[] = [];
 let _hasSearched = false;
 let currentPage = 1;

@@ -1,0 +1,195 @@
+---
+import EshopProductImage from '../../../../components/l3/react/eshop/EshopProductImage';
+import EshopProductRating from '../../../../components/l3/solid/eshop/EshopProductRating';
+import EshopProductDetails from '../../../../components/l3/svelte/eshop/EshopProductDetails.svelte';
+import EshopProductName from '../../../../components/l3/vue/eshop/EshopProductName.vue';
+import { type ProductMeta, products } from '../../../../data/eshop/products';
+import '../../../../styles/l3/eshop.css';
+import ThemeInit from '../../../../components/ThemeInit.astro';
+
+export function getStaticPaths() {
+	return products.map((p) => ({
+		params: { sku: p.sku },
+		props: { product: p },
+	}));
+}
+
+interface Props {
+	product: ProductMeta;
+}
+
+const { product } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{product.name} — VaultMart L3</title>
+    <meta name="description" content={product.excerpt} />
+    <ThemeInit />
+  </head>
+  <body>
+    <header class="vm3-masthead">
+      <div class="vm3-masthead-inner">
+        <a href="/l3/eshop/" class="vm3-logo">VaultMart</a>
+        <nav class="vm3-nav">
+          <a href="/l3/eshop/" class="vm3-nav-item">Home</a>
+          <a href="/l3/eshop/?cart" class="vm3-nav-item">Cart</a>
+          <a href="/l3/" class="vm3-nav-item">← L3</a>
+        </nav>
+        <span class="vm3-edition">L3 · Islands Edition</span>
+      </div>
+    </header>
+
+    <main class="vm3-main">
+      <div class="vm3-breadcrumb">
+        <a href="/l3/eshop/">Catalog</a>
+        <span aria-hidden="true">›</span>
+        <a href={`/l3/eshop/?cat=${encodeURIComponent(product.category)}`}>{product.category}</a>
+        <span aria-hidden="true">›</span>
+        <span>{product.sku}</span>
+      </div>
+
+      <div class="vm3-layout">
+        <section class="vm3-primary">
+          <EshopProductImage client:only="react" product={product} />
+          <EshopProductName client:only="vue" sku={product.sku} />
+        </section>
+        <aside class="vm3-sidebar-col">
+          <EshopProductDetails client:only="svelte" sku={product.sku} />
+          <EshopProductRating client:only="solid-js" sku={product.sku} />
+        </aside>
+      </div>
+    </main>
+
+    <footer class="vm3-footer">
+      <div class="vm3-footer-inner">
+        <span>© 2026 VaultMart</span>
+        <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--vm3-bg);
+    color: var(--vm3-text);
+    font-family: var(--vm3-font);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .vm3-masthead {
+    background: var(--vm3-surface);
+    border-bottom: 1px solid var(--vm3-border);
+  }
+  .vm3-masthead-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .vm3-logo {
+    font-family: var(--vm3-font);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--vm3-primary);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+    margin-right: auto;
+  }
+
+  .vm3-nav {
+    display: flex;
+    gap: 4px;
+  }
+  .vm3-nav-item {
+    padding: 7px 14px;
+    font-family: var(--vm3-font);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--vm3-muted);
+    text-decoration: none;
+    border-radius: var(--vm3-radius);
+    transition: color 0.15s, background 0.15s;
+  }
+  .vm3-nav-item:hover { color: var(--vm3-text); background: var(--vm3-surface2); }
+
+  .vm3-edition {
+    font-family: var(--vm3-font);
+    font-size: 11px;
+    color: var(--vm3-muted);
+    font-style: italic;
+  }
+
+  .vm3-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .vm3-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--vm3-font);
+    font-size: 13px;
+    color: var(--vm3-muted);
+  }
+  .vm3-breadcrumb a {
+    color: var(--vm3-primary);
+    text-decoration: none;
+  }
+  .vm3-breadcrumb a:hover { text-decoration: underline; }
+
+  .vm3-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 32px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .vm3-layout { grid-template-columns: 1fr; }
+  }
+
+  .vm3-primary {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+  }
+
+  .vm3-sidebar-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .vm3-footer {
+    border-top: 1px solid var(--vm3-border);
+    background: var(--vm3-surface);
+    margin-top: 48px;
+  }
+  .vm3-footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--vm3-font);
+    font-size: 12px;
+    color: var(--vm3-muted);
+  }
+</style>

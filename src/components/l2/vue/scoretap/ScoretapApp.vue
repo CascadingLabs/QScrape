@@ -183,9 +183,9 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { fakeGet } from '../../../../data/api';
-import type { Game } from '../../../../data/scoretap/data';
 import {
 	events,
+	type Game,
 	liveMatches,
 	newsItems,
 	recentResults,
@@ -306,6 +306,54 @@ onMounted(() => {
 onUnmounted(() => window.removeEventListener('popstate', onPop));
 </script>
 
+<style>
+/* ── Light mode overrides ──────────────────────────────── */
+[data-theme='light'] .st-shell { background: #f0f2f5; color: #111827; }
+[data-theme='light'] .st-header { background: #ffffff; border-bottom-color: #d1d5db; }
+[data-theme='light'] .st-nav-btn { color: #6b7280; }
+[data-theme='light'] .st-nav-btn:hover { color: #111827; }
+[data-theme='light'] .st-nav-btn--active { color: #111827; border-bottom-color: #22c55e; }
+[data-theme='light'] .st-game-filter { background: #f5f7fa; border-bottom-color: #d1d5db; }
+[data-theme='light'] .st-game-tab:hover { color: #111827; }
+[data-theme='light'] .st-game-tab--active { color: #111827; }
+[data-theme='light'] .st-widget { background: #ffffff; border-color: #d1d5db; }
+[data-theme='light'] .st-widget-header { border-bottom-color: #d1d5db; }
+[data-theme='light'] .st-match-card { border-bottom-color: #d1d5db; }
+[data-theme='light'] .st-news-card { border-bottom-color: #d1d5db; border-right-color: #d1d5db; }
+[data-theme='light'] .st-news-headline { color: #111827; }
+[data-theme='light'] .st-news-headline:hover { color: #000000; }
+[data-theme='light'] .st-upcoming-card { border-bottom-color: #d1d5db; }
+[data-theme='light'] .st-rank-row { border-bottom-color: #d1d5db; }
+[data-theme='light'] .st-event-row { border-bottom-color: #d1d5db; }
+[data-theme='light'] .st-filter-tab { background: #f5f7fa; border-color: #d1d5db; }
+[data-theme='light'] .st-filter-tab:hover { color: #111827; border-color: #111827; }
+[data-theme='light'] .st-events-table { border-color: #d1d5db; }
+[data-theme='light'] .st-event-table-row { border-bottom-color: #d1d5db; }
+[data-theme='light'] .st-team-card { background: #ffffff; border-color: #d1d5db; }
+[data-theme='light'] .st-footer { border-top-color: #d1d5db; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .st-shell { background: #f0f2f5; color: #111827; }
+  :root:not([data-theme]) .st-header { background: #ffffff; border-bottom-color: #d1d5db; }
+  :root:not([data-theme]) .st-nav-btn:hover { color: #111827; }
+  :root:not([data-theme]) .st-nav-btn--active { color: #111827; border-bottom-color: #22c55e; }
+  :root:not([data-theme]) .st-game-filter { background: #f5f7fa; border-bottom-color: #d1d5db; }
+  :root:not([data-theme]) .st-game-tab:hover { color: #111827; }
+  :root:not([data-theme]) .st-game-tab--active { color: #111827; }
+  :root:not([data-theme]) .st-widget { background: #ffffff; border-color: #d1d5db; }
+  :root:not([data-theme]) .st-widget-header { border-bottom-color: #d1d5db; }
+  :root:not([data-theme]) .st-match-card { border-bottom-color: #d1d5db; }
+  :root:not([data-theme]) .st-news-card { border-bottom-color: #d1d5db; border-right-color: #d1d5db; }
+  :root:not([data-theme]) .st-news-headline { color: #111827; }
+  :root:not([data-theme]) .st-upcoming-card { border-bottom-color: #d1d5db; }
+  :root:not([data-theme]) .st-rank-row { border-bottom-color: #d1d5db; }
+  :root:not([data-theme]) .st-event-row { border-bottom-color: #d1d5db; }
+  :root:not([data-theme]) .st-filter-tab { background: #f5f7fa; border-color: #d1d5db; }
+  :root:not([data-theme]) .st-events-table { border-color: #d1d5db; }
+  :root:not([data-theme]) .st-event-table-row { border-bottom-color: #d1d5db; }
+  :root:not([data-theme]) .st-team-card { background: #ffffff; border-color: #d1d5db; }
+  :root:not([data-theme]) .st-footer { border-top-color: #d1d5db; }
+}
+</style>
 <style scoped>
 .st-shell { min-height: 100vh; background: #0f1117; color: #e8e8f0; font-family: 'Inter', system-ui, sans-serif; }
 .st-header { background: #1a1d27; border-bottom: 1px solid #2d3148; }

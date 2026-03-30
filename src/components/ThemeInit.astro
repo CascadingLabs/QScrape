@@ -1,0 +1,21 @@
+---
+---
+<script is:inline>
+	(function () {
+		function getCookie(name) {
+			var m = document.cookie.match(new RegExp("(?:^|; )" + name + "=([^;]*)"));
+			return m ? decodeURIComponent(m[1]) : null;
+		}
+		var c = getCookie("cl-theme");
+		var s = c || localStorage.getItem("starlight-theme");
+		var pref = s === "light" || s === "dark" ? s : "auto";
+		var resolved =
+			pref === "auto"
+				? window.matchMedia("(prefers-color-scheme: light)").matches
+					? "light"
+					: "dark"
+				: pref;
+		document.documentElement.dataset.theme = resolved;
+		document.documentElement.dataset.themePreference = pref;
+	})();
+</script>

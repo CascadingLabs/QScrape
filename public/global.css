@@ -336,3 +336,70 @@ table.grid-view td {
     padding: 4px 8px;
     border: 1px solid #cccccc;
 }
+
+/* ── Dark mode overrides ─────────────────────────────── */
+[data-theme='dark'] body { background-color: #1a1a1a; color: #d8d8d8; }
+[data-theme='dark'] .headerBar { background-color: #162040; color: #e0e0e0; }
+[data-theme='dark'] .footerBar { background-color: #162040; color: #aaaaaa; }
+[data-theme='dark'] .navBar { background-color: #242424; border-bottom-color: #3a3a3a; }
+[data-theme='dark'] .navBar a { color: #7ea8e8; }
+[data-theme='dark'] .breadcrumbs { background-color: #1e1e1e; border-bottom-color: #333; color: #888; }
+[data-theme='dark'] .breadcrumbs a { color: #7ea8e8; }
+[data-theme='dark'] .pageTitle { color: #7ea8e8; border-bottom-color: #333; }
+[data-theme='dark'] h1, [data-theme='dark'] h2, [data-theme='dark'] h3,
+[data-theme='dark'] h4, [data-theme='dark'] h5, [data-theme='dark'] h6 { color: #7ea8e8; }
+[data-theme='dark'] a { color: #7ea8e8; }
+[data-theme='dark'] a:visited { color: #a07ec8; }
+[data-theme='dark'] hr { border-top-color: #333; }
+[data-theme='dark'] .searchBox { background-color: #222; border-color: #444; }
+[data-theme='dark'] .formSection { background-color: #222; border-color: #444; }
+[data-theme='dark'] .infoBox { background-color: #1e1e1e; border-color: #333; color: #aaa; }
+[data-theme='dark'] .errorMessage { background-color: #2a1010; border-color: #a03030; color: #f08080; }
+[data-theme='dark'] .successMessage { background-color: #102a10; border-color: #308030; color: #80c880; }
+[data-theme='dark'] .resultsInfo { color: #888; }
+[data-theme='dark'] table.aspNetTable { background-color: #1a1a1a; border-color: #444; }
+[data-theme='dark'] table.aspNetTable td { background-color: #222; border-color: #333; color: #d8d8d8; }
+[data-theme='dark'] table.aspNetTable th { background-color: #162040; border-color: #333; color: #e0e0e0; }
+[data-theme='dark'] .headerRow { background-color: #162040; color: #e0e0e0; }
+[data-theme='dark'] .alternatingRow { background-color: #1e1e1e; }
+[data-theme='dark'] table.grid-view th { background-color: #162040; border-color: #444; color: #e0e0e0; }
+[data-theme='dark'] table.grid-view td { border-color: #333; }
+[data-theme='dark'] input[type="text"],
+[data-theme='dark'] input.aspNetTextBox,
+[data-theme='dark'] select { background-color: #222; border-color: #555; color: #d8d8d8; }
+[data-theme='dark'] .aspNetButton,
+[data-theme='dark'] input[type="submit"] { background-color: #2a2a2a; border-color: #555; color: #d8d8d8; }
+[data-theme='dark'] .statusApproved { background-color: #143a22; color: #6fcf8a; }
+[data-theme='dark'] .statusPending { background-color: #3a2810; color: #e0a85a; }
+[data-theme='dark'] .statusReview { background-color: #102038; color: #7ab0e8; }
+[data-theme='dark'] .aspNetLabel { color: #d8d8d8; }
+[data-theme='dark'] .aspNetLabelBold { color: #d8d8d8; }
+[data-theme='dark'] .pageTitle { color: #7ea8e8; border-bottom-color: #333; }
+[data-theme='dark'] table.formTable td { color: #d8d8d8; }
+[data-theme='dark'] table.formTable td.labelCol { color: #d8d8d8; }
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) body { background-color: #1a1a1a; color: #d8d8d8; }
+    :root:not([data-theme]) .headerBar { background-color: #162040; color: #e0e0e0; }
+    :root:not([data-theme]) .footerBar { background-color: #162040; color: #aaaaaa; }
+    :root:not([data-theme]) .navBar { background-color: #242424; border-bottom-color: #3a3a3a; }
+    :root:not([data-theme]) .navBar a { color: #7ea8e8; }
+    :root:not([data-theme]) .breadcrumbs { background-color: #1e1e1e; border-bottom-color: #333; color: #888; }
+    :root:not([data-theme]) .breadcrumbs a { color: #7ea8e8; }
+    :root:not([data-theme]) .pageTitle { color: #7ea8e8; border-bottom-color: #333; }
+    :root:not([data-theme]) h1, :root:not([data-theme]) h2, :root:not([data-theme]) h3 { color: #7ea8e8; }
+    :root:not([data-theme]) a { color: #7ea8e8; }
+    :root:not([data-theme]) a:visited { color: #a07ec8; }
+    :root:not([data-theme]) .searchBox { background-color: #222; border-color: #444; }
+    :root:not([data-theme]) table.aspNetTable { background-color: #1a1a1a; border-color: #444; }
+    :root:not([data-theme]) table.aspNetTable td { background-color: #222; border-color: #333; color: #d8d8d8; }
+    :root:not([data-theme]) table.aspNetTable th { background-color: #162040; border-color: #333; color: #e0e0e0; }
+    :root:not([data-theme]) table.grid-view th { background-color: #162040; border-color: #444; color: #e0e0e0; }
+    :root:not([data-theme]) table.grid-view td { border-color: #333; }
+    :root:not([data-theme]) input[type="text"],
+    :root:not([data-theme]) select { background-color: #222; border-color: #555; color: #d8d8d8; }
+    :root:not([data-theme]) .aspNetLabel { color: #d8d8d8; }
+    :root:not([data-theme]) .aspNetLabelBold { color: #d8d8d8; }
+    :root:not([data-theme]) table.formTable td { color: #d8d8d8; }
+    :root:not([data-theme]) table.formTable td.labelCol { color: #d8d8d8; }
+}

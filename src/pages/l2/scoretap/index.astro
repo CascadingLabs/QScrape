@@ -1,0 +1,11 @@
+---
+import ScoretapApp from '../../../components/l2/react/scoretap/ScoretapApp';
+import ScoretapAppSvelte from '../../../components/l2/svelte/scoretap/ScoretapApp.svelte';
+import ScoretapAppVue from '../../../components/l2/vue/scoretap/ScoretapApp.vue';
+import L2SiteLayout from '../../../layouts/L2SiteLayout.astro';
+---
+<L2SiteLayout title="ScoreTap — L2" description="ScoreTap — QScrape L2 test site. React, Vue, and Svelte.">
+  <ScoretapApp slot="react" client:only="react" />
+  <ScoretapAppVue slot="vue" client:only="vue" />
+  <ScoretapAppSvelte slot="svelte" client:only="svelte" />
+</L2SiteLayout>

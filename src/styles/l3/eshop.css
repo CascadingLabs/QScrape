@@ -1,0 +1,43 @@
+/* @qscrape L3 / design-tokens / eshop — VaultMart */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+	--vm3-bg: #0d0d0d;
+	--vm3-surface: #161616;
+	--vm3-surface2: #1e1e1e;
+	--vm3-text: #f0f0f0;
+	--vm3-muted: #888888;
+	--vm3-primary: oklch(58% 0.2 255);
+	--vm3-primary-hover: oklch(52% 0.22 255);
+	--vm3-cta: oklch(55% 0.18 145);
+	--vm3-cta-hover: oklch(49% 0.2 145);
+	--vm3-sale: oklch(58% 0.22 25);
+	--vm3-border: #2a2a2a;
+	--vm3-border-hover: #444444;
+	--vm3-font: "DM Sans", system-ui, sans-serif;
+	--vm3-radius: 8px;
+}
+
+/* Island scope — no body/global resets here, those live in the shell */
+
+/* ── Light mode token overrides ──────────────────────── */
+[data-theme="light"] {
+	--vm3-bg: #f5f5f5;
+	--vm3-surface: #ffffff;
+	--vm3-surface2: #f0f0f0;
+	--vm3-text: #111111;
+	--vm3-muted: #666666;
+	--vm3-border: #d4d4d4;
+	--vm3-border-hover: #aaaaaa;
+}
+@media (prefers-color-scheme: light) {
+	:root:not([data-theme]) {
+		--vm3-bg: #f5f5f5;
+		--vm3-surface: #ffffff;
+		--vm3-surface2: #f0f0f0;
+		--vm3-text: #111111;
+		--vm3-muted: #666666;
+		--vm3-border: #d4d4d4;
+		--vm3-border-hover: #aaaaaa;
+	}
+}

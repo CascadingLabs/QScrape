@@ -79,7 +79,7 @@ let cart: CartItem[] = [
 		name: 'Iron Ingot Bundle (10-bar)',
 	},
 ];
-let searchQuery = '';
+const searchQuery = '';
 
 function nav(p: Page) {
 	current = p;

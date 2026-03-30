@@ -47,3 +47,25 @@ img {
 	height: auto;
 	display: block;
 }
+
+/* ── Dark mode token overrides ───────────────────────── */
+[data-theme="dark"] {
+	--hn-bg: #161614;
+	--hn-surface: #1e1e1c;
+	--hn-text: #e8e8e6;
+	--hn-muted: #999999;
+	--hn-border: #2e2e2c;
+	--hn-masthead-bg: #0a0a0a;
+	--hn-masthead-text: #e8e8e6;
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--hn-bg: #161614;
+		--hn-surface: #1e1e1c;
+		--hn-text: #e8e8e6;
+		--hn-muted: #999999;
+		--hn-border: #2e2e2c;
+		--hn-masthead-bg: #0a0a0a;
+		--hn-masthead-text: #e8e8e6;
+	}
+}

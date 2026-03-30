@@ -42,7 +42,7 @@ let _ready = false;
 let _current: Page = 'home';
 
 const _games = Object.keys(gameLabels) as Game[];
-let gameFilter: Game | 'all' = 'all';
+const gameFilter: Game | 'all' = 'all';
 
 // Live score ticker
 let liveTicker = liveMatches.map((m) => ({ ...m }));
