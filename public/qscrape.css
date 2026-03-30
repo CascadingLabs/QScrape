@@ -10,10 +10,10 @@
 	--qs-text-dim: #808080;
 	--qs-text-marker: #555555;
 	--qs-border: #2a2a2a;
-	--qs-accent: #3b2f54;
-	--qs-accent-text: #9b78d4;
-	--qs-accent-pale: #c4a8e8;
-	--qs-link-hover-bg: color-mix(in srgb, #3b2f54 15%, transparent);
+	--qs-accent: #3d1414;
+	--qs-accent-text: #ef6464;
+	--qs-accent-pale: #e8b4b4;
+	--qs-link-hover-bg: color-mix(in srgb, #3d1414 15%, transparent);
 	--qs-edge-shadow: none;
 }
 
@@ -26,10 +26,10 @@
 	--qs-text-dim: #808080;
 	--qs-text-marker: #b0b0b0;
 	--qs-border: #d0d0d0;
-	--qs-accent: #3b2f54;
-	--qs-accent-text: #6b4aaf;
-	--qs-accent-pale: #e8d9f7;
-	--qs-link-hover-bg: color-mix(in srgb, #3b2f54 10%, transparent);
+	--qs-accent: #3d1414;
+	--qs-accent-text: #c23232;
+	--qs-accent-pale: #f7e0e0;
+	--qs-link-hover-bg: color-mix(in srgb, #3d1414 10%, transparent);
 	--qs-edge-shadow: none;
 }
 
@@ -43,10 +43,10 @@
 		--qs-text-dim: #808080;
 		--qs-text-marker: #b0b0b0;
 		--qs-border: #d0d0d0;
-		--qs-accent: #3b2f54;
-		--qs-accent-text: #6b4aaf;
-		--qs-accent-pale: #e8d9f7;
-		--qs-link-hover-bg: color-mix(in srgb, #3b2f54 10%, transparent);
+		--qs-accent: #3d1414;
+		--qs-accent-text: #c23232;
+		--qs-accent-pale: #f7e0e0;
+		--qs-link-hover-bg: color-mix(in srgb, #3d1414 10%, transparent);
 		--qs-edge-shadow: none;
 	}
 }
