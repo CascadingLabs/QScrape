@@ -1,5 +1,16 @@
 <p align="center">
-  <img src="public/favicon.svg" width="64" height="64" alt="QScrape" />
+  <a href="https://qscrape.dev">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="media/logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="media/logo-light.svg">
+      <img src="media/logo-dark.svg" alt="QScrape" width="200">
+    </picture>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://discord.gg/5WZNzFZtgb"><img src="https://img.shields.io/badge/Discord-Join-c94040?labelColor=1a0808&logo=discord&logoColor=white" alt="Discord"></a>
+  <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache_2.0-c94040?labelColor=1a0808" alt="License"></a>
 </p>
 
 # QScrape
