@@ -11,13 +11,7 @@
 		"astro": "astro",
 		"lint": "biome lint .",
 		"format": "biome format . --write",
-		"check": "biome check --write --no-errors-on-unmatched .",
-		"prepare": "husky"
-	},
-	"lint-staged": {
-		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,astro}": [
-			"biome check --write --no-errors-on-unmatched"
-		]
+		"check": "biome check --write --no-errors-on-unmatched ."
 	},
 	"dependencies": {
 		"@astrojs/react": "^5.0.2",
@@ -36,8 +30,6 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.9",
-		"husky": "^9.1.7",
-		"lint-staged": "^16.2.7",
 		"start-server-and-test": "^3.0.0"
 	}
 }
