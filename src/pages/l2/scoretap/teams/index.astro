@@ -1,25 +1,17 @@
 ---
 // ── React islands ────────────────────────────────────────────────────────────
-import ReactGameFilter from '../../../components/l2/scoretap/react/ScoretapGameFilter';
-import ReactLiveScores from '../../../components/l2/scoretap/react/ScoretapLiveScores';
-import ReactRankings from '../../../components/l2/scoretap/react/ScoretapRankings';
-import ReactUpcoming from '../../../components/l2/scoretap/react/ScoretapUpcoming';
+import ReactGameFilter from '../../../../components/l2/react/scoretap/ScoretapGameFilter';
+import ReactTeamsList from '../../../../components/l2/react/scoretap/ScoretapTeamsList';
 // ── Solid islands ────────────────────────────────────────────────────────────
-import SolidGameFilter from '../../../components/l2/scoretap/solid/ScoretapGameFilter';
-import SolidLiveScores from '../../../components/l2/scoretap/solid/ScoretapLiveScores';
-import SolidRankings from '../../../components/l2/scoretap/solid/ScoretapRankings';
-import SolidUpcoming from '../../../components/l2/scoretap/solid/ScoretapUpcoming';
+import SolidGameFilter from '../../../../components/l2/solid/scoretap/ScoretapGameFilter';
+import SolidTeamsList from '../../../../components/l2/solid/scoretap/ScoretapTeamsList';
 // ── Svelte islands ───────────────────────────────────────────────────────────
-import SvelteGameFilter from '../../../components/l2/scoretap/svelte/ScoretapGameFilter.svelte';
-import SvelteLiveScores from '../../../components/l2/scoretap/svelte/ScoretapLiveScores.svelte';
-import SvelteRankings from '../../../components/l2/scoretap/svelte/ScoretapRankings.svelte';
-import SvelteUpcoming from '../../../components/l2/scoretap/svelte/ScoretapUpcoming.svelte';
+import SvelteGameFilter from '../../../../components/l2/svelte/scoretap/ScoretapGameFilter.svelte';
+import SvelteTeamsList from '../../../../components/l2/svelte/scoretap/ScoretapTeamsList.svelte';
 // ── Vue islands ──────────────────────────────────────────────────────────────
-import VueGameFilter from '../../../components/l2/scoretap/vue/ScoretapGameFilter.vue';
-import VueLiveScores from '../../../components/l2/scoretap/vue/ScoretapLiveScores.vue';
-import VueRankings from '../../../components/l2/scoretap/vue/ScoretapRankings.vue';
-import VueUpcoming from '../../../components/l2/scoretap/vue/ScoretapUpcoming.vue';
-import ThemeInit from '../../../components/ThemeInit.astro';
+import VueGameFilter from '../../../../components/l2/vue/scoretap/ScoretapGameFilter.vue';
+import VueTeamsList from '../../../../components/l2/vue/scoretap/ScoretapTeamsList.vue';
+import ThemeInit from '../../../../components/ThemeInit.astro';
 ---
 
 <!doctype html>
@@ -27,8 +19,8 @@ import ThemeInit from '../../../components/ThemeInit.astro';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ScoreTap — L2</title>
-    <meta name="description" content="ScoreTap — QScrape L2 test site. Framework-shuffled islands: React, Vue, Svelte, Solid." />
+    <title>ScoreTap — Teams — L2</title>
+    <meta name="description" content="ScoreTap Teams — QScrape L2 test site. Framework-shuffled islands: React, Vue, Svelte, Solid." />
     <ThemeInit />
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -75,6 +67,11 @@ import ThemeInit from '../../../components/ThemeInit.astro';
         color: var(--st-text, #e8e8f0);
         background: var(--st-surface2, #21253a);
       }
+      .st2-nav-link--active {
+        color: var(--st-text, #e8e8f0);
+        background: var(--st-surface2, #21253a);
+        font-weight: 600;
+      }
       .st2-edition {
         font-size: 11px;
         color: var(--st-muted, #6b7280);
@@ -87,19 +84,8 @@ import ThemeInit from '../../../components/ThemeInit.astro';
         margin: 0 auto;
         padding: 0 0 40px;
       }
-      .st2-body {
-        display: grid;
-        grid-template-columns: 1fr 300px;
-        gap: 24px;
-        padding: 24px 24px 0;
-      }
-      @media (max-width: 860px) {
-        .st2-body { grid-template-columns: 1fr; }
-      }
-      .st2-sidebar {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+      .st2-main {
+        padding: 24px;
       }
 
       /* ── Footer ─────────────────────────────────────── */
@@ -129,6 +115,9 @@ import ThemeInit from '../../../components/ThemeInit.astro';
         <a href="/l2/scoretap/" class="st2-logo">ScoreTap</a>
         <nav class="st2-nav">
           <a href="/l2/" class="st2-nav-link">← L2</a>
+          <a href="/l2/scoretap/" class="st2-nav-link">Home</a>
+          <a href="/l2/scoretap/events/" class="st2-nav-link">Events</a>
+          <a href="/l2/scoretap/teams/" class="st2-nav-link st2-nav-link--active">Teams</a>
         </nav>
         <span class="st2-edition">L2 · Shuffled Islands</span>
       </div>
@@ -144,39 +133,16 @@ import ThemeInit from '../../../components/ThemeInit.astro';
         <div data-fw="solid" hidden><SolidGameFilter client:only="solid-js" /></div>
       </div>
 
-      <div class="st2-body">
-
-        <!-- ── Live Scores slot ──────────────────────────── -->
-        <main>
-          <div class="st2-slot" data-slot="live-scores">
-            <div data-fw="react" hidden><ReactLiveScores client:only="react" /></div>
-            <div data-fw="vue" hidden><VueLiveScores client:only="vue" /></div>
-            <div data-fw="svelte" hidden><SvelteLiveScores client:only="svelte" /></div>
-            <div data-fw="solid" hidden><SolidLiveScores client:only="solid-js" /></div>
-          </div>
-        </main>
-
-        <!-- ── Sidebar slots ──────────────────────────────── -->
-        <aside class="st2-sidebar">
-
-          <!-- Upcoming slot -->
-          <div class="st2-slot" data-slot="upcoming">
-            <div data-fw="react" hidden><ReactUpcoming client:only="react" /></div>
-            <div data-fw="vue" hidden><VueUpcoming client:only="vue" /></div>
-            <div data-fw="svelte" hidden><SvelteUpcoming client:only="svelte" /></div>
-            <div data-fw="solid" hidden><SolidUpcoming client:only="solid-js" /></div>
-          </div>
-
-          <!-- Rankings slot -->
-          <div class="st2-slot" data-slot="rankings">
-            <div data-fw="react" hidden><ReactRankings client:only="react" /></div>
-            <div data-fw="vue" hidden><VueRankings client:only="vue" /></div>
-            <div data-fw="svelte" hidden><SvelteRankings client:only="svelte" /></div>
-            <div data-fw="solid" hidden><SolidRankings client:only="solid-js" /></div>
-          </div>
-
-        </aside>
+      <!-- ── Teams List slot ──────────────────────────── -->
+      <div class="st2-main">
+        <div class="st2-slot" data-slot="teams-list">
+          <div data-fw="react" hidden><ReactTeamsList client:only="react" /></div>
+          <div data-fw="vue" hidden><VueTeamsList client:only="vue" /></div>
+          <div data-fw="svelte" hidden><SvelteTeamsList client:only="svelte" /></div>
+          <div data-fw="solid" hidden><SolidTeamsList client:only="solid-js" /></div>
+        </div>
       </div>
+
     </div>
 
     <footer class="st2-footer">
@@ -189,7 +155,7 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     <!--
       Framework shuffler — runs synchronously after HTML is parsed.
       Each slot independently picks a random framework.
-      All 16 client:only islands still hydrate (just hidden unless selected).
+      All 8 client:only islands still hydrate (just hidden unless selected).
     -->
     <script>
       (function () {

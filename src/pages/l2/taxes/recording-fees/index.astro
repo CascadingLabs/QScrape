@@ -1,12 +1,20 @@
 ---
 // ── React islands ────────────────────────────────────────────────────────────
-import ReactRecordingFees from '../../../../components/l2/react/taxes/TaxesRecordingFees';
+import ReactRecordingFees from '../../../../components/l2/taxes/react/TaxesRecordingFees';
+import ReactSuppFees from '../../../../components/l2/taxes/react/TaxesSuppFees';
+import ReactTransferTax from '../../../../components/l2/taxes/react/TaxesTransferTax';
 // ── Solid islands ────────────────────────────────────────────────────────────
-import SolidRecordingFees from '../../../../components/l2/solid/taxes/TaxesRecordingFees';
+import SolidRecordingFees from '../../../../components/l2/taxes/solid/TaxesRecordingFees';
+import SolidSuppFees from '../../../../components/l2/taxes/solid/TaxesSuppFees';
+import SolidTransferTax from '../../../../components/l2/taxes/solid/TaxesTransferTax';
 // ── Svelte islands ───────────────────────────────────────────────────────────
-import SvelteRecordingFees from '../../../../components/l2/svelte/taxes/TaxesRecordingFees.svelte';
+import SvelteRecordingFees from '../../../../components/l2/taxes/svelte/TaxesRecordingFees.svelte';
+import SvelteSuppFees from '../../../../components/l2/taxes/svelte/TaxesSuppFees.svelte';
+import SvelteTransferTax from '../../../../components/l2/taxes/svelte/TaxesTransferTax.svelte';
 // ── Vue islands ──────────────────────────────────────────────────────────────
-import VueRecordingFees from '../../../../components/l2/vue/taxes/TaxesRecordingFees.vue';
+import VueRecordingFees from '../../../../components/l2/taxes/vue/TaxesRecordingFees.vue';
+import VueSuppFees from '../../../../components/l2/taxes/vue/TaxesSuppFees.vue';
+import VueTransferTax from '../../../../components/l2/taxes/vue/TaxesTransferTax.vue';
 import ThemeInit from '../../../../components/ThemeInit.astro';
 ---
 
@@ -55,7 +63,8 @@ import ThemeInit from '../../../../components/ThemeInit.astro';
       .er2-edition { font-size: 11px; color: rgba(255,255,255,0.5); font-style: italic; }
 
       .er2-layout { max-width: 1200px; margin: 0 auto; padding: 0 0 40px; }
-      .er2-main { padding: 20px 0 0; }
+      .er2-main { padding: 20px 0 0; display: flex; flex-direction: column; gap: 0; }
+      .er2-slot + .er2-slot { border-top: 1px solid var(--er-border, #ced4da); }
 
       .er2-footer { border-top: 1px solid var(--er-border, #ced4da); background: var(--er-surface, #fff); margin-top: 40px; }
       .er2-footer-inner {
@@ -87,11 +96,23 @@ import ThemeInit from '../../../../components/ThemeInit.astro';
 
     <div class="er2-layout">
       <main class="er2-main">
-        <div class="er2-slot" data-slot="recording-fees">
+        <div class="er2-slot" data-slot="std-fees">
           <div data-fw="react" hidden><ReactRecordingFees client:only="react" /></div>
           <div data-fw="vue" hidden><VueRecordingFees client:only="vue" /></div>
           <div data-fw="svelte" hidden><SvelteRecordingFees client:only="svelte" /></div>
           <div data-fw="solid" hidden><SolidRecordingFees client:only="solid-js" /></div>
+        </div>
+        <div class="er2-slot" data-slot="supp-fees">
+          <div data-fw="react" hidden><ReactSuppFees client:only="react" /></div>
+          <div data-fw="vue" hidden><VueSuppFees client:only="vue" /></div>
+          <div data-fw="svelte" hidden><SvelteSuppFees client:only="svelte" /></div>
+          <div data-fw="solid" hidden><SolidSuppFees client:only="solid-js" /></div>
+        </div>
+        <div class="er2-slot" data-slot="transfer-tax">
+          <div data-fw="react" hidden><ReactTransferTax client:only="react" /></div>
+          <div data-fw="vue" hidden><VueTransferTax client:only="vue" /></div>
+          <div data-fw="svelte" hidden><SvelteTransferTax client:only="svelte" /></div>
+          <div data-fw="solid" hidden><SolidTransferTax client:only="solid-js" /></div>
         </div>
       </main>
     </div>

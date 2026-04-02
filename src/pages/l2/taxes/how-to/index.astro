@@ -1,12 +1,16 @@
 ---
 // ── React islands ────────────────────────────────────────────────────────────
-import ReactHowTo from '../../../../components/l2/react/taxes/TaxesHowTo';
+import ReactHowTo from '../../../../components/l2/taxes/react/TaxesHowTo';
+import ReactHowToInfo from '../../../../components/l2/taxes/react/TaxesHowToInfo';
 // ── Solid islands ────────────────────────────────────────────────────────────
-import SolidHowTo from '../../../../components/l2/solid/taxes/TaxesHowTo';
+import SolidHowTo from '../../../../components/l2/taxes/solid/TaxesHowTo';
+import SolidHowToInfo from '../../../../components/l2/taxes/solid/TaxesHowToInfo';
 // ── Svelte islands ───────────────────────────────────────────────────────────
-import SvelteHowTo from '../../../../components/l2/svelte/taxes/TaxesHowTo.svelte';
+import SvelteHowTo from '../../../../components/l2/taxes/svelte/TaxesHowTo.svelte';
+import SvelteHowToInfo from '../../../../components/l2/taxes/svelte/TaxesHowToInfo.svelte';
 // ── Vue islands ──────────────────────────────────────────────────────────────
-import VueHowTo from '../../../../components/l2/vue/taxes/TaxesHowTo.vue';
+import VueHowTo from '../../../../components/l2/taxes/vue/TaxesHowTo.vue';
+import VueHowToInfo from '../../../../components/l2/taxes/vue/TaxesHowToInfo.vue';
 import ThemeInit from '../../../../components/ThemeInit.astro';
 ---
 
@@ -55,7 +59,13 @@ import ThemeInit from '../../../../components/ThemeInit.astro';
       .er2-edition { font-size: 11px; color: rgba(255,255,255,0.5); font-style: italic; }
 
       .er2-layout { max-width: 1200px; margin: 0 auto; padding: 0 0 40px; }
-      .er2-main { padding: 20px 0 0; }
+      .er2-main {
+        padding: 20px 0 0;
+        display: grid;
+        grid-template-columns: 1fr 260px;
+        gap: 0;
+        align-items: start;
+      }
 
       .er2-footer { border-top: 1px solid var(--er-border, #ced4da); background: var(--er-surface, #fff); margin-top: 40px; }
       .er2-footer-inner {
@@ -92,6 +102,12 @@ import ThemeInit from '../../../../components/ThemeInit.astro';
           <div data-fw="vue" hidden><VueHowTo client:only="vue" /></div>
           <div data-fw="svelte" hidden><SvelteHowTo client:only="svelte" /></div>
           <div data-fw="solid" hidden><SolidHowTo client:only="solid-js" /></div>
+        </div>
+        <div class="er2-slot" data-slot="how-to-info">
+          <div data-fw="react" hidden><ReactHowToInfo client:only="react" /></div>
+          <div data-fw="vue" hidden><VueHowToInfo client:only="vue" /></div>
+          <div data-fw="svelte" hidden><SvelteHowToInfo client:only="svelte" /></div>
+          <div data-fw="solid" hidden><SolidHowToInfo client:only="solid-js" /></div>
         </div>
       </main>
     </div>

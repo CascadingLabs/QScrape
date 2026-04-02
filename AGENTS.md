@@ -8,7 +8,7 @@ QScrape is a web scraper evaluation suite. It hosts fictional test sites across 
 | Level | Status | Description |
 |-------|--------|-------------|
 | L1 | Live | Standard HTML/CSS/JS. Static Astro build. No frameworks, no anti-bot measures. |
-| L2 | Live | Modern web frameworks (React, Vue, Svelte, Solid). All content client-side only (`client:only`). Scrapers must execute JS. Framework toggled via in-page switcher. |
+| L2 | Live | Modern web frameworks (React, Vue, Svelte, Solid). All content client-side only (`client:only`). Scrapers must execute JS. Each page section is an independent island assigned to a randomly shuffled framework — all 4 frameworks appear on every page load. |
 | L3 | Live | Anti-bot sites. Astro islands (React + Vue + Svelte + Solid). No recaptchas or unsolvable challenge puzzles. |
 
 ## Index Pages
@@ -17,10 +17,7 @@ QScrape is a web scraper evaluation suite. It hosts fictional test sites across 
 |-------|------|-------------|
 | `/` | `src/pages/index.astro` | Root index: project overview, levels list, all sites, resources |
 | `/l1/` | `src/pages/l1/index.astro` | L1 index: level explanation, list of L1 sites with descriptions |
-| `/l2/` | `src/pages/l2/index.astro` | L2 index: full 12-site matrix table (React × Vue × Svelte × 4 sites) |
-| `/l2/react/` | `src/pages/l2/react/index.astro` | React framework index: lists all 4 React L2 sites |
-| `/l2/vue/` | `src/pages/l2/vue/index.astro` | Vue framework index: lists all 4 Vue L2 sites |
-| `/l2/svelte/` | `src/pages/l2/svelte/index.astro` | Svelte framework index: lists all 4 Svelte L2 sites |
+| `/l2/` | `src/pages/l2/index.astro` | L2 index: level explanation and list of L2 sites |
 
 ### Shared CSS
 Both index pages use `public/qscrape.css` — the dark-theme stylesheet for QScrape meta/navigation pages. This is separate from `public/global.css`, which is the legacy ASP.NET stylesheet used by L1 site pages.
@@ -38,24 +35,26 @@ See each site's `AGENTS.md` for full page structure, data schemas, URL encoding 
 
 ## L2 Sites
 
-All L2 sites are SPAs mounted with `client:only`. HTML source is empty — scrapers must execute JavaScript.
+All L2 page sections are independent `client:only` islands. HTML source is empty shell — scrapers must execute JavaScript to see any content.
 
-### L2 runtime behaviour (important for scraper authors)
+### L2 architecture (important for scraper authors)
 
-**Async loading gate** — every L2 component calls `fakeGet(null)` on mount, which resolves after a simulated 300–550 ms network delay. Until it resolves the component renders a plain "Loading…" div. Scrapers must wait for the real content to appear before extracting data. The fake API is at `src/data/api.ts`.
+**Islands, not SPAs** — each page is divided into named slots (e.g. `product-grid`, `category-nav`). Every slot embeds four copies of its component (one per framework), all `hidden` initially. An inline synchronous script runs a Fisher-Yates shuffle and reveals exactly one framework per slot. All four framework runtimes still hydrate; only the revealed copy is visible.
 
-**Client-side URL routing** — navigation inside each SPA uses `history.pushState` rather than full page loads. Each sub-URL maps to a different SPA "page":
+**Framework distribution** — the shuffler assigns a unique framework to each slot via permutation, so all 4 frameworks (React, Vue, Svelte, Solid) appear on every page load. The active framework is recorded in `data-active-fw` on each slot element.
 
-| Site | Sub-URLs |
-|------|----------|
-| news | `articles?cat=…`, `article?id=…`, `about`, `staff`, `contact` |
-| eshop | `catalog?cat=…`, `product?sku=…`, `cart`, `search?q=…` |
-| scoretap | `events`, `teams` |
-| taxes | `search`, `viewer?file=…`, `how-to`, `recording-fees` |
+**Async loading gate** — every island calls `fakeGet(null)` on mount, which resolves after a simulated 300–550 ms delay. Until resolved the island renders a plain "Loading…" div. Scrapers must wait for all visible islands to settle before extracting data. The fake API is at `src/data/api.ts`.
 
-The Astro shells at each sub-URL also mount the same SPA component (`client:only`), so deep-linking a specific URL loads the correct page directly. `popstate` listeners keep the back/forward buttons functional.
+**Client-side URL routing** — navigation within a site uses `history.pushState` (query-param based). `popstate` listeners keep back/forward buttons functional. Taxes sub-pages (`/l2/taxes/how-to/` and `/l2/taxes/recording-fees/`) are separate Astro pages with their own single island slot.
 
-**Game filter (scoretap)** — a single `activeGame` state controls filtering across all pages (Home, Events, Teams). The header tabs and per-page filter tabs all update the same state, matching the behaviour across all three frameworks.
+| Site | URL state keys |
+|------|----------------|
+| news | `?id=…` (article detail), `?cat=…` (category filter) |
+| eshop | `?sku=…` (product detail), `?view=cart\|checkout` |
+| scoretap | `?match=…`, `?team=…`, `?event=…`, `?game=…` |
+| taxes | `?file=…` (deed viewer), `?lastFirm=…&first=…&index=…` (search) |
+
+**Game filter (scoretap)** — a single `activeGame` state controls filtering. The header tabs and per-section filter tabs update state via custom events, keeping all slots in sync regardless of which framework handles each slot.
 
 ### Shared data layer
 
@@ -77,12 +76,22 @@ The Astro shells at each sub-URL also mount the same SPA component (`client:only
 
 ### Component locations
 
-| Framework | News | Eshop | ScoreTap | Taxes |
-|-----------|------|-------|----------|-------|
-| React | `src/components/l2/react/news/NewsApp.tsx` | `…/eshop/EshopApp.tsx` | `…/scoretap/ScoretapApp.tsx` | `…/taxes/TaxesApp.tsx` |
-| Vue | `src/components/l2/vue/news/NewsApp.vue` | `…/eshop/EshopApp.vue` | `…/scoretap/ScoretapApp.vue` | `…/taxes/TaxesApp.vue` |
-| Svelte | `src/components/l2/svelte/news/NewsApp.svelte` | `…/eshop/EshopApp.svelte` | `…/scoretap/ScoretapApp.svelte` | `…/taxes/TaxesApp.svelte` |
-| Solid | `src/components/l2/solid/news/NewsApp.tsx` | `…/eshop/EshopApp.tsx` | `…/scoretap/ScoretapApp.tsx` | `…/taxes/TaxesApp.tsx` |
+Components are organised **site-first**: `src/components/l2/{site}/{framework}/`. Each directory contains multiple `*.tsx` / `*.vue` / `*.svelte` files, one per slot.
+
+| Site | React | Vue | Svelte | Solid |
+|------|-------|-----|--------|-------|
+| News | `src/components/l2/news/react/` | `…/vue/` | `…/svelte/` | `…/solid/` |
+| Eshop | `src/components/l2/eshop/react/` | `…/vue/` | `…/svelte/` | `…/solid/` |
+| ScoreTap | `src/components/l2/scoretap/react/` | `…/vue/` | `…/svelte/` | `…/solid/` |
+| Taxes | `src/components/l2/taxes/react/` | `…/vue/` | `…/svelte/` | `…/solid/` |
+
+**News slots**: `NewsBreakingTicker`, `NewsArticleFeed`, `NewsCategorySidebar`, `NewsStaffSpotlight`, `NewsWeatherWidget` (breaking news + geomantic conditions)
+
+**Eshop slots**: `EshopCategoryNav`, `EshopFeaturedBanner`, `EshopPriceBadges`, `EshopProductGrid` (full cart/checkout flow)
+
+**ScoreTap slots**: `ScoretapGameFilter`, `ScoretapLiveScores`, `ScoretapUpcoming`, `ScoretapRankings`
+
+**Taxes slots**: `TaxesSearchForm`, `TaxesResultsGrid`, `TaxesIndexSidebar`, `TaxesRecentRecords` (+ sub-page single-slot islands: `TaxesHowTo`, `TaxesRecordingFees`)
 
 ## L3 Sites
 
@@ -223,9 +232,10 @@ src/pages/
     svelte/scoretap/       — ScoreTap (Svelte) — 3 shells
     svelte/taxes/          — Eldoria Registry (Svelte) — 5 shells
 src/components/l2/
-  react/{news,eshop,scoretap,taxes}/   — React SPAs
-  vue/{news,eshop,scoretap,taxes}/     — Vue SPAs
-  svelte/{news,eshop,scoretap,taxes}/  — Svelte SPAs
+  news/{react,vue,svelte,solid}/       — News islands (all frameworks)
+  eshop/{react,vue,svelte,solid}/      — Eshop islands (all frameworks)
+  scoretap/{react,vue,svelte,solid}/   — ScoreTap islands (all frameworks)
+  taxes/{react,vue,svelte,solid}/      — Taxes islands (all frameworks)
 src/data/
   news/articles.ts         — Shared news data (L1 re-exports from here)
   eshop/products.ts        — Shared eshop data (L1 re-exports from here)
