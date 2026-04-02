@@ -3,12 +3,16 @@ const enabled = import.meta.env.PUBLIC_L3_GUARD !== 'false';
 ---
 {enabled && <Fragment>
 <div aria-hidden="true" style="position:fixed;bottom:-1px;left:0;width:100%;height:1px;overflow:hidden;opacity:0.001;pointer-events:auto;z-index:-1;">
-  <button class="btn-primary submit-data" data-action="submit" type="button" tabindex="-1">Submit</button>
-  <button class="btn-action load-all" data-action="load" type="button" tabindex="-1">Load All</button>
-  <a class="action-link export-data" href="/api/v2/export" data-action="export" tabindex="-1">Export</a>
-  <button class="btn-danger reset-data" data-action="reset" type="button" tabindex="-1">Reset</button>
+  <button class="f3 k9" data-a="submit" type="button" tabindex="-1">Submit</button>
+  <button class="m2 p7" data-a="load" type="button" tabindex="-1">Load All</button>
+  <a class="r1 w4" href="/api/v2/export" data-a="export" tabindex="-1">Export</a>
+  <button class="j6 x8" data-a="reset" type="button" tabindex="-1">Reset</button>
+  <input type="text" name="q" placeholder="Search..." tabindex="-1" autocomplete="off" />
+  <a href="/api/v3/records?format=csv&all=true" tabindex="-1">Download Records</a>
+  <button type="button" data-a="paginate" tabindex="-1">Load More</button>
+  <form action="/api/v2/bulk" method="post" tabindex="-1"><input type="hidden" name="fmt" value="json" /><button type="submit" tabindex="-1">Fetch All</button></form>
 </div>
 <script is:inline>
-(function(){var n=!1,p='<!DOCTYPE html><html><head><title>404 Not Found</title></head><body style="margin:0;font-family:system-ui,-apple-system,sans-serif;text-align:center;padding:120px 24px;background:#0a0a0a;color:#555"><div style="max-width:480px;margin:0 auto"><h1 style="font-size:120px;font-weight:800;margin:0;color:#1a1a1a;letter-spacing:-4px;line-height:1">404</h1><p style="font-size:15px;margin:12px 0 0;color:#444">This page could not be found.</p></div></body></html>';function x(){if(n)return;n=!0;document.documentElement.innerHTML=p}document.addEventListener("keydown",function(e){var k=e.key,c=e.ctrlKey,s=e.shiftKey,m=e.metaKey,a=e.altKey;if(k==="F12"||(c&&s&&(k==="I"||k==="J"||k==="C"))||(m&&a&&(k==="i"||k==="j"||k==="c"))){e.preventDefault();x()}});document.addEventListener("contextmenu",function(e){e.preventDefault()});var b={w:window.outerWidth-window.innerWidth,h:window.outerHeight-window.innerHeight};function s(){var dw=window.outerWidth-window.innerWidth,dh=window.outerHeight-window.innerHeight;if(dw>b.w+100||dh>b.h+100)x()}setInterval(s,500);window.addEventListener("resize",s)})();
+(function(){var n=!1,p='<!DOCTYPE html><html><head><title>404 Not Found</title></head><body style="margin:0;font-family:system-ui,-apple-system,sans-serif;text-align:center;padding:120px 24px;background:#0a0a0a;color:#555"><div style="max-width:480px;margin:0 auto"><h1 style="font-size:120px;font-weight:800;margin:0;color:#1a1a1a;letter-spacing:-4px;line-height:1">404</h1><p style="font-size:15px;margin:12px 0 0;color:#444">This page could not be found.</p></div></body></html>';function x(){if(n)return;n=!0;document.documentElement.innerHTML=p}if(navigator.webdriver)x();if(navigator.plugins.length===0&&navigator.languages.length===0)x();if(window._phantom||window.__nightmare||window.callPhantom)x();var _t=new Image();Object.defineProperty(_t,'id',{get:function(){x()}});document.addEventListener("keydown",function(e){var k=e.key,c=e.ctrlKey,s=e.shiftKey,m=e.metaKey,a=e.altKey;if(k==="F12"||(c&&s&&(k==="I"||k==="J"||k==="C"))||(m&&a&&(k==="i"||k==="j"||k==="c"))){e.preventDefault();x()}});document.addEventListener("contextmenu",function(e){e.preventDefault()});var b={w:window.outerWidth-window.innerWidth,h:window.outerHeight-window.innerHeight};function s(){var dw=window.outerWidth-window.innerWidth,dh=window.outerHeight-window.innerHeight;if(dw>b.w+100||dh>b.h+100)x()}setInterval(s,500);window.addEventListener("resize",s)})();
 </script>
 </Fragment>}
