@@ -42,7 +42,7 @@ onMount(() => {
 });
 </script>
 
-<div data-island="svelte-price-badges">
+<div>
   {#if !items}
     <div class="vm3-pb-loading">Loading…</div>
   {:else}

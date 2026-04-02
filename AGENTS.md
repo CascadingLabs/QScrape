@@ -8,7 +8,7 @@ QScrape is a web scraper evaluation suite. It hosts fictional test sites across 
 | Level | Status | Description |
 |-------|--------|-------------|
 | L1 | Live | Standard HTML/CSS/JS. Static Astro build. No frameworks, no anti-bot measures. |
-| L2 | Live | Modern web frameworks (React, Vue, Svelte). All content client-side only (`client:only`). Scrapers must execute JS. |
+| L2 | Live | Modern web frameworks (React, Vue, Svelte, Solid). All content client-side only (`client:only`). Scrapers must execute JS. Framework toggled via in-page switcher. |
 | L3 | Live | Anti-bot sites. Astro islands (React + Vue + Svelte + Solid). No recaptchas or unsolvable challenge puzzles. |
 
 ## Index Pages
@@ -61,10 +61,10 @@ The Astro shells at each sub-URL also mount the same SPA component (`client:only
 
 | File | Used by |
 |------|---------|
-| `src/data/news/articles.ts` | All 3 news implementations + L1 |
-| `src/data/eshop/products.ts` | All 3 eshop implementations + L1 |
-| `src/data/scoretap/data.ts` | All 3 scoretap implementations |
-| `src/data/taxes/deeds.ts` | All 3 taxes implementations |
+| `src/data/news/articles.ts` | All 4 news implementations + L1 |
+| `src/data/eshop/products.ts` | All 4 eshop implementations + L1 |
+| `src/data/scoretap/data.ts` | All 4 scoretap implementations |
+| `src/data/taxes/deeds.ts` | All 4 taxes implementations |
 
 ### CSS design tokens
 
@@ -82,10 +82,11 @@ The Astro shells at each sub-URL also mount the same SPA component (`client:only
 | React | `src/components/l2/react/news/NewsApp.tsx` | `…/eshop/EshopApp.tsx` | `…/scoretap/ScoretapApp.tsx` | `…/taxes/TaxesApp.tsx` |
 | Vue | `src/components/l2/vue/news/NewsApp.vue` | `…/eshop/EshopApp.vue` | `…/scoretap/ScoretapApp.vue` | `…/taxes/TaxesApp.vue` |
 | Svelte | `src/components/l2/svelte/news/NewsApp.svelte` | `…/eshop/EshopApp.svelte` | `…/scoretap/ScoretapApp.svelte` | `…/taxes/TaxesApp.svelte` |
+| Solid | `src/components/l2/solid/news/NewsApp.tsx` | `…/eshop/EshopApp.tsx` | `…/scoretap/ScoretapApp.tsx` | `…/taxes/TaxesApp.tsx` |
 
 ## L3 Sites
 
-L3 uses Astro Islands architecture. Each page composes four independent `client:only` islands — one per framework — each owning a different slice of the page data. Scrapers must hydrate all four runtimes and wait for four staggered async gates to reconstruct a complete record. Navigation between routes is full page loads (not SPA routing). Solid.js is used here for the first time in the project.
+L3 uses Astro Islands architecture. Each page composes four independent `client:only` islands — one per framework — each owning a different slice of the page data. Scrapers must hydrate all four runtimes and wait for four staggered async gates to reconstruct a complete record. Navigation between routes is full page loads (not SPA routing).
 
 ### L3 anti-bot techniques (per framework)
 
@@ -184,8 +185,7 @@ Dynamic routes use `getStaticPaths()` — resolved at build time with props pass
 ### L3 implementation notes
 
 - Solid directive is `client:only="solid-js"` (not `"solid"`)
-- React and Solid both process `.tsx` — `astro.config.mjs` uses `include` scoping to prevent JSX transform conflict: `react({ include: ['**/l2/react/**', '**/l3/react/**'] })` and `solid({ include: ['**/l3/solid/**'] })`
-- Each island has a `data-island="…"` attribute on its root element for scraper targeting
+- React and Solid both process `.tsx` — `astro.config.mjs` uses `include` scoping to prevent JSX transform conflict: `react({ include: ['**/l2/react/**', '**/l3/react/**'] })` and `solid({ include: ['**/l2/solid/**', '**/l3/solid/**'] })`
 - Shared data layer is identical to L1/L2 — no new data files
 
 ## CSS Architecture

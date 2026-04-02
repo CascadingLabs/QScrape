@@ -22,7 +22,7 @@ onMount(() => {
 });
 </script>
 
-<div data-island="svelte-article-image">
+<div>
   {#if !article}
     <div class="hn3-img-loading">Loading…</div>
   {:else}

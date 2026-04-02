@@ -22,7 +22,7 @@ onMount(() => {
 });
 </script>
 
-<div data-island="svelte-sidebar">
+<div>
   {#if !catData}
     <div class="hn3-sidebar-loading">Loading…</div>
   {:else}

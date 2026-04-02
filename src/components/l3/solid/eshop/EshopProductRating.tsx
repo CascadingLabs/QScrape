@@ -48,7 +48,6 @@ function RatingCanvas(props: { rating: number; count: number }) {
 			width={240}
 			height={28}
 			style={{ display: 'block', 'border-radius': '4px' }}
-			aria-label="product rating"
 		/>
 	);
 }
@@ -73,7 +72,7 @@ export default function EshopProductRating(props: { sku: string }) {
 	});
 
 	return (
-		<div data-island="solid-product-rating">
+		<div>
 			<Show when={!data()}>
 				<div class="vm3-rat-loading">Loading…</div>
 			</Show>

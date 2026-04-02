@@ -25,7 +25,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div data-island="vue-results">
+  <div>
     <div v-if="!results" class="er3-results-loading">Loading…</div>
     <div v-else class="er3-results">
       <div class="er3-results-header">

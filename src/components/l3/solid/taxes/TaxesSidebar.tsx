@@ -26,7 +26,6 @@ function FileNumCanvas(props: { fileNum: string }) {
 			width={120}
 			height={18}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
-			aria-label="file number"
 		/>
 	);
 }
@@ -42,7 +41,7 @@ export default function TaxesSidebar() {
 	});
 
 	return (
-		<div data-island="solid-sidebar">
+		<div>
 			<Show when={!recent()}>
 				<div class="er3-sidebar-loading">Loading…</div>
 			</Show>

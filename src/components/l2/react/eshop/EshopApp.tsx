@@ -85,7 +85,7 @@ function StarRating({
 	const half = rating - full >= 0.5;
 	const empty = 5 - full - (half ? 1 : 0);
 	return (
-		<span className={styles.stars} aria-label={`${rating} out of 5 stars`}>
+		<span className={styles.stars}>
 			{'★'.repeat(full)}
 			{half ? '½' : ''}
 			{'☆'.repeat(empty)}
@@ -137,8 +137,6 @@ function ProductCard({
 			<a
 				className={styles.productCardImg}
 				onClick={() => onNavigate('product', product.sku)}
-				role="button"
-				tabIndex={0}
 			>
 				<img
 					src={product.image}
@@ -158,11 +156,7 @@ function ProductCard({
 			<div className={styles.productCardBody}>
 				<CategoryBadge category={product.category} />
 				<h3 className={styles.productName}>
-					<a
-						onClick={() => onNavigate('product', product.sku)}
-						role="button"
-						tabIndex={0}
-					>
+					<a onClick={() => onNavigate('product', product.sku)}>
 						{product.name}
 					</a>
 				</h3>
@@ -678,8 +672,6 @@ function CartPage({
 								<a
 									className={styles.cartItemName}
 									onClick={() => onNavigate('product', ci.sku)}
-									role="button"
-									tabIndex={0}
 								>
 									{ci.product!.name}
 								</a>
@@ -781,8 +773,6 @@ function SearchPage({
 								<a
 									className={styles.searchResultName}
 									onClick={() => onNavigate('product', p.sku)}
-									role="button"
-									tabIndex={0}
 								>
 									{highlight(p.name)}
 								</a>

@@ -178,7 +178,6 @@ $: currentProduct =
           bind:value={searchQuery}
           type="search"
           placeholder="Search products…"
-          aria-label="Search"
         />
         <button class="vm-search-btn" type="submit">Search</button>
       </form>
@@ -276,7 +275,7 @@ $: currentProduct =
               <h3><button class="link-btn" on:click={() => nav({ name: 'product', sku: p.sku })}>{p.name}</button></h3>
               <p class="vm-excerpt">{p.excerpt}</p>
               <div class="vm-rating">
-                <span class="vm-stars" aria-label="{p.rating} stars">{'★'.repeat(Math.round(p.rating))}{'☆'.repeat(5 - Math.round(p.rating))}</span>
+                <span class="vm-stars">{'★'.repeat(Math.round(p.rating))}{'☆'.repeat(5 - Math.round(p.rating))}</span>
                 <span class="vm-review-count">({p.reviewCount})</span>
               </div>
               <div class="vm-price-row">

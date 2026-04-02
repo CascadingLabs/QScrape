@@ -15,76 +15,58 @@ const { title, description } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
     <style>
-      .l2-switcher {
-        position: fixed;
+      .l2-island-label {
+        position: sticky;
         top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 9999;
-        display: flex;
-        gap: 2px;
-        background: rgba(15, 17, 23, 0.92);
-        border: 1px solid #2d3148;
-        border-top: none;
-        border-radius: 0 0 8px 8px;
-        padding: 4px 6px;
+        z-index: 100;
+        background: rgba(15, 17, 23, 0.88);
+        border-bottom: 2px solid #2d3148;
         backdrop-filter: blur(8px);
-      }
-      .l2-switcher button {
-        background: none;
-        border: none;
-        color: #6b7280;
+        padding: 6px 16px;
         font-family: system-ui, sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        padding: 4px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        letter-spacing: 0.04em;
-        transition: color 0.15s, background 0.15s;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b7280;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
-      .l2-switcher button:hover {
-        color: #e8e8f0;
+      .l2-island-label::before {
+        content: '';
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
       }
-      .l2-switcher button.active {
-        background: #2d3148;
-        color: #e8e8f0;
+      .l2-island[data-fw="react"] .l2-island-label { color: #61dafb; border-color: #61dafb33; }
+      .l2-island[data-fw="vue"]   .l2-island-label { color: #42b883; border-color: #42b88333; }
+      .l2-island[data-fw="svelte"] .l2-island-label { color: #ff3e00; border-color: #ff3e0033; }
+      .l2-island[data-fw="solid"] .l2-island-label { color: #446b9e; border-color: #446b9e33; }
+      .l2-island + .l2-island {
+        border-top: 3px solid #1a1d2e;
       }
-      .l2-panel { display: none; }
-      .l2-panel.active { display: block; }
     </style>
     <ThemeInit />
   </head>
   <body>
-    <div class="l2-switcher" id="l2-switcher">
-      <button class="active" data-fw="react">React</button>
-      <button data-fw="vue">Vue</button>
-      <button data-fw="svelte">Svelte</button>
-    </div>
-
-    <div id="l2-react" class="l2-panel active">
+    <div class="l2-island" data-fw="react">
+      <div class="l2-island-label">React</div>
       <slot name="react" />
     </div>
-    <div id="l2-vue" class="l2-panel">
+    <div class="l2-island" data-fw="vue">
+      <div class="l2-island-label">Vue</div>
       <slot name="vue" />
     </div>
-    <div id="l2-svelte" class="l2-panel">
+    <div class="l2-island" data-fw="svelte">
+      <div class="l2-island-label">Svelte</div>
       <slot name="svelte" />
     </div>
-
-    <script is:inline>
-      (function () {
-        var btns = document.querySelectorAll('#l2-switcher button');
-        btns.forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            var fw = btn.dataset.fw;
-            document.querySelectorAll('.l2-panel').forEach(function (p) { p.classList.remove('active'); });
-            document.getElementById('l2-' + fw).classList.add('active');
-            btns.forEach(function (b) { b.classList.remove('active'); });
-            btn.classList.add('active');
-          });
-        });
-      })();
-    </script>
+    <div class="l2-island" data-fw="solid">
+      <div class="l2-island-label">Solid</div>
+      <slot name="solid" />
+    </div>
   </body>
 </html>

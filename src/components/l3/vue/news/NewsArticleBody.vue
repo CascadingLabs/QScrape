@@ -32,7 +32,7 @@ function _bodyParagraphs(a: ArticleMeta): string[] {
 </script>
 
 <template>
-  <div data-island="vue-article-body">
+  <div>
     <div v-if="!article" class="hn3-body-loading">Loading…</div>
     <div v-else class="hn3-article-body" :data-article-id="article.id">
       <!-- Anti-bot: date text rendered via ::before pseudo-element -->

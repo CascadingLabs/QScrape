@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div data-island="vue-product-grid">
+  <div>
     <div v-if="!items" class="vm3-grid-loading">Loading…</div>
     <div v-else class="vm3-grid">
       <a

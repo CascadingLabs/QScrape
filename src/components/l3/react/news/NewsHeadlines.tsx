@@ -56,7 +56,7 @@ export default function NewsHeadlines() {
 	}
 
 	return (
-		<div className={styles.root} data-island="react-headlines">
+		<div className={styles.root}>
 			{data.breaking.length > 0 && (
 				<div className={styles.breakingBar}>
 					<span className={styles.breakingLabel}>BREAKING</span>

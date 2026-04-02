@@ -52,11 +52,7 @@ export default function EshopProductImage({ product }: Props) {
 	const onSale = product.salePrice !== undefined;
 
 	return (
-		<div
-			className={styles.root}
-			data-island="react-product-image"
-			data-sku={product.sku}
-		>
+		<div className={styles.root} data-sku={product.sku}>
 			<div className={styles.imageWrap}>
 				<img
 					src={product.image}

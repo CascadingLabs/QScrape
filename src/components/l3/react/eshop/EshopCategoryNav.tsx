@@ -51,7 +51,7 @@ export default function EshopCategoryNav() {
 	}
 
 	return (
-		<nav className={styles.root} data-island="react-category-nav">
+		<nav className={styles.root}>
 			<a
 				href="/l3/eshop/"
 				className={`${styles.tab}${!activeCat ? ` ${styles.tabActive}` : ''}`}

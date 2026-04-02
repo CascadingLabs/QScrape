@@ -91,8 +91,6 @@ function MatchCard({ match, onClick }: { match: Match; onClick?: () => void }) {
 			data-game={match.game}
 			data-match-id={match.id}
 			onClick={onClick}
-			role={onClick ? 'button' : undefined}
-			tabIndex={onClick ? 0 : undefined}
 			style={{ cursor: onClick ? 'pointer' : undefined }}
 			onKeyDown={
 				onClick

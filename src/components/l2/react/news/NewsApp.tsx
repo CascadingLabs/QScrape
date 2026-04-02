@@ -375,13 +375,11 @@ function ArticlesPage({
 			<h1 className={styles.pageTitle}>Articles</h1>
 
 			{/* Filter tabs */}
-			<div className={styles.filterTabs} role="tablist">
+			<div className={styles.filterTabs}>
 				{['All', ...categories].map((cat) => (
 					<button
 						type="button"
 						key={cat}
-						role="tab"
-						aria-selected={activeCategory === cat}
 						className={`${styles.filterTab} ${activeCategory === cat ? styles.filterTabActive : ''}`}
 						onClick={() => handleCategory(cat)}
 						data-category={cat}
@@ -411,7 +409,6 @@ function ArticlesPage({
 							key={p}
 							className={`${styles.pageBtn} ${p === page ? styles.pageBtnActive : ''}`}
 							onClick={() => setPage(p)}
-							aria-current={p === page ? 'page' : undefined}
 						>
 							{p}
 						</button>

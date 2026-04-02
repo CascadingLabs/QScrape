@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div data-island="vue-article-cards">
+  <div>
     <div v-if="!items" class="hn3-cards-loading">Loading…</div>
     <template v-else>
       <p class="hn3-cards-count">{{ items.length }} article{{ items.length !== 1 ? 's' : '' }}</p>

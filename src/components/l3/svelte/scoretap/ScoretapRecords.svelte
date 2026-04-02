@@ -60,7 +60,7 @@ onMount(() => {
 });
 </script>
 
-<div data-island="svelte-records">
+<div>
   {#if !records}
     <div class="st3-rec-loading">Loading…</div>
   {:else}

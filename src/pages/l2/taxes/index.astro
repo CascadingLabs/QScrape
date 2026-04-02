@@ -1,11 +1,13 @@
 ---
 import TaxesApp from '../../../components/l2/react/taxes/TaxesApp';
+import TaxesAppSolid from '../../../components/l2/solid/taxes/TaxesApp';
 import TaxesAppSvelte from '../../../components/l2/svelte/taxes/TaxesApp.svelte';
 import TaxesAppVue from '../../../components/l2/vue/taxes/TaxesApp.vue';
 import L2SiteLayout from '../../../layouts/L2SiteLayout.astro';
 ---
-<L2SiteLayout title="Eldoria Registry of Deeds — L2" description="Eldoria Registry of Deeds — QScrape L2 test site. React, Vue, and Svelte.">
+<L2SiteLayout title="Eldoria Registry of Deeds — L2" description="Eldoria Registry of Deeds — QScrape L2 test site. React, Vue, Svelte, and Solid.">
   <TaxesApp slot="react" client:only="react" />
   <TaxesAppVue slot="vue" client:only="vue" />
   <TaxesAppSvelte slot="svelte" client:only="svelte" />
+  <TaxesAppSolid slot="solid" client:only="solid-js" />
 </L2SiteLayout>

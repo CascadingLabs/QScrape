@@ -33,7 +33,7 @@ onMount(() => {
 });
 </script>
 
-<div data-island="svelte-pdf-link">
+<div>
   {#if notFound}
     <div class="er3-pdf-error">PDF not available.</div>
   {:else if !pdfData}

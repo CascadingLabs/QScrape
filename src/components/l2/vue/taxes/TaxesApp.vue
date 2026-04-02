@@ -174,7 +174,7 @@
         </div>
         <div class="er-pdf-viewer">
           <div class="er-pdf-header">Document: {{ currentRecord.fileNum }}.pdf</div>
-          <iframe :src="'/' + currentRecord.fileNum + '.pdf'" class="er-pdf-frame" :title="'Deed document ' + currentRecord.fileNum" />
+          <iframe :src="'/' + currentRecord.fileNum + '.pdf'" class="er-pdf-frame" />
         </div>
       </div>
       <div v-else class="er-not-found">

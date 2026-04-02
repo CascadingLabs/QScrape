@@ -31,7 +31,6 @@ function SkuCanvas(props: { sku: string }) {
 			width={140}
 			height={16}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
-			aria-label="sku"
 		/>
 	);
 }
@@ -57,7 +56,6 @@ function RatingCanvas(props: { rating: number; count: number }) {
 			width={120}
 			height={18}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
-			aria-label="rating"
 		/>
 	);
 }
@@ -78,7 +76,7 @@ export default function EshopFeaturedBanner() {
 	});
 
 	return (
-		<div data-island="solid-featured-banner">
+		<div>
 			<Show when={!items()}>
 				<div class="vm3-feat-loading">Loading…</div>
 			</Show>

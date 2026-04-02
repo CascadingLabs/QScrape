@@ -49,8 +49,8 @@
         <h2 class="vm-section-title">Featured Products</h2>
         <div class="vm-grid3">
           <article v-for="p in featuredProducts" :key="p.sku" class="vm-product-card" :data-sku="p.sku" :data-category="p.category">
-            <a class="vm-card-img" @click="navigate('product', p.sku)" role="button" tabindex="0">
-              <img :src="p.image" :alt="p.name" loading="lazy" width="280" height="200" />
+            <a class="vm-card-img" @click="navigate('product', p.sku)">
+              <img :src="p.image" loading="lazy" width="280" height="200" />
               <div class="vm-badges">
                 <span v-if="p.isNew" class="vm-badge-new">NEW</span>
                 <span v-if="!p.inStock" class="vm-badge-oos">OUT OF STOCK</span>
@@ -59,7 +59,7 @@
             </a>
             <div class="vm-card-body">
               <span :class="['vm-cat-badge', 'vm-cat-' + catSlug(p.category)]">{{ p.category }}</span>
-              <h3 class="vm-product-name"><a @click="navigate('product', p.sku)" role="button" tabindex="0">{{ p.name }}</a></h3>
+              <h3 class="vm-product-name"><a @click="navigate('product', p.sku)">{{ p.name }}</a></h3>
               <div class="vm-stars">{{ starStr(p.rating) }} <span class="vm-review-count">({{ p.reviewCount }})</span></div>
               <div class="vm-card-footer">
                 <span class="vm-sale-price" v-if="p.salePrice">{{ p.salePrice.toFixed(2) }} GS <span class="vm-orig-price">{{ p.basePrice.toFixed(2) }} GS</span></span>
@@ -76,13 +76,13 @@
         <h2 class="vm-section-title">New Arrivals</h2>
         <div class="vm-grid3">
           <article v-for="p in newProducts.slice(0, 6)" :key="p.sku" class="vm-product-card" :data-sku="p.sku" :data-category="p.category">
-            <a class="vm-card-img" @click="navigate('product', p.sku)" role="button" tabindex="0">
-              <img :src="p.image" :alt="p.name" loading="lazy" width="280" height="200" />
+            <a class="vm-card-img" @click="navigate('product', p.sku)">
+              <img :src="p.image" loading="lazy" width="280" height="200" />
               <div class="vm-badges"><span class="vm-badge-new">NEW</span></div>
             </a>
             <div class="vm-card-body">
               <span :class="['vm-cat-badge', 'vm-cat-' + catSlug(p.category)]">{{ p.category }}</span>
-              <h3 class="vm-product-name"><a @click="navigate('product', p.sku)" role="button" tabindex="0">{{ p.name }}</a></h3>
+              <h3 class="vm-product-name"><a @click="navigate('product', p.sku)">{{ p.name }}</a></h3>
               <div class="vm-stars">{{ starStr(p.rating) }} <span class="vm-review-count">({{ p.reviewCount }})</span></div>
               <div class="vm-card-footer">
                 <span class="vm-price">{{ p.basePrice.toFixed(2) }} GS</span>
@@ -111,8 +111,8 @@
           <div class="vm-catalog-meta">{{ filteredProducts.length }} products</div>
           <div class="vm-grid3">
             <article v-for="p in pagedProducts" :key="p.sku" class="vm-product-card" :data-sku="p.sku" :data-category="p.category">
-              <a class="vm-card-img" @click="navigate('product', p.sku)" role="button" tabindex="0">
-                <img :src="p.image" :alt="p.name" loading="lazy" width="280" height="200" />
+              <a class="vm-card-img" @click="navigate('product', p.sku)">
+                <img :src="p.image" loading="lazy" width="280" height="200" />
                 <div class="vm-badges">
                   <span v-if="p.isNew" class="vm-badge-new">NEW</span>
                   <span v-if="!p.inStock" class="vm-badge-oos">OUT OF STOCK</span>
@@ -121,7 +121,7 @@
               </a>
               <div class="vm-card-body">
                 <span :class="['vm-cat-badge', 'vm-cat-' + catSlug(p.category)]">{{ p.category }}</span>
-                <h3 class="vm-product-name"><a @click="navigate('product', p.sku)" role="button" tabindex="0">{{ p.name }}</a></h3>
+                <h3 class="vm-product-name"><a @click="navigate('product', p.sku)">{{ p.name }}</a></h3>
                 <div class="vm-stars">{{ starStr(p.rating) }} <span class="vm-review-count">({{ p.reviewCount }})</span></div>
                 <div class="vm-card-footer">
                   <span class="vm-sale-price" v-if="p.salePrice">{{ p.salePrice.toFixed(2) }} GS <span class="vm-orig-price">{{ p.basePrice.toFixed(2) }} GS</span></span>
@@ -151,7 +151,7 @@
         </nav>
         <div class="vm-product-detail">
           <div class="vm-detail-img">
-            <img :src="currentProduct.image" :alt="currentProduct.name" width="560" height="400" />
+            <img :src="currentProduct.image" width="560" height="400" />
             <div class="vm-badges">
               <span v-if="currentProduct.isNew" class="vm-badge-new">NEW</span>
               <span v-if="!currentProduct.inStock" class="vm-badge-oos">OUT OF STOCK</span>
@@ -203,11 +203,11 @@
           <h2 class="vm-section-title">Related Products</h2>
           <div class="vm-grid3">
             <article v-for="p in relatedProducts" :key="p.sku" class="vm-product-card" :data-sku="p.sku">
-              <a class="vm-card-img" @click="navigate('product', p.sku)" role="button" tabindex="0">
-                <img :src="p.image" :alt="p.name" loading="lazy" width="280" height="200" />
+              <a class="vm-card-img" @click="navigate('product', p.sku)">
+                <img :src="p.image" loading="lazy" width="280" height="200" />
               </a>
               <div class="vm-card-body">
-                <h3 class="vm-product-name"><a @click="navigate('product', p.sku)" role="button" tabindex="0">{{ p.name }}</a></h3>
+                <h3 class="vm-product-name"><a @click="navigate('product', p.sku)">{{ p.name }}</a></h3>
                 <div class="vm-card-footer">
                   <span class="vm-price">{{ (p.salePrice || p.basePrice).toFixed(2) }} GS</span>
                   <button v-if="p.inStock" class="vm-add-btn" @click="addToCart(p.sku)">Add</button>
@@ -229,9 +229,9 @@
       <div class="vm-cart-layout">
         <div class="vm-cart-items">
           <div v-for="ci in displayCartItems" :key="ci.sku" class="vm-cart-item">
-            <img :src="ci.product.image" :alt="ci.product.name" width="80" height="60" />
+            <img :src="ci.product.image" width="80" height="60" />
             <div class="vm-cart-item-info">
-              <a class="vm-cart-item-name" @click="navigate('product', ci.sku)" role="button" tabindex="0">{{ ci.product.name }}</a>
+              <a class="vm-cart-item-name" @click="navigate('product', ci.sku)">{{ ci.product.name }}</a>
               <div class="vm-cart-item-meta">SKU: {{ ci.sku }} · Qty: {{ ci.qty }}</div>
             </div>
             <div class="vm-cart-item-price">{{ ((ci.product.salePrice || ci.product.basePrice) * ci.qty).toFixed(2) }} GS</div>
@@ -256,9 +256,9 @@
         <p class="vm-search-count">{{ searchResults.length }} product{{ searchResults.length !== 1 ? 's' : '' }} found</p>
         <div class="vm-search-results">
           <div v-for="p in searchResults" :key="p.sku" class="vm-search-result-item" :data-sku="p.sku">
-            <img :src="p.image" :alt="p.name" width="100" height="75" />
+            <img :src="p.image" width="100" height="75" />
             <div class="vm-search-result-info">
-              <a class="vm-search-result-name" @click="navigate('product', p.sku)" role="button" tabindex="0" v-html="highlight(p.name)" />
+              <a class="vm-search-result-name" @click="navigate('product', p.sku)" v-html="highlight(p.name)" />
               <p class="vm-search-result-exc" v-html="highlight(p.excerpt)" />
             </div>
             <span class="vm-search-result-price">{{ (p.salePrice || p.basePrice).toFixed(2) }} GS</span>

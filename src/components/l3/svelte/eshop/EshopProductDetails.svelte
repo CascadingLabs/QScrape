@@ -40,7 +40,7 @@ onMount(() => {
 });
 </script>
 
-<div data-island="svelte-product-details">
+<div>
   {#if !data}
     <div class="vm3-pd-loading">Loading…</div>
   {:else}
@@ -67,7 +67,7 @@ onMount(() => {
         {/if}
       </div>
 
-      <button class="vm3-pd-btn" disabled={!data.product.inStock} aria-label="Add to cart">
+      <button class="vm3-pd-btn" disabled={!data.product.inStock}>
         {data.product.inStock ? 'Add to Cart' : 'Unavailable'}
       </button>
     </div>

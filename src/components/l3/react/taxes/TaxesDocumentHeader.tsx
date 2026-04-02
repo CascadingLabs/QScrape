@@ -57,11 +57,7 @@ export default function TaxesDocumentHeader({ deed }: Props) {
 				: styles.statusDelinquent;
 
 	return (
-		<div
-			className={styles.root}
-			data-island="react-document-header"
-			data-file-num={data.fileNum}
-		>
+		<div className={styles.root} data-file-num={data.fileNum}>
 			<div className={styles.topRow}>
 				<span className={styles.fileNum}>{data.fileNum}</span>
 				<span className={`${styles.statusBadge} ${statusClass}`}>

@@ -184,7 +184,7 @@ const _howToGuides = [
   <header class="er-header">
     <div class="er-header-inner">
       <div class="er-header-title">
-        <span class="er-crest" aria-hidden="true">⚖</span>
+        <span class="er-crest">⚖</span>
         <div>
           <h1 class="er-site-title">Eldoria Registry of Deeds</h1>
           <p class="er-site-subtitle">Grand Duchy of Mountainhome · Bureau of Land Records</p>
@@ -203,7 +203,7 @@ const _howToGuides = [
   <main class="er-main">
     <!-- HOME PAGE -->
     {#if current === 'home'}
-      <div class="er-notice" role="note">
+      <div class="er-notice">
         <strong>Notice:</strong> The Registry is open Monday–Friday, 8:00 AM – 4:30 PM. Documents recorded by 3:00 PM receive same-day indexing.
       </div>
       <div class="er-home-grid">
@@ -382,7 +382,6 @@ const _howToGuides = [
         <div class="er-pdf-viewer">
           <iframe
             src="/{d.fileNum}.pdf"
-            title="Document {d.fileNum}"
             width="100%"
             height="600"
           ></iframe>

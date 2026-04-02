@@ -62,7 +62,7 @@ export default function ScoretapTeamSearch() {
 		: allTeams;
 
 	return (
-		<div className={styles.root} data-island="react-team-search">
+		<div className={styles.root}>
 			<div className={styles.searchBar}>
 				<input
 					type="search"
@@ -70,7 +70,6 @@ export default function ScoretapTeamSearch() {
 					placeholder="Search teams…"
 					value={query}
 					onChange={(e) => setQuery(e.target.value)}
-					aria-label="Search teams"
 				/>
 			</div>
 			<ul className={styles.list}>

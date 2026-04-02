@@ -27,7 +27,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div data-island="vue-owner-details">
+  <div>
     <div v-if="notFound" class="er3-owner-error">Record not found.</div>
     <div v-else-if="!deed" class="er3-owner-loading">Loading…</div>
     <div v-else class="er3-owner-panel">

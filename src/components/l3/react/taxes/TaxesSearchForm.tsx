@@ -51,7 +51,7 @@ export default function TaxesSearchForm() {
 	}
 
 	return (
-		<div className={styles.root} data-island="react-search-form">
+		<div className={styles.root}>
 			<h2 className={styles.heading}>
 				<AssembledText text="Search Property Records" />
 			</h2>

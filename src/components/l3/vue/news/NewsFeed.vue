@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div data-island="vue-feed">
+  <div>
     <div v-if="!articles" class="hn3-feed-loading">Loading…</div>
     <div v-else class="hn3-feed">
       <article

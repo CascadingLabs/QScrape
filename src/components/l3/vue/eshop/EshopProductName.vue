@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div data-island="vue-product-name">
+  <div>
     <div v-if="!product" class="vm3-pname-loading">Loading…</div>
     <div v-else class="vm3-pname-root" :data-sku="product.sku">
       <!-- Anti-bot: category text lives in CSS ::before, textContent is empty -->

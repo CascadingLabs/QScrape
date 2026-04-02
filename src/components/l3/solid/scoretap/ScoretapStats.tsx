@@ -71,7 +71,6 @@ function StatCanvas(props: { value: string; width?: number }) {
 			width={props.width ?? 60}
 			height={20}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
-			aria-label={props.value}
 		/>
 	);
 }
@@ -84,7 +83,7 @@ export default function ScoretapStats() {
 	});
 
 	return (
-		<div data-island="solid-stats">
+		<div>
 			<Show when={!stats()}>
 				<div class="st3-stats-loading">Loading…</div>
 			</Show>

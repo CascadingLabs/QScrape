@@ -18,7 +18,7 @@
         <div class="hn-breaking-ticker">
           <template v-for="(a, i) in breaking" :key="a.id">
             <span v-if="i > 0"> · </span>
-            <a @click="navigate('article', a.id)" role="button" tabindex="0">{{ a.headline }}</a>
+            <a @click="navigate('article', a.id)">{{ a.headline }}</a>
           </template>
         </div>
       </div>
@@ -36,14 +36,14 @@
     <!-- Home -->
     <main class="hn-main" v-if="page === 'home'">
       <section class="hn-hero" v-if="featured">
-        <a class="hn-hero-img" @click="navigate('article', featured.id)" role="button" tabindex="0">
-          <img :src="featured.image" :alt="featured.imageCaption" width="900" height="500" loading="eager" />
+        <a class="hn-hero-img" @click="navigate('article', featured.id)">
+          <img :src="featured.image" width="900" height="500" loading="eager" />
           <span v-if="featured.breaking" class="hn-breaking-tag">BREAKING</span>
         </a>
         <div class="hn-hero-body">
           <span :class="['hn-badge', 'hn-badge--' + featured.category.toLowerCase()]">{{ featured.category }}</span>
           <h1 class="hn-hero-hl">
-            <a @click="navigate('article', featured.id)" role="button" tabindex="0">{{ featured.headline }}</a>
+            <a @click="navigate('article', featured.id)">{{ featured.headline }}</a>
           </h1>
           <p class="hn-hero-exc">{{ featured.excerpt }}</p>
           <div class="hn-hero-meta">
@@ -58,14 +58,14 @@
           <h2 class="hn-section-head">Latest News</h2>
           <div class="hn-grid3">
             <article v-for="a in gridArticles" :key="a.id" class="hn-article-card" :data-article-id="a.id" :data-category="a.category">
-              <a class="hn-card-img" @click="navigate('article', a.id)" role="button" tabindex="0">
-                <img :src="a.image" :alt="a.imageCaption" loading="lazy" width="580" height="320" />
+              <a class="hn-card-img" @click="navigate('article', a.id)">
+                <img :src="a.image" loading="lazy" width="580" height="320" />
                 <span v-if="a.breaking" class="hn-breaking-tag">BREAKING</span>
               </a>
               <div class="hn-card-body">
                 <span :class="['hn-badge', 'hn-badge--' + a.category.toLowerCase()]">{{ a.category }}</span>
                 <h2 class="hn-card-hl">
-                  <a @click="navigate('article', a.id)" role="button" tabindex="0">{{ a.headline }}</a>
+                  <a @click="navigate('article', a.id)">{{ a.headline }}</a>
                 </h2>
                 <p class="hn-card-exc">{{ a.excerpt }}</p>
                 <div class="hn-card-meta">
@@ -83,7 +83,7 @@
             <h3 class="hn-side-title">Top Stories</h3>
             <div v-for="a in sidebarArticles" :key="a.id" class="hn-side-item">
               <span :class="['hn-badge', 'hn-badge--' + a.category.toLowerCase()]">{{ a.category }}</span>
-              <a class="hn-side-hl" @click="navigate('article', a.id)" role="button" tabindex="0">{{ a.headline }}</a>
+              <a class="hn-side-hl" @click="navigate('article', a.id)">{{ a.headline }}</a>
               <div class="hn-side-date">{{ formatDate(a.published) }}</div>
             </div>
           </div>
@@ -98,23 +98,22 @@
     <!-- Articles -->
     <main class="hn-main" v-else-if="page === 'articles'">
       <h1 class="hn-page-title">Articles</h1>
-      <div class="hn-filter-tabs" role="tablist">
+      <div class="hn-filter-tabs">
         <button v-for="cat in ['All', ...categories]" :key="cat"
           :class="['hn-filter-tab', { 'hn-filter-tab--active': activeCategory === cat }]"
-          :aria-selected="activeCategory === cat"
           :data-category="cat"
           @click="setCategory(cat)">{{ cat }}</button>
       </div>
       <div class="hn-grid3">
         <article v-for="a in pagedArticles" :key="a.id" class="hn-article-card" :data-article-id="a.id" :data-category="a.category">
-          <a class="hn-card-img" @click="navigate('article', a.id)" role="button" tabindex="0">
-            <img :src="a.image" :alt="a.imageCaption" loading="lazy" width="580" height="320" />
+          <a class="hn-card-img" @click="navigate('article', a.id)">
+            <img :src="a.image" loading="lazy" width="580" height="320" />
             <span v-if="a.breaking" class="hn-breaking-tag">BREAKING</span>
           </a>
           <div class="hn-card-body">
             <span :class="['hn-badge', 'hn-badge--' + a.category.toLowerCase()]">{{ a.category }}</span>
             <h2 class="hn-card-hl">
-              <a @click="navigate('article', a.id)" role="button" tabindex="0">{{ a.headline }}</a>
+              <a @click="navigate('article', a.id)">{{ a.headline }}</a>
             </h2>
             <p class="hn-card-exc">{{ a.excerpt }}</p>
             <div class="hn-card-meta">
@@ -127,7 +126,6 @@
       <div v-if="totalArticlePages > 1" class="hn-pagination">
         <button v-for="p in totalArticlePages" :key="p"
           :class="['hn-page-btn', { 'hn-page-btn--active': articlePage === p }]"
-          :aria-current="articlePage === p ? 'page' : undefined"
           @click="articlePage = p">{{ p }}</button>
       </div>
     </main>
@@ -150,7 +148,7 @@
           <span v-if="currentArticle.updated" class="hn-updated">Updated: {{ formatDateTime(currentArticle.updated) }}</span>
         </div>
         <figure class="hn-article-fig">
-          <img :src="currentArticle.image" :alt="currentArticle.imageCaption" width="680" height="380" />
+          <img :src="currentArticle.image" width="680" height="380" />
           <figcaption>{{ currentArticle.imageCaption }} <em>{{ currentArticle.imageCredit }}</em></figcaption>
         </figure>
         <div class="hn-article-body">
@@ -165,12 +163,12 @@
           <h2 class="hn-related-title">Related Articles</h2>
           <div class="hn-grid3">
             <article v-for="a in relatedArticles" :key="a.id" class="hn-article-card" :data-article-id="a.id">
-              <a class="hn-card-img" @click="navigate('article', a.id)" role="button" tabindex="0">
-                <img :src="a.image" :alt="a.imageCaption" loading="lazy" width="580" height="320" />
+              <a class="hn-card-img" @click="navigate('article', a.id)">
+                <img :src="a.image" loading="lazy" width="580" height="320" />
               </a>
               <div class="hn-card-body">
                 <span :class="['hn-badge', 'hn-badge--' + a.category.toLowerCase()]">{{ a.category }}</span>
-                <h2 class="hn-card-hl"><a @click="navigate('article', a.id)" role="button" tabindex="0">{{ a.headline }}</a></h2>
+                <h2 class="hn-card-hl"><a @click="navigate('article', a.id)">{{ a.headline }}</a></h2>
                 <div class="hn-card-meta"><span>{{ a.author }}</span><span>{{ formatDate(a.published) }}</span></div>
               </div>
             </article>
@@ -227,9 +225,9 @@
       <div class="hn-footer-inner">
         <p>&copy; Year 312 The Mountainhome Herald.</p>
         <p class="hn-footer-links">
-          <a @click="navigate('about')" role="button" tabindex="0">About</a> ·
-          <a @click="navigate('contact')" role="button" tabindex="0">Contact</a> ·
-          <a @click="navigate('staff')" role="button" tabindex="0">Staff</a>
+          <a @click="navigate('about')">About</a> ·
+          <a @click="navigate('contact')">Contact</a> ·
+          <a @click="navigate('staff')">Staff</a>
         </p>
       </div>
     </footer>

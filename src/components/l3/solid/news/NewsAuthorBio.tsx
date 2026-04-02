@@ -35,7 +35,6 @@ function EmailCanvas(props: { email: string }) {
 			width={220}
 			height={18}
 			style={{ display: 'inline-block' }}
-			aria-label="email"
 		/>
 	);
 }
@@ -58,7 +57,7 @@ export default function NewsAuthorBio(props: Props) {
 	});
 
 	return (
-		<div data-island="solid-author-bio">
+		<div>
 			<Show when={!data()}>
 				<div class="hn3-bio-loading">Loading…</div>
 			</Show>

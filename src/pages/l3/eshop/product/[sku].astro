@@ -45,9 +45,9 @@ const { product } = Astro.props;
     <main class="vm3-main">
       <div class="vm3-breadcrumb">
         <a href="/l3/eshop/">Catalog</a>
-        <span aria-hidden="true">›</span>
+        <span>›</span>
         <a href={`/l3/eshop/?cat=${encodeURIComponent(product.category)}`}>{product.category}</a>
-        <span aria-hidden="true">›</span>
+        <span>›</span>
         <span>{product.sku}</span>
       </div>
 

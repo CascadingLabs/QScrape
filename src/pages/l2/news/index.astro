@@ -1,11 +1,13 @@
 ---
 import NewsApp from '../../../components/l2/react/news/NewsApp';
+import NewsAppSolid from '../../../components/l2/solid/news/NewsApp';
 import NewsAppSvelte from '../../../components/l2/svelte/news/NewsApp.svelte';
 import NewsAppVue from '../../../components/l2/vue/news/NewsApp.vue';
 import L2SiteLayout from '../../../layouts/L2SiteLayout.astro';
 ---
-<L2SiteLayout title="Mountainhome Herald — L2" description="Mountainhome Herald — QScrape L2 test site. React, Vue, and Svelte.">
+<L2SiteLayout title="Mountainhome Herald — L2" description="Mountainhome Herald — QScrape L2 test site. React, Vue, Svelte, and Solid.">
   <NewsApp slot="react" client:only="react" initialPage="home" />
   <NewsAppVue slot="vue" client:only="vue" />
   <NewsAppSvelte slot="svelte" client:only="svelte" />
+  <NewsAppSolid slot="solid" client:only="solid-js" />
 </L2SiteLayout>

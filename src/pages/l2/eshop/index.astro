@@ -1,11 +1,13 @@
 ---
 import EshopApp from '../../../components/l2/react/eshop/EshopApp';
+import EshopAppSolid from '../../../components/l2/solid/eshop/EshopApp';
 import EshopAppSvelte from '../../../components/l2/svelte/eshop/EshopApp.svelte';
 import EshopAppVue from '../../../components/l2/vue/eshop/EshopApp.vue';
 import L2SiteLayout from '../../../layouts/L2SiteLayout.astro';
 ---
-<L2SiteLayout title="VaultMart — L2" description="VaultMart — QScrape L2 test site. React, Vue, and Svelte.">
+<L2SiteLayout title="VaultMart — L2" description="VaultMart — QScrape L2 test site. React, Vue, Svelte, and Solid.">
   <EshopApp slot="react" client:only="react" />
   <EshopAppVue slot="vue" client:only="vue" />
   <EshopAppSvelte slot="svelte" client:only="svelte" />
+  <EshopAppSolid slot="solid" client:only="solid-js" />
 </L2SiteLayout>

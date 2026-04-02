@@ -60,11 +60,7 @@ export default function ScoretapGameFilter() {
 	}
 
 	return (
-		<nav
-			className={styles.root}
-			data-island="react-game-filter"
-			aria-label="Filter by game"
-		>
+		<nav className={styles.root}>
 			{tabs.map((tab) => {
 				const isActive = tab.key === activeGame;
 				const href = tab.game
@@ -76,7 +72,6 @@ export default function ScoretapGameFilter() {
 						href={href}
 						className={`${styles.tab} ${isActive ? styles.tabActive : ''}`}
 						data-game={tab.key}
-						aria-current={isActive ? 'page' : undefined}
 					>
 						<AssembledText text={tab.label} />
 					</a>

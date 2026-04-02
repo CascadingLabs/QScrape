@@ -26,7 +26,6 @@ function EmailCanvas(props: { email: string }) {
 			width={220}
 			height={18}
 			style={{ display: 'inline-block', vertical: 'middle' }}
-			aria-label="email"
 		/>
 	);
 }
@@ -39,7 +38,7 @@ export default function NewsStaffPanel() {
 	});
 
 	return (
-		<div data-island="solid-staff">
+		<div>
 			<Show when={!staff()}>
 				<div class="hn3-staff-loading">Loading…</div>
 			</Show>

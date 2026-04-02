@@ -59,7 +59,7 @@ function _gameLabel(game: Game): string {
 </script>
 
 <template>
-  <div data-island="vue-events">
+  <div>
     <div v-if="!rows" class="st3-events-loading">Loading…</div>
     <div v-else class="st3-events">
       <div v-if="filtered().length === 0" class="st3-events-empty">No matches found.</div>

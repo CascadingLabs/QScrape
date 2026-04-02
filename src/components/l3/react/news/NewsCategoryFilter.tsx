@@ -49,7 +49,7 @@ export default function NewsCategoryFilter() {
 	const allCats = ['All', ...categories] as string[];
 
 	return (
-		<div className={styles.root} data-island="react-category-filter">
+		<div className={styles.root}>
 			<span className={styles.label}>Filter by category</span>
 			<div className={styles.tabs}>
 				{allCats.map((cat) => {

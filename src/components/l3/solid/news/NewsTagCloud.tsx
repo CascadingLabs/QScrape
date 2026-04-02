@@ -27,7 +27,6 @@ function TagCanvas(props: { tag: string }) {
 			width={width}
 			height={20}
 			style={{ display: 'inline-block' }}
-			aria-label={props.tag}
 		/>
 	);
 }
@@ -41,7 +40,7 @@ export default function NewsTagCloud() {
 	});
 
 	return (
-		<div data-island="solid-tag-cloud">
+		<div>
 			<Show when={!tags()}>
 				<div class="hn3-tags-loading">Loading…</div>
 			</Show>

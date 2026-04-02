@@ -51,11 +51,7 @@ export default function NewsArticleHeader({ article }: Props) {
 	}
 
 	return (
-		<header
-			className={styles.root}
-			data-island="react-article-header"
-			data-article-id={article.id}
-		>
+		<header className={styles.root} data-article-id={article.id}>
 			<span className={styles.category}>{article.category}</span>
 			{article.breaking && <span className={styles.breakingTag}>Breaking</span>}
 			<h1 className={styles.headline}>

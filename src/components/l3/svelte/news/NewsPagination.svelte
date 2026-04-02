@@ -34,11 +34,11 @@ function _pageHref(p: number): string {
 }
 </script>
 
-<div data-island="svelte-pagination">
+<div>
   {#if !ready}
     <div class="hn3-pag-loading">Loading…</div>
   {:else if pages.length > 1}
-    <nav class="hn3-pagination" aria-label="Article pages">
+    <nav class="hn3-pagination">
       {#each pages as p}
         <a
           href={pageHref(p)}
@@ -47,7 +47,7 @@ function _pageHref(p: number): string {
           <!-- Anti-bot: decoy overlay on page number -->
           <span class="hn3-num-wrap">
             <span class="hn3-num-real">{p}</span>
-            <span class="hn3-num-decoy" aria-hidden="true">{p + 10}</span>
+            <span class="hn3-num-decoy">{p + 10}</span>
           </span>
         </a>
       {/each}

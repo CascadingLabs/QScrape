@@ -32,7 +32,6 @@ function AmountCanvas(props: { amount: string }) {
 			width={140}
 			height={18}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
-			aria-label="amount"
 		/>
 	);
 }
@@ -57,7 +56,7 @@ export default function TaxesRelatedDocs(props: Props) {
 	});
 
 	return (
-		<div data-island="solid-related-docs" data-file-num={props.fileNum}>
+		<div data-file-num={props.fileNum}>
 			<Show when={!related()}>
 				<div class="er3-rel-loading">Loading…</div>
 			</Show>

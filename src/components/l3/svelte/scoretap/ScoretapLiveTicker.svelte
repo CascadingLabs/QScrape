@@ -22,7 +22,7 @@ onMount(() => {
 });
 </script>
 
-<div data-island="svelte-live-ticker">
+<div>
   {#if !rows}
     <div class="st3-ticker-loading">Loading…</div>
   {:else}

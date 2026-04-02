@@ -28,7 +28,6 @@ function RankCanvas(props: { value: number | string; width?: number }) {
 			width={props.width ?? 52}
 			height={18}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
-			aria-label={String(props.value)}
 		/>
 	);
 }
@@ -41,7 +40,7 @@ export default function ScoretapStandings() {
 	});
 
 	return (
-		<div data-island="solid-standings">
+		<div>
 			<Show when={!rows()}>
 				<div class="st3-stand-loading">Loading…</div>
 			</Show>

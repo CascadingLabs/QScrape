@@ -26,7 +26,7 @@ function _gameLabel(game: Game): string {
 </script>
 
 <template>
-  <div data-island="vue-team-cards">
+  <div>
     <div v-if="!allTeams" class="st3-cards-loading">Loading…</div>
     <div v-else class="st3-cards-grid">
       <div

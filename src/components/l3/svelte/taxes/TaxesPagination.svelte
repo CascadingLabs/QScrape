@@ -29,16 +29,15 @@ onMount(() => {
 });
 </script>
 
-<div data-island="svelte-pagination">
+<div>
   {#if !pages}
     <div class="er3-page-loading">Loading…</div>
   {:else}
-    <nav class="er3-pagination" aria-label="Pagination">
+    <nav class="er3-pagination">
       <a
         href="?page={currentPage - 1}"
         class="er3-page-btn er3-page-prev"
         class:er3-page-disabled={currentPage <= 1}
-        aria-disabled={currentPage <= 1}
       >← Prev</a>
 
       {#each pages as item}
@@ -47,11 +46,10 @@ onMount(() => {
             href="?page={item.page}"
             class="er3-page-num"
             class:er3-page-active={item.page === currentPage}
-            aria-current={item.page === currentPage ? 'page' : undefined}
           >
             <!-- Anti-bot decoy: real page below, fake page overlaid -->
             <span class="er3-pagenum-real">{item.page}</span>
-            <span class="er3-pagenum-decoy" aria-hidden="true">{item.fakePage}</span>
+            <span class="er3-pagenum-decoy">{item.fakePage}</span>
           </a>
         </span>
       {/each}
@@ -60,7 +58,6 @@ onMount(() => {
         href="?page={currentPage + 1}"
         class="er3-page-btn er3-page-next"
         class:er3-page-disabled={currentPage >= pages.length}
-        aria-disabled={currentPage >= pages.length}
       >Next →</a>
     </nav>
   {/if}
