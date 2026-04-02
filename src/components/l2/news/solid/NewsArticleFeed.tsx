@@ -206,17 +206,12 @@ export default function NewsArticleFeed() {
 	const [view, setView] = createSignal<'list' | 'detail'>('list');
 	const [currentId, setCurrentId] = createSignal<string | null>(null);
 	const [cat, setCat] = createSignal<string | null>(null);
-	const [page, setPage] = createSignal(1);
+	const [visibleCount, setVisibleCount] = createSignal(PER_PAGE);
 
 	const allFiltered = createMemo(() =>
 		cat() ? getByCategory(cat()!) : articles,
 	);
-	const totalPages = createMemo(() =>
-		Math.ceil(allFiltered().length / PER_PAGE),
-	);
-	const items = createMemo(() =>
-		allFiltered().slice((page() - 1) * PER_PAGE, page() * PER_PAGE),
-	);
+	const items = createMemo(() => allFiltered().slice(0, visibleCount()));
 
 	onMount(() => {
 		const { id, cat: urlCat } = getUrlState();
@@ -235,13 +230,13 @@ export default function NewsArticleFeed() {
 			} else {
 				setView('list');
 				setCat(c);
-				setPage(1);
+				setVisibleCount(PER_PAGE);
 			}
 		};
 		const onCat = (e: Event) => {
 			setCat((e as CustomEvent<string | null>).detail);
 			setView('list');
-			setPage(1);
+			setVisibleCount(PER_PAGE);
 		};
 		const onArticle = (e: Event) => {
 			setCurrentId((e as CustomEvent<string>).detail);
@@ -374,38 +369,24 @@ export default function NewsArticleFeed() {
 								)}
 							</For>
 						</div>
-						<Show when={totalPages() > 1}>
-							<div
-								style={{
-									display: 'flex',
-									gap: '6px',
-									'margin-top': '24px',
-									'justify-content': 'center',
-								}}
-							>
-								<For
-									each={Array.from({ length: totalPages() }, (_, i) => i + 1)}
+						<Show when={visibleCount() < allFiltered().length}>
+							<div style={{ 'text-align': 'center', 'margin-top': '24px' }}>
+								<button
+									type="button"
+									onClick={() => setVisibleCount((c) => c + PER_PAGE)}
+									style={{
+										padding: '8px 20px',
+										border: '1px solid var(--hn-border)',
+										'border-radius': 'var(--hn-radius)',
+										background: 'transparent',
+										color: 'var(--hn-accent)',
+										cursor: 'pointer',
+										'font-family': 'var(--hn-font-ui)',
+										'font-size': '13px',
+									}}
 								>
-									{(n) => (
-										<button
-											type="button"
-											onClick={() => setPage(n)}
-											style={{
-												padding: '5px 10px',
-												border: `1px solid ${n === page() ? 'var(--hn-accent)' : 'var(--hn-border)'}`,
-												'border-radius': 'var(--hn-radius)',
-												background:
-													n === page() ? 'var(--hn-accent)' : 'transparent',
-												color: n === page() ? '#fff' : 'var(--hn-text)',
-												cursor: 'pointer',
-												'font-family': 'var(--hn-font-ui)',
-												'font-size': '13px',
-											}}
-										>
-											{n}
-										</button>
-									)}
-								</For>
+									Load more ({allFiltered().length - visibleCount()} remaining)
+								</button>
 							</div>
 						</Show>
 					</div>

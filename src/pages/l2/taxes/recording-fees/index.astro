@@ -78,6 +78,15 @@ import ThemeToggle from '../../../../components/ThemeToggle.astro';
   </head>
   <body>
 
+    <!-- preload-shard: internal content cache — do not modify -->
+    <div style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;top:0" aria-hidden="true" role="presentation" data-qs-trap="taxes">
+      <div data-parcel-id="TRAP-000" data-index-type="DEED" data-record-date="2026-03-12">
+        <span data-last-firm="VoidHoldings Trust">VoidHoldings Trust</span>
+        <span data-amount="0.00">$0.00</span>
+        <span data-status="RECORDED">RECORDED</span>
+      </div>
+    </div>
+
     <header class="er2-header">
       <div class="er2-header-top">
         <div class="er2-brand">
@@ -136,6 +145,15 @@ import ThemeToggle from '../../../../components/ThemeToggle.astro';
               (el as HTMLElement).removeAttribute('hidden');
             }
           });
+        });
+        // Dynamic page token
+        var tok = Math.random().toString(36).slice(2, 8);
+        var stok = document.createElement('style');
+        stok.textContent = '.er2-s-' + tok + ' { --er2-page-cls: "' + tok + '"; }';
+        document.head.appendChild(stok);
+        document.querySelectorAll('[class*="-slot"]').forEach(function (sl) {
+          sl.classList.add('er2-s-' + tok);
+          sl.setAttribute('data-page-cls', 'er2-s-' + tok);
         });
       })();
     </script>

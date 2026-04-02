@@ -1,3 +1,5 @@
+import { mulberry32, seededSample, windowSeed } from '../seeded';
+
 export interface ProductMeta {
 	sku: string;
 	name: string;
@@ -472,8 +474,11 @@ export function getByCategory(cat: string): ProductMeta[] {
 	return products.filter((p) => p.category === cat);
 }
 
-export function getFeatured(): ProductMeta[] {
-	return products.filter((p) => p.isFeatured);
+/** Returns n featured products, rotating on a 30-minute seed window */
+export function getFeatured(n: number = 3): ProductMeta[] {
+	const rng = mulberry32(windowSeed(30));
+	const featuredPool = products.filter((p) => p.isFeatured || p.isPromoted);
+	return seededSample(featuredPool, n, rng);
 }
 
 export function getNew(): ProductMeta[] {

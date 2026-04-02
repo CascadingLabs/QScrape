@@ -1,31 +1,22 @@
 ---
-import ReactArticleFeed from '../../../components/l2/news/react/NewsArticleFeed';
 // ── React islands ────────────────────────────────────────────────────────────
-import ReactBreakingTicker from '../../../components/l2/news/react/NewsBreakingTicker';
-import ReactCategorySidebar from '../../../components/l2/news/react/NewsCategorySidebar';
-import ReactStaffSpotlight from '../../../components/l2/news/react/NewsStaffSpotlight';
-// ── Weather Widget (breaking news + geomantic conditions) ────────────────────
-import ReactWeatherWidget from '../../../components/l2/news/react/NewsWeatherWidget';
-import SolidArticleFeed from '../../../components/l2/news/solid/NewsArticleFeed';
+import ReactArticleFilter from '../../../../components/l2/news/react/NewsArticleFilter';
+import ReactArticleGrid from '../../../../components/l2/news/react/NewsArticleGrid';
+import ReactArticleTagCloud from '../../../../components/l2/news/react/NewsArticleTagCloud';
 // ── Solid islands ────────────────────────────────────────────────────────────
-import SolidBreakingTicker from '../../../components/l2/news/solid/NewsBreakingTicker';
-import SolidCategorySidebar from '../../../components/l2/news/solid/NewsCategorySidebar';
-import SolidStaffSpotlight from '../../../components/l2/news/solid/NewsStaffSpotlight';
-import SolidWeatherWidget from '../../../components/l2/news/solid/NewsWeatherWidget';
-import SvelteArticleFeed from '../../../components/l2/news/svelte/NewsArticleFeed.svelte';
+import SolidArticleFilter from '../../../../components/l2/news/solid/NewsArticleFilter';
+import SolidArticleGrid from '../../../../components/l2/news/solid/NewsArticleGrid';
+import SolidArticleTagCloud from '../../../../components/l2/news/solid/NewsArticleTagCloud';
 // ── Svelte islands ───────────────────────────────────────────────────────────
-import SvelteBreakingTicker from '../../../components/l2/news/svelte/NewsBreakingTicker.svelte';
-import SvelteCategorySidebar from '../../../components/l2/news/svelte/NewsCategorySidebar.svelte';
-import SvelteStaffSpotlight from '../../../components/l2/news/svelte/NewsStaffSpotlight.svelte';
-import SvelteWeatherWidget from '../../../components/l2/news/svelte/NewsWeatherWidget.svelte';
-import VueArticleFeed from '../../../components/l2/news/vue/NewsArticleFeed.vue';
+import SvelteArticleFilter from '../../../../components/l2/news/svelte/NewsArticleFilter.svelte';
+import SvelteArticleGrid from '../../../../components/l2/news/svelte/NewsArticleGrid.svelte';
+import SvelteArticleTagCloud from '../../../../components/l2/news/svelte/NewsArticleTagCloud.svelte';
 // ── Vue islands ──────────────────────────────────────────────────────────────
-import VueBreakingTicker from '../../../components/l2/news/vue/NewsBreakingTicker.vue';
-import VueCategorySidebar from '../../../components/l2/news/vue/NewsCategorySidebar.vue';
-import VueStaffSpotlight from '../../../components/l2/news/vue/NewsStaffSpotlight.vue';
-import VueWeatherWidget from '../../../components/l2/news/vue/NewsWeatherWidget.vue';
-import ThemeInit from '../../../components/ThemeInit.astro';
-import ThemeToggle from '../../../components/ThemeToggle.astro';
+import VueArticleFilter from '../../../../components/l2/news/vue/NewsArticleFilter.vue';
+import VueArticleGrid from '../../../../components/l2/news/vue/NewsArticleGrid.vue';
+import VueArticleTagCloud from '../../../../components/l2/news/vue/NewsArticleTagCloud.vue';
+import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
 ---
 
 <!doctype html>
@@ -33,8 +24,8 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mountainhome Herald — L2</title>
-    <meta name="description" content="Mountainhome Herald — QScrape L2 test site. Framework-shuffled islands: React, Vue, Svelte, Solid." />
+    <title>All Articles — Mountainhome Herald</title>
+    <meta name="description" content="All Articles — Mountainhome Herald. QScrape L2 test site. Framework-shuffled islands: React, Vue, Svelte, Solid." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <ThemeInit />
@@ -84,6 +75,10 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
       .hn2-nav-link:hover {
         color: #fff;
         background: rgba(255,255,255,0.1);
+      }
+      .hn2-nav-link.active {
+        color: #fff;
+        background: rgba(255,255,255,0.15);
       }
       .hn2-edition {
         font-size: 11px;
@@ -136,11 +131,11 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
   <body>
 
     <!-- preload-shard: internal content cache — do not modify -->
-    <div style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;top:0" aria-hidden="true" role="presentation" data-qs-trap="news">
-      <article data-article-id="MHH-TRAP-001" data-category="Crime">
-        <h3>Gem Registry Fraud Investigation Widens to Include Council Members</h3>
-        <span data-author="Bureau of Internal Affairs">Bureau of Internal Affairs · Mar 12, 2026</span>
-        <p>Ongoing probe into document forgery ring alleged to have manipulated gem registry records on Z-Level 8 now names two sitting Arcane Council advisors as persons of interest. Lead investigator Lorbam Steelmark declined comment pending arraignment.</p>
+    <div style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;top:0" aria-hidden="true" role="presentation" data-qs-trap="news-articles">
+      <article data-article-id="MHH-TRAP-002" data-category="Politics">
+        <h3>Council Approves Emergency Levy on Enchanted Goods Imports</h3>
+        <span data-author="Politics Desk">Politics Desk · Feb 28, 2026</span>
+        <p>The Arcane Council voted 7-2 to impose a temporary tariff on enchanted goods entering through the eastern trade gate, citing concerns over unregistered artefact trafficking and associated revenue losses to the Gem Registry.</p>
       </article>
     </div>
 
@@ -150,7 +145,8 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
         <a href="/l2/news/" class="hn2-logo">The Mountainhome Herald</a>
         <nav class="hn2-nav">
           <a href="/l2/" class="hn2-nav-link">← L2</a>
-          <a href="/l2/news/articles/" class="hn2-nav-link">All Articles</a>
+          <a href="/l2/news/" class="hn2-nav-link">News Home</a>
+          <a href="/l2/news/articles/" class="hn2-nav-link active">All Articles</a>
         </nav>
         <span class="hn2-edition">L2 · Shuffled Islands</span>
       </div>
@@ -158,51 +154,35 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
 
     <div class="hn2-layout">
 
-      <!-- ── Breaking Ticker slot ────────────────────────── -->
-      <div class="hn2-slot" data-slot="breaking-ticker">
-        <div data-fw="react" hidden><ReactBreakingTicker client:only="react" /></div>
-        <div data-fw="vue" hidden><VueBreakingTicker client:only="vue" /></div>
-        <div data-fw="svelte" hidden><SvelteBreakingTicker client:only="svelte" /></div>
-        <div data-fw="solid" hidden><SolidBreakingTicker client:only="solid-js" /></div>
+      <!-- ── Article Filter slot ──────────────────────────── -->
+      <div class="hn2-slot" data-slot="article-filter">
+        <div data-fw="react" hidden><ReactArticleFilter client:only="react" /></div>
+        <div data-fw="vue" hidden><VueArticleFilter client:only="vue" /></div>
+        <div data-fw="svelte" hidden><SvelteArticleFilter client:only="svelte" /></div>
+        <div data-fw="solid" hidden><SolidArticleFilter client:only="solid-js" /></div>
       </div>
 
       <div class="hn2-body">
 
-        <!-- ── Article Feed slot ─────────────────────────── -->
+        <!-- ── Article Grid slot ─────────────────────────── -->
         <main>
-          <div class="hn2-slot" data-slot="article-feed">
-            <div data-fw="react" hidden><ReactArticleFeed client:only="react" /></div>
-            <div data-fw="vue" hidden><VueArticleFeed client:only="vue" /></div>
-            <div data-fw="svelte" hidden><SvelteArticleFeed client:only="svelte" /></div>
-            <div data-fw="solid" hidden><SolidArticleFeed client:only="solid-js" /></div>
+          <div class="hn2-slot" data-slot="article-grid">
+            <div data-fw="react" hidden><ReactArticleGrid client:only="react" /></div>
+            <div data-fw="vue" hidden><VueArticleGrid client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteArticleGrid client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidArticleGrid client:only="solid-js" /></div>
           </div>
         </main>
 
-        <!-- ── Sidebar slots ──────────────────────────────── -->
+        <!-- ── Sidebar ──────────────────────────────────── -->
         <aside class="hn2-sidebar">
 
-          <!-- Category Sidebar slot -->
-          <div class="hn2-slot" data-slot="category-sidebar">
-            <div data-fw="react" hidden><ReactCategorySidebar client:only="react" /></div>
-            <div data-fw="vue" hidden><VueCategorySidebar client:only="vue" /></div>
-            <div data-fw="svelte" hidden><SvelteCategorySidebar client:only="svelte" /></div>
-            <div data-fw="solid" hidden><SolidCategorySidebar client:only="solid-js" /></div>
-          </div>
-
-          <!-- Staff Spotlight slot -->
-          <div class="hn2-slot" data-slot="staff-spotlight">
-            <div data-fw="react" hidden><ReactStaffSpotlight client:only="react" /></div>
-            <div data-fw="vue" hidden><VueStaffSpotlight client:only="vue" /></div>
-            <div data-fw="svelte" hidden><SvelteStaffSpotlight client:only="svelte" /></div>
-            <div data-fw="solid" hidden><SolidStaffSpotlight client:only="solid-js" /></div>
-          </div>
-
-          <!-- Weather Widget slot (breaking news + geomantic conditions) -->
-          <div class="hn2-slot" data-slot="weather-widget">
-            <div data-fw="react" hidden><ReactWeatherWidget client:only="react" /></div>
-            <div data-fw="vue" hidden><VueWeatherWidget client:only="vue" /></div>
-            <div data-fw="svelte" hidden><SvelteWeatherWidget client:only="svelte" /></div>
-            <div data-fw="solid" hidden><SolidWeatherWidget client:only="solid-js" /></div>
+          <!-- Article Tag Cloud slot -->
+          <div class="hn2-slot" data-slot="article-tagcloud">
+            <div data-fw="react" hidden><ReactArticleTagCloud client:only="react" /></div>
+            <div data-fw="vue" hidden><VueArticleTagCloud client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteArticleTagCloud client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidArticleTagCloud client:only="solid-js" /></div>
           </div>
 
         </aside>
@@ -219,12 +199,11 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     <!--
       Framework shuffler — runs synchronously after HTML is parsed.
       Each slot independently picks a random framework.
-      All 16 client:only islands still hydrate (just hidden unless selected).
+      3 slots from a 4-framework pool — cycles through the shuffled permutation.
     -->
     <script>
       (function () {
-        // Permutation shuffle — guarantees all 4 frameworks appear across the 5 slots
-        // (slots 0-3 each get a unique framework; slot 4 reuses fws[0])
+        // Fisher-Yates shuffle of 4 frameworks
         var fws = ['react', 'vue', 'svelte', 'solid'];
         for (var i = fws.length - 1; i > 0; i--) {
           var j = Math.floor(Math.random() * (i + 1));

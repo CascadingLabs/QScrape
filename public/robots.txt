@@ -1,0 +1,23 @@
+User-agent: *
+
+# Index / overview pages — allow for indexing
+Allow: /$
+Allow: /l1/$
+Allow: /l2/$
+Allow: /l3/$
+
+# Test-site content pages — fictional targets for scraper evaluation, not for indexing
+Disallow: /l1/news/
+Disallow: /l1/scoretap/
+Disallow: /l1/taxes/
+Disallow: /l1/eshop/
+Disallow: /l2/news/
+Disallow: /l2/eshop/
+Disallow: /l2/scoretap/
+Disallow: /l2/taxes/
+Disallow: /l3/news/
+Disallow: /l3/eshop/
+Disallow: /l3/scoretap/
+Disallow: /l3/taxes/
+
+Sitemap: https://qscrape.dev/sitemap-0.xml

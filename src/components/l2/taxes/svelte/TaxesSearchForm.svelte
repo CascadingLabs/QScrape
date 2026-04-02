@@ -3,78 +3,98 @@
   @component TaxesSearchForm
 -->
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { indexLabels, indexTypes } from '../../../../data/taxes/deeds';
-  import '../../../../styles/l2/taxes.css';
+import { onDestroy, onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import { indexLabels, indexTypes } from '../../../../data/taxes/deeds';
+import '../../../../styles/l2/taxes.css';
 
-  const allIndexTypes = ['ALL', ...indexTypes];
-  const _indexLabels = indexLabels;
+const _allIndexTypes = ['ALL', ...indexTypes];
+const _indexLabels = indexLabels;
 
-  let ready = false;
-  let lastFirm = '';
-  let first = '';
-  let index = 'ALL';
+let _ready = false;
+let lastFirm = '';
+let first = '';
+let index = 'ALL';
 
-  function getUrlSearch() {
-    const p = new URLSearchParams(window.location.search);
-    return {
-      lastFirm: p.get('lastFirm') ?? '',
-      first: p.get('first') ?? '',
-      index: p.get('index') ?? 'ALL',
-    };
-  }
+function getUrlSearch() {
+	const p = new URLSearchParams(window.location.search);
+	return {
+		lastFirm: p.get('lastFirm') ?? '',
+		first: p.get('first') ?? '',
+		index: p.get('index') ?? 'ALL',
+	};
+}
 
-  function dispatchSearch(lf: string, fi: string, ix: string) {
-    const url = new URL(window.location.href);
-    if (lf) { url.searchParams.set('lastFirm', lf); } else { url.searchParams.delete('lastFirm'); }
-    if (fi) { url.searchParams.set('first', fi); } else { url.searchParams.delete('first'); }
-    if (ix !== 'ALL') { url.searchParams.set('index', ix); } else { url.searchParams.delete('index'); }
-    url.searchParams.delete('file');
-    history.pushState(null, '', url.toString());
-    window.dispatchEvent(new CustomEvent('taxes:search', { detail: { lastFirm: lf, first: fi, index: ix } }));
-  }
+function dispatchSearch(lf: string, fi: string, ix: string) {
+	const url = new URL(window.location.href);
+	if (lf) {
+		url.searchParams.set('lastFirm', lf);
+	} else {
+		url.searchParams.delete('lastFirm');
+	}
+	if (fi) {
+		url.searchParams.set('first', fi);
+	} else {
+		url.searchParams.delete('first');
+	}
+	if (ix !== 'ALL') {
+		url.searchParams.set('index', ix);
+	} else {
+		url.searchParams.delete('index');
+	}
+	url.searchParams.delete('file');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(
+		new CustomEvent('taxes:search', {
+			detail: { lastFirm: lf, first: fi, index: ix },
+		}),
+	);
+}
 
-  function handleSubmit(e: Event) {
-    e.preventDefault();
-    dispatchSearch(lastFirm, first, index);
-  }
+function _handleSubmit(e: Event) {
+	e.preventDefault();
+	dispatchSearch(lastFirm, first, index);
+}
 
-  function handleClear() {
-    lastFirm = '';
-    first = '';
-    index = 'ALL';
-    dispatchSearch('', '', 'ALL');
-  }
+function _handleClear() {
+	lastFirm = '';
+	first = '';
+	index = 'ALL';
+	dispatchSearch('', '', 'ALL');
+}
 
-  function onPop() {
-    const s = getUrlSearch();
-    lastFirm = s.lastFirm;
-    first = s.first;
-    index = s.index;
-  }
+function onPop() {
+	const s = getUrlSearch();
+	lastFirm = s.lastFirm;
+	first = s.first;
+	index = s.index;
+}
 
-  function onSearch(e: Event) {
-    const d = (e as CustomEvent<{ lastFirm: string; first: string; index: string }>).detail;
-    lastFirm = d.lastFirm;
-    first = d.first;
-    index = d.index;
-  }
+function onSearch(e: Event) {
+	const d = (
+		e as CustomEvent<{ lastFirm: string; first: string; index: string }>
+	).detail;
+	lastFirm = d.lastFirm;
+	first = d.first;
+	index = d.index;
+}
 
-  onMount(() => {
-    const s = getUrlSearch();
-    lastFirm = s.lastFirm;
-    first = s.first;
-    index = s.index;
-    fakeGet(null).then(() => { ready = true; });
-    window.addEventListener('popstate', onPop);
-    window.addEventListener('taxes:search', onSearch);
-  });
+onMount(() => {
+	const s = getUrlSearch();
+	lastFirm = s.lastFirm;
+	first = s.first;
+	index = s.index;
+	fakeGet(null).then(() => {
+		_ready = true;
+	});
+	window.addEventListener('popstate', onPop);
+	window.addEventListener('taxes:search', onSearch);
+});
 
-  onDestroy(() => {
-    window.removeEventListener('popstate', onPop);
-    window.removeEventListener('taxes:search', onSearch);
-  });
+onDestroy(() => {
+	window.removeEventListener('popstate', onPop);
+	window.removeEventListener('taxes:search', onSearch);
+});
 </script>
 
 {#if !ready}

@@ -58,7 +58,7 @@ function getViewState(): { view: View; id: string | null } {
 	}
 	return { view: 'home', id: null };
 }
-function _goTo(v: Exclude<View, 'home'>, id: string) {
+function goTo(v: Exclude<View, 'home'>, id: string) {
 	const url = new URL(window.location.href);
 	for (const k of ['match', 'article', 'team', 'event']) {
 		url.searchParams.delete(k);
@@ -74,26 +74,26 @@ const filter = <T extends { game: Game }>(arr: T[]) =>
 		? arr
 		: arr.filter((x) => x.game === activeGame.value);
 
-const _filteredLive = computed(() => filter(liveMatches));
-const _filteredResults = computed(() => filter(recentResults));
-const _filteredNews = computed(() => filter(newsItems).slice(0, 6));
+const filteredLive = computed(() => filter(liveMatches));
+const filteredResults = computed(() => filter(recentResults));
+const filteredNews = computed(() => filter(newsItems).slice(0, 6));
 
-const _matchData = computed(() =>
+const matchData = computed(() =>
 	selectedId.value
 		? (allMatches.find((x) => x.id === selectedId.value) ?? null)
 		: null,
 );
-const _articleData = computed(() =>
+const articleData = computed(() =>
 	selectedId.value
 		? (newsItems.find((x) => x.id === selectedId.value) ?? null)
 		: null,
 );
-const _teamData = computed(() =>
+const teamData = computed(() =>
 	selectedId.value
 		? (teams.find((x) => x.id === selectedId.value) ?? null)
 		: null,
 );
-const _eventData = computed(() =>
+const eventData = computed(() =>
 	selectedId.value
 		? (events.find((x) => x.id === selectedId.value) ?? null)
 		: null,

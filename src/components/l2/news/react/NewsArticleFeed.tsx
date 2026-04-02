@@ -197,7 +197,7 @@ export default function NewsArticleFeed() {
 	const [view, setView] = useState<'list' | 'detail'>('list');
 	const [currentId, setCurrentId] = useState<string | null>(null);
 	const [cat, setCat] = useState<string | null>(null);
-	const [page, setPage] = useState(1);
+	const [visibleCount, setVisibleCount] = useState(PER_PAGE);
 
 	useEffect(() => {
 		const { id, cat: urlCat } = getUrlState();
@@ -216,13 +216,13 @@ export default function NewsArticleFeed() {
 			} else {
 				setView('list');
 				setCat(c);
-				setPage(1);
+				setVisibleCount(PER_PAGE);
 			}
 		};
 		const onCat = (e: Event) => {
 			setCat((e as CustomEvent<string | null>).detail);
 			setView('list');
-			setPage(1);
+			setVisibleCount(PER_PAGE);
 		};
 		const onArticle = (e: Event) => {
 			setCurrentId((e as CustomEvent<string>).detail);
@@ -253,8 +253,7 @@ export default function NewsArticleFeed() {
 	}
 
 	const all = cat ? getByCategory(cat) : articles;
-	const totalPages = Math.ceil(all.length / PER_PAGE);
-	const items = all.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+	const items = all.slice(0, visibleCount);
 
 	return (
 		<div data-component="news-article-feed" data-framework="react">
@@ -348,34 +347,24 @@ export default function NewsArticleFeed() {
 					</article>
 				))}
 			</div>
-			{totalPages > 1 && (
-				<div
-					style={{
-						display: 'flex',
-						gap: '6px',
-						marginTop: '24px',
-						justifyContent: 'center',
-					}}
-				>
-					{Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
-						<button
-							key={n}
-							type="button"
-							onClick={() => setPage(n)}
-							style={{
-								padding: '5px 10px',
-								border: `1px solid ${n === page ? 'var(--hn-accent)' : 'var(--hn-border)'}`,
-								borderRadius: 'var(--hn-radius)',
-								background: n === page ? 'var(--hn-accent)' : 'transparent',
-								color: n === page ? '#fff' : 'var(--hn-text)',
-								cursor: 'pointer',
-								fontFamily: 'var(--hn-font-ui)',
-								fontSize: '13px',
-							}}
-						>
-							{n}
-						</button>
-					))}
+			{visibleCount < all.length && (
+				<div style={{ textAlign: 'center', marginTop: '24px' }}>
+					<button
+						type="button"
+						onClick={() => setVisibleCount((c) => c + PER_PAGE)}
+						style={{
+							padding: '8px 20px',
+							border: '1px solid var(--hn-border)',
+							borderRadius: 'var(--hn-radius)',
+							background: 'transparent',
+							color: 'var(--hn-accent)',
+							cursor: 'pointer',
+							fontFamily: 'var(--hn-font-ui)',
+							fontSize: '13px',
+						}}
+					>
+						Load more ({all.length - visibleCount} remaining)
+					</button>
 				</div>
 			)}
 		</div>

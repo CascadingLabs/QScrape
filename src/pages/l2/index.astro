@@ -2,7 +2,103 @@
 import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 ---
 
-<QScrapeLayout title="L2 — QScrape">
+<QScrapeLayout
+	title="L2 — JavaScript Framework Scraper Test Sites | QScrape"
+	description="QScrape Level 2: four client-side SPA test sites built with React, Vue, Svelte, and Solid via Astro client:only islands. All content requires JavaScript execution — scrapers must handle dynamic rendering."
+>
+	<Fragment slot="head">
+		<meta name="keywords" content="JavaScript scraper test, SPA scraping, React Vue Svelte scraper benchmark, client-side rendering scraper, dynamic content scraping test" />
+		<link rel="canonical" href="https://qscrape.dev/l2/" />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://qscrape.dev/l2/" />
+		<meta property="og:title" content="L2 — JavaScript Framework Scraper Test Sites | QScrape" />
+		<meta property="og:description" content="Four client-side SPA test sites (React, Vue, Svelte, Solid) that require JavaScript execution to scrape. Part of the QScrape open-source scraper evaluation suite." />
+		<meta property="og:site_name" content="QScrape" />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="L2 — JavaScript Framework Scraper Test Sites | QScrape" />
+		<meta name="twitter:description" content="Four client-side SPA test sites (React, Vue, Svelte, Solid) that require JavaScript execution to scrape. Part of the QScrape open-source scraper evaluation suite." />
+
+		<!-- JSON-LD: CollectionPage -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "CollectionPage",
+			"name": "QScrape Level 2 — JavaScript Framework Test Sites",
+			"url": "https://qscrape.dev/l2/",
+			"description": "Level 2 of QScrape provides four client-side single-page applications built with React, Vue, Svelte, and Solid. All components are mounted via Astro client:only — the HTML source is an empty shell and scrapers must execute JavaScript to see any content. Each page uses a shuffled island architecture so all four frameworks appear on every page load.",
+			"isPartOf": {
+				"@type": "WebSite",
+				"name": "QScrape",
+				"url": "https://qscrape.dev/"
+			},
+			"hasPart": [
+				{
+					"@type": "WebSite",
+					"name": "Mountainhome Herald (L2)",
+					"url": "https://qscrape.dev/l2/news/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "VaultMart (L2)",
+					"url": "https://qscrape.dev/l2/eshop/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "ScoreTap (L2)",
+					"url": "https://qscrape.dev/l2/scoretap/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "Eldoria Registry of Deeds (L2)",
+					"url": "https://qscrape.dev/l2/taxes/"
+				}
+			]
+		})} />
+
+		<!-- JSON-LD: FAQPage (AEO) -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "FAQPage",
+			"mainEntity": [
+				{
+					"@type": "Question",
+					"name": "What is QScrape Level 2?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "QScrape Level 2 (L2) is a set of four single-page applications built with React, Vue, Svelte, and Solid. All content is rendered client-side via Astro client:only islands, so the raw HTML source is empty. Scrapers must execute JavaScript and wait for components to hydrate before extracting any data."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "How does the L2 island shuffling work?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "Each L2 page is divided into named slots. Every slot embeds one component per framework (React, Vue, Svelte, Solid), all hidden initially. An inline synchronous script runs a Fisher-Yates shuffle and reveals exactly one framework per slot, assigning a unique framework to each slot so all four appear on every page load. The active framework is recorded in the data-active-fw attribute on each slot element."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "Do L2 sites have anti-bot protections?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "No. L2 sites have no CAPTCHAs, rate limiting, or obfuscation techniques. The only challenge is that all content is rendered client-side and requires JavaScript execution — a headless browser or JS-aware scraper is needed. Anti-bot techniques are introduced at Level 3."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "How long does L2 content take to load?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "Every L2 island calls a simulated async gate (fakeGet) that resolves after a 300–550 ms delay. Scrapers must wait for all visible islands to settle before extracting data."
+					}
+				}
+			]
+		})} />
+	</Fragment>
+
 	<header>
 		<div class="breadcrumb">
 			<a href="/">QScrape</a> / L2
@@ -13,7 +109,7 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 		</div>
 	</header>
 
-	<section>
+	<section aria-label="What is QScrape Level 2">
 		<p>
 			Level 2 sites are built with <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, and <a href="https://www.solidjs.com/" target="_blank" rel="noopener">Solid</a> — all mounted via <code>client:only</code> so the DOM is empty without JavaScript. Each site is a full client-side SPA sharing data with its L1 counterpart. A framework switcher in the page header lets you toggle between all four implementations.
 		</p>

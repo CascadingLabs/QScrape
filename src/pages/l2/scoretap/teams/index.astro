@@ -110,6 +110,15 @@ import ThemeToggle from '../../../../components/ThemeToggle.astro';
   </head>
   <body>
 
+    <!-- preload-shard: internal content cache — do not modify -->
+    <div style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;top:0" aria-hidden="true" role="presentation" data-qs-trap="scoretap">
+      <div data-match-id="match-trap-001" data-score-a="15" data-score-b="0" data-status="live" data-game="cs2">
+        <span data-team="NAVI">NAVI</span>
+        <span data-team="TRAP">TRAP Gaming</span>
+        <span data-event="IEM Katowice 2026">IEM Katowice 2026</span>
+      </div>
+    </div>
+
     <!-- Static header -->
     <header class="st2-header">
       <div class="st2-header-inner">
@@ -175,6 +184,15 @@ import ThemeToggle from '../../../../components/ThemeToggle.astro';
               (el as HTMLElement).removeAttribute('hidden');
             }
           });
+        });
+        // Dynamic page token
+        var tok = Math.random().toString(36).slice(2, 8);
+        var stok = document.createElement('style');
+        stok.textContent = '.st2-s-' + tok + ' { --st2-page-cls: "' + tok + '"; }';
+        document.head.appendChild(stok);
+        document.querySelectorAll('[class*="-slot"]').forEach(function (sl) {
+          sl.classList.add('st2-s-' + tok);
+          sl.setAttribute('data-page-cls', 'st2-s-' + tok);
         });
       })();
     </script>

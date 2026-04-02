@@ -8,9 +8,6 @@ import { getBreaking } from '../../../../data/news/articles';
 import { getLiveGeomantic, statusColor } from '../../../../data/news/geomantic';
 import '../../../../styles/l2/news.css';
 
-const breaking = getBreaking();
-const geo = getLiveGeomantic();
-
 function goToArticle(id: string) {
 	const url = new URL(window.location.href);
 	url.searchParams.set('id', id);
@@ -21,6 +18,8 @@ function goToArticle(id: string) {
 }
 
 export default function NewsWeatherWidget() {
+	const [breaking] = useState(() => getBreaking());
+	const [geo] = useState(() => getLiveGeomantic());
 	const [ready, setReady] = useState(false);
 	useEffect(() => {
 		fakeGet(null).then(() => setReady(true));

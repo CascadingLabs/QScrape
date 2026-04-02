@@ -5,9 +5,20 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { fakeGet } from '../../../../data/api';
-import { getByCategory, getProductBySku, products } from '../../../../data/eshop/products';
-import { addToCart, cartCount, clearCart, getCart, removeFromCart, updateQty } from '../../../../data/eshop/cart';
 import type { CartItem } from '../../../../data/eshop/cart';
+import {
+	addToCart,
+	cartCount,
+	clearCart,
+	getCart,
+	removeFromCart,
+	updateQty,
+} from '../../../../data/eshop/cart';
+import {
+	getByCategory,
+	getProductBySku,
+	products,
+} from '../../../../data/eshop/products';
 import '../../../../styles/l2/eshop.css';
 
 const PER_PAGE = 9;
@@ -15,143 +26,198 @@ const ready = ref(false);
 const view = ref<'grid' | 'detail' | 'cart' | 'checkout' | 'confirm'>('grid');
 const currentSku = ref<string | null>(null);
 const cat = ref<string | null>(null);
-const page = ref(1);
+const visibleCount = ref(PER_PAGE);
 const cart = ref<CartItem[]>([]);
 const orderNum = ref('');
 const formErrors = ref<string[]>([]);
 const checkoutFormRef = ref<HTMLElement | null>(null);
 
 function validateInput(value: string, type: string): string | null {
-  const v = value.trim();
-  if (!v) { return 'required'; }
-  if (type === 'name' && v.length < 2) { return 'at least 2 characters'; }
-  if (type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { return 'invalid email'; }
-  if (type === 'postcode' && v.length < 3) { return 'too short'; }
-  if (type === 'card' && !/^\d{13,19}$/.test(v.replace(/[\s-]/g, ''))) { return 'must be 13–19 digits'; }
-  if (type === 'expiry' && !/^(0[1-9]|1[0-2])[\s/]+\d{2}$/.test(v)) { return 'use MM / YY'; }
-  if (type === 'cvv' && !/^\d{3,4}$/.test(v)) { return '3 or 4 digits'; }
-  return null;
+	const v = value.trim();
+	if (!v) {
+		return 'required';
+	}
+	if (type === 'name' && v.length < 2) {
+		return 'at least 2 characters';
+	}
+	if (type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+		return 'invalid email';
+	}
+	if (type === 'postcode' && v.length < 3) {
+		return 'too short';
+	}
+	if (type === 'card' && !/^\d{13,19}$/.test(v.replace(/[\s-]/g, ''))) {
+		return 'must be 13–19 digits';
+	}
+	if (type === 'expiry' && !/^(0[1-9]|1[0-2])[\s/]+\d{2}$/.test(v)) {
+		return 'use MM / YY';
+	}
+	if (type === 'cvv' && !/^\d{3,4}$/.test(v)) {
+		return '3 or 4 digits';
+	}
+	return null;
 }
 
 function getUrlState() {
-  const p = new URLSearchParams(window.location.search);
-  return { sku: p.get('sku'), cat: p.get('cat'), view: p.get('view') };
+	const p = new URLSearchParams(window.location.search);
+	return { sku: p.get('sku'), cat: p.get('cat'), view: p.get('view') };
 }
 
-function goToProduct(sku: string) {
-  const url = new URL(window.location.href);
-  url.searchParams.set('sku', sku);
-  url.searchParams.delete('cat');
-  url.searchParams.delete('view');
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('eshop:product', { detail: sku }));
-  window.scrollTo(0, 0);
+function _goToProduct(sku: string) {
+	const url = new URL(window.location.href);
+	url.searchParams.set('sku', sku);
+	url.searchParams.delete('cat');
+	url.searchParams.delete('view');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('eshop:product', { detail: sku }));
+	window.scrollTo(0, 0);
 }
 
 function goToView(v: 'cart' | 'checkout') {
-  const url = new URL(window.location.href);
-  url.searchParams.set('view', v);
-  url.searchParams.delete('sku');
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('eshop:view', { detail: v }));
-  window.scrollTo(0, 0);
+	const url = new URL(window.location.href);
+	url.searchParams.set('view', v);
+	url.searchParams.delete('sku');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('eshop:view', { detail: v }));
+	window.scrollTo(0, 0);
 }
 
-const product = computed(() => currentSku.value ? getProductBySku(currentSku.value) : null);
-const filtered = computed(() => cat.value ? getByCategory(cat.value) : products);
-const totalPages = computed(() => Math.ceil(filtered.value.length / PER_PAGE));
-const items = computed(() => filtered.value.slice((page.value - 1) * PER_PAGE, page.value * PER_PAGE));
-const cartTotal = computed(() => cart.value.reduce((sum, item) => {
-  const p = getProductBySku(item.sku);
-  return sum + (p ? (p.salePrice ?? p.basePrice) * item.qty : 0);
-}, 0));
-const cartItemCount = computed(() => cartCount(cart.value));
+const _product = computed(() =>
+	currentSku.value ? getProductBySku(currentSku.value) : null,
+);
+const filtered = computed(() =>
+	cat.value ? getByCategory(cat.value) : products,
+);
+const _items = computed(() => filtered.value.slice(0, visibleCount.value));
+const _cartTotal = computed(() =>
+	cart.value.reduce((sum, item) => {
+		const p = getProductBySku(item.sku);
+		return sum + (p ? (p.salePrice ?? p.basePrice) * item.qty : 0);
+	}, 0),
+);
+const _cartItemCount = computed(() => cartCount(cart.value));
 
-function stars(rating: number) {
-  return '★'.repeat(Math.floor(rating)) + '☆'.repeat(5 - Math.floor(rating));
+function _stars(rating: number) {
+	return '★'.repeat(Math.floor(rating)) + '☆'.repeat(5 - Math.floor(rating));
 }
 
-function stockLabel(inStock: boolean, stock?: number) {
-  if (!inStock) { return 'Out of Stock'; }
-  if (stock && stock <= 5) { return `Only ${stock} left in stock`; }
-  return 'In Stock';
+function _stockLabel(inStock: boolean, stock?: number) {
+	if (!inStock) {
+		return 'Out of Stock';
+	}
+	if (stock && stock <= 5) {
+		return `Only ${stock} left in stock`;
+	}
+	return 'In Stock';
 }
 
-function handleAddToCart() {
-  if (currentSku.value) {
-    addToCart(currentSku.value);
-    goToView('cart');
-  }
+function _handleAddToCart() {
+	if (currentSku.value) {
+		addToCart(currentSku.value);
+		goToView('cart');
+	}
 }
 
-function handleCheckout() {
-  if (checkoutFormRef.value) {
-    const inputs = Array.from(checkoutFormRef.value.querySelectorAll<HTMLInputElement>('input[data-required]'));
-    const msgs: string[] = [];
-    for (const el of inputs) {
-      const err = validateInput(el.value, el.dataset.validate ?? 'text');
-      if (err) { el.style.borderColor = 'var(--vm-sale)'; msgs.push(`${el.dataset.label}: ${err}`); }
-      else { el.style.borderColor = 'var(--vm-cta)'; }
-    }
-    if (msgs.length > 0) { formErrors.value = msgs; return; }
-  }
-  formErrors.value = [];
-  const n = `VM-312-${Math.floor(100000 + Math.random() * 900000)}`;
-  orderNum.value = n;
-  clearCart();
-  const url = new URL(window.location.href);
-  url.searchParams.delete('view');
-  history.pushState(null, '', url.toString());
-  view.value = 'confirm';
+function _handleCheckout() {
+	if (checkoutFormRef.value) {
+		const inputs = Array.from(
+			checkoutFormRef.value.querySelectorAll<HTMLInputElement>(
+				'input[data-required]',
+			),
+		);
+		const msgs: string[] = [];
+		for (const el of inputs) {
+			const err = validateInput(el.value, el.dataset.validate ?? 'text');
+			if (err) {
+				el.style.borderColor = 'var(--vm-sale)';
+				msgs.push(`${el.dataset.label}: ${err}`);
+			} else {
+				el.style.borderColor = 'var(--vm-cta)';
+			}
+		}
+		if (msgs.length > 0) {
+			formErrors.value = msgs;
+			return;
+		}
+	}
+	formErrors.value = [];
+	const n = `VM-312-${Math.floor(100000 + Math.random() * 900000)}`;
+	orderNum.value = n;
+	clearCart();
+	const url = new URL(window.location.href);
+	url.searchParams.delete('view');
+	history.pushState(null, '', url.toString());
+	view.value = 'confirm';
 }
 
-function handleRemove(sku: string) { removeFromCart(sku); }
-function handleUpdateQty(sku: string, qty: number) { updateQty(sku, qty); }
+function _handleRemove(sku: string) {
+	removeFromCart(sku);
+}
+function _handleUpdateQty(sku: string, qty: number) {
+	updateQty(sku, qty);
+}
 
 function onPop() {
-  const { sku, cat: c, view: v } = getUrlState();
-  if (v === 'cart') { view.value = 'cart'; }
-  else if (v === 'checkout') { view.value = 'checkout'; }
-  else if (sku) { view.value = 'detail'; currentSku.value = sku; }
-  else { view.value = 'grid'; cat.value = c; page.value = 1; }
+	const { sku, cat: c, view: v } = getUrlState();
+	if (v === 'cart') {
+		view.value = 'cart';
+	} else if (v === 'checkout') {
+		view.value = 'checkout';
+	} else if (sku) {
+		view.value = 'detail';
+		currentSku.value = sku;
+	} else {
+		view.value = 'grid';
+		cat.value = c;
+		visibleCount.value = PER_PAGE;
+	}
 }
 function onCat(e: Event) {
-  cat.value = (e as CustomEvent<string | null>).detail;
-  view.value = 'grid';
-  page.value = 1;
+	cat.value = (e as CustomEvent<string | null>).detail;
+	view.value = 'grid';
+	visibleCount.value = PER_PAGE;
 }
 function onProduct(e: Event) {
-  currentSku.value = (e as CustomEvent<string>).detail;
-  view.value = 'detail';
+	currentSku.value = (e as CustomEvent<string>).detail;
+	view.value = 'detail';
 }
 function onCartEvent(e: Event) {
-  cart.value = [...(e as CustomEvent<CartItem[]>).detail];
+	cart.value = [...(e as CustomEvent<CartItem[]>).detail];
 }
 function onViewEvent(e: Event) {
-  view.value = (e as CustomEvent<'grid' | 'detail' | 'cart' | 'checkout' | 'confirm'>).detail;
+	view.value = (
+		e as CustomEvent<'grid' | 'detail' | 'cart' | 'checkout' | 'confirm'>
+	).detail;
 }
 
 onMounted(() => {
-  const { sku, cat: c, view: v } = getUrlState();
-  if (v === 'cart') { view.value = 'cart'; }
-  else if (v === 'checkout') { view.value = 'checkout'; }
-  else if (sku) { view.value = 'detail'; currentSku.value = sku; }
-  cat.value = c;
-  cart.value = getCart();
-  fakeGet(null).then(() => { ready.value = true; });
-  window.addEventListener('popstate', onPop);
-  window.addEventListener('eshop:cat', onCat);
-  window.addEventListener('eshop:product', onProduct);
-  window.addEventListener('eshop:cart', onCartEvent);
-  window.addEventListener('eshop:view', onViewEvent);
+	const { sku, cat: c, view: v } = getUrlState();
+	if (v === 'cart') {
+		view.value = 'cart';
+	} else if (v === 'checkout') {
+		view.value = 'checkout';
+	} else if (sku) {
+		view.value = 'detail';
+		currentSku.value = sku;
+	}
+	cat.value = c;
+	cart.value = getCart();
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
+	window.addEventListener('popstate', onPop);
+	window.addEventListener('eshop:cat', onCat);
+	window.addEventListener('eshop:product', onProduct);
+	window.addEventListener('eshop:cart', onCartEvent);
+	window.addEventListener('eshop:view', onViewEvent);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('popstate', onPop);
-  window.removeEventListener('eshop:cat', onCat);
-  window.removeEventListener('eshop:product', onProduct);
-  window.removeEventListener('eshop:cart', onCartEvent);
-  window.removeEventListener('eshop:view', onViewEvent);
+	window.removeEventListener('popstate', onPop);
+	window.removeEventListener('eshop:cat', onCat);
+	window.removeEventListener('eshop:product', onProduct);
+	window.removeEventListener('eshop:cart', onCartEvent);
+	window.removeEventListener('eshop:view', onViewEvent);
 });
 </script>
 
@@ -312,8 +378,10 @@ onUnmounted(() => {
         </div>
       </article>
     </div>
-    <div v-if="totalPages > 1" class="vm-pagination">
-      <button v-for="n in totalPages" :key="n" type="button" :class="['vm-page-btn', n === page && 'vm-page-active']" @click="page = n">{{ n }}</button>
+    <div v-if="visibleCount < filtered.length" style="text-align: center; margin-top: 24px;">
+      <button type="button" class="vm-load-more-btn" @click="visibleCount += PER_PAGE">
+        Load more ({{ filtered.length - visibleCount }} remaining)
+      </button>
     </div>
   </div>
 </template>
@@ -416,7 +484,5 @@ onUnmounted(() => {
 .vm-card-price-sale { color: var(--vm-sale); }
 .vm-card-orig { font-size: 12px; color: var(--vm-muted); text-decoration: line-through; }
 .vm-card-rating { font-size: 12px; color: var(--vm-muted); margin-top: 4px; }
-.vm-pagination { display: flex; gap: 8px; margin-top: 24px; justify-content: center; }
-.vm-page-btn { padding: 6px 12px; border: 1px solid var(--vm-border); border-radius: var(--vm-radius); background: transparent; color: var(--vm-text); cursor: pointer; font-family: var(--vm-font); font-size: 13px; }
-.vm-page-active { border-color: var(--vm-primary); background: var(--vm-primary); color: #fff; }
+.vm-load-more-btn { padding: 8px 20px; border: 1px solid var(--vm-border); border-radius: var(--vm-radius); background: transparent; color: var(--vm-accent); cursor: pointer; font-family: var(--vm-font-ui); font-size: 13px; }
 </style>

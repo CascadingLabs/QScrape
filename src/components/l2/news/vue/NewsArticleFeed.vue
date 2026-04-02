@@ -19,15 +19,14 @@ const ready = ref(false);
 const view = ref<'list' | 'detail'>('list');
 const currentId = ref<string | null>(null);
 const cat = ref<string | null>(null);
-const page = ref(1);
+const visibleCount = ref(PER_PAGE);
 
 const currentArticle = computed(() => articles.find((a) => a.id === currentId.value) ?? null);
 const articleDateStr = computed(() => currentArticle.value ? formatDateTime(currentArticle.value.published) : '');
 const allFiltered = computed(() => cat.value ? getByCategory(cat.value) : articles);
-const totalPages = computed(() => Math.ceil(allFiltered.value.length / PER_PAGE));
 const items = computed(() =>
   allFiltered.value
-    .slice((page.value - 1) * PER_PAGE, page.value * PER_PAGE)
+    .slice(0, visibleCount.value)
     .map((a) => ({ ...a, dateStr: formatDate(a.published) })),
 );
 
@@ -53,14 +52,14 @@ function onPop() {
   } else {
     view.value = 'list';
     cat.value = c;
-    page.value = 1;
+    visibleCount.value = PER_PAGE;
   }
 }
 
 function onCat(e: Event) {
   cat.value = (e as CustomEvent<string | null>).detail;
   view.value = 'list';
-  page.value = 1;
+  visibleCount.value = PER_PAGE;
 }
 
 function onArticle(e: Event) {
@@ -134,14 +133,12 @@ onUnmounted(() => {
         </div>
       </article>
     </div>
-    <div v-if="totalPages > 1" class="hn-pagination">
+    <div v-if="visibleCount < allFiltered.length" style="text-align: center; margin-top: 24px;">
       <button
-        v-for="n in totalPages"
-        :key="n"
         type="button"
-        :class="['hn-page-btn', n === page ? 'hn-page-btn-active' : '']"
-        @click="page = n"
-      >{{ n }}</button>
+        class="hn-load-more-btn"
+        @click="visibleCount += PER_PAGE"
+      >Load more ({{ allFiltered.length - visibleCount }} remaining)</button>
     </div>
   </div>
 </template>
@@ -170,7 +167,5 @@ onUnmounted(() => {
 .hn-feed-headline { font-family: var(--hn-font-display); font-size: 16px; font-weight: 600; color: var(--hn-text); line-height: 1.3; margin-bottom: 6px; }
 .hn-feed-excerpt { font-size: 13px; color: var(--hn-muted); line-height: 1.5; font-family: var(--hn-font-body); margin-bottom: 6px; }
 .hn-feed-meta { font-size: 12px; color: var(--hn-muted); font-family: var(--hn-font-ui); }
-.hn-pagination { display: flex; gap: 6px; margin-top: 24px; justify-content: center; }
-.hn-page-btn { padding: 5px 10px; border: 1px solid var(--hn-border); border-radius: var(--hn-radius); background: transparent; color: var(--hn-text); cursor: pointer; font-family: var(--hn-font-ui); font-size: 13px; }
-.hn-page-btn-active { border-color: var(--hn-accent); background: var(--hn-accent); color: #fff; }
+.hn-load-more-btn { padding: 8px 20px; border: 1px solid var(--hn-border); border-radius: var(--hn-radius); background: transparent; color: var(--hn-accent); cursor: pointer; font-family: var(--hn-font-ui); font-size: 13px; }
 </style>

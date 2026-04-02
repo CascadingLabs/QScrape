@@ -1172,7 +1172,7 @@ export default function EshopProductGrid() {
 	const [view, setView] = useState<View>('grid');
 	const [currentSku, setCurrentSku] = useState<string | null>(null);
 	const [cat, setCat] = useState<string | null>(null);
-	const [page, setPage] = useState(1);
+	const [visibleCount, setVisibleCount] = useState(PER_PAGE);
 	const [cart, setCartState] = useState<CartItem[]>([]);
 	const [orderNum, setOrderNum] = useState('');
 
@@ -1202,13 +1202,13 @@ export default function EshopProductGrid() {
 			} else {
 				setView('grid');
 				setCat(c);
-				setPage(1);
+				setVisibleCount(PER_PAGE);
 			}
 		};
 		const onCat = (e: Event) => {
 			setCat((e as CustomEvent<string | null>).detail);
 			setView('grid');
-			setPage(1);
+			setVisibleCount(PER_PAGE);
 		};
 		const onProduct = (e: Event) => {
 			setCurrentSku((e as CustomEvent<string>).detail);
@@ -1306,8 +1306,7 @@ export default function EshopProductGrid() {
 	}
 
 	const all = cat ? getByCategory(cat) : products;
-	const totalPages = Math.ceil(all.length / PER_PAGE);
-	const items = all.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+	const items = all.slice(0, visibleCount);
 
 	return (
 		<div
@@ -1336,34 +1335,24 @@ export default function EshopProductGrid() {
 					<ProductCard key={p.sku} p={p} onClick={() => goToProduct(p.sku)} />
 				))}
 			</div>
-			{totalPages > 1 && (
-				<div
-					style={{
-						display: 'flex',
-						gap: '8px',
-						marginTop: '24px',
-						justifyContent: 'center',
-					}}
-				>
-					{Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
-						<button
-							key={n}
-							type="button"
-							onClick={() => setPage(n)}
-							style={{
-								padding: '6px 12px',
-								border: `1px solid ${n === page ? 'var(--vm-primary)' : 'var(--vm-border)'}`,
-								borderRadius: 'var(--vm-radius)',
-								background: n === page ? 'var(--vm-primary)' : 'transparent',
-								color: n === page ? '#fff' : 'var(--vm-text)',
-								cursor: 'pointer',
-								fontFamily: 'var(--vm-font)',
-								fontSize: '13px',
-							}}
-						>
-							{n}
-						</button>
-					))}
+			{visibleCount < all.length && (
+				<div style={{ textAlign: 'center', marginTop: '24px' }}>
+					<button
+						type="button"
+						onClick={() => setVisibleCount((c) => c + PER_PAGE)}
+						style={{
+							padding: '8px 20px',
+							border: '1px solid var(--vm-border)',
+							borderRadius: 'var(--vm-radius)',
+							background: 'transparent',
+							color: 'var(--vm-accent)',
+							cursor: 'pointer',
+							fontFamily: 'var(--vm-font-ui)',
+							fontSize: '13px',
+						}}
+					>
+						Load more ({all.length - visibleCount} remaining)
+					</button>
 				</div>
 			)}
 		</div>

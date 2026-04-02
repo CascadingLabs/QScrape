@@ -3,53 +3,67 @@
   @component TaxesIndexSidebar
 -->
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { deeds, indexLabels, indexTypes } from '../../../../data/taxes/deeds';
-  import '../../../../styles/l2/taxes.css';
+import { onDestroy, onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import { deeds, indexLabels, indexTypes } from '../../../../data/taxes/deeds';
+import '../../../../styles/l2/taxes.css';
 
-  const allIndexTypes = ['ALL', ...indexTypes];
-  const counts = Object.fromEntries(indexTypes.map((t) => [t, deeds.filter((d) => d.index === t).length]));
-  const _indexLabels = indexLabels;
+const _allIndexTypes = ['ALL', ...indexTypes];
+const _counts = Object.fromEntries(
+	indexTypes.map((t) => [t, deeds.filter((d) => d.index === t).length]),
+);
+const _indexLabels = indexLabels;
 
-  let ready = false;
-  let active = 'ALL';
+let _ready = false;
+let _active = 'ALL';
 
-  function getActiveIndex() {
-    return new URLSearchParams(window.location.search).get('index') ?? 'ALL';
-  }
+function getActiveIndex() {
+	return new URLSearchParams(window.location.search).get('index') ?? 'ALL';
+}
 
-  function dispatchSearch(ix: string) {
-    const url = new URL(window.location.href);
-    if (ix !== 'ALL') { url.searchParams.set('index', ix); } else { url.searchParams.delete('index'); }
-    url.searchParams.delete('lastFirm');
-    url.searchParams.delete('first');
-    url.searchParams.delete('file');
-    history.pushState(null, '', url.toString());
-    window.dispatchEvent(new CustomEvent('taxes:search', { detail: { lastFirm: '', first: '', index: ix } }));
-  }
+function dispatchSearch(ix: string) {
+	const url = new URL(window.location.href);
+	if (ix !== 'ALL') {
+		url.searchParams.set('index', ix);
+	} else {
+		url.searchParams.delete('index');
+	}
+	url.searchParams.delete('lastFirm');
+	url.searchParams.delete('first');
+	url.searchParams.delete('file');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(
+		new CustomEvent('taxes:search', {
+			detail: { lastFirm: '', first: '', index: ix },
+		}),
+	);
+}
 
-  function select(ix: string) {
-    active = ix;
-    dispatchSearch(ix);
-  }
+function _select(ix: string) {
+	_active = ix;
+	dispatchSearch(ix);
+}
 
-  function onPop() { active = getActiveIndex(); }
-  function onSearch(e: Event) {
-    active = (e as CustomEvent<{ index: string }>).detail.index;
-  }
+function onPop() {
+	_active = getActiveIndex();
+}
+function onSearch(e: Event) {
+	_active = (e as CustomEvent<{ index: string }>).detail.index;
+}
 
-  onMount(() => {
-    active = getActiveIndex();
-    fakeGet(null).then(() => { ready = true; });
-    window.addEventListener('popstate', onPop);
-    window.addEventListener('taxes:search', onSearch);
-  });
+onMount(() => {
+	_active = getActiveIndex();
+	fakeGet(null).then(() => {
+		_ready = true;
+	});
+	window.addEventListener('popstate', onPop);
+	window.addEventListener('taxes:search', onSearch);
+});
 
-  onDestroy(() => {
-    window.removeEventListener('popstate', onPop);
-    window.removeEventListener('taxes:search', onSearch);
-  });
+onDestroy(() => {
+	window.removeEventListener('popstate', onPop);
+	window.removeEventListener('taxes:search', onSearch);
+});
 </script>
 
 {#if !ready}

@@ -2,7 +2,103 @@
 import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 ---
 
-<QScrapeLayout title="L3 — QScrape">
+<QScrapeLayout
+	title="L3 — Anti-Bot Scraper Test Sites | QScrape"
+	description="QScrape Level 3: four anti-bot test sites using Astro Islands (React, Vue, Svelte, Solid). Each island owns a different data slice and uses a distinct obfuscation technique — CSS-assembled text, pseudo-element content, decoy overlays, and canvas-rendered text."
+>
+	<Fragment slot="head">
+		<meta name="keywords" content="anti-bot scraper test, web scraping obfuscation, canvas scraping, CSS order scraping, pseudo-element scraping, Astro islands scraper benchmark" />
+		<link rel="canonical" href="https://qscrape.dev/l3/" />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://qscrape.dev/l3/" />
+		<meta property="og:title" content="L3 — Anti-Bot Scraper Test Sites | QScrape" />
+		<meta property="og:description" content="Four advanced scraper test sites using Astro Islands with CSS-assembled text, pseudo-element content, decoy overlays, and canvas-rendered text. No unsolvable CAPTCHAs." />
+		<meta property="og:site_name" content="QScrape" />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="L3 — Anti-Bot Scraper Test Sites | QScrape" />
+		<meta name="twitter:description" content="Four advanced scraper test sites using Astro Islands with CSS-assembled text, pseudo-element content, decoy overlays, and canvas-rendered text. No unsolvable CAPTCHAs." />
+
+		<!-- JSON-LD: CollectionPage -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "CollectionPage",
+			"name": "QScrape Level 3 — Anti-Bot Scraper Test Sites",
+			"url": "https://qscrape.dev/l3/",
+			"description": "Level 3 of QScrape provides four anti-bot test sites built with Astro Islands. Each page splits its data across four independent framework islands (React, Vue, Svelte, Solid). Every island uses a distinct data-obfuscation technique: React splits words into CSS flex-ordered spans, Vue renders data via CSS pseudo-element attr(), Svelte layers a transparent decoy over the real value, and Solid draws text to an HTML canvas. There are no unsolvable CAPTCHAs.",
+			"isPartOf": {
+				"@type": "WebSite",
+				"name": "QScrape",
+				"url": "https://qscrape.dev/"
+			},
+			"hasPart": [
+				{
+					"@type": "WebSite",
+					"name": "Mountainhome Herald (L3)",
+					"url": "https://qscrape.dev/l3/news/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "VaultMart (L3)",
+					"url": "https://qscrape.dev/l3/eshop/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "ScoreTap (L3)",
+					"url": "https://qscrape.dev/l3/scoretap/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "Eldoria Registry of Deeds (L3)",
+					"url": "https://qscrape.dev/l3/taxes/"
+				}
+			]
+		})} />
+
+		<!-- JSON-LD: FAQPage (AEO) -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "FAQPage",
+			"mainEntity": [
+				{
+					"@type": "Question",
+					"name": "What is QScrape Level 3?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "QScrape Level 3 (L3) is a set of four anti-bot test sites built with Astro Islands. Each page composes four independent client:only islands — one per framework (React, Vue, Svelte, Solid) — each owning a different slice of the page data and using a distinct obfuscation technique. A complete record requires hydrating all four runtimes, waiting for four staggered async gates, and defeating four different anti-bot tricks."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "What anti-bot techniques does QScrape L3 use?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "L3 uses four distinct techniques across its four framework islands: React splits text into span elements with shuffled DOM order, using CSS flex order to restore visual order (textContent returns scrambled text). Vue renders key data via CSS pseudo-element attr() (textContent returns empty string). Svelte places the real value at z-index 1 and a visually identical fake value with transparent color at z-index 2 (the DOM contains both). Solid draws numbers and IDs to an HTML canvas via ctx.fillText() — nothing appears in the DOM, but an aria-label provides an accessible alternative."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "Does QScrape L3 use CAPTCHAs?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "No. QScrape Level 3 uses no CAPTCHAs, browser fingerprinting, or rate limiting. All challenges are purely DOM and rendering-based obfuscation techniques that a sufficiently capable scraper can defeat programmatically."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "How long do L3 islands take to load?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "L3 islands use staggered async delays: Solid resolves after 300–500 ms, React after 400–650 ms, Vue after 600–850 ms, and Svelte after 800–1050 ms. The worst-case total wait is approximately 1050 ms. Scrapers must wait for all four islands to settle before reconstructing a complete record."
+					}
+				}
+			]
+		})} />
+	</Fragment>
+
 	<header>
 		<div class="breadcrumb">
 			<a href="/">QScrape</a> / L3
@@ -13,7 +109,7 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 		</div>
 	</header>
 
-	<section>
+	<section aria-label="What is QScrape Level 3">
 		<p>
 			Level 3 sites use <a href="https://docs.astro.build/en/concepts/islands/" target="_blank" rel="noopener">Astro Islands</a> to split each page across four independent framework components — <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, and <a href="https://www.solidjs.com/" target="_blank" rel="noopener">Solid</a> — each owning a different slice of the data. On top of that, each framework island uses a distinct data-obfuscation technique to frustrate scrapers. A scraper must hydrate all four runtimes, wait for four staggered async gates, and defeat four different anti-bot tricks to reconstruct a complete record.
 		</p>

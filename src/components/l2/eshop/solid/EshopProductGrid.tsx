@@ -1201,15 +1201,12 @@ export default function EshopProductGrid() {
 	const [view, setView] = createSignal<View>('grid');
 	const [currentSku, setCurrentSku] = createSignal<string | null>(null);
 	const [cat, setCat] = createSignal<string | null>(null);
-	const [page, setPage] = createSignal(1);
+	const [visibleCount, setVisibleCount] = createSignal(PER_PAGE);
 	const [cart, setCartState] = createSignal<CartItem[]>([]);
 	const [orderNum, setOrderNum] = createSignal('');
 
 	const filtered = createMemo(() => (cat() ? getByCategory(cat()!) : products));
-	const totalPages = createMemo(() => Math.ceil(filtered().length / PER_PAGE));
-	const items = createMemo(() =>
-		filtered().slice((page() - 1) * PER_PAGE, page() * PER_PAGE),
-	);
+	const items = createMemo(() => filtered().slice(0, visibleCount()));
 
 	const onPop = () => {
 		const { sku, cat: c, view: v } = getUrlState();
@@ -1223,13 +1220,13 @@ export default function EshopProductGrid() {
 		} else {
 			setView('grid');
 			setCat(c);
-			setPage(1);
+			setVisibleCount(PER_PAGE);
 		}
 	};
 	const onCat = (e: Event) => {
 		setCat((e as CustomEvent<string | null>).detail);
 		setView('grid');
-		setPage(1);
+		setVisibleCount(PER_PAGE);
 	};
 	const onProduct = (e: Event) => {
 		setCurrentSku((e as CustomEvent<string>).detail);
@@ -1360,36 +1357,24 @@ export default function EshopProductGrid() {
 							{(p) => <ProductCard p={p} onClick={() => goToProduct(p.sku)} />}
 						</For>
 					</div>
-					<Show when={totalPages() > 1}>
-						<div
-							style={{
-								display: 'flex',
-								gap: '8px',
-								'margin-top': '24px',
-								'justify-content': 'center',
-							}}
-						>
-							<For each={Array.from({ length: totalPages() }, (_, i) => i + 1)}>
-								{(n) => (
-									<button
-										type="button"
-										onClick={() => setPage(n)}
-										style={{
-											padding: '6px 12px',
-											border: `1px solid ${n === page() ? 'var(--vm-primary)' : 'var(--vm-border)'}`,
-											'border-radius': 'var(--vm-radius)',
-											background:
-												n === page() ? 'var(--vm-primary)' : 'transparent',
-											color: n === page() ? '#fff' : 'var(--vm-text)',
-											cursor: 'pointer',
-											'font-family': 'var(--vm-font)',
-											'font-size': '13px',
-										}}
-									>
-										{n}
-									</button>
-								)}
-							</For>
+					<Show when={visibleCount() < filtered().length}>
+						<div style={{ 'text-align': 'center', 'margin-top': '24px' }}>
+							<button
+								type="button"
+								onClick={() => setVisibleCount((c) => c + PER_PAGE)}
+								style={{
+									padding: '8px 20px',
+									border: '1px solid var(--vm-border)',
+									'border-radius': 'var(--vm-radius)',
+									background: 'transparent',
+									color: 'var(--vm-accent)',
+									cursor: 'pointer',
+									'font-family': 'var(--vm-font-ui)',
+									'font-size': '13px',
+								}}
+							>
+								Load more ({filtered().length - visibleCount()} remaining)
+							</button>
 						</div>
 					</Show>
 				</div>

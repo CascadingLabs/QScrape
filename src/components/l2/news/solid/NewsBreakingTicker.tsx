@@ -11,9 +11,6 @@ import {
 } from '../../../../data/news/articles';
 import '../../../../styles/l2/news.css';
 
-const breaking = getBreaking();
-const topHeadlines = getLatest(3);
-
 function goToArticle(id: string) {
 	const url = new URL(window.location.href);
 	url.searchParams.set('id', id);
@@ -24,6 +21,8 @@ function goToArticle(id: string) {
 }
 
 export default function NewsBreakingTicker() {
+	const breaking = getBreaking();
+	const topHeadlines = getLatest(3);
 	const [ready, setReady] = createSignal(false);
 
 	onMount(() => {

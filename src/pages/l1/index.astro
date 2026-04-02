@@ -2,7 +2,99 @@
 import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 ---
 
-<QScrapeLayout title="L1 — QScrape">
+<QScrapeLayout
+	title="L1 — Static HTML Scraper Test Sites | QScrape"
+	description="QScrape Level 1: four static HTML/CSS/JS test sites built with Astro. No frameworks, no anti-bot measures. A baseline for validating HTML parsing, multi-page navigation, and structured data extraction."
+>
+	<Fragment slot="head">
+		<meta name="keywords" content="static HTML scraper test, web scraping baseline, HTML parsing test site, scraper benchmark level 1, Astro static site scraping" />
+		<link rel="canonical" href="https://qscrape.dev/l1/" />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://qscrape.dev/l1/" />
+		<meta property="og:title" content="L1 — Static HTML Scraper Test Sites | QScrape" />
+		<meta property="og:description" content="Four static HTML test sites for scraper benchmarking: a news portal, esports scores tracker, property tax registry, and e-commerce catalogue. No JavaScript required." />
+		<meta property="og:site_name" content="QScrape" />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="L1 — Static HTML Scraper Test Sites | QScrape" />
+		<meta name="twitter:description" content="Four static HTML test sites for scraper benchmarking: a news portal, esports scores tracker, property tax registry, and e-commerce catalogue. No JavaScript required." />
+
+		<!-- JSON-LD: CollectionPage -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "CollectionPage",
+			"name": "QScrape Level 1 — Static HTML Test Sites",
+			"url": "https://qscrape.dev/l1/",
+			"description": "Level 1 of QScrape provides four static HTML/CSS/JS websites built with Astro. All content is rendered at build time. No client-side frameworks, no API calls, and no anti-scraping measures. These sites establish a baseline for verifying HTML parsing, multi-page navigation, and structured data extraction.",
+			"isPartOf": {
+				"@type": "WebSite",
+				"name": "QScrape",
+				"url": "https://qscrape.dev/"
+			},
+			"hasPart": [
+				{
+					"@type": "WebSite",
+					"name": "Mountainhome Herald",
+					"description": "Fictional news portal. Tests article listings, pagination, individual article pages, and RSS feeds.",
+					"url": "https://qscrape.dev/l1/news/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "ScoreTap",
+					"description": "Fictional esports scores site. Tests structured tabular data, team/event relationships, and linked detail pages.",
+					"url": "https://qscrape.dev/l1/scoretap/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "Eldoria Registry of Deeds",
+					"description": "Fictional property tax registry. Tests form-like search interfaces, record listings, and document viewer pages.",
+					"url": "https://qscrape.dev/l1/taxes/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "VaultMart",
+					"description": "Fictional e-commerce catalogue. 28 products, 5 categories. Tests sentinel URLs, filter+pagination, cart JSON-LD, dual-price extraction, and stock level attributes.",
+					"url": "https://qscrape.dev/l1/eshop/"
+				}
+			]
+		})} />
+
+		<!-- JSON-LD: FAQPage (AEO) -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "FAQPage",
+			"mainEntity": [
+				{
+					"@type": "Question",
+					"name": "What is QScrape Level 1?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "QScrape Level 1 (L1) is a set of four static HTML websites designed to benchmark web scrapers. All content is server-rendered at build time using Astro. There are no JavaScript frameworks, no AJAX calls, and no anti-bot protections — making L1 the easiest baseline level for scraper evaluation."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "What test sites are in QScrape L1?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "L1 includes four sites: Mountainhome Herald (a news portal testing article listings and pagination), ScoreTap (an esports scores tracker testing tabular data and detail pages), Eldoria Registry of Deeds (a property tax registry testing search and document viewer flows), and VaultMart (an e-commerce catalogue testing product filters, pagination, cart JSON-LD, and stock attributes)."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "Does QScrape L1 require JavaScript to scrape?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "No. All L1 pages are fully server-rendered static HTML. A scraper that only fetches raw HTML — without executing JavaScript — can extract all data from every L1 page."
+					}
+				}
+			]
+		})} />
+	</Fragment>
+
     <header>
         <div class="breadcrumb">
             <a href="/">QScrape</a> / L1
@@ -13,7 +105,7 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
         </div>
     </header>
 
-    <section>
+    <section aria-label="What is QScrape Level 1">
         <h2>About</h2>
         <p>
             L1 sites are static pages built with <a

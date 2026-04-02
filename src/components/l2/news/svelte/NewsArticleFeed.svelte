@@ -3,86 +3,89 @@
   @component NewsArticleFeed
 -->
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import {
-    articles,
-    formatDate,
-    formatDateTime,
-    getByCategory,
-  } from '../../../../data/news/articles';
-  import '../../../../styles/l2/news.css';
+import { onDestroy, onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import {
+	articles,
+	formatDate,
+	formatDateTime,
+	getByCategory,
+} from '../../../../data/news/articles';
+import '../../../../styles/l2/news.css';
 
-  const PER_PAGE = 6;
+const PER_PAGE = 6;
 
-  let ready = false;
-  let view: 'list' | 'detail' = 'list';
-  let currentId: string | null = null;
-  let cat: string | null = null;
-  let page = 1;
+let _ready = false;
+let _view: 'list' | 'detail' = 'list';
+let currentId: string | null = null;
+let cat: string | null = null;
+let visibleCount = PER_PAGE;
 
-  $: currentArticle = articles.find((a) => a.id === currentId) ?? null;
-  $: articleDateStr = currentArticle ? formatDateTime(currentArticle.published) : '';
-  $: allFiltered = cat ? getByCategory(cat) : articles;
-  $: totalPages = Math.ceil(allFiltered.length / PER_PAGE);
-  $: rawItems = allFiltered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
-  $: items = rawItems.map((a) => ({ ...a, dateStr: formatDate(a.published) }));
+$: currentArticle = articles.find((a) => a.id === currentId) ?? null;
+$: articleDateStr = currentArticle
+	? formatDateTime(currentArticle.published)
+	: '';
+$: allFiltered = cat ? getByCategory(cat) : articles;
+$: rawItems = allFiltered.slice(0, visibleCount);
+$: items = rawItems.map((a) => ({ ...a, dateStr: formatDate(a.published) }));
 
-  function goToArticle(id: string) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('id', id);
-    url.searchParams.delete('cat');
-    history.pushState(null, '', url.toString());
-    window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
-    window.scrollTo(0, 0);
-  }
+function _goToArticle(id: string) {
+	const url = new URL(window.location.href);
+	url.searchParams.set('id', id);
+	url.searchParams.delete('cat');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
+	window.scrollTo(0, 0);
+}
 
-  function getUrlState() {
-    const p = new URLSearchParams(window.location.search);
-    return { id: p.get('id'), cat: p.get('cat') };
-  }
+function getUrlState() {
+	const p = new URLSearchParams(window.location.search);
+	return { id: p.get('id'), cat: p.get('cat') };
+}
 
-  function onPop() {
-    const { id: i, cat: c } = getUrlState();
-    if (i) {
-      view = 'detail';
-      currentId = i;
-    } else {
-      view = 'list';
-      cat = c;
-      page = 1;
-    }
-  }
+function onPop() {
+	const { id: i, cat: c } = getUrlState();
+	if (i) {
+		_view = 'detail';
+		currentId = i;
+	} else {
+		_view = 'list';
+		cat = c;
+		visibleCount = PER_PAGE;
+	}
+}
 
-  function onCat(e: Event) {
-    cat = (e as CustomEvent<string | null>).detail;
-    view = 'list';
-    page = 1;
-  }
+function onCat(e: Event) {
+	cat = (e as CustomEvent<string | null>).detail;
+	_view = 'list';
+	visibleCount = PER_PAGE;
+}
 
-  function onArticle(e: Event) {
-    currentId = (e as CustomEvent<string>).detail;
-    view = 'detail';
-  }
+function onArticle(e: Event) {
+	currentId = (e as CustomEvent<string>).detail;
+	_view = 'detail';
+}
 
-  onMount(() => {
-    const { id, cat: urlCat } = getUrlState();
-    if (id) {
-      view = 'detail';
-      currentId = id;
-    }
-    cat = urlCat;
-    fakeGet(null).then(() => { ready = true; });
-    window.addEventListener('popstate', onPop);
-    window.addEventListener('news:cat', onCat);
-    window.addEventListener('news:article', onArticle);
-  });
+onMount(() => {
+	const { id, cat: urlCat } = getUrlState();
+	if (id) {
+		_view = 'detail';
+		currentId = id;
+	}
+	cat = urlCat;
+	fakeGet(null).then(() => {
+		_ready = true;
+	});
+	window.addEventListener('popstate', onPop);
+	window.addEventListener('news:cat', onCat);
+	window.addEventListener('news:article', onArticle);
+});
 
-  onDestroy(() => {
-    window.removeEventListener('popstate', onPop);
-    window.removeEventListener('news:cat', onCat);
-    window.removeEventListener('news:article', onArticle);
-  });
+onDestroy(() => {
+	window.removeEventListener('popstate', onPop);
+	window.removeEventListener('news:cat', onCat);
+	window.removeEventListener('news:article', onArticle);
+});
 </script>
 
 {#if !ready}
@@ -130,11 +133,9 @@
         </article>
       {/each}
     </div>
-    {#if totalPages > 1}
-      <div class="hn-pagination">
-        {#each Array.from({ length: totalPages }, (_, i) => i + 1) as n (n)}
-          <button type="button" class={`hn-page-btn${n === page ? ' hn-page-btn-active' : ''}`} on:click={() => { page = n; }}>{n}</button>
-        {/each}
+    {#if visibleCount < allFiltered.length}
+      <div style="text-align: center; margin-top: 24px;">
+        <button type="button" class="hn-load-more-btn" on:click={() => { visibleCount += PER_PAGE; }}>Load more ({allFiltered.length - visibleCount} remaining)</button>
       </div>
     {/if}
   </div>
@@ -164,7 +165,5 @@
   .hn-feed-headline { font-family: var(--hn-font-display); font-size: 16px; font-weight: 600; color: var(--hn-text); line-height: 1.3; margin-bottom: 6px; }
   .hn-feed-excerpt { font-size: 13px; color: var(--hn-muted); line-height: 1.5; font-family: var(--hn-font-body); margin-bottom: 6px; }
   .hn-feed-meta { font-size: 12px; color: var(--hn-muted); font-family: var(--hn-font-ui); }
-  .hn-pagination { display: flex; gap: 6px; margin-top: 24px; justify-content: center; }
-  .hn-page-btn { padding: 5px 10px; border: 1px solid var(--hn-border); border-radius: var(--hn-radius); background: transparent; color: var(--hn-text); cursor: pointer; font-family: var(--hn-font-ui); font-size: 13px; }
-  .hn-page-btn-active { border-color: var(--hn-accent); background: var(--hn-accent); color: #fff; }
+  .hn-load-more-btn { padding: 8px 20px; border: 1px solid var(--hn-border); border-radius: var(--hn-radius); background: transparent; color: var(--hn-accent); cursor: pointer; font-family: var(--hn-font-ui); font-size: 13px; }
 </style>

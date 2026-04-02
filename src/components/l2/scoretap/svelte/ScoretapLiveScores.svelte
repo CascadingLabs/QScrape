@@ -24,9 +24,9 @@ type View = 'home' | 'match' | 'article' | 'team' | 'event';
 
 const allMatches = [...liveMatches, ...recentResults, ...upcomingMatches];
 
-let _ready = false;
+let ready = false;
 let activeGame: GameOrAll = 'all';
-let _view: View = 'home';
+let view: View = 'home';
 let selectedId: string | null = null;
 let scores = getInitialLiveScores();
 const _gameColors = gameColors;
@@ -58,7 +58,7 @@ function getViewState(): { view: View; id: string | null } {
 	}
 	return { view: 'home', id: null };
 }
-function _goTo(v: Exclude<View, 'home'>, id: string) {
+function goTo(v: Exclude<View, 'home'>, id: string) {
 	const url = new URL(window.location.href);
 	for (const k of ['match', 'article', 'team', 'event']) {
 		url.searchParams.delete(k);
@@ -91,7 +91,7 @@ $: eventData = selectedId
 
 function onPop() {
 	const s = getViewState();
-	_view = s.view;
+	view = s.view;
 	selectedId = s.id;
 	activeGame = getActiveGame();
 }
@@ -99,19 +99,19 @@ function onGame(e: Event) {
 	activeGame = (e as CustomEvent<GameOrAll>).detail;
 }
 function onMatch(e: Event) {
-	_view = 'match';
+	view = 'match';
 	selectedId = (e as CustomEvent<string>).detail;
 }
 function onArticle(e: Event) {
-	_view = 'article';
+	view = 'article';
 	selectedId = (e as CustomEvent<string>).detail;
 }
 function onTeam(e: Event) {
-	_view = 'team';
+	view = 'team';
 	selectedId = (e as CustomEvent<string>).detail;
 }
 function onEvent(e: Event) {
-	_view = 'event';
+	view = 'event';
 	selectedId = (e as CustomEvent<string>).detail;
 }
 
@@ -119,11 +119,11 @@ let ticker: ReturnType<typeof setInterval>;
 
 onMount(() => {
 	const s = getViewState();
-	_view = s.view;
+	view = s.view;
 	selectedId = s.id;
 	activeGame = getActiveGame();
 	fakeGet(null).then(() => {
-		_ready = true;
+		ready = true;
 	});
 	window.addEventListener('popstate', onPop);
 	window.addEventListener('scoretap:game', onGame);

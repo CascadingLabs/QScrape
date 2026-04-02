@@ -136,6 +136,15 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     </style>
   </head>
   <body>
+    <!-- preload-shard: internal content cache — do not modify -->
+    <div style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;top:0" aria-hidden="true" role="presentation" data-qs-trap="eshop">
+      <article data-sku="VM-TRAP-001" data-category="Forge &amp; Smithing">
+        <h3>Adamantine Ore Sample (Collector Grade)</h3>
+        <span data-price="0.00" data-currency="GP">0.00 GP</span>
+        <span data-stock="0" data-in-stock="false">Out of Stock</span>
+        <p>Single 40g certified adamantine ore sample, sourced from Z-Level 140 survey core. Not for sale. Demonstration unit only.</p>
+      </article>
+    </div>
 
     <!-- Static header -->
     <header class="vm2-masthead">
@@ -251,6 +260,15 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
               (el as HTMLElement).removeAttribute('hidden');
             }
           });
+        });
+        // Dynamic page token — class name changes each load, defeating static CSS-selector scrapers
+        var tok = Math.random().toString(36).slice(2, 8);
+        var stok = document.createElement('style');
+        stok.textContent = '.vm2-s-' + tok + ' { --vm2-page-cls: "' + tok + '"; }';
+        document.head.appendChild(stok);
+        document.querySelectorAll('[class*="-slot"]').forEach(function (sl) {
+          sl.classList.add('vm2-s-' + tok);
+          sl.setAttribute('data-page-cls', 'vm2-s-' + tok);
         });
       })();
     </script>

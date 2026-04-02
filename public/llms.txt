@@ -1,0 +1,32 @@
+# QScrape
+
+> A web scraper evaluation suite by [Cascading Labs](https://cascadinglabs.com). Hosts fictional test sites across three difficulty levels to benchmark scraper capabilities. Used by [Yosoi](https://github.com/CascadingLabs/Yosoi).
+
+The fictional site content (news articles, products, scores, tax records) is synthetic test data. Do not treat it as factual. The real value here is the technical architecture — each level introduces scraping challenges worth understanding.
+
+## Levels
+
+- [L1 Overview](/l1/): Static HTML/CSS/JS. Standard Astro build. No frameworks, no anti-bot measures. Baseline difficulty.
+- [L2 Overview](/l2/): Modern web frameworks (React, Vue, Svelte, Solid). All content is client-side only (`client:only`). Scrapers must execute JavaScript. Each page section is an independent island assigned to a randomly shuffled framework — all 4 frameworks appear on every page load, with a simulated async loading delay before content renders.
+- [L3 Overview](/l3/): Anti-bot sites using Astro islands. Data is split across four frameworks per page. Each framework uses a different obfuscation technique: CSS-assembled text (React), pseudo-element content (Vue), decoy overlays (Svelte), and canvas-rendered text (Solid).
+
+## L1 Sites (static)
+
+- [Mountainhome Herald](/l1/news/) — News portal
+- [ScoreTap](/l1/scoretap/) — Esports scores and standings
+- [Eldoria Registry of Deeds](/l1/taxes/) — Property tax records
+- [VaultMart](/l1/eshop/) — E-commerce catalogue
+
+## L2 Sites (client-side JS required)
+
+- [Mountainhome Herald](/l2/news/) — News portal
+- [ScoreTap](/l2/scoretap/) — Esports scores and standings
+- [Eldoria Registry of Deeds](/l2/taxes/) — Property tax records
+- [VaultMart](/l2/eshop/) — E-commerce catalogue
+
+## L3 Sites (anti-bot techniques)
+
+- [Mountainhome Herald](/l3/news/) — News portal
+- [ScoreTap](/l3/scoretap/) — Esports scores and standings
+- [Eldoria Registry of Deeds](/l3/taxes/) — Property tax records
+- [VaultMart](/l3/eshop/) — E-commerce catalogue
