@@ -106,6 +106,17 @@ L3 uses Astro Islands architecture. Each page composes four independent `client:
 | Svelte | Decoy overlay — real value at z-index 1, visually-identical fake value at z-index 2 with `color: transparent; position: absolute` | Must resolve z-index stacking to identify the real value |
 | Solid | Canvas-rendered text — numbers and IDs drawn via `ctx.fillText()` to `<canvas>`; nothing in DOM | Must render canvas and OCR or use accessibility label (`aria-label`) |
 
+### L3 page-level defenses
+
+Every L3 page includes `L3Guard.astro` (`src/components/l3/L3Guard.astro`), which adds three page-level anti-bot measures:
+
+| Defence | Mechanism | How to defeat |
+|---------|-----------|---------------|
+| DevTools detection → 404 | Intercepts F12, Ctrl+Shift+I/J/C, Cmd+Opt+I/J/C keyboard shortcuts and replaces the entire document with a static 404 page. Also monitors `outerWidth − innerWidth` delta (polled every 500 ms + resize listener) to detect docked DevTools. | Disable JavaScript keyboard event listeners, or use a headless browser that doesn't trigger key events. For docked detection, use undocked DevTools or set matching outer/inner dimensions. |
+| Right-click disabled | `contextmenu` event is `preventDefault()`-ed, blocking the "Inspect Element" menu item. | Override the listener via `removeEventListener` or inject before the guard script runs. |
+| Honeypot buttons | A fixed `<div>` with `opacity: 0.001` contains four fake interactive elements (`Submit`, `Load All`, `Export`, `Reset`) with realistic class names and `data-action` attributes. Invisible to users, visible in the DOM to scrapers. | Filter elements by computed opacity or skip elements inside `aria-hidden="true"` containers. |
+| No source comments | All L3 component source files are stripped of `//`, `/* */`, and `<!-- -->` comments — no hints about anti-bot technique or implementation details. | N/A (code analysis required to understand obfuscation). |
+
 ### L3 async loading gates (`fakeGetMs`)
 
 Every L3 island calls `fakeGetMs(data, baseMs, jitterMs)` from `src/data/api.ts` on mount. Delays are staggered so all four islands finish at different times (worst case ~1050ms total):

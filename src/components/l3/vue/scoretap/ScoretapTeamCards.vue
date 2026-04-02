@@ -1,8 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / scoretap — team card grid
-// Anti-bot: game badge rendered via CSS ::before pseudo-element content
-// element.textContent on .st3-card-game returns empty string;
-// requires getComputedStyle(el,'::before').content to read the game label.
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -20,7 +16,7 @@ onMounted(() => {
 	});
 });
 
-function _gameLabel(game: Game): string {
+function gameLabel(game: Game): string {
 	return gameLabels[game];
 }
 </script>
@@ -38,7 +34,6 @@ function _gameLabel(game: Game): string {
       >
         <div class="st3-card-top">
           <span class="st3-card-abbr">{{ team.abbr }}</span>
-          <!-- Anti-bot: game label via pseudo-element, textContent empty -->
           <span class="st3-card-game" :data-game-label="gameLabel(team.game as Game)"></span>
         </div>
         <div class="st3-card-name">{{ team.name }}</div>
@@ -102,7 +97,6 @@ function _gameLabel(game: Game): string {
 .st3-team-card[data-game="dota2"] .st3-card-abbr { color: var(--st3-dota2); }
 .st3-team-card[data-game="rl"] .st3-card-abbr { color: var(--st3-rl); }
 
-/* Anti-bot: game label text via ::before pseudo-element */
 .st3-card-game {
 	display: inline-block;
 	font-family: var(--st3-font-ui);

@@ -1,4 +1,3 @@
-/* TaxesSearchForm — L3 React island */
 .loading {
 	display: flex;
 	align-items: center;
@@ -90,7 +89,6 @@
 	background: var(--er3-primary-hover);
 }
 
-/* Anti-bot: CSS-assembled text */
 .assembled {
 	display: inline-flex;
 	flex-wrap: wrap;

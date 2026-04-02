@@ -1,7 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / taxes — search results table
-// Anti-bot: status badge via CSS ::before pseudo-element — content: attr(data-status)
-// element.textContent on .er3-status returns empty string; requires getComputedStyle(el,'::before').content
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import { type DeedRecord, deeds } from '../../../../data/taxes/deeds';
@@ -59,7 +56,6 @@ onMounted(() => {
               </td>
               <td class="er3-td er3-td-mono">{{ deed.amount }}</td>
               <td class="er3-td">
-                <!-- Anti-bot: status text lives in CSS ::before, textContent is empty -->
                 <span
                   class="er3-status"
                   :data-status="deed.status"
@@ -159,7 +155,6 @@ onMounted(() => {
 	text-align: right;
 }
 
-/* Anti-bot: status text via pseudo-element, not textContent */
 .er3-status {
 	display: inline-block;
 	font-size: 11px;

@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / eshop — featured + promoted products banner (catalog page)
-// Anti-bot: product SKUs and rating scores drawn to <canvas> — not present in DOM text at all
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import {

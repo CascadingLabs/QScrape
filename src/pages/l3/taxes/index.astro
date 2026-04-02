@@ -4,6 +4,7 @@ import TaxesSidebar from '../../../components/l3/solid/taxes/TaxesSidebar';
 import TaxesPagination from '../../../components/l3/svelte/taxes/TaxesPagination.svelte';
 import TaxesResults from '../../../components/l3/vue/taxes/TaxesResults.vue';
 import '../../../styles/l3/taxes.css';
+import L3Guard from '../../../components/l3/L3Guard.astro';
 import ThemeInit from '../../../components/ThemeInit.astro';
 import ThemeToggle from '../../../components/ThemeToggle.astro';
 ---
@@ -54,6 +55,7 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
       </div>
     </footer>
     <ThemeToggle />
+    <L3Guard />
   </body>
 </html>
 

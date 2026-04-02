@@ -1,6 +1,3 @@
-// @qscrape L3 / react island / scoretap — game filter tabs
-// Anti-bot: CSS-assembled text — game names rendered in shuffled DOM order,
-// CSS flex order restores visual sequence. textContent returns words scrambled.
 import { useEffect, useState } from 'react';
 import { fakeGetMs } from '../../../../data/api';
 import type { Game } from '../../../../data/scoretap/data';

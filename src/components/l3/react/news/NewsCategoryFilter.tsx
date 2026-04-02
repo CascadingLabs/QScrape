@@ -1,5 +1,3 @@
-// @qscrape L3 / react island / news — category filter tabs (articles page)
-// Anti-bot: CSS-assembled text on category labels
 import { useEffect, useState } from 'react';
 import { fakeGetMs } from '../../../../data/api';
 import { categories } from '../../../../data/news/articles';

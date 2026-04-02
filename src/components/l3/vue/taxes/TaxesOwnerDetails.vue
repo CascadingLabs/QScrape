@@ -1,7 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / taxes — owner details panel (viewer page)
-// Anti-bot: owner name rendered via CSS ::before pseudo-element — content: attr(data-owner)
-// element.textContent on .er3-owner-name returns empty string
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -36,7 +33,6 @@ onMounted(() => {
         <div class="er3-owner-row">
           <dt class="er3-owner-dt">Last Name / Firm</dt>
           <dd class="er3-owner-dd">
-            <!-- Anti-bot: owner name via pseudo-element, not textContent -->
             <span class="er3-owner-name" :data-owner="deed.lastFirm"></span>
           </dd>
         </div>
@@ -134,7 +130,6 @@ onMounted(() => {
 	font-size: 13px;
 }
 
-/* Anti-bot: owner name via pseudo-element, not textContent */
 .er3-owner-name {
 	display: inline;
 	font-family: var(--er3-font);

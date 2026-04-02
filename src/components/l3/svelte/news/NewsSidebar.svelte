@@ -1,14 +1,11 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / news — category sidebar (home page)
-// Anti-bot: decoy overlay — real article count at z-index 1, fake count at z-index 2
-// (color: transparent, pointer-events: none). DOM has both; scraper must resolve z-index.
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import { categories, getByCategory } from '../../../../data/news/articles';
 
 type CatData = { name: string; count: number; fakeCount: number };
 
-let _catData: CatData[] | null = null;
+let catData: CatData[] | null = null;
 
 onMount(() => {
 	const data: CatData[] = categories.map((cat) => ({
@@ -17,7 +14,7 @@ onMount(() => {
 		fakeCount: getByCategory(cat).length + Math.floor(cat.length % 5) + 3,
 	}));
 	fakeGetMs(data, 800, 250).then((d) => {
-		_catData = d;
+		catData = d;
 	});
 });
 </script>
@@ -34,7 +31,6 @@ onMount(() => {
             <a href="/l3/news/articles/?cat={encodeURIComponent(cat.name)}" class="hn3-cat-link">
               {cat.name}
             </a>
-            <!-- Anti-bot decoy: real count below, fake count overlaid -->
             <span class="hn3-count-wrap">
               <span class="hn3-count-real">{cat.count}</span>
               <span class="hn3-count-decoy" aria-hidden="true">{cat.fakeCount}</span>
@@ -109,7 +105,6 @@ onMount(() => {
     color: var(--hn3-accent);
   }
 
-  /* Anti-bot: decoy overlay on article count */
   .hn3-count-wrap {
     position: relative;
     display: inline-block;

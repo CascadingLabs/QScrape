@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / scoretap — top performers / stats panel
-// Anti-bot: stats values drawn via ctx.fillText() to canvas — not in DOM text
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import '../../../../styles/l3/scoretap.css';

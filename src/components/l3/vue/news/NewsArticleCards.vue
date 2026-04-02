@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / news — article card grid (articles page)
-// Anti-bot: category badge via CSS ::before pseudo-element
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -38,7 +36,6 @@ onMounted(() => {
             <img :src="a.image" :alt="a.headline" class="hn3-card-img" loading="lazy" />
           </a>
           <div class="hn3-card-body">
-            <!-- Anti-bot: category via pseudo-element -->
             <span class="hn3-cat" :data-cat="a.category"></span>
             <h3 class="hn3-card-headline">
               <a :href="`/l3/news/article/${a.id}/`">{{ a.headline }}</a>

@@ -1,5 +1,3 @@
-// @qscrape L3 / react island / news — article headline + byline + date
-// Anti-bot: CSS-assembled text on headline and author name
 import { useEffect, useState } from 'react';
 import { fakeGetMs } from '../../../../data/api';
 import {

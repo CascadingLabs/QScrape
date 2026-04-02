@@ -1,14 +1,11 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / scoretap — live match scores ticker
-// Anti-bot: decoy overlay — real score at z-index 1, fake score at z-index 2
-// (color: transparent, pointer-events: none). DOM has both; scraper must resolve z-index.
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import { liveMatches, type Match } from '../../../../data/scoretap/data';
 
 type TickerRow = Match & { fakeScoreA: number; fakeScoreB: number };
 
-let _rows: TickerRow[] | null = null;
+let rows: TickerRow[] | null = null;
 
 onMount(() => {
 	const data: TickerRow[] = liveMatches.map((m) => ({
@@ -17,7 +14,7 @@ onMount(() => {
 		fakeScoreB: m.scoreB + Math.floor((m.id.length % 3) + 1),
 	}));
 	fakeGetMs(data, 800, 250).then((d) => {
-		_rows = d;
+		rows = d;
 	});
 });
 </script>
@@ -36,7 +33,6 @@ onMount(() => {
           <div class="st3-ticker-event">{row.event}</div>
           <div class="st3-ticker-matchup">
             <span class="st3-ticker-team">{row.teamA}</span>
-            <!-- Anti-bot decoy: real score below, fake score overlaid -->
             <span class="st3-score-wrap">
               <span class="st3-score-real">{row.scoreA}</span>
               <span class="st3-score-decoy" aria-hidden="true">{row.fakeScoreA}</span>
@@ -158,7 +154,6 @@ onMount(() => {
     color: var(--st3-muted);
   }
 
-  /* Anti-bot: decoy overlay on scores */
   .st3-score-wrap {
     position: relative;
     display: inline-block;

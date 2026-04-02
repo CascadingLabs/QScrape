@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / eshop — product rating + related products (product detail page)
-// Anti-bot: rating value and review count drawn to <canvas> — not present in DOM text at all
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -23,16 +21,13 @@ function RatingCanvas(props: { rating: number; count: number }) {
 		const h = canvas.height;
 		ctx.clearRect(0, 0, w, h);
 
-		// Draw star bar background
 		ctx.fillStyle = '#2a2a2a';
 		ctx.fillRect(0, 0, w, h);
 
-		// Draw filled stars proportional to rating
 		const starFill = (props.rating / 5) * w;
 		ctx.fillStyle = 'oklch(58% 0.22 25)';
 		ctx.fillRect(0, 0, starFill, h);
 
-		// Draw rating text over bar
 		ctx.font = 'bold 13px "DM Sans", system-ui, sans-serif';
 		ctx.fillStyle = '#fff';
 		ctx.textBaseline = 'middle';

@@ -1,8 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / scoretap — events list filtered by ?game= URL param
-// Anti-bot: game badge and status badge rendered via CSS ::before pseudo-element content
-// element.textContent on .st3-game-badge / .st3-status-badge returns empty string;
-// requires getComputedStyle(el,'::before').content to read the real value.
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -43,7 +39,7 @@ onMounted(() => {
 	});
 });
 
-function _filtered() {
+function filtered() {
 	if (!rows.value) {
 		return [];
 	}
@@ -53,7 +49,7 @@ function _filtered() {
 	return rows.value.filter((r) => r.game === activeGame.value);
 }
 
-function _gameLabel(game: Game): string {
+function gameLabel(game: Game): string {
 	return gameLabels[game];
 }
 </script>
@@ -72,9 +68,7 @@ function _gameLabel(game: Game): string {
         :data-status="row.status"
       >
         <div class="st3-event-header">
-          <!-- Anti-bot: game label via pseudo-element, textContent empty -->
           <span class="st3-game-badge" :data-game-label="gameLabel(row.game as Game)"></span>
-          <!-- Anti-bot: status via pseudo-element on data-status -->
           <span class="st3-status-badge" :data-status="row.status"></span>
           <span v-if="row.time" class="st3-event-time">{{ row.time }}</span>
         </div>
@@ -135,7 +129,6 @@ function _gameLabel(game: Game): string {
 	gap: 8px;
 }
 
-/* Anti-bot: game badge text via ::before pseudo-element */
 .st3-game-badge {
 	display: inline-block;
 	font-family: var(--st3-font-ui);
@@ -157,7 +150,6 @@ function _gameLabel(game: Game): string {
 .st3-event-row[data-game="dota2"] .st3-game-badge { color: var(--st3-dota2); }
 .st3-event-row[data-game="rl"] .st3-game-badge { color: var(--st3-rl); }
 
-/* Anti-bot: status badge text via ::before pseudo-element */
 .st3-status-badge {
 	display: inline-block;
 	font-family: var(--st3-font-ui);

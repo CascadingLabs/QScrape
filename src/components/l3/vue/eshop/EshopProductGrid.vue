@@ -1,7 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / eshop — product card grid (catalog page)
-// Anti-bot: category badge rendered via CSS ::before pseudo-element content
-// element.textContent on .vm3-cat returns empty string; requires getComputedStyle(el,'::before').content
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -42,7 +39,6 @@ onMounted(() => {
           </div>
         </div>
         <div class="vm3-card-body">
-          <!-- Anti-bot: category text lives in CSS ::before, textContent is empty -->
           <span class="vm3-cat" :data-cat="p.category"></span>
           <span class="vm3-card-name">{{ p.name }}</span>
           <span class="vm3-card-stock" :data-instock="p.inStock">
@@ -134,7 +130,6 @@ onMounted(() => {
 	padding: 12px;
 }
 
-/* Anti-bot: category text via pseudo-element, not textContent */
 .vm3-cat {
 	display: inline-block;
 	font-family: var(--vm3-font);

@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / news — author bio + related articles (article page)
-// Anti-bot: author email drawn to <canvas> — not in DOM text
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import {

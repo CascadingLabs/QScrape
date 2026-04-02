@@ -1,6 +1,4 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / news — pagination controls (articles page)
-// Anti-bot: decoy overlay on page numbers
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -10,24 +8,24 @@ import {
 
 const PAGE_SIZE = 6;
 
-let _pages: number[] = [];
-let _currentPage = 1;
-let _ready = false;
+let pages: number[] = [];
+let currentPage = 1;
+let ready = false;
 
 onMount(() => {
 	const params = new URLSearchParams(window.location.search);
 	const cat = params.get('cat');
-	_currentPage = Number(params.get('page') ?? 1);
+	currentPage = Number(params.get('page') ?? 1);
 	const total = cat ? getByCategory(cat).length : allArticles.length;
 	const pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
 	const data = Array.from({ length: pageCount }, (_, i) => i + 1);
 	fakeGetMs(data, 800, 250).then((d) => {
-		_pages = d;
-		_ready = true;
+		pages = d;
+		ready = true;
 	});
 });
 
-function _pageHref(p: number): string {
+function pageHref(p: number): string {
 	const params = new URLSearchParams(window.location.search);
 	params.set('page', String(p));
 	return `/l3/news/articles/?${params.toString()}`;
@@ -44,7 +42,6 @@ function _pageHref(p: number): string {
           href={pageHref(p)}
           class="hn3-page-btn {p === currentPage ? 'hn3-page-active' : ''}"
         >
-          <!-- Anti-bot: decoy overlay on page number -->
           <span class="hn3-num-wrap">
             <span class="hn3-num-real">{p}</span>
             <span class="hn3-num-decoy">{p + 10}</span>
@@ -97,7 +94,6 @@ function _pageHref(p: number): string {
     color: #fff;
   }
 
-  /* Anti-bot: decoy overlay on page number */
   .hn3-num-wrap {
     position: relative;
     display: inline-block;

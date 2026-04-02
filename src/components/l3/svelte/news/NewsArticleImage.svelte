@@ -1,6 +1,4 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / news — article image + caption + credit (article page)
-// Anti-bot: decoy overlay on image credit text
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -10,13 +8,13 @@ import {
 
 export let articleId: string;
 
-let _article: ArticleMeta | null = null;
+let article: ArticleMeta | null = null;
 
 onMount(() => {
 	const found = getArticleById(articleId);
 	if (found) {
 		fakeGetMs(found, 800, 250).then((d) => {
-			_article = d;
+			article = d;
 		});
 	}
 });
@@ -34,7 +32,6 @@ onMount(() => {
       />
       <figcaption class="hn3-figcaption">
         <span class="hn3-caption-text">{article.imageCaption}</span>
-        <!-- Anti-bot: decoy overlay on credit text -->
         <span class="hn3-credit-wrap">
           <span class="hn3-credit-real">{article.imageCredit}</span>
           <span class="hn3-credit-decoy" aria-hidden="true">Image courtesy of unknown archive</span>
@@ -84,7 +81,6 @@ onMount(() => {
     font-style: italic;
   }
 
-  /* Anti-bot: real credit vs decoy */
   .hn3-credit-wrap {
     position: relative;
     display: inline-block;

@@ -1,6 +1,3 @@
-// @qscrape L3 / react island / news — breaking ticker + top 3 headlines
-// Anti-bot: CSS-assembled text — words rendered in shuffled DOM order, CSS order restores
-// visual sequence. element.textContent returns words scrambled with no spaces.
 import { useEffect, useState } from 'react';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -17,12 +14,10 @@ function seedHash(s: string): number {
 	);
 }
 
-/** Renders text with words in shuffled DOM order but correct CSS flex order. */
 function AssembledText({ text }: { text: string }) {
 	const words = text.split(' ');
 	const seed = seedHash(text);
 	const indexed = words.map((word, i) => ({ word, i }));
-	// Deterministic DOM-order shuffle seeded by text
 	const shuffled = [...indexed].sort(
 		(a, b) =>
 			((seed * (a.i + 3)) % (words.length + 1)) -

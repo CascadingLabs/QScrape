@@ -1,6 +1,3 @@
-// @qscrape L3 / react island / eshop — product image + badges (product detail page)
-// Anti-bot: CSS-assembled text — product name words in shuffled DOM order, CSS flex order restores.
-// element.textContent on .assembled returns words scrambled; scrapers must read CSS order properties.
 import { useEffect, useState } from 'react';
 import { fakeGetMs } from '../../../../data/api';
 import type { ProductMeta } from '../../../../data/eshop/products';
@@ -13,7 +10,6 @@ function seedHash(s: string): number {
 	);
 }
 
-/** Renders text with words in shuffled DOM order but correct CSS flex order. */
 function AssembledText({ text }: { text: string }) {
 	const words = text.split(' ');
 	const seed = seedHash(text);

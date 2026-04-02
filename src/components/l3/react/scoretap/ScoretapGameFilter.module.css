@@ -1,4 +1,3 @@
-/* ScoretapGameFilter — L3 React island */
 .loading {
 	display: flex;
 	align-items: center;
@@ -45,7 +44,6 @@
 	color: var(--st3-live);
 }
 
-/* Anti-bot: CSS-assembled text */
 .assembled {
 	display: inline-flex;
 	flex-wrap: wrap;

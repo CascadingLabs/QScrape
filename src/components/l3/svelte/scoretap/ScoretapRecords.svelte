@@ -1,7 +1,4 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / scoretap — team win/loss records derived from match data
-// Anti-bot: decoy overlay — real W-L record at z-index 1, fake W-L record at z-index 2
-// (color: transparent, pointer-events: none). DOM has both; scraper must resolve z-index.
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -22,7 +19,7 @@ type RecordRow = {
 	fakeLosses: number;
 };
 
-let _records: RecordRow[] | null = null;
+let records: RecordRow[] | null = null;
 
 onMount(() => {
 	const allMatches = [...liveMatches, ...recentResults];
@@ -55,7 +52,7 @@ onMount(() => {
 	});
 
 	fakeGetMs(data, 800, 250).then((d) => {
-		_records = d;
+		records = d;
 	});
 });
 </script>
@@ -71,7 +68,6 @@ onMount(() => {
           <li class="st3-rec-item" data-team-id={row.teamId} data-game={row.game}>
             <span class="st3-rec-abbr">{row.abbr}</span>
             <span class="st3-rec-name">{row.name}</span>
-            <!-- Anti-bot decoy: real record below, fake record overlaid -->
             <span class="st3-rec-wrap">
               <span class="st3-rec-real">{row.wins}–{row.losses}</span>
               <span class="st3-rec-decoy" aria-hidden="true">{row.fakeWins}–{row.fakeLosses}</span>
@@ -159,7 +155,6 @@ onMount(() => {
     white-space: nowrap;
   }
 
-  /* Anti-bot: decoy overlay on W-L record */
   .st3-rec-wrap {
     position: relative;
     display: inline-block;

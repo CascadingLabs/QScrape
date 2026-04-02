@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / news — staff spotlight panel (home page)
-// Anti-bot: email addresses drawn to <canvas> — not present in DOM text at all
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import { reporters } from '../../../../data/news/articles';

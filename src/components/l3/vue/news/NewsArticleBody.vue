@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / news — article body text (article page)
-// Anti-bot: publication date rendered via CSS ::before on a data attribute span
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -21,8 +19,7 @@ onMounted(() => {
 	}
 });
 
-// Generate deterministic body paragraphs from excerpt + article data
-function _bodyParagraphs(a: ArticleMeta): string[] {
+function bodyParagraphs(a: ArticleMeta): string[] {
 	return [
 		a.excerpt,
 		`The ${a.category.toLowerCase()} desk at the Mountainhome Herald has been following this story closely. Sources close to the situation confirmed the details on ${a.published.slice(0, 10)}.`,
@@ -35,7 +32,6 @@ function _bodyParagraphs(a: ArticleMeta): string[] {
   <div>
     <div v-if="!article" class="hn3-body-loading">Loading…</div>
     <div v-else class="hn3-article-body" :data-article-id="article.id">
-      <!-- Anti-bot: date text rendered via ::before pseudo-element -->
       <p class="hn3-dateline">
         Published <span class="hn3-pub-date" :data-date="article.published.slice(0,10)"></span>
         <template v-if="article.updated">
@@ -79,7 +75,6 @@ function _bodyParagraphs(a: ArticleMeta): string[] {
 	margin: 0;
 }
 
-/* Anti-bot: date text lives in ::before, textContent is empty */
 .hn3-pub-date {
 	font-weight: 600;
 	color: var(--hn3-text);

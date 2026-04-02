@@ -1,7 +1,4 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / taxes — pagination controls
-// Anti-bot: decoy overlay — real page numbers at z-index 1, fake numbers at z-index 2
-// (color: transparent, pointer-events: none). DOM has both; scraper must resolve z-index.
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import { deeds } from '../../../../data/taxes/deeds';
@@ -10,12 +7,12 @@ const PAGE_SIZE = 5;
 
 type PageItem = { page: number; fakePage: number; label: string };
 
-let _pages: PageItem[] | null = null;
-let _currentPage = 1;
+let pages: PageItem[] | null = null;
+let currentPage = 1;
 
 onMount(() => {
 	const params = new URLSearchParams(window.location.search);
-	_currentPage = parseInt(params.get('page') || '1', 10) || 1;
+	currentPage = parseInt(params.get('page') || '1', 10) || 1;
 	const total = deeds.length;
 	const numPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 	const items: PageItem[] = Array.from({ length: numPages }, (_, i) => ({
@@ -24,7 +21,7 @@ onMount(() => {
 		label: String(i + 1),
 	}));
 	fakeGetMs(items, 800, 250).then((d) => {
-		_pages = d;
+		pages = d;
 	});
 });
 </script>
@@ -47,7 +44,6 @@ onMount(() => {
             class="er3-page-num"
             class:er3-page-active={item.page === currentPage}
           >
-            <!-- Anti-bot decoy: real page below, fake page overlaid -->
             <span class="er3-pagenum-real">{item.page}</span>
             <span class="er3-pagenum-decoy">{item.fakePage}</span>
           </a>
@@ -135,7 +131,6 @@ onMount(() => {
     font-weight: 600;
   }
 
-  /* Anti-bot: decoy overlay on page numbers */
   .er3-pagenum-real {
     position: relative;
     z-index: 1;

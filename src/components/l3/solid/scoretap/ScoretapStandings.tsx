@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / scoretap — ranked standings table
-// Anti-bot: rank numbers and point totals drawn via ctx.fillText() to canvas — not in DOM text
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import { cs2Rankings } from '../../../../data/scoretap/data';

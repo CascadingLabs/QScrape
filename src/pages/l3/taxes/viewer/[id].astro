@@ -5,6 +5,7 @@ import TaxesPdfLink from '../../../../components/l3/svelte/taxes/TaxesPdfLink.sv
 import TaxesOwnerDetails from '../../../../components/l3/vue/taxes/TaxesOwnerDetails.vue';
 import { type DeedRecord, deeds } from '../../../../data/taxes/deeds';
 import '../../../../styles/l3/taxes.css';
+import L3Guard from '../../../../components/l3/L3Guard.astro';
 import ThemeInit from '../../../../components/ThemeInit.astro';
 import ThemeToggle from '../../../../components/ThemeToggle.astro';
 
@@ -66,6 +67,7 @@ const { deed } = Astro.props;
       </div>
     </footer>
     <ThemeToggle />
+    <L3Guard />
   </body>
 </html>
 

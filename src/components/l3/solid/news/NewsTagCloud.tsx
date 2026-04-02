@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / news — tag cloud (articles page)
-// Anti-bot: tag labels drawn to individual <canvas> elements — not in DOM text
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import { articles } from '../../../../data/news/articles';

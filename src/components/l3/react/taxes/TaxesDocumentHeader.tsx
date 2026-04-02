@@ -1,6 +1,3 @@
-// @qscrape L3 / react island / taxes — document header (viewer page)
-// Anti-bot: CSS-assembled text — document type label words in shuffled DOM order,
-// CSS flex `order` restores visual sequence. textContent returns scrambled words.
 import { useEffect, useState } from 'react';
 import { fakeGetMs } from '../../../../data/api';
 import { type DeedRecord, indexLabels } from '../../../../data/taxes/deeds';

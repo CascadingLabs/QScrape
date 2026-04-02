@@ -1,7 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / news — article feed (home page)
-// Anti-bot: category badge rendered via CSS ::before pseudo-element content
-// element.textContent on .hn3-cat returns empty string; requires getComputedStyle(el,'::before').content
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import { type ArticleMeta, getLatest } from '../../../../data/news/articles';
@@ -29,7 +26,6 @@ onMounted(() => {
           <img :src="a.image" :alt="a.headline" class="hn3-feed-img" loading="lazy" />
         </a>
         <div class="hn3-feed-body">
-          <!-- Anti-bot: category text lives in CSS ::before, textContent is empty -->
           <span class="hn3-cat" :data-cat="a.category"></span>
           <h2 class="hn3-feed-headline">
             <a :href="`/l3/news/article/${a.id}/`">{{ a.headline }}</a>
@@ -90,7 +86,6 @@ onMounted(() => {
 	gap: 6px;
 }
 
-/* Anti-bot: category text via pseudo-element, not textContent */
 .hn3-cat {
 	display: inline-block;
 	font-family: var(--hn3-font-body);

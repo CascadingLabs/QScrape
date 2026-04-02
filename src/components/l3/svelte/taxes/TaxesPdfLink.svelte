@@ -1,25 +1,23 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / taxes — PDF download link + doc type badge
-// Anti-bot: decoy overlay — real PDF URL at z-index 1, fake URL at z-index 2
-// (color: transparent, pointer-events: none). Scraper must resolve z-index.
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import {
 	type DeedRecord,
 	getDeedByFileNum,
+	indexLabels,
 } from '../../../../data/taxes/deeds';
 
 export let fileNum: string;
 
 type PdfData = { deed: DeedRecord; realUrl: string; fakeUrl: string };
 
-let _pdfData: PdfData | null = null;
-let _notFound = false;
+let pdfData: PdfData | null = null;
+let notFound = false;
 
 onMount(() => {
 	const found = getDeedByFileNum(fileNum);
 	if (!found) {
-		_notFound = true;
+		notFound = true;
 		return;
 	}
 	const data: PdfData = {
@@ -28,7 +26,7 @@ onMount(() => {
 		fakeUrl: `/documents/ref-${found.index.toLowerCase()}-${found.fileNum.replace('-', '')}.pdf`,
 	};
 	fakeGetMs(data, 800, 250).then((d) => {
-		_pdfData = d;
+		pdfData = d;
 	});
 });
 </script>
@@ -49,7 +47,6 @@ onMount(() => {
           <a href={pdfData.realUrl} class="er3-pdf-anchor er3-url-real" download>
             {pdfData.realUrl}
           </a>
-          <!-- Anti-bot decoy: fake URL overlaid, color transparent -->
           <span class="er3-url-decoy" aria-hidden="true">{pdfData.fakeUrl}</span>
         </div>
       </div>
@@ -123,7 +120,6 @@ onMount(() => {
     letter-spacing: 0.06em;
   }
 
-  /* Anti-bot: decoy overlay on URL */
   .er3-url-container {
     position: relative;
     display: block;

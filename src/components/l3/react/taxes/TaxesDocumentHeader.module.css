@@ -1,4 +1,3 @@
-/* TaxesDocumentHeader — L3 React island */
 .loading {
 	display: flex;
 	align-items: center;
@@ -93,7 +92,6 @@
 	color: var(--er3-text);
 }
 
-/* Anti-bot: CSS-assembled text */
 .assembled {
 	display: inline-flex;
 	flex-wrap: wrap;

@@ -5,6 +5,7 @@ import EshopProductDetails from '../../../../components/l3/svelte/eshop/EshopPro
 import EshopProductName from '../../../../components/l3/vue/eshop/EshopProductName.vue';
 import { type ProductMeta, products } from '../../../../data/eshop/products';
 import '../../../../styles/l3/eshop.css';
+import L3Guard from '../../../../components/l3/L3Guard.astro';
 import ThemeInit from '../../../../components/ThemeInit.astro';
 import ThemeToggle from '../../../../components/ThemeToggle.astro';
 
@@ -71,6 +72,7 @@ const { product } = Astro.props;
       </div>
     </footer>
     <ThemeToggle />
+    <L3Guard />
   </body>
 </html>
 

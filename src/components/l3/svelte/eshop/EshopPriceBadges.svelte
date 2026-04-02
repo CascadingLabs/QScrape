@@ -1,8 +1,4 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / eshop — price badge list (catalog page)
-// Anti-bot: decoy overlay — real price at z-index 1, fake price at z-index 2
-// (color: transparent, pointer-events: none). DOM has both; scraper must resolve z-index.
-// Join with Vue product grid by data-sku attribute.
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -21,10 +17,9 @@ type PriceItem = {
 	onSale: boolean;
 };
 
-let _items: PriceItem[] | null = null;
+let items: PriceItem[] | null = null;
 
 onMount(() => {
-	// Read ?cat= param to match Vue product grid
 	const params = new URLSearchParams(window.location.search);
 	const cat = params.get('cat');
 	const filtered: ProductMeta[] = cat ? getByCategory(cat) : products;
@@ -37,7 +32,7 @@ onMount(() => {
 		onSale: p.salePrice !== undefined,
 	}));
 	fakeGetMs(data, 800, 250).then((d) => {
-		_items = d;
+		items = d;
 	});
 });
 </script>
@@ -51,7 +46,6 @@ onMount(() => {
       {#each items as item}
         <div class="vm3-pb-row" data-sku={item.sku}>
           <span class="vm3-pb-name">{item.name}</span>
-          <!-- Anti-bot decoy: real price below, fake price overlaid -->
           <span class="vm3-price-wrap">
             <span class="vm3-price-real" class:vm3-price-sale={item.onSale}>{item.realPrice}</span>
             <span class="vm3-price-decoy" aria-hidden="true">{item.fakePrice}</span>
@@ -120,7 +114,6 @@ onMount(() => {
     text-overflow: ellipsis;
   }
 
-  /* Anti-bot: decoy overlay on price */
   .vm3-price-wrap {
     position: relative;
     display: inline-block;

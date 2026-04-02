@@ -76,7 +76,7 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 					"name": "What anti-bot techniques does QScrape L3 use?",
 					"acceptedAnswer": {
 						"@type": "Answer",
-						"text": "L3 uses four distinct techniques across its four framework islands: React splits text into span elements with shuffled DOM order, using CSS flex order to restore visual order (textContent returns scrambled text). Vue renders key data via CSS pseudo-element attr() (textContent returns empty string). Svelte places the real value at z-index 1 and a visually identical fake value with transparent color at z-index 2 (the DOM contains both). Solid draws numbers and IDs to an HTML canvas via ctx.fillText() — nothing appears in the DOM, but an aria-label provides an accessible alternative."
+						"text": "L3 uses four per-framework obfuscation techniques plus three page-level defenses. Per-framework: React splits text into CSS flex-ordered spans (scrambled textContent), Vue renders data via CSS pseudo-element attr() (empty textContent), Svelte overlays a transparent decoy at higher z-index (DOM has both real and fake values), Solid draws text to canvas (nothing in DOM). Page-level: DevTools detection replaces the page with a 404 on keyboard shortcuts (F12, Ctrl+Shift+I/J/C) and docked DevTools window size changes; right-click context menu is disabled; and honeypot buttons with opacity 0.001 are present in the DOM as scraper traps. All source code comments are stripped."
 					}
 				},
 				{
@@ -84,7 +84,7 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 					"name": "Does QScrape L3 use CAPTCHAs?",
 					"acceptedAnswer": {
 						"@type": "Answer",
-						"text": "No. QScrape Level 3 uses no CAPTCHAs, browser fingerprinting, or rate limiting. All challenges are purely DOM and rendering-based obfuscation techniques that a sufficiently capable scraper can defeat programmatically."
+						"text": "No. QScrape Level 3 uses no CAPTCHAs, browser fingerprinting, or rate limiting. All challenges are DOM/rendering-based obfuscation techniques and DevTools detection that a sufficiently capable scraper can defeat programmatically."
 					}
 				},
 				{
@@ -117,6 +117,7 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 
 	<section>
 		<h2>Anti-Bot Techniques</h2>
+		<h3>Per-Framework Obfuscation</h3>
 		<ul class="nav-links">
 			<li>
 				<span class="nav-path">React</span>
@@ -133,6 +134,22 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 			<li>
 				<span class="nav-path">Solid</span>
 				<span class="nav-name">Canvas-rendered text — numbers and IDs drawn via <code>ctx.fillText()</code>; not present in the DOM at all</span>
+			</li>
+		</ul>
+
+		<h3>Page-Level Defenses</h3>
+		<ul class="nav-links">
+			<li>
+				<span class="nav-path">DevTools Detection</span>
+				<span class="nav-name">Opening browser DevTools triggers a 404 page takeover — the entire document is replaced with a static "404 Not Found" response. Detection runs on an 800 ms polling interval.</span>
+			</li>
+			<li>
+				<span class="nav-path">Honeypot Buttons</span>
+				<span class="nav-name">Hidden interactive elements (<code>opacity: 0.001</code>) with realistic class names and actions. Visible in the DOM but invisible to users. Scrapers that interact with these reveal themselves.</span>
+			</li>
+			<li>
+				<span class="nav-path">No Source Comments</span>
+				<span class="nav-name">All L3 component source code is stripped of comments — no <code>//</code>, <code>/* */</code>, or <code>&lt;!-- --&gt;</code> hints about anti-bot techniques or implementation details.</span>
 			</li>
 		</ul>
 	</section>

@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / taxes — recent deeds sidebar
-// Anti-bot: file numbers drawn to <canvas> — not present in DOM text at all
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import { type DeedRecord, deeds } from '../../../../data/taxes/deeds';
