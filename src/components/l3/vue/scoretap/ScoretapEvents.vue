@@ -39,7 +39,7 @@ onMounted(() => {
 	});
 });
 
-function filtered() {
+function _filtered() {
 	if (!rows.value) {
 		return [];
 	}
@@ -49,40 +49,40 @@ function filtered() {
 	return rows.value.filter((r) => r.game === activeGame.value);
 }
 
-function gameLabel(game: Game): string {
+function _gameLabel(game: Game): string {
 	return gameLabels[game];
 }
 </script>
 
 <template>
-  <div>
-    <div v-if="!rows" class="st3-events-loading">Loading…</div>
-    <div v-else class="st3-events">
-      <div v-if="filtered().length === 0" class="st3-events-empty">No matches found.</div>
+  <div data-island="vue-events">
+    <div v-if="!rows" class="a">Loading…</div>
+    <div v-else class="b">
+      <div v-if="filtered().length === 0" class="c">No matches found.</div>
       <div
         v-for="row in filtered()"
         :key="row.id"
-        class="st3-event-row"
-        :data-match-id="row.id"
-        :data-game="row.game"
-        :data-status="row.status"
+        class="d"
+        :data-0="row.id"
+        :data-1="row.game"
+        :data-2="row.status"
       >
-        <div class="st3-event-header">
-          <span class="st3-game-badge" :data-game-label="gameLabel(row.game as Game)"></span>
-          <span class="st3-status-badge" :data-status="row.status"></span>
-          <span v-if="row.time" class="st3-event-time">{{ row.time }}</span>
+        <div class="e">
+          <span class="f" :data-3="gameLabel(row.game as Game)"></span>
+          <span class="g" :data-2="row.status"></span>
+          <span v-if="row.time" class="h">{{ row.time }}</span>
         </div>
-        <div class="st3-event-body">
-          <div class="st3-team-row">
-            <span class="st3-team-name">{{ row.teamA }}</span>
-            <span class="st3-score">{{ row.status !== 'upcoming' ? row.scoreA : '—' }}</span>
+        <div class="i">
+          <div class="j">
+            <span class="k">{{ row.teamA }}</span>
+            <span class="l">{{ row.status !== 'upcoming' ? row.scoreA : '—' }}</span>
           </div>
-          <div class="st3-team-row">
-            <span class="st3-team-name">{{ row.teamB }}</span>
-            <span class="st3-score">{{ row.status !== 'upcoming' ? row.scoreB : '—' }}</span>
+          <div class="j">
+            <span class="k">{{ row.teamB }}</span>
+            <span class="l">{{ row.status !== 'upcoming' ? row.scoreB : '—' }}</span>
           </div>
         </div>
-        <div class="st3-event-footer">{{ row.event }}</div>
+        <div class="m">{{ row.event }}</div>
       </div>
     </div>
   </div>
@@ -91,7 +91,7 @@ function gameLabel(game: Game): string {
 <style>
 @import '../../../../styles/l3/scoretap.css';
 
-.st3-events-loading {
+.a {
 	min-height: 160px;
 	display: flex;
 	align-items: center;
@@ -100,20 +100,20 @@ function gameLabel(game: Game): string {
 	font-size: 14px;
 }
 
-.st3-events {
+.b {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 }
 
-.st3-events-empty {
+.c {
 	color: var(--st3-muted);
 	font-family: var(--st3-font-ui);
 	font-size: 14px;
 	padding: 20px 0;
 }
 
-.st3-event-row {
+.d {
 	background: var(--st3-surface);
 	border: 1px solid var(--st3-border);
 	border-radius: var(--st3-radius);
@@ -123,13 +123,13 @@ function gameLabel(game: Game): string {
 	gap: 10px;
 }
 
-.st3-event-header {
+.e {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 }
 
-.st3-game-badge {
+.f {
 	display: inline-block;
 	font-family: var(--st3-font-ui);
 	font-size: 10px;
@@ -141,16 +141,16 @@ function gameLabel(game: Game): string {
 	background: var(--st3-surface2);
 	color: var(--st3-muted);
 }
-.st3-game-badge::before {
-	content: attr(data-game-label);
+.f::before {
+	content: attr(data-3);
 }
-.st3-event-row[data-game="cs2"] .st3-game-badge { color: var(--st3-cs2); }
-.st3-event-row[data-game="valorant"] .st3-game-badge { color: var(--st3-valorant); }
-.st3-event-row[data-game="lol"] .st3-game-badge { color: var(--st3-lol); }
-.st3-event-row[data-game="dota2"] .st3-game-badge { color: var(--st3-dota2); }
-.st3-event-row[data-game="rl"] .st3-game-badge { color: var(--st3-rl); }
+.d[data-1="cs2"] .f { color: var(--st3-cs2); }
+.d[data-1="valorant"] .f { color: var(--st3-valorant); }
+.d[data-1="lol"] .f { color: var(--st3-lol); }
+.d[data-1="dota2"] .f { color: var(--st3-dota2); }
+.d[data-1="rl"] .f { color: var(--st3-rl); }
 
-.st3-status-badge {
+.g {
 	display: inline-block;
 	font-family: var(--st3-font-ui);
 	font-size: 10px;
@@ -160,56 +160,56 @@ function gameLabel(game: Game): string {
 	padding: 2px 7px;
 	border-radius: 4px;
 }
-.st3-status-badge[data-status="live"] {
+.g[data-2="live"] {
 	background: var(--st3-live-dim);
 	color: var(--st3-live);
 }
-.st3-status-badge[data-status="upcoming"] {
+.g[data-2="upcoming"] {
 	background: var(--st3-surface2);
 	color: var(--st3-muted);
 }
-.st3-status-badge[data-status="final"] {
+.g[data-2="final"] {
 	background: var(--st3-surface2);
 	color: var(--st3-muted);
 }
-.st3-status-badge[data-status="live"]::before { content: "LIVE"; }
-.st3-status-badge[data-status="upcoming"]::before { content: "UPCOMING"; }
-.st3-status-badge[data-status="final"]::before { content: "FINAL"; }
+.g[data-2="live"]::before { content: "LIVE"; }
+.g[data-2="upcoming"]::before { content: "UPCOMING"; }
+.g[data-2="final"]::before { content: "FINAL"; }
 
-.st3-event-time {
+.h {
 	margin-left: auto;
 	font-family: var(--st3-font-ui);
 	font-size: 11px;
 	color: var(--st3-muted);
 }
 
-.st3-event-body {
+.i {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
 }
 
-.st3-team-row {
+.j {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.st3-team-name {
+.k {
 	font-family: var(--st3-font-ui);
 	font-size: 14px;
 	font-weight: 600;
 	color: var(--st3-text);
 }
 
-.st3-score {
+.l {
 	font-family: var(--st3-font-score);
 	font-size: 15px;
 	font-weight: 700;
 	color: var(--st3-text);
 }
 
-.st3-event-footer {
+.m {
 	font-family: var(--st3-font-ui);
 	font-size: 11px;
 	color: var(--st3-muted);

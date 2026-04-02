@@ -1,4 +1,4 @@
-.loading {
+.a {
 	display: flex;
 	align-items: center;
 	min-height: 80px;
@@ -7,17 +7,17 @@
 	font-size: 14px;
 }
 
-.root {
+.b {
 	display: flex;
 	flex-direction: column;
 	gap: 14px;
 }
 
-.searchBar {
+.c {
 	display: flex;
 }
 
-.input {
+.d {
 	width: 100%;
 	padding: 9px 14px;
 	background: var(--st3-surface2);
@@ -29,14 +29,14 @@
 	outline: none;
 	transition: border-color 0.15s;
 }
-.input::placeholder {
+.d::placeholder {
 	color: var(--st3-muted);
 }
-.input:focus {
+.d:focus {
 	border-color: var(--st3-live);
 }
 
-.list {
+.e {
 	list-style: none;
 	padding: 0;
 	margin: 0;
@@ -45,7 +45,7 @@
 	gap: 0;
 }
 
-.item {
+.f {
 	display: grid;
 	grid-template-columns: 52px 1fr auto;
 	align-items: center;
@@ -53,25 +53,25 @@
 	padding: 12px 0;
 	border-bottom: 1px solid var(--st3-border);
 }
-.item:last-child {
+.f:last-child {
 	border-bottom: none;
 }
 
-.abbr {
+.g {
 	font-family: var(--st3-font-score);
 	font-size: 13px;
 	font-weight: 700;
 	letter-spacing: 0.04em;
 }
 
-.name {
+.h {
 	font-family: var(--st3-font-ui);
 	font-size: 14px;
 	font-weight: 500;
 	color: var(--st3-text);
 }
 
-.game {
+.i {
 	font-family: var(--st3-font-ui);
 	font-size: 11px;
 	font-weight: 600;
@@ -80,19 +80,19 @@
 	white-space: nowrap;
 }
 
-.empty {
+.j {
 	padding: 20px 0;
 	color: var(--st3-muted);
 	font-family: var(--st3-font-ui);
 	font-size: 13px;
 }
 
-.assembled {
+.k {
 	display: inline-flex;
 	flex-wrap: wrap;
 	gap: 0.25em;
 	align-items: baseline;
 }
-.assembledWord {
+.l {
 	display: inline;
 }

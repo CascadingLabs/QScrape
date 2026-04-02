@@ -26,9 +26,9 @@ function AssembledText({ text }: { text: string }) {
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.k}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.l}>
 					{word}
 				</span>
 			))}
@@ -45,7 +45,7 @@ export default function ScoretapTeamSearch() {
 	}, []);
 
 	if (!allTeams) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	const q = query.toLowerCase().trim();
@@ -59,41 +59,39 @@ export default function ScoretapTeamSearch() {
 		: allTeams;
 
 	return (
-		<div className={styles.root}>
-			<div className={styles.searchBar}>
+		<div className={styles.b} data-island="react-team-search">
+			<div className={styles.c}>
 				<input
 					type="search"
-					className={styles.input}
+					className={styles.d}
 					placeholder="Search teams…"
 					value={query}
 					onChange={(e) => setQuery(e.target.value)}
 				/>
 			</div>
-			<ul className={styles.list}>
+			<ul className={styles.e}>
 				{filtered.map((team) => {
 					const color = gameColors[team.game as Game];
 					return (
 						<li
 							key={team.id}
-							className={styles.item}
-							data-team-id={team.id}
-							data-game={team.game}
+							className={styles.f}
+							data-0={team.id}
+							data-1={team.game}
 						>
-							<span className={styles.abbr} style={{ color }}>
+							<span className={styles.g} style={{ color }}>
 								{team.abbr}
 							</span>
-							<span className={styles.name}>
+							<span className={styles.h}>
 								<AssembledText text={team.name} />
 							</span>
-							<span className={styles.game} style={{ color }}>
+							<span className={styles.i} style={{ color }}>
 								{gameLabels[team.game]}
 							</span>
 						</li>
 					);
 				})}
-				{filtered.length === 0 && (
-					<li className={styles.empty}>No teams found.</li>
-				)}
+				{filtered.length === 0 && <li className={styles.j}>No teams found.</li>}
 			</ul>
 		</div>
 	);

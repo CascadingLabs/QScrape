@@ -20,9 +20,9 @@ function AssembledText({ text }: { text: string }) {
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.e}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.f}>
 					{word}
 				</span>
 			))}
@@ -53,11 +53,11 @@ export default function ScoretapGameFilter() {
 	}, []);
 
 	if (!tabs) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	return (
-		<nav className={styles.root}>
+		<nav className={styles.b} data-island="react-game-filter">
 			{tabs.map((tab) => {
 				const isActive = tab.key === activeGame;
 				const href = tab.game
@@ -67,8 +67,9 @@ export default function ScoretapGameFilter() {
 					<a
 						key={tab.key}
 						href={href}
-						className={`${styles.tab} ${isActive ? styles.tabActive : ''}`}
-						data-game={tab.key}
+						className={`${styles.c} ${isActive ? styles.d : ''}`}
+						data-0={tab.key}
+						aria-current={isActive ? 'page' : undefined}
 					>
 						<AssembledText text={tab.label} />
 					</a>
