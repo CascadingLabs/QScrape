@@ -10,6 +10,7 @@ import {
 	events,
 	gameColors,
 	gameLabels,
+	getInitialLiveScores,
 	liveMatches,
 	newsItems,
 	recentResults,
@@ -27,11 +28,7 @@ const ready = ref(false);
 const activeGame = ref<GameOrAll>('all');
 const view = ref<View>('home');
 const selectedId = ref<string | null>(null);
-const scores = ref(
-	Object.fromEntries(
-		liveMatches.map((m) => [m.id, { a: m.scoreA, b: m.scoreB }]),
-	),
-);
+const scores = ref(getInitialLiveScores());
 const _gameColors = gameColors;
 const _gameLabels = gameLabels;
 

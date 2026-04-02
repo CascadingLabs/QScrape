@@ -6,6 +6,7 @@ import TaxesOwnerDetails from '../../../../components/l3/vue/taxes/TaxesOwnerDet
 import { type DeedRecord, deeds } from '../../../../data/taxes/deeds';
 import '../../../../styles/l3/taxes.css';
 import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
 
 export async function getStaticPaths() {
 	return deeds.map((deed) => ({
@@ -64,6 +65,7 @@ const { deed } = Astro.props;
         <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
       </div>
     </footer>
+    <ThemeToggle />
   </body>
 </html>
 

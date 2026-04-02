@@ -6,6 +6,7 @@ import NewsArticleBody from '../../../../components/l3/vue/news/NewsArticleBody.
 import { type ArticleMeta, articles } from '../../../../data/news/articles';
 import '../../../../styles/l3/news.css';
 import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
 
 export async function getStaticPaths() {
 	return articles.map((a) => ({
@@ -65,6 +66,7 @@ const { article } = Astro.props;
         <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
       </div>
     </footer>
+    <ThemeToggle />
   </body>
 </html>
 

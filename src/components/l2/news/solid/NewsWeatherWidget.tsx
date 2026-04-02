@@ -5,16 +5,11 @@
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGet } from '../../../../data/api';
 import { getBreaking } from '../../../../data/news/articles';
-import {
-	advisories,
-	metrics,
-	statusColor,
-	updated,
-	zones,
-} from '../../../../data/news/geomantic';
+import { getLiveGeomantic, statusColor } from '../../../../data/news/geomantic';
 import '../../../../styles/l2/news.css';
 
 const breaking = getBreaking();
+const geo = getLiveGeomantic();
 
 function goToArticle(id: string) {
 	const url = new URL(window.location.href);
@@ -152,7 +147,7 @@ export default function NewsWeatherWidget() {
 								</tr>
 							</thead>
 							<tbody>
-								<For each={zones}>
+								<For each={geo.zones}>
 									{(z) => (
 										<tr style={{ 'border-top': '1px solid var(--hn-border)' }}>
 											<td
@@ -209,24 +204,24 @@ export default function NewsWeatherWidget() {
 								<span style={{ color: 'var(--hn-text)', 'font-weight': '600' }}>
 									Seismic:
 								</span>{' '}
-								{metrics.seismic}
+								{geo.metrics.seismic}
 								<br />
 								<span style={{ color: 'var(--hn-text)', 'font-weight': '600' }}>
 									Magma:
 								</span>{' '}
-								{metrics.magma}
+								{geo.metrics.magma}
 								<br />
 								<span style={{ color: 'var(--hn-text)', 'font-weight': '600' }}>
 									Aquifer:
 								</span>{' '}
-								{metrics.aquifer}
+								{geo.metrics.aquifer}
 								<br />
 								<span style={{ color: 'var(--hn-text)', 'font-weight': '600' }}>
 									Wind:
 								</span>{' '}
-								{metrics.wind}
+								{geo.metrics.wind}
 							</div>
-							<For each={advisories}>
+							<For each={geo.advisories}>
 								{(a) => (
 									<div
 										style={{
@@ -247,7 +242,7 @@ export default function NewsWeatherWidget() {
 									'line-height': '1.5',
 								}}
 							>
-								Updated: {updated}
+								Updated: {geo.updated}
 								<br />
 								Source: Geomancer's Office
 							</div>

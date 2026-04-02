@@ -16,6 +16,7 @@ import {
 	events,
 	gameColors,
 	gameLabels,
+	getInitialLiveScores,
 	liveMatches,
 	newsItems,
 	recentResults,
@@ -115,11 +116,7 @@ export default function ScoretapLiveScores() {
 	const [activeGame, setActiveGame] = createSignal<GameOrAll>('all');
 	const [view, setView] = createSignal<View>('home');
 	const [selectedId, setSelectedId] = createSignal<string | null>(null);
-	const [scores, setScores] = createSignal(
-		Object.fromEntries(
-			liveMatches.map((m) => [m.id, { a: m.scoreA, b: m.scoreB }]),
-		),
-	);
+	const [scores, setScores] = createSignal(getInitialLiveScores());
 
 	const filter = <T extends { game: Game }>(arr: T[]) =>
 		activeGame() === 'all' ? arr : arr.filter((x) => x.game === activeGame());

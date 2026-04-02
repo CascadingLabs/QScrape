@@ -5,16 +5,11 @@
 import { useEffect, useState } from 'react';
 import { fakeGet } from '../../../../data/api';
 import { getBreaking } from '../../../../data/news/articles';
-import {
-	advisories,
-	metrics,
-	statusColor,
-	updated,
-	zones,
-} from '../../../../data/news/geomantic';
+import { getLiveGeomantic, statusColor } from '../../../../data/news/geomantic';
 import '../../../../styles/l2/news.css';
 
 const breaking = getBreaking();
+const geo = getLiveGeomantic();
 
 function goToArticle(id: string) {
 	const url = new URL(window.location.href);
@@ -173,7 +168,7 @@ export default function NewsWeatherWidget() {
 						</tr>
 					</thead>
 					<tbody>
-						{zones.map((z) => (
+						{geo.zones.map((z) => (
 							<tr
 								key={z.zone}
 								style={{ borderTop: '1px solid var(--hn-border)' }}
@@ -231,24 +226,24 @@ export default function NewsWeatherWidget() {
 						<span style={{ color: 'var(--hn-text)', fontWeight: '600' }}>
 							Seismic:
 						</span>{' '}
-						{metrics.seismic}
+						{geo.metrics.seismic}
 						<br />
 						<span style={{ color: 'var(--hn-text)', fontWeight: '600' }}>
 							Magma:
 						</span>{' '}
-						{metrics.magma}
+						{geo.metrics.magma}
 						<br />
 						<span style={{ color: 'var(--hn-text)', fontWeight: '600' }}>
 							Aquifer:
 						</span>{' '}
-						{metrics.aquifer}
+						{geo.metrics.aquifer}
 						<br />
 						<span style={{ color: 'var(--hn-text)', fontWeight: '600' }}>
 							Wind:
 						</span>{' '}
-						{metrics.wind}
+						{geo.metrics.wind}
 					</div>
-					{advisories.map((a) => (
+					{geo.advisories.map((a) => (
 						<div
 							key={a}
 							style={{
@@ -268,7 +263,7 @@ export default function NewsWeatherWidget() {
 							lineHeight: '1.5',
 						}}
 					>
-						Updated: {updated}
+						Updated: {geo.updated}
 						<br />
 						Source: Geomancer's Office
 					</div>

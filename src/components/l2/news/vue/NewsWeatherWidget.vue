@@ -6,15 +6,16 @@
 import { onMounted, ref } from 'vue';
 import { fakeGet } from '../../../../data/api';
 import { getBreaking } from '../../../../data/news/articles';
-import { advisories, metrics, statusColor, updated, zones } from '../../../../data/news/geomantic';
+import { getLiveGeomantic, statusColor } from '../../../../data/news/geomantic';
 import '../../../../styles/l2/news.css';
 
 const ready = ref(false);
 const breaking = getBreaking();
-const _zones = zones;
-const _metrics = metrics;
-const _advisories = advisories;
-const _updated = updated;
+const _geo = getLiveGeomantic();
+const _zones = _geo.zones;
+const _metrics = _geo.metrics;
+const _advisories = _geo.advisories;
+const _updated = _geo.updated;
 const _statusColor = statusColor;
 
 function goToArticle(id: string) {

@@ -10,6 +10,7 @@ import {
 	events,
 	gameColors,
 	gameLabels,
+	getInitialLiveScores,
 	liveMatches,
 	newsItems,
 	recentResults,
@@ -27,9 +28,7 @@ let _ready = false;
 let activeGame: GameOrAll = 'all';
 let _view: View = 'home';
 let selectedId: string | null = null;
-let scores = Object.fromEntries(
-	liveMatches.map((m) => [m.id, { a: m.scoreA, b: m.scoreB }]),
-);
+let scores = getInitialLiveScores();
 const _gameColors = gameColors;
 const _gameLabels = gameLabels;
 

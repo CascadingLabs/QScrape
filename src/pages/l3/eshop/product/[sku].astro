@@ -6,6 +6,7 @@ import EshopProductName from '../../../../components/l3/vue/eshop/EshopProductNa
 import { type ProductMeta, products } from '../../../../data/eshop/products';
 import '../../../../styles/l3/eshop.css';
 import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
 
 export function getStaticPaths() {
 	return products.map((p) => ({
@@ -69,6 +70,7 @@ const { product } = Astro.props;
         <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
       </div>
     </footer>
+    <ThemeToggle />
   </body>
 </html>
 

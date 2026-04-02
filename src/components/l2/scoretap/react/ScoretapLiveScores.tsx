@@ -9,6 +9,7 @@ import {
 	events,
 	gameColors,
 	gameLabels,
+	getInitialLiveScores,
 	liveMatches,
 	newsItems,
 	recentResults,
@@ -553,11 +554,7 @@ export default function ScoretapLiveScores() {
 	const [activeGame, setActiveGame] = useState<GameOrAll>('all');
 	const [view, setView] = useState<View>('home');
 	const [selectedId, setSelectedId] = useState<string | null>(null);
-	const [scores, setScores] = useState(() =>
-		Object.fromEntries(
-			liveMatches.map((m) => [m.id, { a: m.scoreA, b: m.scoreB }]),
-		),
-	);
+	const [scores, setScores] = useState(() => getInitialLiveScores());
 
 	useEffect(() => {
 		const { view: v, id } = getViewState();
