@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / taxes — recent deeds sidebar
-// Anti-bot: file numbers drawn to <canvas> — not present in DOM text at all
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import { type DeedRecord, deeds } from '../../../../data/taxes/deeds';
@@ -44,38 +42,35 @@ export default function TaxesSidebar() {
 	return (
 		<div data-island="solid-sidebar">
 			<Show when={!recent()}>
-				<div class="er3-sidebar-loading">Loading…</div>
+				<div class="a">Loading…</div>
 			</Show>
 			<Show when={recent()}>
-				<div class="er3-sidebar-panel">
-					<h3 class="er3-sidebar-title">Recent Filings</h3>
-					<ul class="er3-sidebar-list">
+				<div class="b">
+					<h3 class="c">Recent Filings</h3>
+					<ul class="d">
 						<For each={recent() ?? []}>
 							{(deed) => (
-								<li class="er3-sidebar-item" data-file-num={deed.fileNum}>
-									<a
-										href={`/l3/taxes/viewer/${deed.fileNum}/`}
-										class="er3-sidebar-link"
-									>
-										<span class="er3-sidebar-filenum">
+								<li class="e" data-0={deed.fileNum}>
+									<a href={`/l3/taxes/viewer/${deed.fileNum}/`} class="f">
+										<span class="h">
 											<FileNumCanvas fileNum={deed.fileNum} />
 										</span>
-										<span class="er3-sidebar-meta">
-											<span class="er3-sidebar-index">{deed.index}</span>
-											<span class="er3-sidebar-date">{deed.recordDate}</span>
+										<span class="i">
+											<span class="g">{deed.index}</span>
+											<span class="j">{deed.recordDate}</span>
 										</span>
 									</a>
 								</li>
 							)}
 						</For>
 					</ul>
-					<a href="/l3/taxes/" class="er3-sidebar-all">
+					<a href="/l3/taxes/" class="k">
 						All records →
 					</a>
 				</div>
 			</Show>
 			<style>{`
-				.er3-sidebar-loading {
+				.a {
 					min-height: 100px;
 					display: flex;
 					align-items: center;
@@ -83,7 +78,7 @@ export default function TaxesSidebar() {
 					font-family: var(--er3-font);
 					font-size: 13px;
 				}
-				.er3-sidebar-panel {
+				.b {
 					background: var(--er3-surface);
 					border: 1px solid var(--er3-border);
 					border-radius: var(--er3-radius);
@@ -92,7 +87,7 @@ export default function TaxesSidebar() {
 					flex-direction: column;
 					gap: 12px;
 				}
-				.er3-sidebar-title {
+				.c {
 					font-family: var(--er3-font);
 					font-size: 14px;
 					font-weight: 700;
@@ -102,7 +97,7 @@ export default function TaxesSidebar() {
 					border-bottom: 2px solid var(--er3-primary);
 					letter-spacing: -0.1px;
 				}
-				.er3-sidebar-list {
+				.d {
 					list-style: none;
 					padding: 0;
 					margin: 0;
@@ -110,32 +105,32 @@ export default function TaxesSidebar() {
 					flex-direction: column;
 					gap: 0;
 				}
-				.er3-sidebar-item {
+				.e {
 					border-bottom: 1px solid var(--er3-border);
 				}
-				.er3-sidebar-item:last-child {
+				.e:last-child {
 					border-bottom: none;
 				}
-				.er3-sidebar-link {
+				.f {
 					display: flex;
 					flex-direction: column;
 					gap: 3px;
 					padding: 9px 0;
 					text-decoration: none;
 				}
-				.er3-sidebar-link:hover .er3-sidebar-index {
+				.f:hover .g {
 					color: var(--er3-primary);
 				}
-				.er3-sidebar-filenum {
+				.h {
 					display: block;
 					line-height: 1;
 				}
-				.er3-sidebar-meta {
+				.i {
 					display: flex;
 					gap: 8px;
 					align-items: center;
 				}
-				.er3-sidebar-index {
+				.g {
 					font-family: var(--er3-font-mono);
 					font-size: 11px;
 					font-weight: 600;
@@ -143,12 +138,12 @@ export default function TaxesSidebar() {
 					text-transform: uppercase;
 					letter-spacing: 0.04em;
 				}
-				.er3-sidebar-date {
+				.j {
 					font-family: var(--er3-font-mono);
 					font-size: 11px;
 					color: var(--er3-muted);
 				}
-				.er3-sidebar-all {
+				.k {
 					font-family: var(--er3-font);
 					font-size: 12px;
 					font-weight: 600;
@@ -156,7 +151,7 @@ export default function TaxesSidebar() {
 					text-decoration: none;
 					margin-top: 4px;
 				}
-				.er3-sidebar-all:hover {
+				.k:hover {
 					text-decoration: underline;
 				}
 			`}</style>

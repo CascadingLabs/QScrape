@@ -1,7 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / taxes — search results table
-// Anti-bot: status badge via CSS ::before pseudo-element — content: attr(data-status)
-// element.textContent on .er3-status returns empty string; requires getComputedStyle(el,'::before').content
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import { type DeedRecord, deeds } from '../../../../data/taxes/deeds';
@@ -26,48 +23,47 @@ onMounted(() => {
 
 <template>
   <div data-island="vue-results">
-    <div v-if="!results" class="er3-results-loading">Loading…</div>
-    <div v-else class="er3-results">
-      <div class="er3-results-header">
-        <span class="er3-results-count">{{ results.length }} record{{ results.length !== 1 ? 's' : '' }} found</span>
+    <div v-if="!results" class="a">Loading…</div>
+    <div v-else class="b">
+      <div class="c">
+        <span class="d">{{ results.length }} record{{ results.length !== 1 ? 's' : '' }} found</span>
       </div>
-      <div class="er3-table-wrap">
-        <table class="er3-table">
+      <div class="e">
+        <table class="f">
           <thead>
             <tr>
-              <th class="er3-th">File #</th>
-              <th class="er3-th">Type</th>
-              <th class="er3-th">Date</th>
-              <th class="er3-th">Party</th>
-              <th class="er3-th">Amount</th>
-              <th class="er3-th">Status</th>
-              <th class="er3-th er3-th-action"></th>
+              <th class="g">File #</th>
+              <th class="g">Type</th>
+              <th class="g">Date</th>
+              <th class="g">Party</th>
+              <th class="g">Amount</th>
+              <th class="g">Status</th>
+              <th class="g h"></th>
             </tr>
           </thead>
           <tbody>
             <tr
               v-for="deed in results"
               :key="deed.fileNum"
-              class="er3-tr"
-              :data-file-num="deed.fileNum"
+              class="i"
+              :data-0="deed.fileNum"
             >
-              <td class="er3-td er3-td-mono">{{ deed.fileNum }}</td>
-              <td class="er3-td er3-td-mono">{{ deed.index }}</td>
-              <td class="er3-td er3-td-mono">{{ deed.recordDate }}</td>
-              <td class="er3-td">
+              <td class="j k">{{ deed.fileNum }}</td>
+              <td class="j k">{{ deed.index }}</td>
+              <td class="j k">{{ deed.recordDate }}</td>
+              <td class="j">
                 {{ deed.lastFirm }}{{ deed.first ? ', ' + deed.first : '' }}
               </td>
-              <td class="er3-td er3-td-mono">{{ deed.amount }}</td>
-              <td class="er3-td">
-                <!-- Anti-bot: status text lives in CSS ::before, textContent is empty -->
+              <td class="j k">{{ deed.amount }}</td>
+              <td class="j">
                 <span
-                  class="er3-status"
-                  :data-status="deed.status"
-                  :data-status-type="deed.status.toLowerCase()"
+                  class="m"
+                  :data-1="deed.status"
+                  :data-2="deed.status.toLowerCase()"
                 ></span>
               </td>
-              <td class="er3-td er3-td-action">
-                <a :href="`/l3/taxes/viewer/${deed.fileNum}/`" class="er3-view-link">View →</a>
+              <td class="j l">
+                <a :href="`/l3/taxes/viewer/${deed.fileNum}/`" class="n">View →</a>
               </td>
             </tr>
           </tbody>
@@ -80,7 +76,7 @@ onMounted(() => {
 <style>
 @import '../../../../styles/l3/taxes.css';
 
-.er3-results-loading {
+.a {
 	min-height: 200px;
 	display: flex;
 	align-items: center;
@@ -89,38 +85,38 @@ onMounted(() => {
 	font-size: 14px;
 }
 
-.er3-results {
+.b {
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
 }
 
-.er3-results-header {
+.c {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
 
-.er3-results-count {
+.d {
 	font-family: var(--er3-font);
 	font-size: 13px;
 	color: var(--er3-muted);
 }
 
-.er3-table-wrap {
+.e {
 	overflow-x: auto;
 	border: 1px solid var(--er3-border);
 	border-radius: var(--er3-radius);
 }
 
-.er3-table {
+.f {
 	width: 100%;
 	border-collapse: collapse;
 	font-family: var(--er3-font);
 	font-size: 13px;
 }
 
-.er3-th {
+.g {
 	padding: 10px 14px;
 	text-align: left;
 	font-size: 11px;
@@ -132,35 +128,34 @@ onMounted(() => {
 	border-bottom: 1px solid var(--er3-border);
 	white-space: nowrap;
 }
-.er3-th-action {
+.h {
 	width: 60px;
 }
 
-.er3-tr {
+.i {
 	border-bottom: 1px solid var(--er3-border);
 }
-.er3-tr:last-child {
+.i:last-child {
 	border-bottom: none;
 }
-.er3-tr:hover {
+.i:hover {
 	background: var(--er3-primary-dim);
 }
 
-.er3-td {
+.j {
 	padding: 11px 14px;
 	color: var(--er3-text);
 	vertical-align: middle;
 }
-.er3-td-mono {
+.k {
 	font-family: var(--er3-font-mono);
 	font-size: 12px;
 }
-.er3-td-action {
+.l {
 	text-align: right;
 }
 
-/* Anti-bot: status text via pseudo-element, not textContent */
-.er3-status {
+.m {
 	display: inline-block;
 	font-size: 11px;
 	font-weight: 700;
@@ -169,23 +164,23 @@ onMounted(() => {
 	padding: 2px 8px;
 	border-radius: 2px;
 }
-.er3-status::before {
-	content: attr(data-status);
+.m::before {
+	content: attr(data-1);
 }
-.er3-status[data-status-type="recorded"] {
+.m[data-2="recorded"] {
 	color: var(--er3-recorded);
 	background: var(--er3-recorded-bg);
 }
-.er3-status[data-status-type="satisfied"] {
+.m[data-2="satisfied"] {
 	color: var(--er3-satisfied);
 	background: var(--er3-satisfied-bg);
 }
-.er3-status[data-status-type="delinquent"] {
+.m[data-2="delinquent"] {
 	color: var(--er3-delinquent);
 	background: var(--er3-delinquent-bg);
 }
 
-.er3-view-link {
+.n {
 	font-family: var(--er3-font);
 	font-size: 12px;
 	font-weight: 600;
@@ -193,7 +188,7 @@ onMounted(() => {
 	text-decoration: none;
 	white-space: nowrap;
 }
-.er3-view-link:hover {
+.n:hover {
 	color: var(--er3-primary-hover);
 	text-decoration: underline;
 }

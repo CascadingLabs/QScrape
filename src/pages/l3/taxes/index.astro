@@ -16,38 +16,38 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     <ThemeInit />
   </head>
   <body>
-    <header class="er3-masthead">
-      <div class="er3-masthead-inner">
-        <span class="er3-crest">🛡</span>
-        <div class="er3-title-block">
-          <span class="er3-title-main">Eldoria Registry of Deeds</span>
-          <span class="er3-tagline">Official Property Records · L3 Islands Edition</span>
+    <header class="a">
+      <div class="b">
+        <span class="c">🛡</span>
+        <div class="d">
+          <span class="e">Eldoria Registry of Deeds</span>
+          <span class="f">Official Property Records · L3 Islands Edition</span>
         </div>
-        <span class="er3-edition">QScrape · L3</span>
+        <span class="g">QScrape · L3</span>
       </div>
-      <nav class="er3-nav">
-        <div class="er3-nav-inner">
-          <a href="/l3/taxes/" class="er3-nav-item er3-nav-active">Search</a>
-          <a href="/l3/" class="er3-nav-item">← L3</a>
+      <nav class="h">
+        <div class="i">
+          <a href="/l3/taxes/" class="j k">Search</a>
+          <a href="/l3/" class="j">← L3</a>
         </div>
       </nav>
     </header>
 
-    <main class="er3-main">
-      <div class="er3-layout">
-        <section class="er3-primary">
+    <main class="l">
+      <div class="m">
+        <section class="n">
           <TaxesSearchForm client:only="react" />
           <TaxesResults client:only="vue" />
         </section>
-        <aside class="er3-sidebar-col">
+        <aside class="o">
           <TaxesPagination client:only="svelte" />
           <TaxesSidebar client:only="solid-js" />
         </aside>
       </div>
     </main>
 
-    <footer class="er3-footer">
-      <div class="er3-footer-inner">
+    <footer class="p">
+      <div class="q">
         <span>© 2027 Eldoria Registry of Deeds</span>
         <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
       </div>
@@ -66,11 +66,11 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     line-height: 1.6;
   }
 
-  .er3-masthead {
+  .a {
     background: var(--er3-surface);
     border-bottom: 1px solid var(--er3-border);
   }
-  .er3-masthead-inner {
+  .b {
     max-width: 1100px;
     margin: 0 auto;
     padding: 16px 24px;
@@ -80,18 +80,18 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     gap: 16px;
   }
 
-  .er3-crest {
+  .c {
     font-size: 28px;
     line-height: 1;
     filter: hue-rotate(160deg);
   }
 
-  .er3-title-block {
+  .d {
     display: flex;
     flex-direction: column;
     gap: 2px;
   }
-  .er3-title-main {
+  .e {
     display: block;
     font-family: var(--er3-font);
     font-size: clamp(18px, 2.5vw, 28px);
@@ -100,14 +100,14 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     line-height: 1.1;
     color: var(--er3-primary);
   }
-  .er3-tagline {
+  .f {
     display: block;
     font-size: 11px;
     color: var(--er3-muted);
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
-  .er3-edition {
+  .g {
     font-family: var(--er3-font);
     font-size: 11px;
     color: var(--er3-muted);
@@ -115,17 +115,17 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     font-style: italic;
   }
 
-  .er3-nav {
+  .h {
     border-bottom: 2px solid var(--er3-primary);
     background: var(--er3-surface2);
   }
-  .er3-nav-inner {
+  .i {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 24px;
     display: flex;
   }
-  .er3-nav-item {
+  .j {
     padding: 10px 16px;
     font-family: var(--er3-font);
     font-size: 13px;
@@ -138,42 +138,42 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     margin-bottom: -2px;
     transition: color 0.15s;
   }
-  .er3-nav-item:hover { color: var(--er3-text); }
-  .er3-nav-active { color: var(--er3-primary); border-bottom-color: var(--er3-primary); }
+  .j:hover { color: var(--er3-text); }
+  .k { color: var(--er3-primary); border-bottom-color: var(--er3-primary); }
 
-  .er3-main {
+  .l {
     max-width: 1100px;
     margin: 0 auto;
     padding: 32px 24px;
   }
 
-  .er3-layout {
+  .m {
     display: grid;
     grid-template-columns: 1fr 280px;
     gap: 32px;
   }
   @media (max-width: 768px) {
-    .er3-layout { grid-template-columns: 1fr; }
+    .m { grid-template-columns: 1fr; }
   }
 
-  .er3-primary {
+  .n {
     display: flex;
     flex-direction: column;
     gap: 24px;
     min-width: 0;
   }
-  .er3-sidebar-col {
+  .o {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
 
-  .er3-footer {
+  .p {
     border-top: 1px solid var(--er3-border);
     background: var(--er3-surface);
     margin-top: 48px;
   }
-  .er3-footer-inner {
+  .q {
     max-width: 1100px;
     margin: 0 auto;
     padding: 16px 24px;
