@@ -20,9 +20,9 @@ function AssembledText({ text }: { text: string }) {
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.e}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.f}>
 					{word}
 				</span>
 			))}
@@ -43,14 +43,14 @@ export default function EshopCategoryNav() {
 	}, []);
 
 	if (!ready) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	return (
-		<nav className={styles.root}>
+		<nav className={styles.b}>
 			<a
 				href="/l3/eshop/"
-				className={`${styles.tab}${!activeCat ? ` ${styles.tabActive}` : ''}`}
+				className={`${styles.c}${!activeCat ? ` ${styles.d}` : ''}`}
 			>
 				All
 			</a>
@@ -58,8 +58,8 @@ export default function EshopCategoryNav() {
 				<a
 					key={cat}
 					href={`/l3/eshop/?cat=${encodeURIComponent(cat)}`}
-					className={`${styles.tab}${activeCat === cat ? ` ${styles.tabActive}` : ''}`}
-					data-cat={cat}
+					className={`${styles.c}${activeCat === cat ? ` ${styles.d}` : ''}`}
+					data-0={cat}
 				>
 					<AssembledText text={cat} />
 				</a>

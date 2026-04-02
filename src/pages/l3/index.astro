@@ -120,19 +120,19 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 		<h3>Per-Framework Obfuscation</h3>
 		<ul class="nav-links">
 			<li>
-				<span class="nav-path">React</span>
+				<a class="nav-path" href="https://react.dev/" target="_blank" rel="noopener">React</a>
 				<span class="nav-name">CSS-assembled text — words split into spans, DOM order shuffled, CSS <code>flex order</code> restores visual order; <code>textContent</code> returns scrambled words</span>
 			</li>
 			<li>
-				<span class="nav-path">Vue</span>
+				<a class="nav-path" href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>
 				<span class="nav-name">Pseudo-element content — data rendered via <code>::before &#123; content: attr(data-x) &#125;</code>; <code>textContent</code> returns empty string</span>
 			</li>
 			<li>
-				<span class="nav-path">Svelte</span>
+				<a class="nav-path" href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>
 				<span class="nav-name">Decoy overlay — real value at z-index 1, fake value at z-index 2 with <code>color: transparent</code>; DOM has both, scraper must resolve z-order</span>
 			</li>
 			<li>
-				<span class="nav-path">Solid</span>
+				<a class="nav-path" href="https://www.solidjs.com/" target="_blank" rel="noopener">Solid</a>
 				<span class="nav-name">Canvas-rendered text — numbers and IDs drawn via <code>ctx.fillText()</code>; not present in the DOM at all</span>
 			</li>
 		</ul>
@@ -140,15 +140,15 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 		<h3>Page-Level Defenses</h3>
 		<ul class="nav-links">
 			<li>
-				<span class="nav-path">DevTools Detection</span>
+				<a class="nav-path" href="https://developer.chrome.com/docs/devtools/" target="_blank" rel="noopener">DevTools Detection</a>
 				<span class="nav-name">Opening browser DevTools triggers a 404 page takeover — the entire document is replaced with a static "404 Not Found" response. Detection runs on an 800 ms polling interval.</span>
 			</li>
 			<li>
-				<span class="nav-path">Honeypot Buttons</span>
+				<a class="nav-path" href="https://en.wikipedia.org/wiki/Honeypot_(computing)" target="_blank" rel="noopener">Honeypot Buttons</a>
 				<span class="nav-name">Hidden interactive elements (<code>opacity: 0.001</code>) with realistic class names and actions. Visible in the DOM but invisible to users. Scrapers that interact with these reveal themselves.</span>
 			</li>
 			<li>
-				<span class="nav-path">No Source Comments</span>
+				<a class="nav-path" href="https://en.wikipedia.org/wiki/Obfuscation_(software)" target="_blank" rel="noopener">No Source Comments</a>
 				<span class="nav-name">All L3 component source code is stripped of comments — no <code>//</code>, <code>/* */</code>, or <code>&lt;!-- --&gt;</code> hints about anti-bot techniques or implementation details.</span>
 			</li>
 		</ul>

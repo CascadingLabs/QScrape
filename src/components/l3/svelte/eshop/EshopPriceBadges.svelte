@@ -39,18 +39,23 @@ onMount(() => {
 
 <div>
   {#if !items}
-    <div class="vm3-pb-loading">Loading…</div>
+    <div class="a">Loading…</div>
   {:else}
-    <div class="vm3-pb-list">
-      <h3 class="vm3-pb-title">Prices</h3>
+    <div class="b">
+      <h3 class="c">Prices</h3>
       {#each items as item}
-        <div class="vm3-pb-row" data-sku={item.sku}>
-          <span class="vm3-pb-name">{item.name}</span>
-          <span class="vm3-price-wrap">
-            <span class="vm3-price-real" class:vm3-price-sale={item.onSale}>{item.realPrice}</span>
-            <span class="vm3-price-decoy" aria-hidden="true">{item.fakePrice}</span>
+        <div class="d" data-0={item.sku}>
+          <span class="e">
+            <span class="f">
+              <span class="g">{item.name}</span>
+              <span class="h" aria-hidden="true">{item.name.split('').reverse().join('')}</span>
+            </span>
           </span>
-          <span class="vm3-pb-stock" class:vm3-pb-oos={!item.inStock}>
+          <span class="i">
+            <span class="j" class:k={item.onSale}>{item.realPrice}</span>
+            <span class="l" aria-hidden="true">{item.fakePrice}</span>
+          </span>
+          <span class="m" class:n={!item.inStock}>
             {item.inStock ? 'In Stock' : 'OOS'}
           </span>
         </div>
@@ -62,7 +67,7 @@ onMount(() => {
 <style>
   @import '../../../../styles/l3/eshop.css';
 
-  .vm3-pb-loading {
+  .a {
     min-height: 100px;
     display: flex;
     align-items: center;
@@ -71,7 +76,7 @@ onMount(() => {
     font-size: 14px;
   }
 
-  .vm3-pb-list {
+  .b {
     background: var(--vm3-surface2);
     border: 1px solid var(--vm3-border);
     border-radius: var(--vm3-radius);
@@ -81,7 +86,7 @@ onMount(() => {
     gap: 0;
   }
 
-  .vm3-pb-title {
+  .c {
     font-family: var(--vm3-font);
     font-size: 14px;
     font-weight: 700;
@@ -93,7 +98,7 @@ onMount(() => {
     letter-spacing: 0.06em;
   }
 
-  .vm3-pb-row {
+  .d {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -102,11 +107,11 @@ onMount(() => {
     font-family: var(--vm3-font);
     font-size: 12px;
   }
-  .vm3-pb-row:last-child {
+  .d:last-child {
     border-bottom: none;
   }
 
-  .vm3-pb-name {
+  .e {
     flex: 1;
     color: var(--vm3-muted);
     white-space: nowrap;
@@ -114,22 +119,26 @@ onMount(() => {
     text-overflow: ellipsis;
   }
 
-  .vm3-price-wrap {
+  .f { position: relative; display: inline; }
+  .g { position: relative; z-index: 1; }
+  .h { position: absolute; top: 0; left: 0; color: transparent; z-index: 2; pointer-events: none; user-select: none; white-space: nowrap; }
+
+  .i {
     position: relative;
     display: inline-block;
     min-width: 120px;
     text-align: right;
   }
-  .vm3-price-real {
+  .j {
     font-weight: 600;
     color: var(--vm3-text);
     position: relative;
     z-index: 1;
   }
-  .vm3-price-real.vm3-price-sale {
+  .j.k {
     color: var(--vm3-sale);
   }
-  .vm3-price-decoy {
+  .l {
     position: absolute;
     top: 0;
     left: 0;
@@ -142,14 +151,14 @@ onMount(() => {
     user-select: none;
   }
 
-  .vm3-pb-stock {
+  .m {
     font-size: 11px;
     color: var(--vm3-cta);
     font-weight: 500;
     min-width: 48px;
     text-align: right;
   }
-  .vm3-pb-oos {
+  .n {
     color: var(--vm3-sale);
   }
 </style>

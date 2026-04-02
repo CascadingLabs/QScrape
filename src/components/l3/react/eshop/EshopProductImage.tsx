@@ -20,9 +20,9 @@ function AssembledText({ text }: { text: string }) {
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.k}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.l}>
 					{word}
 				</span>
 			))}
@@ -42,35 +42,31 @@ export default function EshopProductImage({ product }: Props) {
 	}, []);
 
 	if (!ready) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	const onSale = product.salePrice !== undefined;
 
 	return (
-		<div className={styles.root} data-sku={product.sku}>
-			<div className={styles.imageWrap}>
+		<div className={styles.b} data-0={product.sku}>
+			<div className={styles.c}>
 				<img
 					src={product.image}
 					alt={product.name}
-					className={styles.image}
+					className={styles.d}
 					loading="eager"
 				/>
-				<div className={styles.badges}>
+				<div className={styles.e}>
 					{product.isNew && (
-						<span className={`${styles.badge} ${styles.badgeNew}`}>New</span>
+						<span className={`${styles.f} ${styles.g}`}>New</span>
 					)}
-					{onSale && (
-						<span className={`${styles.badge} ${styles.badgeSale}`}>Sale</span>
-					)}
+					{onSale && <span className={`${styles.f} ${styles.h}`}>Sale</span>}
 					{!product.inStock && (
-						<span className={`${styles.badge} ${styles.badgeOos}`}>
-							Out of Stock
-						</span>
+						<span className={`${styles.f} ${styles.i}`}>Out of Stock</span>
 					)}
 				</div>
 			</div>
-			<h1 className={styles.name}>
+			<h1 className={styles.j}>
 				<AssembledText text={product.name} />
 			</h1>
 		</div>

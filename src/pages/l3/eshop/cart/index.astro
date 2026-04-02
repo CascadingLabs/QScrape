@@ -1,34 +1,20 @@
 ---
-import EshopProductImage from '../../../../components/l3/react/eshop/EshopProductImage';
-import EshopProductRating from '../../../../components/l3/solid/eshop/EshopProductRating';
-import EshopProductDetails from '../../../../components/l3/svelte/eshop/EshopProductDetails.svelte';
-import EshopProductName from '../../../../components/l3/vue/eshop/EshopProductName.vue';
-import { type ProductMeta, products } from '../../../../data/eshop/products';
+import EshopCartItems from '../../../../components/l3/react/eshop/EshopCartItems';
+import EshopCartCheckout from '../../../../components/l3/solid/eshop/EshopCartCheckout';
+import EshopCartSummary from '../../../../components/l3/svelte/eshop/EshopCartSummary.svelte';
+import EshopCartPrices from '../../../../components/l3/vue/eshop/EshopCartPrices.vue';
 import '../../../../styles/l3/eshop.css';
 import L3Guard from '../../../../components/l3/L3Guard.astro';
 import ThemeInit from '../../../../components/ThemeInit.astro';
 import ThemeToggle from '../../../../components/ThemeToggle.astro';
-
-export function getStaticPaths() {
-	return products.map((p) => ({
-		params: { sku: p.sku },
-		props: { product: p },
-	}));
-}
-
-interface Props {
-	product: ProductMeta;
-}
-
-const { product } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{product.name} — VaultMart L3</title>
-    <meta name="description" content={product.excerpt} />
+    <title>Cart — VaultMart L3</title>
+    <meta name="description" content="Your shopping cart — VaultMart L3." />
     <ThemeInit />
   </head>
   <body>
@@ -37,30 +23,22 @@ const { product } = Astro.props;
         <a href="/l3/eshop/" class="c">VaultMart</a>
         <nav class="d">
           <a href="/l3/eshop/" class="e">Home</a>
-          <a href="/l3/eshop/cart/" class="e">Cart</a>
+          <a href="/l3/eshop/cart/" class="e f">Cart</a>
           <a href="/l3/" class="e">← L3</a>
         </nav>
-        <span class="f">L3 · Islands Edition</span>
+        <span class="g">L3 · Islands Edition</span>
       </div>
     </header>
 
-    <main class="g">
-      <div class="h">
-        <a href="/l3/eshop/">Catalog</a>
-        <span>›</span>
-        <a href={`/l3/eshop/?cat=${encodeURIComponent(product.category)}`}>{product.category}</a>
-        <span>›</span>
-        <span>{product.sku}</span>
-      </div>
-
+    <main class="h">
       <div class="i">
         <section class="j">
-          <EshopProductImage client:only="react" product={product} />
-          <EshopProductName client:only="vue" sku={product.sku} />
+          <EshopCartItems client:only="react" />
+          <EshopCartPrices client:only="vue" />
         </section>
         <aside class="k">
-          <EshopProductDetails client:only="svelte" sku={product.sku} />
-          <EshopProductRating client:only="solid-js" sku={product.sku} />
+          <EshopCartSummary client:only="svelte" />
+          <EshopCartCheckout client:only="solid-js" />
         </aside>
       </div>
     </main>
@@ -88,8 +66,10 @@ const { product } = Astro.props;
   }
 
   .a {
-    background: var(--vm3-surface);
-    border-bottom: 1px solid var(--vm3-border);
+    background: var(--vm3-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--vm3-glass-border);
   }
   .b {
     max-width: 1200px;
@@ -125,42 +105,25 @@ const { product } = Astro.props;
     transition: color 0.15s, background 0.15s;
   }
   .e:hover { color: var(--vm3-text); background: var(--vm3-surface2); }
+  .f { color: var(--vm3-text); }
 
-  .f {
+  .g {
     font-family: var(--vm3-font);
     font-size: 11px;
     color: var(--vm3-muted);
     font-style: italic;
   }
 
-  .g {
+  .h {
     max-width: 1200px;
     margin: 0 auto;
     padding: 32px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
   }
-
-  .h {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--vm3-font);
-    font-size: 13px;
-    color: var(--vm3-muted);
-  }
-  .h a {
-    color: var(--vm3-primary);
-    text-decoration: none;
-  }
-  .h a:hover { text-decoration: underline; }
 
   .i {
     display: grid;
     grid-template-columns: 1fr 320px;
     gap: 32px;
-    align-items: start;
   }
   @media (max-width: 900px) {
     .i { grid-template-columns: 1fr; }
@@ -169,7 +132,7 @@ const { product } = Astro.props;
   .j {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
     min-width: 0;
   }
 
@@ -180,8 +143,10 @@ const { product } = Astro.props;
   }
 
   .l {
-    border-top: 1px solid var(--vm3-border);
-    background: var(--vm3-surface);
+    border-top: 1px solid var(--vm3-glass-border);
+    background: var(--vm3-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     margin-top: 48px;
   }
   .m {
