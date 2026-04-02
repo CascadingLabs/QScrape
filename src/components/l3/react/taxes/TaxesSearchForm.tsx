@@ -20,9 +20,9 @@ function AssembledText({ text }: { text: string }) {
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.k}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.l}>
 					{word}
 				</span>
 			))}
@@ -43,17 +43,17 @@ export default function TaxesSearchForm() {
 	}, []);
 
 	if (!form) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	return (
-		<div className={styles.root}>
-			<h2 className={styles.heading}>
+		<div className={styles.b} data-island="react-search-form">
+			<h2 className={styles.c}>
 				<AssembledText text="Search Property Records" />
 			</h2>
-			<form method="get" action="/l3/taxes/" className={styles.form}>
-				<div className={styles.fieldGroup}>
-					<label htmlFor="er3-parcel" className={styles.label}>
+			<form method="get" action="/l3/taxes/" className={styles.d}>
+				<div className={styles.e}>
+					<label htmlFor="er3-parcel" className={styles.f}>
 						<AssembledText text="Parcel ID" />
 					</label>
 					<input
@@ -61,12 +61,12 @@ export default function TaxesSearchForm() {
 						name="q"
 						type="text"
 						placeholder="e.g. 26-008492"
-						className={styles.input}
+						className={styles.g}
 						autoComplete="off"
 					/>
 				</div>
-				<div className={styles.fieldGroup}>
-					<label htmlFor="er3-owner" className={styles.label}>
+				<div className={styles.e}>
+					<label htmlFor="er3-owner" className={styles.f}>
 						<AssembledText text="Owner Name or Firm" />
 					</label>
 					<input
@@ -74,15 +74,15 @@ export default function TaxesSearchForm() {
 						name="q"
 						type="text"
 						placeholder="e.g. ARMOK HOLDINGS"
-						className={styles.input}
+						className={styles.g}
 						autoComplete="off"
 					/>
 				</div>
-				<div className={styles.fieldGroup}>
-					<label htmlFor="er3-index" className={styles.label}>
+				<div className={styles.e}>
+					<label htmlFor="er3-index" className={styles.f}>
 						<AssembledText text="Document Type" />
 					</label>
-					<select id="er3-index" name="index" className={styles.select}>
+					<select id="er3-index" name="index" className={styles.h}>
 						<option value="ALL">All Types</option>
 						{form.indexTypes.map((t) => (
 							<option key={t} value={t}>
@@ -91,8 +91,8 @@ export default function TaxesSearchForm() {
 						))}
 					</select>
 				</div>
-				<div className={styles.actions}>
-					<button type="submit" className={styles.btn}>
+				<div className={styles.i}>
+					<button type="submit" className={styles.j}>
 						Search Records
 					</button>
 				</div>

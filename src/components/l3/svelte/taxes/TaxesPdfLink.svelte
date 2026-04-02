@@ -4,20 +4,19 @@ import { fakeGetMs } from '../../../../data/api';
 import {
 	type DeedRecord,
 	getDeedByFileNum,
-	indexLabels,
 } from '../../../../data/taxes/deeds';
 
 export let fileNum: string;
 
 type PdfData = { deed: DeedRecord; realUrl: string; fakeUrl: string };
 
-let pdfData: PdfData | null = null;
-let notFound = false;
+let _pdfData: PdfData | null = null;
+let _notFound = false;
 
 onMount(() => {
 	const found = getDeedByFileNum(fileNum);
 	if (!found) {
-		notFound = true;
+		_notFound = true;
 		return;
 	}
 	const data: PdfData = {
@@ -26,32 +25,32 @@ onMount(() => {
 		fakeUrl: `/documents/ref-${found.index.toLowerCase()}-${found.fileNum.replace('-', '')}.pdf`,
 	};
 	fakeGetMs(data, 800, 250).then((d) => {
-		pdfData = d;
+		_pdfData = d;
 	});
 });
 </script>
 
-<div>
+<div data-island="svelte-pdf-link">
   {#if notFound}
-    <div class="er3-pdf-error">PDF not available.</div>
+    <div class="b">PDF not available.</div>
   {:else if !pdfData}
-    <div class="er3-pdf-loading">Loading…</div>
+    <div class="a">Loading…</div>
   {:else}
-    <div class="er3-pdf-panel">
-      <h3 class="er3-pdf-title">Official Document</h3>
-      <div class="er3-pdf-badge">{pdfData.deed.index} — {indexLabels[pdfData.deed.index]}</div>
+    <div class="c">
+      <h3 class="d">Official Document</h3>
+      <div class="e">{pdfData.deed.index} — {indexLabels[pdfData.deed.index]}</div>
 
-      <div class="er3-pdf-link-wrap">
-        <span class="er3-pdf-label">Download PDF</span>
-        <div class="er3-url-container">
-          <a href={pdfData.realUrl} class="er3-pdf-anchor er3-url-real" download>
+      <div class="f">
+        <span class="g">Download PDF</span>
+        <div class="h">
+          <a href={pdfData.realUrl} class="i" download>
             {pdfData.realUrl}
           </a>
-          <span class="er3-url-decoy" aria-hidden="true">{pdfData.fakeUrl}</span>
+          <span class="j" aria-hidden="true">{pdfData.fakeUrl}</span>
         </div>
       </div>
 
-      <a href={pdfData.realUrl} class="er3-pdf-btn" download>
+      <a href={pdfData.realUrl} class="k" download>
         ↓ Download {pdfData.deed.index} ({pdfData.deed.fileNum})
       </a>
     </div>
@@ -61,8 +60,8 @@ onMount(() => {
 <style>
   @import '../../../../styles/l3/taxes.css';
 
-  .er3-pdf-loading,
-  .er3-pdf-error {
+  .a,
+  .b {
     min-height: 80px;
     display: flex;
     align-items: center;
@@ -71,7 +70,7 @@ onMount(() => {
     font-size: 13px;
   }
 
-  .er3-pdf-panel {
+  .c {
     background: var(--er3-surface);
     border: 1px solid var(--er3-border);
     border-radius: var(--er3-radius);
@@ -81,7 +80,7 @@ onMount(() => {
     gap: 14px;
   }
 
-  .er3-pdf-title {
+  .d {
     font-family: var(--er3-font);
     font-size: 14px;
     font-weight: 700;
@@ -91,7 +90,7 @@ onMount(() => {
     border-bottom: 2px solid var(--er3-primary);
   }
 
-  .er3-pdf-badge {
+  .e {
     display: inline-block;
     font-family: var(--er3-font-mono);
     font-size: 11px;
@@ -105,13 +104,13 @@ onMount(() => {
     align-self: flex-start;
   }
 
-  .er3-pdf-link-wrap {
+  .f {
     display: flex;
     flex-direction: column;
     gap: 4px;
   }
 
-  .er3-pdf-label {
+  .g {
     font-family: var(--er3-font);
     font-size: 11px;
     font-weight: 600;
@@ -120,11 +119,11 @@ onMount(() => {
     letter-spacing: 0.06em;
   }
 
-  .er3-url-container {
+  .h {
     position: relative;
     display: block;
   }
-  .er3-url-real {
+  .i {
     font-family: var(--er3-font-mono);
     font-size: 12px;
     color: var(--er3-primary);
@@ -133,10 +132,10 @@ onMount(() => {
     z-index: 1;
     word-break: break-all;
   }
-  .er3-url-real:hover {
+  .i:hover {
     text-decoration: underline;
   }
-  .er3-url-decoy {
+  .j {
     position: absolute;
     top: 0;
     left: 0;
@@ -149,7 +148,7 @@ onMount(() => {
     word-break: break-all;
   }
 
-  .er3-pdf-btn {
+  .k {
     font-family: var(--er3-font);
     font-size: 13px;
     font-weight: 600;
@@ -162,7 +161,7 @@ onMount(() => {
     display: block;
     transition: background 0.15s;
   }
-  .er3-pdf-btn:hover {
+  .k:hover {
     background: var(--er3-primary-hover);
   }
 </style>

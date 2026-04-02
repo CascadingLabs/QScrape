@@ -20,9 +20,9 @@ function AssembledText({ text }: { text: string }) {
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.n}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.o}>
 					{word}
 				</span>
 			))}
@@ -42,46 +42,48 @@ export default function TaxesDocumentHeader({ deed }: Props) {
 	}, [deed]);
 
 	if (!data) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	const label = indexLabels[data.index];
 	const statusClass =
 		data.status === 'RECORDED'
-			? styles.statusRecorded
+			? styles.f
 			: data.status === 'SATISFIED'
-				? styles.statusSatisfied
-				: styles.statusDelinquent;
+				? styles.g
+				: styles.h;
 
 	return (
-		<div className={styles.root} data-file-num={data.fileNum}>
-			<div className={styles.topRow}>
-				<span className={styles.fileNum}>{data.fileNum}</span>
-				<span className={`${styles.statusBadge} ${statusClass}`}>
-					{data.status}
-				</span>
+		<div
+			className={styles.b}
+			data-island="react-document-header"
+			data-0={data.fileNum}
+		>
+			<div className={styles.c}>
+				<span className={styles.d}>{data.fileNum}</span>
+				<span className={`${styles.e} ${statusClass}`}>{data.status}</span>
 			</div>
-			<h1 className={styles.docType}>
+			<h1 className={styles.i}>
 				<AssembledText text={label} />
 			</h1>
-			<dl className={styles.meta}>
-				<div className={styles.metaItem}>
-					<dt className={styles.metaLabel}>
+			<dl className={styles.j}>
+				<div className={styles.k}>
+					<dt className={styles.l}>
 						<AssembledText text="Document Type" />
 					</dt>
-					<dd className={styles.metaValue}>{data.index}</dd>
+					<dd className={styles.m}>{data.index}</dd>
 				</div>
-				<div className={styles.metaItem}>
-					<dt className={styles.metaLabel}>
+				<div className={styles.k}>
+					<dt className={styles.l}>
 						<AssembledText text="Recording Date" />
 					</dt>
-					<dd className={styles.metaValue}>{data.recordDate}</dd>
+					<dd className={styles.m}>{data.recordDate}</dd>
 				</div>
-				<div className={styles.metaItem}>
-					<dt className={styles.metaLabel}>
+				<div className={styles.k}>
+					<dt className={styles.l}>
 						<AssembledText text="Amount" />
 					</dt>
-					<dd className={styles.metaValue}>{data.amount}</dd>
+					<dd className={styles.m}>{data.amount}</dd>
 				</div>
 			</dl>
 		</div>

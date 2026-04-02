@@ -30,6 +30,7 @@ function AmountCanvas(props: { amount: string }) {
 			width={140}
 			height={18}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
+			aria-label="amount"
 		/>
 	);
 }
@@ -54,29 +55,26 @@ export default function TaxesRelatedDocs(props: Props) {
 	});
 
 	return (
-		<div data-file-num={props.fileNum}>
+		<div data-island="solid-related-docs" data-0={props.fileNum}>
 			<Show when={!related()}>
-				<div class="er3-rel-loading">Loading…</div>
+				<div class="a">Loading…</div>
 			</Show>
 			<Show when={related()}>
-				<div class="er3-rel-panel">
-					<h3 class="er3-rel-title">Related Documents</h3>
+				<div class="b">
+					<h3 class="c">Related Documents</h3>
 					<Show when={related()?.length === 0}>
-						<p class="er3-rel-empty">No related documents found.</p>
+						<p class="d">No related documents found.</p>
 					</Show>
 					<Show when={related()?.length > 0}>
-						<ul class="er3-rel-list">
+						<ul class="e">
 							<For each={related() ?? []}>
 								{(deed) => (
-									<li class="er3-rel-item" data-file-num={deed.fileNum}>
-										<a
-											href={`/l3/taxes/viewer/${deed.fileNum}/`}
-											class="er3-rel-link"
-										>
-											<span class="er3-rel-filenum">{deed.fileNum}</span>
-											<span class="er3-rel-index">{deed.index}</span>
+									<li class="f" data-0={deed.fileNum}>
+										<a href={`/l3/taxes/viewer/${deed.fileNum}/`} class="g">
+											<span class="h">{deed.fileNum}</span>
+											<span class="i">{deed.index}</span>
 										</a>
-										<span class="er3-rel-amount">
+										<span class="j">
 											<AmountCanvas amount={deed.amount} />
 										</span>
 									</li>
@@ -85,21 +83,21 @@ export default function TaxesRelatedDocs(props: Props) {
 						</ul>
 					</Show>
 
-					<div class="er3-fees-section">
-						<h4 class="er3-fees-title">Recording Fees</h4>
-						<table class="er3-fees-table">
+					<div class="k">
+						<h4 class="l">Recording Fees</h4>
+						<table class="m">
 							<thead>
 								<tr>
-									<th class="er3-fees-th">Document Type</th>
-									<th class="er3-fees-th">Fee</th>
+									<th class="n">Document Type</th>
+									<th class="n">Fee</th>
 								</tr>
 							</thead>
 							<tbody>
 								<For each={RECORDING_FEES}>
 									{(row) => (
-										<tr class="er3-fees-tr">
-											<td class="er3-fees-td">{row.type}</td>
-											<td class="er3-fees-td er3-fees-td-fee">{row.fee}</td>
+										<tr class="o">
+											<td class="p">{row.type}</td>
+											<td class="p q">{row.fee}</td>
 										</tr>
 									)}
 								</For>
@@ -109,7 +107,7 @@ export default function TaxesRelatedDocs(props: Props) {
 				</div>
 			</Show>
 			<style>{`
-				.er3-rel-loading {
+				.a {
 					min-height: 80px;
 					display: flex;
 					align-items: center;
@@ -117,7 +115,7 @@ export default function TaxesRelatedDocs(props: Props) {
 					font-family: var(--er3-font);
 					font-size: 13px;
 				}
-				.er3-rel-panel {
+				.b {
 					background: var(--er3-surface);
 					border: 1px solid var(--er3-border);
 					border-radius: var(--er3-radius);
@@ -126,7 +124,7 @@ export default function TaxesRelatedDocs(props: Props) {
 					flex-direction: column;
 					gap: 16px;
 				}
-				.er3-rel-title {
+				.c {
 					font-family: var(--er3-font);
 					font-size: 14px;
 					font-weight: 700;
@@ -136,14 +134,14 @@ export default function TaxesRelatedDocs(props: Props) {
 					border-bottom: 2px solid var(--er3-primary);
 					letter-spacing: -0.1px;
 				}
-				.er3-rel-empty {
+				.d {
 					font-family: var(--er3-font);
 					font-size: 13px;
 					color: var(--er3-muted);
 					margin: 0;
 					font-style: italic;
 				}
-				.er3-rel-list {
+				.e {
 					list-style: none;
 					padding: 0;
 					margin: 0;
@@ -151,7 +149,7 @@ export default function TaxesRelatedDocs(props: Props) {
 					flex-direction: column;
 					gap: 0;
 				}
-				.er3-rel-item {
+				.f {
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
@@ -159,22 +157,22 @@ export default function TaxesRelatedDocs(props: Props) {
 					padding: 8px 0;
 					border-bottom: 1px solid var(--er3-border);
 				}
-				.er3-rel-item:last-child { border-bottom: none; }
-				.er3-rel-link {
+				.f:last-child { border-bottom: none; }
+				.g {
 					display: flex;
 					align-items: center;
 					gap: 8px;
 					text-decoration: none;
 				}
-				.er3-rel-link:hover .er3-rel-filenum {
+				.g:hover .h {
 					color: var(--er3-primary);
 				}
-				.er3-rel-filenum {
+				.h {
 					font-family: var(--er3-font-mono);
 					font-size: 12px;
 					color: var(--er3-text);
 				}
-				.er3-rel-index {
+				.i {
 					font-family: var(--er3-font-mono);
 					font-size: 11px;
 					color: var(--er3-muted);
@@ -183,15 +181,15 @@ export default function TaxesRelatedDocs(props: Props) {
 					border-radius: 2px;
 					padding: 1px 5px;
 				}
-				.er3-rel-amount {
+				.j {
 					display: inline-block;
 					line-height: 1;
 				}
-				.er3-fees-section {
+				.k {
 					border-top: 1px solid var(--er3-border);
 					padding-top: 14px;
 				}
-				.er3-fees-title {
+				.l {
 					font-family: var(--er3-font);
 					font-size: 12px;
 					font-weight: 700;
@@ -200,13 +198,13 @@ export default function TaxesRelatedDocs(props: Props) {
 					letter-spacing: 0.06em;
 					margin: 0 0 10px;
 				}
-				.er3-fees-table {
+				.m {
 					width: 100%;
 					border-collapse: collapse;
 					font-family: var(--er3-font);
 					font-size: 12px;
 				}
-				.er3-fees-th {
+				.n {
 					text-align: left;
 					padding: 6px 8px;
 					font-size: 11px;
@@ -217,15 +215,15 @@ export default function TaxesRelatedDocs(props: Props) {
 					background: var(--er3-surface2);
 					border-bottom: 1px solid var(--er3-border);
 				}
-				.er3-fees-tr {
+				.o {
 					border-bottom: 1px solid var(--er3-border);
 				}
-				.er3-fees-tr:last-child { border-bottom: none; }
-				.er3-fees-td {
+				.o:last-child { border-bottom: none; }
+				.p {
 					padding: 7px 8px;
 					color: var(--er3-text);
 				}
-				.er3-fees-td-fee {
+				.q {
 					font-family: var(--er3-font-mono);
 					font-weight: 600;
 					color: var(--er3-primary);
