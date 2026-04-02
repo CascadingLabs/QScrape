@@ -13,25 +13,25 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <div v-if="!articles" class="hn3-feed-loading">Loading…</div>
-    <div v-else class="hn3-feed">
+  <div data-island="vue-feed">
+    <div v-if="!articles" class="a">Loading…</div>
+    <div v-else class="b">
       <article
         v-for="a in articles"
         :key="a.id"
-        class="hn3-feed-item"
-        :data-article-id="a.id"
+        class="c"
+        :data-0="a.id"
       >
-        <a :href="`/l3/news/article/${a.id}/`" class="hn3-feed-img-link">
-          <img :src="a.image" :alt="a.headline" class="hn3-feed-img" loading="lazy" />
+        <a :href="`/l3/news/article/${a.id}/`" class="d">
+          <img :src="a.image" :alt="a.headline" class="e" loading="lazy" />
         </a>
-        <div class="hn3-feed-body">
-          <span class="hn3-cat" :data-cat="a.category"></span>
-          <h2 class="hn3-feed-headline">
+        <div class="f">
+          <span class="g" :data-1="a.category"></span>
+          <h2 class="h">
             <a :href="`/l3/news/article/${a.id}/`">{{ a.headline }}</a>
           </h2>
-          <p class="hn3-feed-excerpt">{{ a.excerpt }}</p>
-          <div class="hn3-feed-meta">
+          <p class="i">{{ a.excerpt }}</p>
+          <div class="j">
             <span>{{ a.author }}</span>
             <span>{{ formatDate(a.published) }}</span>
           </div>
@@ -44,7 +44,7 @@ onMounted(() => {
 <style>
 @import '../../../../styles/l3/news.css';
 
-.hn3-feed-loading {
+.a {
 	min-height: 200px;
 	display: flex;
 	align-items: center;
@@ -53,40 +53,40 @@ onMounted(() => {
 	font-size: 14px;
 }
 
-.hn3-feed {
+.b {
 	display: flex;
 	flex-direction: column;
 	gap: 0;
 }
 
-.hn3-feed-item {
+.c {
 	display: grid;
 	grid-template-columns: 140px 1fr;
 	gap: 16px;
 	padding: 20px 0;
 	border-bottom: 1px solid var(--hn3-border);
 }
-.hn3-feed-item:last-child {
+.c:last-child {
 	border-bottom: none;
 }
 
-.hn3-feed-img-link {
+.d {
 	display: block;
 	flex-shrink: 0;
 }
-.hn3-feed-img {
+.e {
 	width: 100%;
 	aspect-ratio: 4 / 3;
 	object-fit: cover;
 }
 
-.hn3-feed-body {
+.f {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
 }
 
-.hn3-cat {
+.g {
 	display: inline-block;
 	font-family: var(--hn3-font-body);
 	font-size: 11px;
@@ -95,11 +95,11 @@ onMounted(() => {
 	letter-spacing: 0.08em;
 	color: var(--hn3-accent);
 }
-.hn3-cat::before {
-	content: attr(data-cat);
+.g::before {
+	content: attr(data-1);
 }
 
-.hn3-feed-headline {
+.h {
 	font-family: var(--hn3-font-display);
 	font-size: 16px;
 	font-weight: 700;
@@ -107,15 +107,15 @@ onMounted(() => {
 	letter-spacing: -0.2px;
 	margin: 0;
 }
-.hn3-feed-headline a {
+.h a {
 	color: var(--hn3-text);
 	text-decoration: none;
 }
-.hn3-feed-headline a:hover {
+.h a:hover {
 	color: var(--hn3-accent);
 }
 
-.hn3-feed-excerpt {
+.i {
 	font-family: var(--hn3-font-body);
 	font-size: 13px;
 	color: var(--hn3-muted);
@@ -123,7 +123,7 @@ onMounted(() => {
 	margin: 0;
 }
 
-.hn3-feed-meta {
+.j {
 	display: flex;
 	gap: 12px;
 	font-family: var(--hn3-font-body);

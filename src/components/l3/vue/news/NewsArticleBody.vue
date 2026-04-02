@@ -19,7 +19,7 @@ onMounted(() => {
 	}
 });
 
-function bodyParagraphs(a: ArticleMeta): string[] {
+function _bodyParagraphs(a: ArticleMeta): string[] {
 	return [
 		a.excerpt,
 		`The ${a.category.toLowerCase()} desk at the Mountainhome Herald has been following this story closely. Sources close to the situation confirmed the details on ${a.published.slice(0, 10)}.`,
@@ -29,22 +29,22 @@ function bodyParagraphs(a: ArticleMeta): string[] {
 </script>
 
 <template>
-  <div>
-    <div v-if="!article" class="hn3-body-loading">Loading…</div>
-    <div v-else class="hn3-article-body" :data-article-id="article.id">
-      <p class="hn3-dateline">
-        Published <span class="hn3-pub-date" :data-date="article.published.slice(0,10)"></span>
+  <div data-island="vue-article-body">
+    <div v-if="!article" class="a">Loading…</div>
+    <div v-else class="b" :data-0="article.id">
+      <p class="c">
+        Published <span class="d" :data-1="article.published.slice(0,10)"></span>
         <template v-if="article.updated">
-          · Updated <span class="hn3-pub-date" :data-date="article.updated!.slice(0,10)"></span>
+          · Updated <span class="d" :data-1="article.updated!.slice(0,10)"></span>
         </template>
       </p>
-      <div class="hn3-body-text">
-        <p v-for="(para, i) in bodyParagraphs(article)" :key="i" :class="{ 'hn3-lead': i === 0 }">
+      <div class="e">
+        <p v-for="(para, i) in bodyParagraphs(article)" :key="i" :class="{ 'f': i === 0 }">
           {{ para }}
         </p>
       </div>
-      <div class="hn3-tags">
-        <span v-for="tag in article.tags" :key="tag" class="hn3-tag">{{ tag }}</span>
+      <div class="g">
+        <span v-for="tag in article.tags" :key="tag" class="h">{{ tag }}</span>
       </div>
     </div>
   </div>
@@ -53,7 +53,7 @@ function bodyParagraphs(a: ArticleMeta): string[] {
 <style>
 @import '../../../../styles/l3/news.css';
 
-.hn3-body-loading {
+.a {
 	min-height: 160px;
 	display: flex;
 	align-items: center;
@@ -62,35 +62,35 @@ function bodyParagraphs(a: ArticleMeta): string[] {
 	font-size: 14px;
 }
 
-.hn3-article-body {
+.b {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
 }
 
-.hn3-dateline {
+.c {
 	font-family: var(--hn3-font-body);
 	font-size: 12px;
 	color: var(--hn3-muted);
 	margin: 0;
 }
 
-.hn3-pub-date {
+.d {
 	font-weight: 600;
 	color: var(--hn3-text);
 }
-.hn3-pub-date::before {
-	content: attr(data-date);
+.d::before {
+	content: attr(data-1);
 }
 
-.hn3-body-text {
+.e {
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
 	max-width: var(--hn3-max-reading);
 }
 
-.hn3-body-text p {
+.e p {
 	font-family: var(--hn3-font-body);
 	font-size: 16px;
 	line-height: 1.75;
@@ -98,12 +98,12 @@ function bodyParagraphs(a: ArticleMeta): string[] {
 	margin: 0;
 }
 
-.hn3-lead {
+.f {
 	font-weight: 600;
 	font-size: 17px !important;
 }
 
-.hn3-tags {
+.g {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px;
@@ -111,7 +111,7 @@ function bodyParagraphs(a: ArticleMeta): string[] {
 	border-top: 1px solid var(--hn3-border);
 }
 
-.hn3-tag {
+.h {
 	background: var(--hn3-border);
 	padding: 4px 10px;
 	font-family: var(--hn3-font-body);

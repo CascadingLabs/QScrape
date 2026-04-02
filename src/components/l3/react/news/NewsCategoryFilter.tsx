@@ -20,9 +20,9 @@ function AssembledText({ text }: { text: string }) {
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.g}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.h}>
 					{word}
 				</span>
 			))}
@@ -41,15 +41,15 @@ export default function NewsCategoryFilter() {
 	}, []);
 
 	if (!ready) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	const allCats = ['All', ...categories] as string[];
 
 	return (
-		<div className={styles.root}>
-			<span className={styles.label}>Filter by category</span>
-			<div className={styles.tabs}>
+		<div className={styles.b} data-island="react-category-filter">
+			<span className={styles.c}>Filter by category</span>
+			<div className={styles.d}>
 				{allCats.map((cat) => {
 					const href =
 						cat === 'All'
@@ -60,7 +60,7 @@ export default function NewsCategoryFilter() {
 						<a
 							key={cat}
 							href={href}
-							className={`${styles.tab} ${isActive ? styles.tabActive : ''}`}
+							className={`${styles.e} ${isActive ? styles.f : ''}`}
 						>
 							<AssembledText text={cat} />
 						</a>

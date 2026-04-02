@@ -8,43 +8,43 @@ import {
 
 const PAGE_SIZE = 6;
 
-let pages: number[] = [];
-let currentPage = 1;
-let ready = false;
+let _pages: number[] = [];
+let _currentPage = 1;
+let _ready = false;
 
 onMount(() => {
 	const params = new URLSearchParams(window.location.search);
 	const cat = params.get('cat');
-	currentPage = Number(params.get('page') ?? 1);
+	_currentPage = Number(params.get('page') ?? 1);
 	const total = cat ? getByCategory(cat).length : allArticles.length;
 	const pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
 	const data = Array.from({ length: pageCount }, (_, i) => i + 1);
 	fakeGetMs(data, 800, 250).then((d) => {
-		pages = d;
-		ready = true;
+		_pages = d;
+		_ready = true;
 	});
 });
 
-function pageHref(p: number): string {
+function _pageHref(p: number): string {
 	const params = new URLSearchParams(window.location.search);
 	params.set('page', String(p));
 	return `/l3/news/articles/?${params.toString()}`;
 }
 </script>
 
-<div>
+<div data-island="svelte-pagination">
   {#if !ready}
-    <div class="hn3-pag-loading">Loading…</div>
+    <div class="a">Loading…</div>
   {:else if pages.length > 1}
-    <nav class="hn3-pagination">
+    <nav class="b">
       {#each pages as p}
         <a
           href={pageHref(p)}
-          class="hn3-page-btn {p === currentPage ? 'hn3-page-active' : ''}"
+          class="c {p === currentPage ? 'd' : ''}"
         >
-          <span class="hn3-num-wrap">
-            <span class="hn3-num-real">{p}</span>
-            <span class="hn3-num-decoy">{p + 10}</span>
+          <span class="e">
+            <span class="f">{p}</span>
+            <span class="g" aria-hidden="true">{p + 10}</span>
           </span>
         </a>
       {/each}
@@ -55,7 +55,7 @@ function pageHref(p: number): string {
 <style>
   @import '../../../../styles/l3/news.css';
 
-  .hn3-pag-loading {
+  .a {
     min-height: 40px;
     display: flex;
     align-items: center;
@@ -64,14 +64,14 @@ function pageHref(p: number): string {
     font-size: 14px;
   }
 
-  .hn3-pagination {
+  .b {
     display: flex;
     gap: 8px;
     justify-content: center;
     padding: 24px 0 0;
   }
 
-  .hn3-page-btn {
+  .c {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -84,27 +84,27 @@ function pageHref(p: number): string {
     color: var(--hn3-text);
     text-decoration: none;
   }
-  .hn3-page-btn:hover {
+  .c:hover {
     border-color: var(--hn3-accent);
     color: var(--hn3-accent);
   }
-  .hn3-page-active {
+  .d {
     background: var(--hn3-accent);
     border-color: var(--hn3-accent);
     color: #fff;
   }
 
-  .hn3-num-wrap {
+  .e {
     position: relative;
     display: inline-block;
     width: 20px;
     text-align: center;
   }
-  .hn3-num-real {
+  .f {
     position: relative;
     z-index: 1;
   }
-  .hn3-num-decoy {
+  .g {
     position: absolute;
     top: 0;
     left: 0;

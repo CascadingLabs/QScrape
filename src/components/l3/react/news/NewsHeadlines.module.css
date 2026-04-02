@@ -1,4 +1,4 @@
-.loading {
+.a {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -8,13 +8,13 @@
 	font-size: 14px;
 }
 
-.root {
+.b {
 	display: flex;
 	flex-direction: column;
 	gap: 0;
 }
 
-.breakingBar {
+.c {
 	background: var(--hn3-accent);
 	display: flex;
 	align-items: center;
@@ -23,25 +23,25 @@
 	font-family: var(--hn3-font-body);
 	font-size: 13px;
 }
-.breakingLabel {
+.d {
 	font-weight: 700;
 	color: #fff;
 	letter-spacing: 0.1em;
 	white-space: nowrap;
 	font-size: 11px;
 }
-.breakingTicker {
+.e {
 	color: #fff;
 	flex: 1;
 	overflow: hidden;
 }
 
-.topStories {
+.f {
 	display: flex;
 	flex-direction: column;
 	gap: 0;
 }
-.topItem {
+.g {
 	display: grid;
 	grid-template-columns: auto 1fr auto;
 	gap: 8px 12px;
@@ -49,10 +49,10 @@
 	padding: 14px 0;
 	border-bottom: 1px solid var(--hn3-border);
 }
-.topItem:last-child {
+.g:last-child {
 	border-bottom: none;
 }
-.topCat {
+.h {
 	font-family: var(--hn3-font-body);
 	font-size: 11px;
 	font-weight: 700;
@@ -61,7 +61,7 @@
 	color: var(--hn3-accent);
 	white-space: nowrap;
 }
-.topHeadline {
+.i {
 	font-family: var(--hn3-font-display);
 	font-size: 17px;
 	font-weight: 700;
@@ -70,19 +70,19 @@
 	color: var(--hn3-text);
 	margin: 0;
 }
-.topDate {
+.j {
 	font-family: var(--hn3-font-body);
 	font-size: 11px;
 	color: var(--hn3-muted);
 	white-space: nowrap;
 }
 
-.assembled {
+.k {
 	display: inline-flex;
 	flex-wrap: wrap;
 	gap: 0.25em;
 	align-items: baseline;
 }
-.assembledWord {
+.l {
 	display: inline;
 }

@@ -40,17 +40,17 @@ export default function NewsTagCloud() {
 	return (
 		<div>
 			<Show when={!tags()}>
-				<div class="hn3-tags-loading">Loading…</div>
+				<div class="a">Loading…</div>
 			</Show>
 			<Show when={tags()}>
-				<div class="hn3-tag-cloud">
-					<h3 class="hn3-tag-title">Tags</h3>
-					<div class="hn3-tag-list">
+				<div class="b">
+					<h3 class="c">Tags</h3>
+					<div class="d">
 						<For each={tags() ?? []}>
 							{(tag) => (
 								<a
 									href={`/l3/news/articles/?cat=${encodeURIComponent(tag)}`}
-									class="hn3-tag-pill"
+									class="e"
 								>
 									<TagCanvas tag={tag} />
 								</a>
@@ -60,7 +60,7 @@ export default function NewsTagCloud() {
 				</div>
 			</Show>
 			<style>{`
-				.hn3-tags-loading {
+				.a {
 					min-height: 60px;
 					display: flex;
 					align-items: center;
@@ -68,12 +68,12 @@ export default function NewsTagCloud() {
 					font-family: var(--hn3-font-body);
 					font-size: 14px;
 				}
-				.hn3-tag-cloud {
+				.b {
 					display: flex;
 					flex-direction: column;
 					gap: 12px;
 				}
-				.hn3-tag-title {
+				.c {
 					font-family: var(--hn3-font-body);
 					font-size: 11px;
 					font-weight: 700;
@@ -82,12 +82,12 @@ export default function NewsTagCloud() {
 					color: var(--hn3-muted);
 					margin: 0;
 				}
-				.hn3-tag-list {
+				.d {
 					display: flex;
 					flex-wrap: wrap;
 					gap: 8px;
 				}
-				.hn3-tag-pill {
+				.e {
 					display: inline-flex;
 					align-items: center;
 					background: var(--hn3-surface2);
@@ -97,7 +97,7 @@ export default function NewsTagCloud() {
 					text-decoration: none;
 					transition: border-color 0.15s;
 				}
-				.hn3-tag-pill:hover {
+				.e:hover {
 					border-color: var(--hn3-accent);
 				}
 			`}</style>

@@ -18,39 +18,39 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     <ThemeInit />
   </head>
   <body>
-    <header class="hn3-masthead">
-      <div class="hn3-masthead-inner">
-        <span class="hn3-date" id="hn3-date"></span>
-        <a href="/l3/news/" class="hn3-title-link">
-          <span class="hn3-title-main">Mountainhome Herald</span>
-          <span class="hn3-tagline">The Voice of the Deep</span>
+    <header class="a">
+      <div class="b">
+        <span class="c" id="_0"></span>
+        <a href="/l3/news/" class="d">
+          <span class="e">Mountainhome Herald</span>
+          <span class="f">The Voice of the Deep</span>
         </a>
-        <span class="hn3-edition">L3 · Islands Edition</span>
+        <span class="g">L3 · Islands Edition</span>
       </div>
-      <nav class="hn3-nav">
-        <div class="hn3-nav-inner">
-          <a href="/l3/news/" class="hn3-nav-item hn3-nav-active">Home</a>
-          <a href="/l3/news/articles/" class="hn3-nav-item">Articles</a>
-          <a href="/l3/" class="hn3-nav-item">← L3</a>
+      <nav class="h">
+        <div class="i">
+          <a href="/l3/news/" class="j k">Home</a>
+          <a href="/l3/news/articles/" class="j">Articles</a>
+          <a href="/l3/" class="j">← L3</a>
         </div>
       </nav>
     </header>
 
-    <main class="hn3-main">
-      <div class="hn3-layout">
-        <section class="hn3-primary">
+    <main class="l">
+      <div class="m">
+        <section class="n">
           <NewsHeadlines client:only="react" />
           <NewsFeed client:only="vue" />
         </section>
-        <aside class="hn3-sidebar-col">
+        <aside class="o">
           <NewsSidebar client:only="svelte" />
           <NewsStaffPanel client:only="solid-js" />
         </aside>
       </div>
     </main>
 
-    <footer class="hn3-footer">
-      <div class="hn3-footer-inner">
+    <footer class="p">
+      <div class="q">
         <span>© 2026 Mountainhome Herald</span>
         <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
       </div>
@@ -61,7 +61,7 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
 </html>
 
 <script>
-  document.getElementById('hn3-date')!.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('_0')!.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 </script>
 
 <style>
@@ -75,11 +75,11 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     line-height: 1.6;
   }
 
-  .hn3-masthead {
+  .a {
     background: var(--hn3-masthead-bg);
     color: var(--hn3-masthead-text);
   }
-  .hn3-masthead-inner {
+  .b {
     max-width: 1100px;
     margin: 0 auto;
     padding: 18px 24px;
@@ -88,18 +88,18 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     align-items: center;
     gap: 16px;
   }
-  .hn3-date {
+  .c {
     font-family: var(--hn3-font-body);
     font-size: 11px;
     color: #777;
   }
-  .hn3-title-link {
+  .d {
     text-align: center;
     text-decoration: none;
     color: inherit;
     display: block;
   }
-  .hn3-title-main {
+  .e {
     display: block;
     font-family: var(--hn3-font-display);
     font-size: clamp(22px, 3.5vw, 40px);
@@ -108,7 +108,7 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     line-height: 1.1;
     color: var(--hn3-masthead-text);
   }
-  .hn3-tagline {
+  .f {
     display: block;
     font-size: 11px;
     color: #777;
@@ -116,7 +116,7 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
-  .hn3-edition {
+  .g {
     font-family: var(--hn3-font-body);
     font-size: 11px;
     color: #777;
@@ -124,17 +124,17 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     font-style: italic;
   }
 
-  .hn3-nav {
+  .h {
     border-bottom: 2px solid var(--hn3-accent);
     background: #1a1a1a;
   }
-  .hn3-nav-inner {
+  .i {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 24px;
     display: flex;
   }
-  .hn3-nav-item {
+  .j {
     padding: 11px 16px;
     font-family: var(--hn3-font-body);
     font-size: 13px;
@@ -146,41 +146,41 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     border-bottom: 3px solid transparent;
     margin-bottom: -2px;
   }
-  .hn3-nav-item:hover { color: #fff; }
-  .hn3-nav-active { color: #fff; border-bottom-color: var(--hn3-accent); }
+  .j:hover { color: #fff; }
+  .k { color: #fff; border-bottom-color: var(--hn3-accent); }
 
-  .hn3-main {
+  .l {
     max-width: 1100px;
     margin: 0 auto;
     padding: 32px 24px;
   }
 
-  .hn3-layout {
+  .m {
     display: grid;
     grid-template-columns: 1fr 280px;
     gap: 32px;
   }
   @media (max-width: 768px) {
-    .hn3-layout { grid-template-columns: 1fr; }
+    .m { grid-template-columns: 1fr; }
   }
 
-  .hn3-primary {
+  .n {
     display: flex;
     flex-direction: column;
     gap: 24px;
   }
-  .hn3-sidebar-col {
+  .o {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
 
-  .hn3-footer {
+  .p {
     border-top: 1px solid var(--hn3-border);
     background: var(--hn3-masthead-bg);
     margin-top: 48px;
   }
-  .hn3-footer-inner {
+  .q {
     max-width: 1100px;
     margin: 0 auto;
     padding: 16px 24px;

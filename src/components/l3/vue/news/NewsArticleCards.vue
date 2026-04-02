@@ -21,27 +21,27 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <div v-if="!items" class="hn3-cards-loading">Loading…</div>
+  <div data-island="vue-article-cards">
+    <div v-if="!items" class="a">Loading…</div>
     <template v-else>
-      <p class="hn3-cards-count">{{ items.length }} article{{ items.length !== 1 ? 's' : '' }}</p>
-      <div class="hn3-cards-grid">
+      <p class="b">{{ items.length }} article{{ items.length !== 1 ? 's' : '' }}</p>
+      <div class="c">
         <article
           v-for="a in items"
           :key="a.id"
-          class="hn3-card"
-          :data-article-id="a.id"
+          class="d"
+          :data-0="a.id"
         >
-          <a :href="`/l3/news/article/${a.id}/`" class="hn3-card-img-link">
-            <img :src="a.image" :alt="a.headline" class="hn3-card-img" loading="lazy" />
+          <a :href="`/l3/news/article/${a.id}/`" class="e">
+            <img :src="a.image" :alt="a.headline" class="f" loading="lazy" />
           </a>
-          <div class="hn3-card-body">
-            <span class="hn3-cat" :data-cat="a.category"></span>
-            <h3 class="hn3-card-headline">
+          <div class="g">
+            <span class="h" :data-1="a.category"></span>
+            <h3 class="i">
               <a :href="`/l3/news/article/${a.id}/`">{{ a.headline }}</a>
             </h3>
-            <p class="hn3-card-excerpt">{{ a.excerpt }}</p>
-            <div class="hn3-card-meta">
+            <p class="j">{{ a.excerpt }}</p>
+            <div class="k">
               <span>{{ a.author }}</span>
               <span>{{ formatDate(a.published) }}</span>
             </div>
@@ -55,7 +55,7 @@ onMounted(() => {
 <style>
 @import '../../../../styles/l3/news.css';
 
-.hn3-cards-loading {
+.a {
 	min-height: 200px;
 	display: flex;
 	align-items: center;
@@ -64,47 +64,47 @@ onMounted(() => {
 	font-size: 14px;
 }
 
-.hn3-cards-count {
+.b {
 	font-family: var(--hn3-font-body);
 	font-size: 13px;
 	color: var(--hn3-muted);
 	margin: 0 0 16px;
 }
 
-.hn3-cards-grid {
+.c {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 24px;
 }
 @media (max-width: 900px) {
-	.hn3-cards-grid { grid-template-columns: repeat(2, 1fr); }
+	.c { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 560px) {
-	.hn3-cards-grid { grid-template-columns: 1fr; }
+	.c { grid-template-columns: 1fr; }
 }
 
-.hn3-card {
+.d {
 	background: var(--hn3-surface2);
 	border: 1px solid var(--hn3-border);
 	overflow: hidden;
 }
 
-.hn3-card-img-link { display: block; }
-.hn3-card-img {
+.e { display: block; }
+.f {
 	width: 100%;
 	aspect-ratio: 16 / 9;
 	object-fit: cover;
 	display: block;
 }
 
-.hn3-card-body {
+.g {
 	padding: 14px;
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
 }
 
-.hn3-cat {
+.h {
 	display: inline-block;
 	font-family: var(--hn3-font-body);
 	font-size: 11px;
@@ -113,26 +113,26 @@ onMounted(() => {
 	letter-spacing: 0.08em;
 	color: var(--hn3-accent);
 }
-.hn3-cat::before {
-	content: attr(data-cat);
+.h::before {
+	content: attr(data-1);
 }
 
-.hn3-card-headline {
+.i {
 	font-family: var(--hn3-font-display);
 	font-size: 15px;
 	font-weight: 700;
 	line-height: 1.35;
 	margin: 0;
 }
-.hn3-card-headline a {
+.i a {
 	color: var(--hn3-text);
 	text-decoration: none;
 }
-.hn3-card-headline a:hover {
+.i a:hover {
 	color: var(--hn3-accent);
 }
 
-.hn3-card-excerpt {
+.j {
 	font-family: var(--hn3-font-body);
 	font-size: 12px;
 	color: var(--hn3-muted);
@@ -140,7 +140,7 @@ onMounted(() => {
 	margin: 0;
 }
 
-.hn3-card-meta {
+.k {
 	display: flex;
 	justify-content: space-between;
 	font-family: var(--hn3-font-body);
