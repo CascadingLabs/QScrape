@@ -117,6 +117,22 @@ Every L3 page includes `L3Guard.astro` (`src/components/l3/L3Guard.astro`), whic
 | Honeypot buttons | A fixed `<div>` with `opacity: 0.001` contains four fake interactive elements (`Submit`, `Load All`, `Export`, `Reset`) with realistic class names and `data-action` attributes. Invisible to users, visible in the DOM to scrapers. | Filter elements by computed opacity or skip elements inside `aria-hidden="true"` containers. |
 | No source comments | All L3 component source files are stripped of `//`, `/* */`, and `<!-- -->` comments — no hints about anti-bot technique or implementation details. | N/A (code analysis required to understand obfuscation). |
 
+### L3Guard environment variable
+
+L3Guard is controlled by the `PUBLIC_L3_GUARD` environment variable. It defaults to enabled (guard active) when the variable is unset or any value other than `"false"`.
+
+| Variable | Default | Effect |
+|----------|---------|--------|
+| `PUBLIC_L3_GUARD` | (unset = enabled) | Set to `false` to disable L3Guard (honeypot buttons, DevTools detection, right-click blocking) at build time. Useful for local development and testing. |
+
+To disable locally, add to `.env`:
+
+```
+PUBLIC_L3_GUARD=false
+```
+
+The check runs at Astro build time in `L3Guard.astro` frontmatter — when disabled, the component renders nothing (no honeypot div, no inline script).
+
 ### L3 async loading gates (`fakeGetMs`)
 
 Every L3 island calls `fakeGetMs(data, baseMs, jitterMs)` from `src/data/api.ts` on mount. Delays are staggered so all four islands finish at different times (worst case ~1050ms total):

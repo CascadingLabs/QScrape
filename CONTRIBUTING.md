@@ -35,6 +35,20 @@ uvx prek install
 uvx prek run --all-files
 ```
 
+### Environment variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PUBLIC_L3_GUARD` | (unset = enabled) | Set to `false` to disable L3Guard anti-bot defenses (DevTools detection, honeypot buttons, right-click blocking) at build time. Useful during local development so you can use browser DevTools on L3 pages without triggering the 404 takeover. |
+
+To disable L3Guard locally, create a `.env` file in the project root:
+
+```
+PUBLIC_L3_GUARD=false
+```
+
+This is a build-time Astro public env var — changes require restarting the dev server.
+
 ### Run the dev server
 
 ```bash
