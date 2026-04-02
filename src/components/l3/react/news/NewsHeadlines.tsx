@@ -1,6 +1,3 @@
-// @qscrape L3 / react island / news — breaking ticker + top 3 headlines
-// Anti-bot: CSS-assembled text — words rendered in shuffled DOM order, CSS order restores
-// visual sequence. element.textContent returns words scrambled with no spaces.
 import { useEffect, useState } from 'react';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -17,21 +14,19 @@ function seedHash(s: string): number {
 	);
 }
 
-/** Renders text with words in shuffled DOM order but correct CSS flex order. */
 function AssembledText({ text }: { text: string }) {
 	const words = text.split(' ');
 	const seed = seedHash(text);
 	const indexed = words.map((word, i) => ({ word, i }));
-	// Deterministic DOM-order shuffle seeded by text
 	const shuffled = [...indexed].sort(
 		(a, b) =>
 			((seed * (a.i + 3)) % (words.length + 1)) -
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.k}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.l}>
 					{word}
 				</span>
 			))}
@@ -52,27 +47,27 @@ export default function NewsHeadlines() {
 	}, []);
 
 	if (!data) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	return (
-		<div className={styles.root} data-island="react-headlines">
+		<div className={styles.b} data-island="react-headlines">
 			{data.breaking.length > 0 && (
-				<div className={styles.breakingBar}>
-					<span className={styles.breakingLabel}>BREAKING</span>
-					<span className={styles.breakingTicker}>
+				<div className={styles.c}>
+					<span className={styles.d}>BREAKING</span>
+					<span className={styles.e}>
 						<AssembledText text={data.breaking[0].headline} />
 					</span>
 				</div>
 			)}
-			<div className={styles.topStories}>
+			<div className={styles.f}>
 				{data.top.map((a) => (
-					<article key={a.id} className={styles.topItem} data-article-id={a.id}>
-						<span className={styles.topCat}>{a.category}</span>
-						<h3 className={styles.topHeadline}>
+					<article key={a.id} className={styles.g} data-0={a.id}>
+						<span className={styles.h}>{a.category}</span>
+						<h3 className={styles.i}>
 							<AssembledText text={a.headline} />
 						</h3>
-						<span className={styles.topDate}>{a.published.slice(0, 10)}</span>
+						<span className={styles.j}>{a.published.slice(0, 10)}</span>
 					</article>
 				))}
 			</div>

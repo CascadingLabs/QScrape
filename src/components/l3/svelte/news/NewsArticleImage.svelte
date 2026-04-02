@@ -1,6 +1,4 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / news — article image + caption + credit (article page)
-// Anti-bot: decoy overlay on image credit text
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -24,20 +22,19 @@ onMount(() => {
 
 <div data-island="svelte-article-image">
   {#if !article}
-    <div class="hn3-img-loading">Loading…</div>
+    <div class="a">Loading…</div>
   {:else}
-    <figure class="hn3-figure" data-article-id={article.id}>
+    <figure class="b" data-0={article.id}>
       <img
         src={article.image}
         alt={article.headline}
-        class="hn3-fig-img"
+        class="c"
       />
-      <figcaption class="hn3-figcaption">
-        <span class="hn3-caption-text">{article.imageCaption}</span>
-        <!-- Anti-bot: decoy overlay on credit text -->
-        <span class="hn3-credit-wrap">
-          <span class="hn3-credit-real">{article.imageCredit}</span>
-          <span class="hn3-credit-decoy" aria-hidden="true">Image courtesy of unknown archive</span>
+      <figcaption class="d">
+        <span class="e">{article.imageCaption}</span>
+        <span class="f">
+          <span class="g">{article.imageCredit}</span>
+          <span class="h" aria-hidden="true">Image courtesy of unknown archive</span>
         </span>
       </figcaption>
     </figure>
@@ -47,7 +44,7 @@ onMount(() => {
 <style>
   @import '../../../../styles/l3/news.css';
 
-  .hn3-img-loading {
+  .a {
     min-height: 200px;
     display: flex;
     align-items: center;
@@ -56,18 +53,18 @@ onMount(() => {
     font-size: 14px;
   }
 
-  .hn3-figure {
+  .b {
     margin: 0;
   }
 
-  .hn3-fig-img {
+  .c {
     width: 100%;
     display: block;
     max-height: 420px;
     object-fit: cover;
   }
 
-  .hn3-figcaption {
+  .d {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -79,22 +76,21 @@ onMount(() => {
     border-bottom: 1px solid var(--hn3-border);
   }
 
-  .hn3-caption-text {
+  .e {
     flex: 1;
     font-style: italic;
   }
 
-  /* Anti-bot: real credit vs decoy */
-  .hn3-credit-wrap {
+  .f {
     position: relative;
     display: inline-block;
     white-space: nowrap;
   }
-  .hn3-credit-real {
+  .g {
     position: relative;
     z-index: 1;
   }
-  .hn3-credit-decoy {
+  .h {
     position: absolute;
     top: 0;
     left: 0;

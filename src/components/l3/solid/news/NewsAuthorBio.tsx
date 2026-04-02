@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / news — author bio + related articles (article page)
-// Anti-bot: author email drawn to <canvas> — not in DOM text
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -35,7 +33,6 @@ function EmailCanvas(props: { email: string }) {
 			width={220}
 			height={18}
 			style={{ display: 'inline-block' }}
-			aria-label="email"
 		/>
 	);
 }
@@ -60,7 +57,7 @@ export default function NewsAuthorBio(props: Props) {
 	return (
 		<div data-island="solid-author-bio">
 			<Show when={!data()}>
-				<div class="hn3-bio-loading">Loading…</div>
+				<div class="a">Loading…</div>
 			</Show>
 			<Show when={data()}>
 				{(() => {
@@ -73,34 +70,27 @@ export default function NewsAuthorBio(props: Props) {
 					return (
 						<>
 							{reporter && (
-								<div class="hn3-bio-card">
-									<h3 class="hn3-bio-name">{reporter.name}</h3>
-									<p class="hn3-bio-role">
+								<div class="b">
+									<h3 class="c">{reporter.name}</h3>
+									<p class="d">
 										{reporter.title} · {reporter.beat}
 									</p>
-									<span class="hn3-bio-email">
+									<span class="e">
 										<EmailCanvas email={reporter.email} />
 									</span>
 								</div>
 							)}
 							{related.length > 0 && (
-								<div class="hn3-related">
-									<h3 class="hn3-related-title">
-										More from {article.category}
-									</h3>
-									<ul class="hn3-related-list">
+								<div class="f">
+									<h3 class="g">More from {article.category}</h3>
+									<ul class="h">
 										<For each={related}>
 											{(a) => (
-												<li class="hn3-related-item" data-article-id={a.id}>
-													<a
-														href={`/l3/news/article/${a.id}/`}
-														class="hn3-related-link"
-													>
+												<li class="i" data-0={a.id}>
+													<a href={`/l3/news/article/${a.id}/`} class="j">
 														{a.headline}
 													</a>
-													<span class="hn3-related-date">
-														{a.published.slice(0, 10)}
-													</span>
+													<span class="k">{a.published.slice(0, 10)}</span>
 												</li>
 											)}
 										</For>
@@ -112,7 +102,7 @@ export default function NewsAuthorBio(props: Props) {
 				})()}
 			</Show>
 			<style>{`
-				.hn3-bio-loading {
+				.a {
 					min-height: 80px;
 					display: flex;
 					align-items: center;
@@ -120,7 +110,7 @@ export default function NewsAuthorBio(props: Props) {
 					font-family: var(--hn3-font-body);
 					font-size: 14px;
 				}
-				.hn3-bio-card {
+				.b {
 					background: var(--hn3-surface2);
 					border: 1px solid var(--hn3-border);
 					padding: 16px;
@@ -129,7 +119,7 @@ export default function NewsAuthorBio(props: Props) {
 					flex-direction: column;
 					gap: 4px;
 				}
-				.hn3-bio-name {
+				.c {
 					font-family: var(--hn3-font-display);
 					font-size: 15px;
 					font-weight: 700;
@@ -137,16 +127,16 @@ export default function NewsAuthorBio(props: Props) {
 					margin: 0;
 					letter-spacing: -0.2px;
 				}
-				.hn3-bio-role {
+				.d {
 					font-family: var(--hn3-font-body);
 					font-size: 12px;
 					color: var(--hn3-muted);
 					margin: 0;
 					font-style: italic;
 				}
-				.hn3-bio-email { display: block; }
-				.hn3-related {}
-				.hn3-related-title {
+				.e { display: block; }
+				.f {}
+				.g {
 					font-family: var(--hn3-font-display);
 					font-size: 15px;
 					font-weight: 700;
@@ -156,7 +146,7 @@ export default function NewsAuthorBio(props: Props) {
 					border-bottom: 2px solid var(--hn3-accent);
 					letter-spacing: -0.2px;
 				}
-				.hn3-related-list {
+				.h {
 					list-style: none;
 					padding: 0;
 					margin: 0;
@@ -164,15 +154,15 @@ export default function NewsAuthorBio(props: Props) {
 					flex-direction: column;
 					gap: 0;
 				}
-				.hn3-related-item {
+				.i {
 					display: flex;
 					flex-direction: column;
 					gap: 2px;
 					padding: 10px 0;
 					border-bottom: 1px solid var(--hn3-border);
 				}
-				.hn3-related-item:last-child { border-bottom: none; }
-				.hn3-related-link {
+				.i:last-child { border-bottom: none; }
+				.j {
 					font-family: var(--hn3-font-display);
 					font-size: 14px;
 					font-weight: 600;
@@ -180,8 +170,8 @@ export default function NewsAuthorBio(props: Props) {
 					text-decoration: none;
 					line-height: 1.35;
 				}
-				.hn3-related-link:hover { color: var(--hn3-accent); }
-				.hn3-related-date {
+				.j:hover { color: var(--hn3-accent); }
+				.k {
 					font-family: var(--hn3-font-body);
 					font-size: 11px;
 					color: var(--hn3-muted);
