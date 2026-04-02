@@ -1,13 +1,244 @@
 ---
-import TaxesApp from '../../../components/l2/react/taxes/TaxesApp';
-import TaxesAppSolid from '../../../components/l2/solid/taxes/TaxesApp';
-import TaxesAppSvelte from '../../../components/l2/svelte/taxes/TaxesApp.svelte';
-import TaxesAppVue from '../../../components/l2/vue/taxes/TaxesApp.vue';
-import L2SiteLayout from '../../../layouts/L2SiteLayout.astro';
+import ReactIndexSidebar from '../../../components/l2/react/taxes/TaxesIndexSidebar';
+import ReactRecentRecords from '../../../components/l2/react/taxes/TaxesRecentRecords';
+import ReactResultsGrid from '../../../components/l2/react/taxes/TaxesResultsGrid';
+// ── React islands ────────────────────────────────────────────────────────────
+import ReactSearchForm from '../../../components/l2/react/taxes/TaxesSearchForm';
+import SolidIndexSidebar from '../../../components/l2/solid/taxes/TaxesIndexSidebar';
+import SolidRecentRecords from '../../../components/l2/solid/taxes/TaxesRecentRecords';
+import SolidResultsGrid from '../../../components/l2/solid/taxes/TaxesResultsGrid';
+// ── Solid islands ────────────────────────────────────────────────────────────
+import SolidSearchForm from '../../../components/l2/solid/taxes/TaxesSearchForm';
+import SvelteIndexSidebar from '../../../components/l2/svelte/taxes/TaxesIndexSidebar.svelte';
+import SvelteRecentRecords from '../../../components/l2/svelte/taxes/TaxesRecentRecords.svelte';
+import SvelteResultsGrid from '../../../components/l2/svelte/taxes/TaxesResultsGrid.svelte';
+// ── Svelte islands ───────────────────────────────────────────────────────────
+import SvelteSearchForm from '../../../components/l2/svelte/taxes/TaxesSearchForm.svelte';
+import VueIndexSidebar from '../../../components/l2/vue/taxes/TaxesIndexSidebar.vue';
+import VueRecentRecords from '../../../components/l2/vue/taxes/TaxesRecentRecords.vue';
+import VueResultsGrid from '../../../components/l2/vue/taxes/TaxesResultsGrid.vue';
+// ── Vue islands ──────────────────────────────────────────────────────────────
+import VueSearchForm from '../../../components/l2/vue/taxes/TaxesSearchForm.vue';
+import ThemeInit from '../../../components/ThemeInit.astro';
 ---
-<L2SiteLayout title="Eldoria Registry of Deeds — L2" description="Eldoria Registry of Deeds — QScrape L2 test site. React, Vue, Svelte, and Solid.">
-  <TaxesApp slot="react" client:only="react" />
-  <TaxesAppVue slot="vue" client:only="vue" />
-  <TaxesAppSvelte slot="svelte" client:only="svelte" />
-  <TaxesAppSolid slot="solid" client:only="solid-js" />
-</L2SiteLayout>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Eldoria Registry of Deeds — L2</title>
+    <meta name="description" content="Eldoria Registry of Deeds — QScrape L2 test site. Framework-shuffled islands: React, Vue, Svelte, Solid." />
+    <ThemeInit />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background: var(--er-bg, #f8f9fa);
+        color: var(--er-text, #212529);
+        font-family: var(--er-font, "IBM Plex Sans", system-ui, sans-serif);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      /* ── Static chrome ──────────────────────────────── */
+      .er2-header {
+        background: var(--er-primary, #1d4ed8);
+        border-bottom: 3px solid rgba(0,0,0,0.15);
+      }
+      .er2-header-top {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .er2-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+      }
+      .er2-crest {
+        font-size: 24px;
+        line-height: 1;
+        color: #fff;
+      }
+      .er2-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.2px;
+        line-height: 1.2;
+      }
+      .er2-subtitle {
+        font-size: 11px;
+        color: rgba(255,255,255,0.7);
+        margin-top: 1px;
+      }
+      .er2-nav { display: flex; gap: 4px; }
+      .er2-nav-link {
+        padding: 6px 12px;
+        font-size: 12px;
+        color: rgba(255,255,255,0.7);
+        text-decoration: none;
+        border-radius: var(--er-radius, 4px);
+        transition: color 0.12s, background 0.12s;
+      }
+      .er2-nav-link:hover {
+        color: #fff;
+        background: rgba(255,255,255,0.15);
+      }
+      .er2-edition {
+        font-size: 11px;
+        color: rgba(255,255,255,0.5);
+        font-style: italic;
+      }
+
+      /* ── Layout ─────────────────────────────────────── */
+      .er2-layout {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 0 40px;
+      }
+      .er2-search-bar {
+        padding: 20px 24px 0;
+      }
+      .er2-body {
+        display: grid;
+        grid-template-columns: 1fr 260px;
+        gap: 24px;
+        padding: 20px 24px 0;
+      }
+      @media (max-width: 860px) {
+        .er2-body { grid-template-columns: 1fr; }
+      }
+      .er2-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* ── Footer ─────────────────────────────────────── */
+      .er2-footer {
+        border-top: 1px solid var(--er-border, #ced4da);
+        background: var(--er-surface, #fff);
+        margin-top: 40px;
+      }
+      .er2-footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 14px 24px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--er-muted, #6c757d);
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Static header -->
+    <header class="er2-header">
+      <div class="er2-header-top">
+        <div class="er2-brand">
+          <div class="er2-crest">⚒</div>
+          <div>
+            <div class="er2-title">Eldoria Registry of Deeds</div>
+            <div class="er2-subtitle">Granite Flats County · Official Records System</div>
+          </div>
+        </div>
+        <nav class="er2-nav">
+          <a href="/l2/" class="er2-nav-link">← L2</a>
+          <a href="/l2/taxes/how-to/" class="er2-nav-link">How-To Guides</a>
+          <a href="/l2/taxes/recording-fees/" class="er2-nav-link">Recording Fees</a>
+        </nav>
+        <span class="er2-edition">L2 · Shuffled Islands</span>
+      </div>
+    </header>
+
+    <div class="er2-layout">
+
+      <!-- ── Search Form slot ──────────────────────────── -->
+      <div class="er2-search-bar">
+        <div class="er2-slot" data-slot="search-form">
+          <div data-fw="react" hidden><ReactSearchForm client:only="react" /></div>
+          <div data-fw="vue" hidden><VueSearchForm client:only="vue" /></div>
+          <div data-fw="svelte" hidden><SvelteSearchForm client:only="svelte" /></div>
+          <div data-fw="solid" hidden><SolidSearchForm client:only="solid-js" /></div>
+        </div>
+      </div>
+
+      <div class="er2-body">
+
+        <!-- ── Results Grid slot ─────────────────────────── -->
+        <main>
+          <div class="er2-slot" data-slot="results-grid">
+            <div data-fw="react" hidden><ReactResultsGrid client:only="react" /></div>
+            <div data-fw="vue" hidden><VueResultsGrid client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteResultsGrid client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidResultsGrid client:only="solid-js" /></div>
+          </div>
+        </main>
+
+        <!-- ── Sidebar slots ──────────────────────────────── -->
+        <aside class="er2-sidebar">
+
+          <!-- Index Sidebar slot -->
+          <div class="er2-slot" data-slot="index-sidebar">
+            <div data-fw="react" hidden><ReactIndexSidebar client:only="react" /></div>
+            <div data-fw="vue" hidden><VueIndexSidebar client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteIndexSidebar client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidIndexSidebar client:only="solid-js" /></div>
+          </div>
+
+          <!-- Recent Records slot -->
+          <div class="er2-slot" data-slot="recent-records">
+            <div data-fw="react" hidden><ReactRecentRecords client:only="react" /></div>
+            <div data-fw="vue" hidden><VueRecentRecords client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteRecentRecords client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidRecentRecords client:only="solid-js" /></div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+
+    <footer class="er2-footer">
+      <div class="er2-footer-inner">
+        <span>Eldoria Registry of Deeds · Granite Flats County · Year 312</span>
+        <span>Official records system — for research and informational purposes only</span>
+      </div>
+    </footer>
+
+    <!--
+      Framework shuffler — runs synchronously after HTML is parsed.
+      Each slot independently picks a random framework.
+      All 16 client:only islands still hydrate (just hidden unless selected).
+    -->
+    <script>
+      (function () {
+        // Permutation shuffle — guarantees all 4 frameworks appear (one per slot)
+        var fws = ['react', 'vue', 'svelte', 'solid'];
+        for (var i = fws.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = fws[i]; fws[i] = fws[j]; fws[j] = tmp;
+        }
+        var idx = 0;
+        document.querySelectorAll('.er2-slot').forEach(function (slot) {
+          var fw = fws[idx++ % fws.length];
+          slot.setAttribute('data-active-fw', fw);
+          slot.querySelectorAll('[data-fw]').forEach(function (el) {
+            if ((el as HTMLElement).dataset.fw === fw) {
+              (el as HTMLElement).removeAttribute('hidden');
+            }
+          });
+        });
+      })();
+    </script>
+
+  </body>
+</html>

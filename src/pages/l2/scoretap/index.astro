@@ -1,13 +1,216 @@
 ---
-import ScoretapApp from '../../../components/l2/react/scoretap/ScoretapApp';
-import ScoretapAppSolid from '../../../components/l2/solid/scoretap/ScoretapApp';
-import ScoretapAppSvelte from '../../../components/l2/svelte/scoretap/ScoretapApp.svelte';
-import ScoretapAppVue from '../../../components/l2/vue/scoretap/ScoretapApp.vue';
-import L2SiteLayout from '../../../layouts/L2SiteLayout.astro';
+// ── React islands ────────────────────────────────────────────────────────────
+import ReactGameFilter from '../../../components/l2/react/scoretap/ScoretapGameFilter';
+import ReactLiveScores from '../../../components/l2/react/scoretap/ScoretapLiveScores';
+import ReactRankings from '../../../components/l2/react/scoretap/ScoretapRankings';
+import ReactUpcoming from '../../../components/l2/react/scoretap/ScoretapUpcoming';
+// ── Solid islands ────────────────────────────────────────────────────────────
+import SolidGameFilter from '../../../components/l2/solid/scoretap/ScoretapGameFilter';
+import SolidLiveScores from '../../../components/l2/solid/scoretap/ScoretapLiveScores';
+import SolidRankings from '../../../components/l2/solid/scoretap/ScoretapRankings';
+import SolidUpcoming from '../../../components/l2/solid/scoretap/ScoretapUpcoming';
+// ── Svelte islands ───────────────────────────────────────────────────────────
+import SvelteGameFilter from '../../../components/l2/svelte/scoretap/ScoretapGameFilter.svelte';
+import SvelteLiveScores from '../../../components/l2/svelte/scoretap/ScoretapLiveScores.svelte';
+import SvelteRankings from '../../../components/l2/svelte/scoretap/ScoretapRankings.svelte';
+import SvelteUpcoming from '../../../components/l2/svelte/scoretap/ScoretapUpcoming.svelte';
+// ── Vue islands ──────────────────────────────────────────────────────────────
+import VueGameFilter from '../../../components/l2/vue/scoretap/ScoretapGameFilter.vue';
+import VueLiveScores from '../../../components/l2/vue/scoretap/ScoretapLiveScores.vue';
+import VueRankings from '../../../components/l2/vue/scoretap/ScoretapRankings.vue';
+import VueUpcoming from '../../../components/l2/vue/scoretap/ScoretapUpcoming.vue';
+import ThemeInit from '../../../components/ThemeInit.astro';
 ---
-<L2SiteLayout title="ScoreTap — L2" description="ScoreTap — QScrape L2 test site. React, Vue, Svelte, and Solid.">
-  <ScoretapApp slot="react" client:only="react" />
-  <ScoretapAppVue slot="vue" client:only="vue" />
-  <ScoretapAppSvelte slot="svelte" client:only="svelte" />
-  <ScoretapAppSolid slot="solid" client:only="solid-js" />
-</L2SiteLayout>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ScoreTap — L2</title>
+    <meta name="description" content="ScoreTap — QScrape L2 test site. Framework-shuffled islands: React, Vue, Svelte, Solid." />
+    <ThemeInit />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background: var(--st-bg, #0f1117);
+        color: var(--st-text, #e8e8f0);
+        font-family: var(--st-font-ui, "Inter", system-ui, sans-serif);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      /* ── Static chrome ──────────────────────────────── */
+      .st2-header {
+        background: var(--st-surface, #1a1d27);
+        border-bottom: 1px solid var(--st-border, #2d3148);
+      }
+      .st2-header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 12px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .st2-logo {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--st-text, #e8e8f0);
+        text-decoration: none;
+        letter-spacing: -0.3px;
+        margin-right: auto;
+      }
+      .st2-nav { display: flex; gap: 4px; }
+      .st2-nav-link {
+        padding: 6px 12px;
+        font-size: 12px;
+        color: var(--st-muted, #6b7280);
+        text-decoration: none;
+        border-radius: var(--st-radius, 6px);
+        transition: color 0.12s, background 0.12s;
+      }
+      .st2-nav-link:hover {
+        color: var(--st-text, #e8e8f0);
+        background: var(--st-surface2, #21253a);
+      }
+      .st2-edition {
+        font-size: 11px;
+        color: var(--st-muted, #6b7280);
+        font-style: italic;
+      }
+
+      /* ── Layout ─────────────────────────────────────── */
+      .st2-layout {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 0 40px;
+      }
+      .st2-body {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 24px;
+        padding: 24px 24px 0;
+      }
+      @media (max-width: 860px) {
+        .st2-body { grid-template-columns: 1fr; }
+      }
+      .st2-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* ── Footer ─────────────────────────────────────── */
+      .st2-footer {
+        border-top: 1px solid var(--st-border, #2d3148);
+        background: var(--st-surface, #1a1d27);
+        margin-top: 40px;
+      }
+      .st2-footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--st-muted, #6b7280);
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Static header -->
+    <header class="st2-header">
+      <div class="st2-header-inner">
+        <a href="/l2/scoretap/" class="st2-logo">ScoreTap</a>
+        <nav class="st2-nav">
+          <a href="/l2/" class="st2-nav-link">← L2</a>
+        </nav>
+        <span class="st2-edition">L2 · Shuffled Islands</span>
+      </div>
+    </header>
+
+    <div class="st2-layout">
+
+      <!-- ── Game Filter slot ──────────────────────────── -->
+      <div class="st2-slot" data-slot="game-filter">
+        <div data-fw="react" hidden><ReactGameFilter client:only="react" /></div>
+        <div data-fw="vue" hidden><VueGameFilter client:only="vue" /></div>
+        <div data-fw="svelte" hidden><SvelteGameFilter client:only="svelte" /></div>
+        <div data-fw="solid" hidden><SolidGameFilter client:only="solid-js" /></div>
+      </div>
+
+      <div class="st2-body">
+
+        <!-- ── Live Scores slot ──────────────────────────── -->
+        <main>
+          <div class="st2-slot" data-slot="live-scores">
+            <div data-fw="react" hidden><ReactLiveScores client:only="react" /></div>
+            <div data-fw="vue" hidden><VueLiveScores client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteLiveScores client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidLiveScores client:only="solid-js" /></div>
+          </div>
+        </main>
+
+        <!-- ── Sidebar slots ──────────────────────────────── -->
+        <aside class="st2-sidebar">
+
+          <!-- Upcoming slot -->
+          <div class="st2-slot" data-slot="upcoming">
+            <div data-fw="react" hidden><ReactUpcoming client:only="react" /></div>
+            <div data-fw="vue" hidden><VueUpcoming client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteUpcoming client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidUpcoming client:only="solid-js" /></div>
+          </div>
+
+          <!-- Rankings slot -->
+          <div class="st2-slot" data-slot="rankings">
+            <div data-fw="react" hidden><ReactRankings client:only="react" /></div>
+            <div data-fw="vue" hidden><VueRankings client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteRankings client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidRankings client:only="solid-js" /></div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+
+    <footer class="st2-footer">
+      <div class="st2-footer-inner">
+        <span>© 2026 ScoreTap. QScrape L2 Test Site.</span>
+        <span>Live scores update every ~8 seconds</span>
+      </div>
+    </footer>
+
+    <!--
+      Framework shuffler — runs synchronously after HTML is parsed.
+      Each slot independently picks a random framework.
+      All 16 client:only islands still hydrate (just hidden unless selected).
+    -->
+    <script>
+      (function () {
+        // Permutation shuffle — guarantees all 4 frameworks appear (one per slot)
+        var fws = ['react', 'vue', 'svelte', 'solid'];
+        for (var i = fws.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = fws[i]; fws[i] = fws[j]; fws[j] = tmp;
+        }
+        var idx = 0;
+        document.querySelectorAll('.st2-slot').forEach(function (slot) {
+          var fw = fws[idx++ % fws.length];
+          slot.setAttribute('data-active-fw', fw);
+          slot.querySelectorAll('[data-fw]').forEach(function (el) {
+            if ((el as HTMLElement).dataset.fw === fw) {
+              (el as HTMLElement).removeAttribute('hidden');
+            }
+          });
+        });
+      })();
+    </script>
+
+  </body>
+</html>
