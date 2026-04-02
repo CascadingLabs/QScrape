@@ -1,7 +1,4 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / scoretap — live match scores ticker
-// Anti-bot: decoy overlay — real score at z-index 1, fake score at z-index 2
-// (color: transparent, pointer-events: none). DOM has both; scraper must resolve z-index.
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import { liveMatches, type Match } from '../../../../data/scoretap/data';
@@ -24,31 +21,30 @@ onMount(() => {
 
 <div data-island="svelte-live-ticker">
   {#if !rows}
-    <div class="st3-ticker-loading">Loading…</div>
+    <div class="a">Loading…</div>
   {:else}
-    <div class="st3-ticker">
-      <div class="st3-ticker-header">
-        <span class="st3-pulse-dot" aria-hidden="true"></span>
-        <span class="st3-ticker-title">Live Now</span>
+    <div class="b">
+      <div class="c">
+        <span class="d" aria-hidden="true"></span>
+        <span class="e">Live Now</span>
       </div>
       {#each rows as row}
-        <div class="st3-ticker-row" data-match-id={row.id} data-game={row.game}>
-          <div class="st3-ticker-event">{row.event}</div>
-          <div class="st3-ticker-matchup">
-            <span class="st3-ticker-team">{row.teamA}</span>
-            <!-- Anti-bot decoy: real score below, fake score overlaid -->
-            <span class="st3-score-wrap">
-              <span class="st3-score-real">{row.scoreA}</span>
-              <span class="st3-score-decoy" aria-hidden="true">{row.fakeScoreA}</span>
+        <div class="f" data-0={row.id} data-1={row.game}>
+          <div class="g">{row.event}</div>
+          <div class="h">
+            <span class="i">{row.teamA}</span>
+            <span class="j">
+              <span class="k">{row.scoreA}</span>
+              <span class="l" aria-hidden="true">{row.fakeScoreA}</span>
             </span>
-            <span class="st3-ticker-sep">:</span>
-            <span class="st3-score-wrap">
-              <span class="st3-score-real">{row.scoreB}</span>
-              <span class="st3-score-decoy" aria-hidden="true">{row.fakeScoreB}</span>
+            <span class="m">:</span>
+            <span class="j">
+              <span class="k">{row.scoreB}</span>
+              <span class="l" aria-hidden="true">{row.fakeScoreB}</span>
             </span>
-            <span class="st3-ticker-team st3-ticker-team-b">{row.teamB}</span>
+            <span class="i n">{row.teamB}</span>
           </div>
-          <div class="st3-ticker-meta">{row.mapOrGame}</div>
+          <div class="o">{row.mapOrGame}</div>
         </div>
       {/each}
     </div>
@@ -58,7 +54,7 @@ onMount(() => {
 <style>
   @import '../../../../styles/l3/scoretap.css';
 
-  .st3-ticker-loading {
+  .a {
     min-height: 100px;
     display: flex;
     align-items: center;
@@ -67,14 +63,14 @@ onMount(() => {
     font-size: 14px;
   }
 
-  .st3-ticker {
+  .b {
     background: var(--st3-surface);
     border: 1px solid var(--st3-border);
     border-radius: var(--st3-radius);
     overflow: hidden;
   }
 
-  .st3-ticker-header {
+  .c {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -83,7 +79,7 @@ onMount(() => {
     border-bottom: 1px solid var(--st3-border);
   }
 
-  .st3-pulse-dot {
+  .d {
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -100,7 +96,7 @@ onMount(() => {
     100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
   }
 
-  .st3-ticker-title {
+  .e {
     font-family: var(--st3-font-ui);
     font-size: 11px;
     font-weight: 700;
@@ -109,18 +105,18 @@ onMount(() => {
     color: var(--st3-live);
   }
 
-  .st3-ticker-row {
+  .f {
     padding: 12px 14px;
     border-bottom: 1px solid var(--st3-border);
     display: flex;
     flex-direction: column;
     gap: 6px;
   }
-  .st3-ticker-row:last-child {
+  .f:last-child {
     border-bottom: none;
   }
 
-  .st3-ticker-event {
+  .g {
     font-family: var(--st3-font-ui);
     font-size: 10px;
     color: var(--st3-muted);
@@ -128,44 +124,43 @@ onMount(() => {
     letter-spacing: 0.06em;
   }
 
-  .st3-ticker-matchup {
+  .h {
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
-  .st3-ticker-team {
+  .i {
     font-family: var(--st3-font-ui);
     font-size: 13px;
     font-weight: 600;
     color: var(--st3-text);
     flex: 1;
   }
-  .st3-ticker-team-b {
+  .n {
     text-align: right;
   }
 
-  .st3-ticker-sep {
+  .m {
     font-family: var(--st3-font-score);
     font-size: 14px;
     font-weight: 700;
     color: var(--st3-muted);
   }
 
-  .st3-ticker-meta {
+  .o {
     font-family: var(--st3-font-ui);
     font-size: 11px;
     color: var(--st3-muted);
   }
 
-  /* Anti-bot: decoy overlay on scores */
-  .st3-score-wrap {
+  .j {
     position: relative;
     display: inline-block;
     min-width: 20px;
     text-align: center;
   }
-  .st3-score-real {
+  .k {
     font-family: var(--st3-font-score);
     font-size: 15px;
     font-weight: 700;
@@ -173,7 +168,7 @@ onMount(() => {
     position: relative;
     z-index: 1;
   }
-  .st3-score-decoy {
+  .l {
     position: absolute;
     top: 0;
     left: 0;

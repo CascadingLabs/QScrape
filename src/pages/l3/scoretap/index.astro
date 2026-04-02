@@ -16,36 +16,36 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     <ThemeInit />
   </head>
   <body>
-    <header class="st3-masthead">
-      <div class="st3-masthead-inner">
-        <a href="/l3/scoretap/" class="st3-logo-link">
-          <span class="st3-logo">Score<span class="st3-logo-accent">Tap</span></span>
+    <header class="a">
+      <div class="b">
+        <a href="/l3/scoretap/" class="c">
+          <span class="d">Score<span class="e">Tap</span></span>
         </a>
-        <nav class="st3-nav" aria-label="Main navigation">
-          <a href="/l3/scoretap/" class="st3-nav-item st3-nav-active">Home</a>
-          <a href="/l3/scoretap/teams/" class="st3-nav-item">Teams</a>
-          <a href="/l3/" class="st3-nav-item st3-nav-back">← L3</a>
+        <nav class="f">
+          <a href="/l3/scoretap/" class="g h">Home</a>
+          <a href="/l3/scoretap/teams/" class="g">Teams</a>
+          <a href="/l3/" class="g i">&larr; L3</a>
         </nav>
       </div>
     </header>
 
-    <main class="st3-main">
-      <div class="st3-layout">
-        <section class="st3-primary">
+    <main class="j">
+      <div class="k">
+        <section class="l">
           <ScoretapGameFilter client:only="react" />
           <ScoretapEvents client:only="vue" />
         </section>
-        <aside class="st3-sidebar-col">
+        <aside class="m">
           <ScoretapLiveTicker client:only="svelte" />
           <ScoretapStandings client:only="solid-js" />
         </aside>
       </div>
     </main>
 
-    <footer class="st3-footer">
-      <div class="st3-footer-inner">
-        <span>© 2026 ScoreTap</span>
-        <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
+    <footer class="n">
+      <div class="o">
+        <span>&copy; 2026 ScoreTap</span>
+        <span>QScrape L3 &middot; Islands: React &middot; Vue &middot; Svelte &middot; Solid</span>
       </div>
     </footer>
   </body>
@@ -63,11 +63,11 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     min-height: 100vh;
   }
 
-  .st3-masthead {
+  .a {
     background: var(--st3-surface);
     border-bottom: 1px solid var(--st3-border);
   }
-  .st3-masthead-inner {
+  .b {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 24px;
@@ -77,28 +77,28 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     gap: 32px;
   }
 
-  .st3-logo-link {
+  .c {
     text-decoration: none;
     flex-shrink: 0;
   }
-  .st3-logo {
+  .d {
     font-family: var(--st3-font-ui);
     font-size: 20px;
     font-weight: 700;
     color: var(--st3-text);
     letter-spacing: -0.5px;
   }
-  .st3-logo-accent {
+  .e {
     color: var(--st3-live);
   }
 
-  .st3-nav {
+  .f {
     display: flex;
     align-items: center;
     gap: 2px;
     margin-left: auto;
   }
-  .st3-nav-item {
+  .g {
     padding: 7px 14px;
     font-family: var(--st3-font-ui);
     font-size: 13px;
@@ -108,56 +108,56 @@ import ThemeInit from '../../../components/ThemeInit.astro';
     border-radius: var(--st3-radius);
     transition: background 0.15s, color 0.15s;
   }
-  .st3-nav-item:hover {
+  .g:hover {
     background: var(--st3-surface2);
     color: var(--st3-text);
   }
-  .st3-nav-active {
+  .h {
     color: var(--st3-text);
     background: var(--st3-surface2);
   }
-  .st3-nav-back {
+  .i {
     margin-left: 8px;
     border-left: 1px solid var(--st3-border);
     border-radius: 0;
     padding-left: 16px;
   }
 
-  .st3-main {
+  .j {
     max-width: 1100px;
     margin: 0 auto;
     padding: 28px 24px 48px;
   }
 
-  .st3-layout {
+  .k {
     display: grid;
     grid-template-columns: 1fr 300px;
     gap: 28px;
   }
   @media (max-width: 768px) {
-    .st3-layout { grid-template-columns: 1fr; }
+    .k { grid-template-columns: 1fr; }
   }
 
-  .st3-primary {
+  .l {
     display: flex;
     flex-direction: column;
     gap: 0;
     min-width: 0;
   }
 
-  .st3-sidebar-col {
+  .m {
     display: flex;
     flex-direction: column;
     gap: 20px;
     min-width: 0;
   }
 
-  .st3-footer {
+  .n {
     border-top: 1px solid var(--st3-border);
     background: var(--st3-surface);
     margin-top: auto;
   }
-  .st3-footer-inner {
+  .o {
     max-width: 1100px;
     margin: 0 auto;
     padding: 14px 24px;
