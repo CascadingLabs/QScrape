@@ -1,5 +1,6 @@
 ---
 import ThemeInit from '../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../components/ThemeToggle.astro';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -13,20 +14,20 @@ import ThemeInit from '../../../components/ThemeInit.astro';
 <body>
     <div id="container">
         <div class="headerBar">Grand Duchy of Eldoria - Arcane Registry of Deeds</div>
-        
+
         <div class="navBar">
             <a href="/l1/taxes/">Home</a>
             <a href="/l1/taxes/tax-search">Tax Search</a>
             <a href="/l1/taxes/how-to">How To</a>
             <a href="/l1/taxes/recording-fees">Recording Fees</a>
         </div>
-        
+
         <div class="breadcrumbs">
             <a href="/l1/taxes/">Home</a> &gt; Property Tax Search
         </div>
-        
+
         <div class="pageTitle">Property Tax Search</div>
-        
+
         <form method="post" action="/l1/taxes/tax-search" id="aspnetForm">
             <div class="aspNetHidden">
                 <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
@@ -34,7 +35,7 @@ import ThemeInit from '../../../components/ThemeInit.astro';
                 <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTQzNDM5MTMzMWRkZBYCAgMPZBYCAgeeD2QeBRPd25lck5hbWVYp5EwoYKY7J3C1zXN4OGk7I0S5r6vB1N9xHq5uQ==" />
                 <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
             </div>
-            
+
             <div class="searchBox">
                 <table border="0" cellpadding="3" cellspacing="0" style="width: 100%;">
                     <tr>
@@ -95,7 +96,7 @@ import ThemeInit from '../../../components/ThemeInit.astro';
                     </tr>
                 </table>
             </div>
-            
+
             <div class="infoBox" style="margin: 0 15px 10px 15px; padding: 6px 10px;">
                 Need help filing a document? See the <a href="/l1/taxes/how-to">How To Guides</a> or the <a href="/l1/taxes/recording-fees">Recording Fee Schedule</a>.
             </div>
@@ -103,7 +104,7 @@ import ThemeInit from '../../../components/ThemeInit.astro';
             <div class="resultsInfo" id="resultsInfo">
                 Showing 15 record(s) found
             </div>
-            
+
             <table class="grid-view" cellspacing="0" rules="all" border="1" id="MainContent_gridResults" style="border-collapse:collapse;">
                 <tr>
                     <th scope="col">File Year</th>
@@ -296,7 +297,7 @@ import ThemeInit from '../../../components/ThemeInit.astro';
                     </td>
                 </tr>
             </table>
-            
+
             <table style="margin: 15px;">
                 <tr>
                     <td id="gridPager">
@@ -305,12 +306,12 @@ import ThemeInit from '../../../components/ThemeInit.astro';
                 </tr>
             </table>
         </form>
-        
+
         <div class="footerBar">
             &copy; 2026 Grand Duchy of Eldoria. All rights reserved.<br>
             Eldoria ROD v2.0.2004
         </div>
-        
+
         <script is:inline>
         var theForm = document.forms['aspnetForm'];
         if (!theForm) {
@@ -398,7 +399,7 @@ import ThemeInit from '../../../components/ThemeInit.astro';
             if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
                 document.getElementById('__EVENTTARGET').value = eventTarget;
                 document.getElementById('__EVENTARGUMENT').value = eventArgument;
-                
+
                 var claimNumber = '';
                 var entityName = '';
                 var zLevel = '';
@@ -409,7 +410,7 @@ import ThemeInit from '../../../components/ThemeInit.astro';
                 var satEtc = '';
                 var lastName = '';
                 var firstName = '';
-                
+
                 var amount = '';
                 var status = '';
 
@@ -650,11 +651,12 @@ import ThemeInit from '../../../components/ThemeInit.astro';
                               'XXXBBBXXX' +
                               'Zp5Rj1hF3dG9sU6cA' +
                               'XXXBBBXXX';
-                
+
                 window.location.href = '/l1/taxes/viewer?postData=' + encodeURIComponent(payload);
             }
         }
         </script>
     </div>
+    <ThemeToggle />
 </body>
 </html>

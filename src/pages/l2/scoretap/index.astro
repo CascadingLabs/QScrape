@@ -20,6 +20,7 @@ import VueLiveScores from '../../../components/l2/scoretap/vue/ScoretapLiveScore
 import VueRankings from '../../../components/l2/scoretap/vue/ScoretapRankings.vue';
 import VueUpcoming from '../../../components/l2/scoretap/vue/ScoretapUpcoming.vue';
 import ThemeInit from '../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../components/ThemeToggle.astro';
 ---
 
 <!doctype html>
@@ -75,6 +76,11 @@ import ThemeInit from '../../../components/ThemeInit.astro';
         color: var(--st-text, #e8e8f0);
         background: var(--st-surface2, #21253a);
       }
+      .st2-nav-link--active {
+        color: var(--st-text, #e8e8f0);
+        background: var(--st-surface2, #21253a);
+        font-weight: 600;
+      }
       .st2-edition {
         font-size: 11px;
         color: var(--st-muted, #6b7280);
@@ -129,6 +135,9 @@ import ThemeInit from '../../../components/ThemeInit.astro';
         <a href="/l2/scoretap/" class="st2-logo">ScoreTap</a>
         <nav class="st2-nav">
           <a href="/l2/" class="st2-nav-link">← L2</a>
+          <a href="/l2/scoretap/" class="st2-nav-link st2-nav-link--active">Home</a>
+          <a href="/l2/scoretap/events/" class="st2-nav-link">Events</a>
+          <a href="/l2/scoretap/teams/" class="st2-nav-link">Teams</a>
         </nav>
         <span class="st2-edition">L2 · Shuffled Islands</span>
       </div>

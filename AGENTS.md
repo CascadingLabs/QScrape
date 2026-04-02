@@ -89,7 +89,7 @@ Components are organised **site-first**: `src/components/l2/{site}/{framework}/`
 
 **Eshop slots**: `EshopCategoryNav`, `EshopFeaturedBanner`, `EshopPriceBadges`, `EshopProductGrid` (full cart/checkout flow)
 
-**ScoreTap slots**: `ScoretapGameFilter`, `ScoretapLiveScores`, `ScoretapUpcoming`, `ScoretapRankings`
+**ScoreTap slots**: `ScoretapGameFilter`, `ScoretapLiveScores`, `ScoretapUpcoming`, `ScoretapRankings` (home page); `ScoretapEventsList` (`/events/`); `ScoretapTeamsList` (`/teams/`)
 
 **Taxes slots**: `TaxesSearchForm`, `TaxesResultsGrid`, `TaxesIndexSidebar`, `TaxesRecentRecords` (+ sub-page single-slot islands: `TaxesHowTo`, `TaxesRecordingFees`)
 

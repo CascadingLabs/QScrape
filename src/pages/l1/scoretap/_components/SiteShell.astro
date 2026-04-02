@@ -1,5 +1,6 @@
 ---
 import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
 
 interface Props {
 	title: string;
@@ -29,6 +30,38 @@ const { title, activePage } = Astro.props;
       --red:           #cc2222;
       --font:          Tahoma, Verdana, Arial, sans-serif;
       --font-size:     12px;
+    }
+
+    [data-theme='light'] {
+      --bg:            #f0f2f5;
+      --bg-panel:      #ffffff;
+      --bg-header:     #e4e8ef;
+      --bg-row-alt:    #f7f8fa;
+      --border:        #d0d5de;
+      --border-accent: #e05500;
+      --text:          #1a1a2a;
+      --text-dim:      #555566;
+      --text-bright:   #0a0a18;
+      --accent:        #e05500;
+      --green:         #17963e;
+      --red:           #b91c1c;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme]) {
+        --bg:            #f0f2f5;
+        --bg-panel:      #ffffff;
+        --bg-header:     #e4e8ef;
+        --bg-row-alt:    #f7f8fa;
+        --border:        #d0d5de;
+        --border-accent: #e05500;
+        --text:          #1a1a2a;
+        --text-dim:      #555566;
+        --text-bright:   #0a0a18;
+        --accent:        #e05500;
+        --green:         #17963e;
+        --red:           #b91c1c;
+      }
     }
 
     *, *::before, *::after {
@@ -591,6 +624,8 @@ const { title, activePage } = Astro.props;
       <a href="#">API</a>
     </div>
   </div>
+
+  <ThemeToggle />
 
   <script is:inline>
     // Pure JS tooltip

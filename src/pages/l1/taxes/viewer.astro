@@ -1,5 +1,6 @@
 ---
 import ThemeInit from '../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../components/ThemeToggle.astro';
 
 const postData = Astro.url.searchParams.get('postData') || '';
 ---
@@ -15,22 +16,22 @@ const postData = Astro.url.searchParams.get('postData') || '';
 <body>
     <div id="container">
         <div class="headerBar">Grand Duchy of Eldoria - Arcane Registry of Deeds</div>
-        
+
         <div class="navBar">
             <a href="/l1/taxes/">Home</a>
             <a href="/l1/taxes/tax-search">Tax Search</a>
             <a href="/l1/taxes/how-to">How To</a>
             <a href="/l1/taxes/recording-fees">Recording Fees</a>
         </div>
-        
+
         <div class="breadcrumbs">
-            <a href="/l1/taxes/">Home</a> &gt; 
-            <a href="/l1/taxes/tax-search">Tax Search</a> &gt; 
+            <a href="/l1/taxes/">Home</a> &gt;
+            <a href="/l1/taxes/tax-search">Tax Search</a> &gt;
             Tax Deed Viewer
         </div>
-        
+
         <div class="pageTitle">Property Tax Deed</div>
-        
+
         <div class="formSection">
             <table class="aspNetTable" style="width: 100%;">
                 <tr>
@@ -74,7 +75,7 @@ const postData = Astro.url.searchParams.get('postData') || '';
                 </tr>
             </table>
         </div>
-        
+
         <div class="formSection">
             <strong>Document Options</strong>
             <table style="margin: 10px 0;">
@@ -97,30 +98,30 @@ const postData = Astro.url.searchParams.get('postData') || '';
                 </tr>
             </table>
         </div>
-        
+
         <div class="formSection">
             <strong>Document Preview</strong>
             <div style="margin-top: 10px; border: 1px solid #999999; height: 600px;">
-                <iframe id="ctl00_MainContent_iframeViewer" 
-                    width="100%" 
-                    height="600px" 
+                <iframe id="ctl00_MainContent_iframeViewer"
+                    width="100%"
+                    height="600px"
                     title="Tax Deed Document">
                 </iframe>
             </div>
         </div>
-        
+
         <div class="footerBar">
             &copy; 2026 Grand Duchy of Eldoria. All rights reserved.<br>
             Eldoria ROD v2.0.2004
         </div>
-        
+
         <script is:inline>
         var postData = '';
         var urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('postData')) {
             postData = decodeURIComponent(urlParams.get('postData'));
         }
-        
+
         var claim = '-';
         var entity = '-';
         var zLevel = '-';
@@ -130,7 +131,7 @@ const postData = Astro.url.searchParams.get('postData') || '';
         var recordDate = '-';
         var amount = '-';
         var status = '-';
-        
+
         if (postData.indexOf('CLAIM=') !== -1) {
             var parts = postData.split('XXXBBBXXX');
             for (var i = 0; i < parts.length; i++) {
@@ -163,7 +164,7 @@ const postData = Astro.url.searchParams.get('postData') || '';
                 }
             }
         }
-        
+
         document.getElementById('lblClaim').textContent = claim;
         document.getElementById('lblEntity').textContent = entity;
         document.getElementById('lblZLevel').textContent = zLevel;
@@ -204,5 +205,6 @@ const postData = Astro.url.searchParams.get('postData') || '';
         }
         </script>
     </div>
+    <ThemeToggle />
 </body>
 </html>

@@ -1,5 +1,6 @@
 ---
 import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
 
 interface Props {
 	title: string;
@@ -70,6 +71,8 @@ const { title, activePage = 'home', breadcrumbs = [] } = Astro.props;
       <a href="/l1/taxes/" style="color:#99bbdd;">ROD Records</a>
     </div>
   </div>
+
+  <ThemeToggle />
 
   <!-- Shared product navigation script -->
   <script is:inline>
