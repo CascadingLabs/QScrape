@@ -5,6 +5,10 @@ import { type ArticleMeta, getLatest } from '../../../../data/news/articles';
 
 const articles = ref<ArticleMeta[] | null>(null);
 
+function formatDate(d: string) {
+	return new Date(d).toLocaleDateString('en-CA');
+}
+
 onMounted(() => {
 	fakeGetMs(getLatest(6), 600, 250).then((data) => {
 		articles.value = data;

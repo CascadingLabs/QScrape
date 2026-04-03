@@ -3,25 +3,27 @@
   @component TaxesRecentRecords
 -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { deeds } from '../../../../data/taxes/deeds';
-  import '../../../../styles/l2/taxes.css';
+import { onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import { deeds } from '../../../../data/taxes/deeds';
+import '../../../../styles/l2/taxes.css';
 
-  const recent = deeds.slice(0, 8);
-  let ready = false;
+const recent = deeds.slice(0, 8);
+let ready = false;
 
-  function goToRecord(fileNum: string) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('file', fileNum);
-    history.pushState(null, '', url.toString());
-    window.dispatchEvent(new CustomEvent('taxes:view', { detail: fileNum }));
-    window.scrollTo(0, 0);
-  }
+function goToRecord(fileNum: string) {
+	const url = new URL(window.location.href);
+	url.searchParams.set('file', fileNum);
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('taxes:view', { detail: fileNum }));
+	window.scrollTo(0, 0);
+}
 
-  onMount(() => {
-    fakeGet(null).then(() => { ready = true; });
-  });
+onMount(() => {
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+});
 </script>
 
 {#if !ready}

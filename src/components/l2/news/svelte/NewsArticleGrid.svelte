@@ -3,44 +3,48 @@
   @component NewsArticleGrid
 -->
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { articles, formatDate, getByCategory } from '../../../../data/news/articles';
-  import '../../../../styles/l2/news.css';
+import { onDestroy, onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import {
+	articles,
+	formatDate,
+	getByCategory,
+} from '../../../../data/news/articles';
+import '../../../../styles/l2/news.css';
 
-  const PER_PAGE = 8;
-  let ready = false;
-  let cat: string | null = null;
-  let visibleCount = PER_PAGE;
+const PER_PAGE = 8;
+let ready = false;
+let cat: string | null = null;
+let visibleCount = PER_PAGE;
 
-  $: all = cat ? getByCategory(cat) : articles;
-  $: items = all.slice(0, visibleCount);
+$: all = cat ? getByCategory(cat) : articles;
+$: items = all.slice(0, visibleCount);
 
-  function getUrlState() {
-    return { cat: new URLSearchParams(window.location.search).get('cat') };
-  }
+function getUrlState() {
+	return { cat: new URLSearchParams(window.location.search).get('cat') };
+}
 
-  function onCat(e: Event) {
-    cat = (e as CustomEvent<string | null>).detail;
-    visibleCount = PER_PAGE;
-  }
-  function onPop() {
-    cat = getUrlState().cat;
-    visibleCount = PER_PAGE;
-  }
+function onCat(e: Event) {
+	cat = (e as CustomEvent<string | null>).detail;
+	visibleCount = PER_PAGE;
+}
+function onPop() {
+	cat = getUrlState().cat;
+	visibleCount = PER_PAGE;
+}
 
-  onMount(() => {
-    cat = getUrlState().cat;
-    fakeGet(null).then(() => {
-      ready = true;
-    });
-    window.addEventListener('news:cat', onCat);
-    window.addEventListener('popstate', onPop);
-  });
-  onDestroy(() => {
-    window.removeEventListener('news:cat', onCat);
-    window.removeEventListener('popstate', onPop);
-  });
+onMount(() => {
+	cat = getUrlState().cat;
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+	window.addEventListener('news:cat', onCat);
+	window.addEventListener('popstate', onPop);
+});
+onDestroy(() => {
+	window.removeEventListener('news:cat', onCat);
+	window.removeEventListener('popstate', onPop);
+});
 </script>
 
 {#if !ready}

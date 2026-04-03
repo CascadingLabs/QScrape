@@ -8,13 +8,13 @@ import {
 
 export let articleId: string;
 
-let _article: ArticleMeta | null = null;
+let article: ArticleMeta | null = null;
 
 onMount(() => {
 	const found = getArticleById(articleId);
 	if (found) {
 		fakeGetMs(found, 800, 250).then((d) => {
-			_article = d;
+			article = d;
 		});
 	}
 });

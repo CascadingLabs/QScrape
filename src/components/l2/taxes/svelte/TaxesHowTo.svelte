@@ -3,23 +3,59 @@
   @component TaxesHowTo
 -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import '../../../../styles/l2/taxes.css';
+import { onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import '../../../../styles/l2/taxes.css';
 
-  const guides = [
-    { type: 'DEED', title: 'Recording a Deed', desc: "How to transfer title to subterranean real property — warranty deeds, quitclaim deeds, trustee's deeds, required elements, and filing steps." },
-    { type: 'MTG', title: 'Filing and Managing a Mortgage', desc: 'How to record a mortgage, required uniform covenants, and how to obtain a satisfaction once the loan is paid in full.' },
-    { type: 'LIEN', title: "Filing a Mechanic's Lien", desc: 'Who may file, statutory deadlines, Notice to Owner requirements, Schedule A itemization, and how to contest or release a lien.' },
-    { type: 'ESMT', title: 'Registering an Easement', desc: 'How to create and record utility, access, drainage, and magma-routing easements including coordinate description requirements.' },
-    { type: 'ASGN', title: 'Filing an Assignment of Mortgage', desc: 'How to transfer a mortgage lien to a new holder, required elements, Mortgagor notification rules, and partial assignments.' },
-    { type: 'REL', title: 'Releasing a Lien or Mortgage', desc: 'Mortgagee obligations upon payoff, step-by-step release process, penalties for delayed discharge, and judicial release procedures.' },
-    { type: 'NTC', title: 'Filing a Notice of Commencement', desc: 'When a NOC is required, what to include, job-site posting requirements, and how to amend or terminate a NOC after project completion.' },
-    { type: 'AFF', title: 'Filing an Affidavit of Title', desc: 'What must be disclosed, legal consequences of false statements, and how to prepare and record a sworn title affidavit.' },
-  ];
+const guides = [
+	{
+		type: 'DEED',
+		title: 'Recording a Deed',
+		desc: "How to transfer title to subterranean real property — warranty deeds, quitclaim deeds, trustee's deeds, required elements, and filing steps.",
+	},
+	{
+		type: 'MTG',
+		title: 'Filing and Managing a Mortgage',
+		desc: 'How to record a mortgage, required uniform covenants, and how to obtain a satisfaction once the loan is paid in full.',
+	},
+	{
+		type: 'LIEN',
+		title: "Filing a Mechanic's Lien",
+		desc: 'Who may file, statutory deadlines, Notice to Owner requirements, Schedule A itemization, and how to contest or release a lien.',
+	},
+	{
+		type: 'ESMT',
+		title: 'Registering an Easement',
+		desc: 'How to create and record utility, access, drainage, and magma-routing easements including coordinate description requirements.',
+	},
+	{
+		type: 'ASGN',
+		title: 'Filing an Assignment of Mortgage',
+		desc: 'How to transfer a mortgage lien to a new holder, required elements, Mortgagor notification rules, and partial assignments.',
+	},
+	{
+		type: 'REL',
+		title: 'Releasing a Lien or Mortgage',
+		desc: 'Mortgagee obligations upon payoff, step-by-step release process, penalties for delayed discharge, and judicial release procedures.',
+	},
+	{
+		type: 'NTC',
+		title: 'Filing a Notice of Commencement',
+		desc: 'When a NOC is required, what to include, job-site posting requirements, and how to amend or terminate a NOC after project completion.',
+	},
+	{
+		type: 'AFF',
+		title: 'Filing an Affidavit of Title',
+		desc: 'What must be disclosed, legal consequences of false statements, and how to prepare and record a sworn title affidavit.',
+	},
+];
 
-  let ready = false;
-  onMount(() => { fakeGet(null).then(() => { ready = true; }); });
+let ready = false;
+onMount(() => {
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+});
 </script>
 
 {#if !ready}

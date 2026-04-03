@@ -13,42 +13,56 @@ const _indexLabels = indexLabels;
 const ready = ref(false);
 const active = ref('ALL');
 
-const counts = Object.fromEntries(indexTypes.map((t) => [t, deeds.filter((d) => d.index === t).length]));
+const counts = Object.fromEntries(
+	indexTypes.map((t) => [t, deeds.filter((d) => d.index === t).length]),
+);
 
 function getActiveIndex() {
-  return new URLSearchParams(window.location.search).get('index') ?? 'ALL';
+	return new URLSearchParams(window.location.search).get('index') ?? 'ALL';
 }
 
 function dispatchSearch(ix: string) {
-  const url = new URL(window.location.href);
-  if (ix !== 'ALL') { url.searchParams.set('index', ix); } else { url.searchParams.delete('index'); }
-  url.searchParams.delete('lastFirm');
-  url.searchParams.delete('first');
-  url.searchParams.delete('file');
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('taxes:search', { detail: { lastFirm: '', first: '', index: ix } }));
+	const url = new URL(window.location.href);
+	if (ix !== 'ALL') {
+		url.searchParams.set('index', ix);
+	} else {
+		url.searchParams.delete('index');
+	}
+	url.searchParams.delete('lastFirm');
+	url.searchParams.delete('first');
+	url.searchParams.delete('file');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(
+		new CustomEvent('taxes:search', {
+			detail: { lastFirm: '', first: '', index: ix },
+		}),
+	);
 }
 
 function select(ix: string) {
-  active.value = ix;
-  dispatchSearch(ix);
+	active.value = ix;
+	dispatchSearch(ix);
 }
 
-function onPop() { active.value = getActiveIndex(); }
+function onPop() {
+	active.value = getActiveIndex();
+}
 function onSearch(e: Event) {
-  active.value = (e as CustomEvent<{ index: string }>).detail.index;
+	active.value = (e as CustomEvent<{ index: string }>).detail.index;
 }
 
 onMounted(() => {
-  active.value = getActiveIndex();
-  fakeGet(null).then(() => { ready.value = true; });
-  window.addEventListener('popstate', onPop);
-  window.addEventListener('taxes:search', onSearch);
+	active.value = getActiveIndex();
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
+	window.addEventListener('popstate', onPop);
+	window.addEventListener('taxes:search', onSearch);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('popstate', onPop);
-  window.removeEventListener('taxes:search', onSearch);
+	window.removeEventListener('popstate', onPop);
+	window.removeEventListener('taxes:search', onSearch);
 });
 </script>
 

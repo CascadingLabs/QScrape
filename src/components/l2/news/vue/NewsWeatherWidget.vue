@@ -19,16 +19,18 @@ const _updated = _geo.updated;
 const _statusColor = statusColor;
 
 function goToArticle(id: string) {
-  const url = new URL(window.location.href);
-  url.searchParams.set('id', id);
-  url.searchParams.delete('cat');
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
-  window.scrollTo(0, 0);
+	const url = new URL(window.location.href);
+	url.searchParams.set('id', id);
+	url.searchParams.delete('cat');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
+	window.scrollTo(0, 0);
 }
 
 onMounted(() => {
-  fakeGet(null).then(() => { ready.value = true; });
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
 });
 </script>
 

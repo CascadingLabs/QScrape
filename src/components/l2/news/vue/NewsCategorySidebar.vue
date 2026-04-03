@@ -13,45 +13,49 @@ const ready = ref(false);
 const activeCat = ref('All');
 
 function navigate(cat: string) {
-  const url = new URL(window.location.href);
-  url.searchParams.delete('id');
-  if (cat === 'All') {
-    url.searchParams.delete('cat');
-  } else {
-    url.searchParams.set('cat', cat);
-  }
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('news:cat', { detail: cat === 'All' ? null : cat }));
-  window.scrollTo(0, 0);
+	const url = new URL(window.location.href);
+	url.searchParams.delete('id');
+	if (cat === 'All') {
+		url.searchParams.delete('cat');
+	} else {
+		url.searchParams.set('cat', cat);
+	}
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(
+		new CustomEvent('news:cat', { detail: cat === 'All' ? null : cat }),
+	);
+	window.scrollTo(0, 0);
 }
 
 function handleClick(cat: string) {
-  activeCat.value = cat;
-  navigate(cat);
+	activeCat.value = cat;
+	navigate(cat);
 }
 
 function onCat(e: Event) {
-  activeCat.value = (e as CustomEvent<string | null>).detail ?? 'All';
+	activeCat.value = (e as CustomEvent<string | null>).detail ?? 'All';
 }
 
 function onPop() {
-  const c = new URLSearchParams(window.location.search).get('cat');
-  activeCat.value = c ?? 'All';
+	const c = new URLSearchParams(window.location.search).get('cat');
+	activeCat.value = c ?? 'All';
 }
 
 onMounted(() => {
-  const cat = new URLSearchParams(window.location.search).get('cat');
-  if (cat) {
-    activeCat.value = cat;
-  }
-  fakeGet(null).then(() => { ready.value = true; });
-  window.addEventListener('news:cat', onCat);
-  window.addEventListener('popstate', onPop);
+	const cat = new URLSearchParams(window.location.search).get('cat');
+	if (cat) {
+		activeCat.value = cat;
+	}
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
+	window.addEventListener('news:cat', onCat);
+	window.addEventListener('popstate', onPop);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('news:cat', onCat);
-  window.removeEventListener('popstate', onPop);
+	window.removeEventListener('news:cat', onCat);
+	window.removeEventListener('popstate', onPop);
 });
 </script>
 

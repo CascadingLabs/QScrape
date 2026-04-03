@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
+import { addToCart } from '../../../../data/eshop/l3cart';
 import {
 	getByCategory,
 	type ProductMeta,
 	products,
 } from '../../../../data/eshop/products';
-import { addToCart } from '../../../../data/eshop/l3cart';
 
 const items = ref<ProductMeta[] | null>(null);
 const justAdded = ref<string | null>(null);

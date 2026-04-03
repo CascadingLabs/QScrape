@@ -3,17 +3,19 @@
   @component NewsStaffSpotlight
 -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { reporters } from '../../../../data/news/articles';
-  import '../../../../styles/l2/news.css';
+import { onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import { reporters } from '../../../../data/news/articles';
+import '../../../../styles/l2/news.css';
 
-  let ready = false;
-  const staff = reporters;
+let ready = false;
+const staff = reporters;
 
-  onMount(() => {
-    fakeGet(null).then(() => { ready = true; });
-  });
+onMount(() => {
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+});
 </script>
 
 {#if !ready}

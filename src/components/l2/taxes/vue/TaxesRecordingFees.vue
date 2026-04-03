@@ -8,18 +8,70 @@ import { fakeGet } from '../../../../data/api';
 import '../../../../styles/l2/taxes.css';
 
 const stdFees = [
-  { index: 'DEED', docs: "Warranty Deed, Quitclaim Deed, Trustee's Deed, Sheriff's Deed", base: '15.00 GP', addl: '2.00 GP', max: '75.00 GP' },
-  { index: 'MTG', docs: 'Mortgage, Purchase Money Mortgage, Construction Mortgage', base: '25.00 GP', addl: '2.00 GP', max: '125.00 GP' },
-  { index: 'LIEN', docs: "Claim of Mechanic's Lien, Construction Lien, Judgment Lien", base: '10.00 GP', addl: '2.00 GP', max: '50.00 GP' },
-  { index: 'ESMT', docs: 'Grant of Easement, Easement Agreement, Utility Easement', base: '15.00 GP', addl: '2.00 GP', max: '75.00 GP' },
-  { index: 'ASGN', docs: 'Assignment of Mortgage, Assignment of Lien, Partial Assignment', base: '20.00 GP', addl: '2.00 GP', max: '60.00 GP' },
-  { index: 'REL', docs: 'Release of Lien, Satisfaction of Mortgage, Discharge of Judgment', base: '10.00 GP', addl: '2.00 GP', max: '30.00 GP' },
-  { index: 'NTC', docs: 'Notice of Commencement, Amended NOC, Notice of Termination', base: '10.00 GP', addl: '2.00 GP', max: '30.00 GP' },
-  { index: 'AFF', docs: 'Affidavit of Title, Affidavit of Heirship, Correction Affidavit', base: '10.00 GP', addl: '2.00 GP', max: '30.00 GP' },
+	{
+		index: 'DEED',
+		docs: "Warranty Deed, Quitclaim Deed, Trustee's Deed, Sheriff's Deed",
+		base: '15.00 GP',
+		addl: '2.00 GP',
+		max: '75.00 GP',
+	},
+	{
+		index: 'MTG',
+		docs: 'Mortgage, Purchase Money Mortgage, Construction Mortgage',
+		base: '25.00 GP',
+		addl: '2.00 GP',
+		max: '125.00 GP',
+	},
+	{
+		index: 'LIEN',
+		docs: "Claim of Mechanic's Lien, Construction Lien, Judgment Lien",
+		base: '10.00 GP',
+		addl: '2.00 GP',
+		max: '50.00 GP',
+	},
+	{
+		index: 'ESMT',
+		docs: 'Grant of Easement, Easement Agreement, Utility Easement',
+		base: '15.00 GP',
+		addl: '2.00 GP',
+		max: '75.00 GP',
+	},
+	{
+		index: 'ASGN',
+		docs: 'Assignment of Mortgage, Assignment of Lien, Partial Assignment',
+		base: '20.00 GP',
+		addl: '2.00 GP',
+		max: '60.00 GP',
+	},
+	{
+		index: 'REL',
+		docs: 'Release of Lien, Satisfaction of Mortgage, Discharge of Judgment',
+		base: '10.00 GP',
+		addl: '2.00 GP',
+		max: '30.00 GP',
+	},
+	{
+		index: 'NTC',
+		docs: 'Notice of Commencement, Amended NOC, Notice of Termination',
+		base: '10.00 GP',
+		addl: '2.00 GP',
+		max: '30.00 GP',
+	},
+	{
+		index: 'AFF',
+		docs: 'Affidavit of Title, Affidavit of Heirship, Correction Affidavit',
+		base: '10.00 GP',
+		addl: '2.00 GP',
+		max: '30.00 GP',
+	},
 ];
 
 const ready = ref(false);
-onMounted(() => { fakeGet(null).then(() => { ready.value = true; }); });
+onMounted(() => {
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
+});
 </script>
 
 <template>

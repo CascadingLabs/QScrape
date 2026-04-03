@@ -1,18 +1,18 @@
 <script lang="ts">
 import { onDestroy, onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
-import { formatPrice, getProductBySku } from '../../../../data/eshop/products';
 import {
 	CART_EVENT,
-	VIEW_EVENT,
-	ORDER_EVENT,
-	type ViewState,
 	cartCount,
 	clearCart,
 	getCart,
 	getView,
+	ORDER_EVENT,
 	setView,
+	VIEW_EVENT,
+	type ViewState,
 } from '../../../../data/eshop/l3cart';
+import { formatPrice, getProductBySku } from '../../../../data/eshop/products';
 
 type SummaryData = {
 	itemCount: number;

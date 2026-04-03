@@ -6,6 +6,7 @@ import NewsArticleBody from '../../../../components/l3/vue/news/NewsArticleBody.
 import { type ArticleMeta, articles } from '../../../../data/news/articles';
 import '../../../../styles/l3/news.css';
 import L3Guard from '../../../../components/l3/L3Guard.astro';
+import PressHoldGate from '../../../../components/l3/PressHoldGate.astro';
 import ThemeInit from '../../../../components/ThemeInit.astro';
 import ThemeToggle from '../../../../components/ThemeToggle.astro';
 
@@ -30,6 +31,7 @@ const { article } = Astro.props;
     <ThemeInit />
   </head>
   <body>
+    <PressHoldGate />
     <header class="a">
       <div class="b">
         <span></span>

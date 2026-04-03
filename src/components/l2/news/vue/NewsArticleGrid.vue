@@ -5,7 +5,11 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { fakeGet } from '../../../../data/api';
-import { articles, formatDate, getByCategory } from '../../../../data/news/articles';
+import {
+	articles,
+	formatDate,
+	getByCategory,
+} from '../../../../data/news/articles';
 import '../../../../styles/l2/news.css';
 
 const PER_PAGE = 8;
@@ -17,29 +21,29 @@ const all = computed(() => (cat.value ? getByCategory(cat.value) : articles));
 const items = computed(() => all.value.slice(0, visibleCount.value));
 
 function getUrlState() {
-  return { cat: new URLSearchParams(window.location.search).get('cat') };
+	return { cat: new URLSearchParams(window.location.search).get('cat') };
 }
 
 const onCat = (e: Event) => {
-  cat.value = (e as CustomEvent<string | null>).detail;
-  visibleCount.value = PER_PAGE;
+	cat.value = (e as CustomEvent<string | null>).detail;
+	visibleCount.value = PER_PAGE;
 };
 const onPop = () => {
-  cat.value = getUrlState().cat;
-  visibleCount.value = PER_PAGE;
+	cat.value = getUrlState().cat;
+	visibleCount.value = PER_PAGE;
 };
 
 onMounted(() => {
-  cat.value = getUrlState().cat;
-  fakeGet(null).then(() => {
-    ready.value = true;
-  });
-  window.addEventListener('news:cat', onCat);
-  window.addEventListener('popstate', onPop);
+	cat.value = getUrlState().cat;
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
+	window.addEventListener('news:cat', onCat);
+	window.addEventListener('popstate', onPop);
 });
 onUnmounted(() => {
-  window.removeEventListener('news:cat', onCat);
-  window.removeEventListener('popstate', onPop);
+	window.removeEventListener('news:cat', onCat);
+	window.removeEventListener('popstate', onPop);
 });
 </script>
 <template>

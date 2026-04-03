@@ -3,56 +3,60 @@
   @component NewsCategorySidebar
 -->
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { categories } from '../../../../data/news/articles';
-  import '../../../../styles/l2/news.css';
+import { onDestroy, onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import { categories } from '../../../../data/news/articles';
+import '../../../../styles/l2/news.css';
 
-  const allCats = ['All', ...categories];
-  let ready = false;
-  let activeCat = 'All';
+const allCats = ['All', ...categories];
+let ready = false;
+let activeCat = 'All';
 
-  function navigate(cat: string) {
-    const url = new URL(window.location.href);
-    url.searchParams.delete('id');
-    if (cat === 'All') {
-      url.searchParams.delete('cat');
-    } else {
-      url.searchParams.set('cat', cat);
-    }
-    history.pushState(null, '', url.toString());
-    window.dispatchEvent(new CustomEvent('news:cat', { detail: cat === 'All' ? null : cat }));
-    window.scrollTo(0, 0);
-  }
+function navigate(cat: string) {
+	const url = new URL(window.location.href);
+	url.searchParams.delete('id');
+	if (cat === 'All') {
+		url.searchParams.delete('cat');
+	} else {
+		url.searchParams.set('cat', cat);
+	}
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(
+		new CustomEvent('news:cat', { detail: cat === 'All' ? null : cat }),
+	);
+	window.scrollTo(0, 0);
+}
 
-  function handleClick(cat: string) {
-    activeCat = cat;
-    navigate(cat);
-  }
+function handleClick(cat: string) {
+	activeCat = cat;
+	navigate(cat);
+}
 
-  function onCat(e: Event) {
-    activeCat = (e as CustomEvent<string | null>).detail ?? 'All';
-  }
+function onCat(e: Event) {
+	activeCat = (e as CustomEvent<string | null>).detail ?? 'All';
+}
 
-  function onPop() {
-    const c = new URLSearchParams(window.location.search).get('cat');
-    activeCat = c ?? 'All';
-  }
+function onPop() {
+	const c = new URLSearchParams(window.location.search).get('cat');
+	activeCat = c ?? 'All';
+}
 
-  onMount(() => {
-    const cat = new URLSearchParams(window.location.search).get('cat');
-    if (cat) {
-      activeCat = cat;
-    }
-    fakeGet(null).then(() => { ready = true; });
-    window.addEventListener('news:cat', onCat);
-    window.addEventListener('popstate', onPop);
-  });
+onMount(() => {
+	const cat = new URLSearchParams(window.location.search).get('cat');
+	if (cat) {
+		activeCat = cat;
+	}
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+	window.addEventListener('news:cat', onCat);
+	window.addEventListener('popstate', onPop);
+});
 
-  onDestroy(() => {
-    window.removeEventListener('news:cat', onCat);
-    window.removeEventListener('popstate', onPop);
-  });
+onDestroy(() => {
+	window.removeEventListener('news:cat', onCat);
+	window.removeEventListener('popstate', onPop);
+});
 </script>
 
 {#if !ready}

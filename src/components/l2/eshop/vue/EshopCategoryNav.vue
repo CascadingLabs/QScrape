@@ -13,33 +13,42 @@ const ready = ref(false);
 const active = ref('All');
 
 function getActiveCat() {
-  return new URLSearchParams(window.location.search).get('cat') ?? 'All';
+	return new URLSearchParams(window.location.search).get('cat') ?? 'All';
 }
 
 function navigate(cat: string) {
-  const url = new URL(window.location.href);
-  if (cat === 'All') { url.searchParams.delete('cat'); }
-  else { url.searchParams.set('cat', cat); }
-  history.pushState(null, '', url.toString());
-  active.value = cat;
-  window.dispatchEvent(
-    new CustomEvent('eshop:cat', { detail: cat === 'All' ? null : cat }),
-  );
+	const url = new URL(window.location.href);
+	if (cat === 'All') {
+		url.searchParams.delete('cat');
+	} else {
+		url.searchParams.set('cat', cat);
+	}
+	history.pushState(null, '', url.toString());
+	active.value = cat;
+	window.dispatchEvent(
+		new CustomEvent('eshop:cat', { detail: cat === 'All' ? null : cat }),
+	);
 }
 
-function onPop() { active.value = getActiveCat(); }
-function onCat(e: Event) { active.value = (e as CustomEvent<string | null>).detail ?? 'All'; }
+function onPop() {
+	active.value = getActiveCat();
+}
+function onCat(e: Event) {
+	active.value = (e as CustomEvent<string | null>).detail ?? 'All';
+}
 
 onMounted(() => {
-  active.value = getActiveCat();
-  fakeGet(null).then(() => { ready.value = true; });
-  window.addEventListener('popstate', onPop);
-  window.addEventListener('eshop:cat', onCat);
+	active.value = getActiveCat();
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
+	window.addEventListener('popstate', onPop);
+	window.addEventListener('eshop:cat', onCat);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('popstate', onPop);
-  window.removeEventListener('eshop:cat', onCat);
+	window.removeEventListener('popstate', onPop);
+	window.removeEventListener('eshop:cat', onCat);
 });
 </script>
 

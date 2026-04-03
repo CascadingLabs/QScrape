@@ -3,12 +3,16 @@
   @component TaxesHowToInfo
 -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import '../../../../styles/l2/taxes.css';
+import { onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import '../../../../styles/l2/taxes.css';
 
-  let ready = false;
-  onMount(() => { fakeGet(null).then(() => { ready = true; }); });
+let ready = false;
+onMount(() => {
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+});
 </script>
 
 {#if !ready}

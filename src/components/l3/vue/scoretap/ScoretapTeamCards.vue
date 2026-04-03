@@ -49,7 +49,9 @@ function _gameLabel(game: Game): string {
 
 <style>
 @import '../../../../styles/l3/scoretap.css';
+</style>
 
+<style scoped>
 .a {
 	min-height: 120px;
 	display: flex;

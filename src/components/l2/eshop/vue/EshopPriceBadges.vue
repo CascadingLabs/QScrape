@@ -11,24 +11,26 @@ import '../../../../styles/l2/eshop.css';
 const ready = ref(false);
 
 function goToProduct(sku: string) {
-  const url = new URL(window.location.href);
-  url.searchParams.set('sku', sku);
-  url.searchParams.delete('cat');
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('eshop:product', { detail: sku }));
-  window.scrollTo(0, 0);
+	const url = new URL(window.location.href);
+	url.searchParams.set('sku', sku);
+	url.searchParams.delete('cat');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('eshop:product', { detail: sku }));
+	window.scrollTo(0, 0);
 }
 
 const saleItems = products
-  .filter((p) => p.salePrice)
-  .slice(0, 6)
-  .map((p) => ({
-    ...p,
-    discount: Math.round(((p.basePrice - p.salePrice!) / p.basePrice) * 100),
-  }));
+	.filter((p) => p.salePrice)
+	.slice(0, 6)
+	.map((p) => ({
+		...p,
+		discount: Math.round(((p.basePrice - p.salePrice!) / p.basePrice) * 100),
+	}));
 
 onMounted(() => {
-  fakeGet(null).then(() => { ready.value = true; });
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
 });
 </script>
 

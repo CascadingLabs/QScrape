@@ -3,26 +3,28 @@
   @component EshopFeaturedBanner
 -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { getFeatured } from '../../../../data/eshop/products';
-  import '../../../../styles/l2/eshop.css';
+import { onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import { getFeatured } from '../../../../data/eshop/products';
+import '../../../../styles/l2/eshop.css';
 
-  let ready = false;
-  const featured = getFeatured().slice(0, 4);
+let ready = false;
+const featured = getFeatured().slice(0, 4);
 
-  function goToProduct(sku: string) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('sku', sku);
-    url.searchParams.delete('cat');
-    history.pushState(null, '', url.toString());
-    window.dispatchEvent(new CustomEvent('eshop:product', { detail: sku }));
-    window.scrollTo(0, 0);
-  }
+function goToProduct(sku: string) {
+	const url = new URL(window.location.href);
+	url.searchParams.set('sku', sku);
+	url.searchParams.delete('cat');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('eshop:product', { detail: sku }));
+	window.scrollTo(0, 0);
+}
 
-  onMount(() => {
-    fakeGet(null).then(() => { ready = true; });
-  });
+onMount(() => {
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+});
 </script>
 
 {#if !ready}

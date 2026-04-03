@@ -6,10 +6,10 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { fakeGet } from '../../../../data/api';
 import {
-  articles,
-  formatDate,
-  formatDateTime,
-  getByCategory,
+	articles,
+	formatDate,
+	formatDateTime,
+	getByCategory,
 } from '../../../../data/news/articles';
 import '../../../../styles/l2/news.css';
 
@@ -21,69 +21,77 @@ const currentId = ref<string | null>(null);
 const cat = ref<string | null>(null);
 const visibleCount = ref(PER_PAGE);
 
-const currentArticle = computed(() => articles.find((a) => a.id === currentId.value) ?? null);
-const articleDateStr = computed(() => currentArticle.value ? formatDateTime(currentArticle.value.published) : '');
-const allFiltered = computed(() => cat.value ? getByCategory(cat.value) : articles);
+const currentArticle = computed(
+	() => articles.find((a) => a.id === currentId.value) ?? null,
+);
+const articleDateStr = computed(() =>
+	currentArticle.value ? formatDateTime(currentArticle.value.published) : '',
+);
+const allFiltered = computed(() =>
+	cat.value ? getByCategory(cat.value) : articles,
+);
 const items = computed(() =>
-  allFiltered.value
-    .slice(0, visibleCount.value)
-    .map((a) => ({ ...a, dateStr: formatDate(a.published) })),
+	allFiltered.value
+		.slice(0, visibleCount.value)
+		.map((a) => ({ ...a, dateStr: formatDate(a.published) })),
 );
 
 function goToArticle(id: string) {
-  const url = new URL(window.location.href);
-  url.searchParams.set('id', id);
-  url.searchParams.delete('cat');
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
-  window.scrollTo(0, 0);
+	const url = new URL(window.location.href);
+	url.searchParams.set('id', id);
+	url.searchParams.delete('cat');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
+	window.scrollTo(0, 0);
 }
 
 function getUrlState() {
-  const p = new URLSearchParams(window.location.search);
-  return { id: p.get('id'), cat: p.get('cat') };
+	const p = new URLSearchParams(window.location.search);
+	return { id: p.get('id'), cat: p.get('cat') };
 }
 
 function onPop() {
-  const { id: i, cat: c } = getUrlState();
-  if (i) {
-    view.value = 'detail';
-    currentId.value = i;
-  } else {
-    view.value = 'list';
-    cat.value = c;
-    visibleCount.value = PER_PAGE;
-  }
+	const { id: i, cat: c } = getUrlState();
+	if (i) {
+		view.value = 'detail';
+		currentId.value = i;
+	} else {
+		view.value = 'list';
+		cat.value = c;
+		visibleCount.value = PER_PAGE;
+	}
 }
 
 function onCat(e: Event) {
-  cat.value = (e as CustomEvent<string | null>).detail;
-  view.value = 'list';
-  visibleCount.value = PER_PAGE;
+	cat.value = (e as CustomEvent<string | null>).detail;
+	view.value = 'list';
+	visibleCount.value = PER_PAGE;
 }
 
 function onArticle(e: Event) {
-  currentId.value = (e as CustomEvent<string>).detail;
-  view.value = 'detail';
+	currentId.value = (e as CustomEvent<string>).detail;
+	view.value = 'detail';
 }
 
 onMounted(() => {
-  const { id, cat: urlCat } = getUrlState();
-  if (id) {
-    view.value = 'detail';
-    currentId.value = id;
-  }
-  cat.value = urlCat;
-  fakeGet(null).then(() => { ready.value = true; });
-  window.addEventListener('popstate', onPop);
-  window.addEventListener('news:cat', onCat);
-  window.addEventListener('news:article', onArticle);
+	const { id, cat: urlCat } = getUrlState();
+	if (id) {
+		view.value = 'detail';
+		currentId.value = id;
+	}
+	cat.value = urlCat;
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
+	window.addEventListener('popstate', onPop);
+	window.addEventListener('news:cat', onCat);
+	window.addEventListener('news:article', onArticle);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('popstate', onPop);
-  window.removeEventListener('news:cat', onCat);
-  window.removeEventListener('news:article', onArticle);
+	window.removeEventListener('popstate', onPop);
+	window.removeEventListener('news:cat', onCat);
+	window.removeEventListener('news:article', onArticle);
 });
 </script>
 

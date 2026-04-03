@@ -3,33 +3,35 @@
   @component NewsWeatherWidget
 -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { getBreaking } from '../../../../data/news/articles';
-  import { getLiveGeomantic, statusColor } from '../../../../data/news/geomantic';
-  import '../../../../styles/l2/news.css';
+import { onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import { getBreaking } from '../../../../data/news/articles';
+import { getLiveGeomantic, statusColor } from '../../../../data/news/geomantic';
+import '../../../../styles/l2/news.css';
 
-  let ready = false;
-  const breaking = getBreaking();
-  const _geo = getLiveGeomantic();
-  const _zones = _geo.zones;
-  const _metrics = _geo.metrics;
-  const _advisories = _geo.advisories;
-  const _updated = _geo.updated;
-  const _statusColor = statusColor;
+let ready = false;
+const breaking = getBreaking();
+const _geo = getLiveGeomantic();
+const _zones = _geo.zones;
+const _metrics = _geo.metrics;
+const _advisories = _geo.advisories;
+const _updated = _geo.updated;
+const _statusColor = statusColor;
 
-  function goToArticle(id: string) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('id', id);
-    url.searchParams.delete('cat');
-    history.pushState(null, '', url.toString());
-    window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
-    window.scrollTo(0, 0);
-  }
+function goToArticle(id: string) {
+	const url = new URL(window.location.href);
+	url.searchParams.set('id', id);
+	url.searchParams.delete('cat');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
+	window.scrollTo(0, 0);
+}
 
-  onMount(() => {
-    fakeGet(null).then(() => { ready = true; });
-  });
+onMount(() => {
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+});
 </script>
 
 {#if !ready}

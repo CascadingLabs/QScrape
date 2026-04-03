@@ -3,33 +3,35 @@
   @component EshopPriceBadges
 -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { products } from '../../../../data/eshop/products';
-  import '../../../../styles/l2/eshop.css';
+import { onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import { products } from '../../../../data/eshop/products';
+import '../../../../styles/l2/eshop.css';
 
-  let ready = false;
+let ready = false;
 
-  function goToProduct(sku: string) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('sku', sku);
-    url.searchParams.delete('cat');
-    history.pushState(null, '', url.toString());
-    window.dispatchEvent(new CustomEvent('eshop:product', { detail: sku }));
-    window.scrollTo(0, 0);
-  }
+function goToProduct(sku: string) {
+	const url = new URL(window.location.href);
+	url.searchParams.set('sku', sku);
+	url.searchParams.delete('cat');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('eshop:product', { detail: sku }));
+	window.scrollTo(0, 0);
+}
 
-  const saleItems = products
-    .filter((p) => p.salePrice)
-    .slice(0, 6)
-    .map((p) => ({
-      ...p,
-      discount: Math.round(((p.basePrice - p.salePrice!) / p.basePrice) * 100),
-    }));
+const saleItems = products
+	.filter((p) => p.salePrice)
+	.slice(0, 6)
+	.map((p) => ({
+		...p,
+		discount: Math.round(((p.basePrice - p.salePrice!) / p.basePrice) * 100),
+	}));
 
-  onMount(() => {
-    fakeGet(null).then(() => { ready = true; });
-  });
+onMount(() => {
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+});
 </script>
 
 {#if !ready}

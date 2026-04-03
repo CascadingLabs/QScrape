@@ -38,7 +38,7 @@ export default function ScoretapStandings() {
 	});
 
 	return (
-		<div>
+		<div data-island="solid-standings">
 			<Show when={!rows()}>
 				<div class="a">Loading…</div>
 			</Show>
@@ -82,7 +82,7 @@ export default function ScoretapStandings() {
 				</div>
 			</Show>
 			<style>{`
-				.a {
+				[data-island="solid-standings"] .a {
 					min-height: 100px;
 					display: flex;
 					align-items: center;
@@ -90,14 +90,14 @@ export default function ScoretapStandings() {
 					font-family: var(--st3-font-ui);
 					font-size: 14px;
 				}
-				.b {
+				[data-island="solid-standings"] .b {
 					background: var(--st3-surface);
 					border: 1px solid var(--st3-border);
 					border-radius: var(--st3-radius);
 					padding: 16px;
 					overflow-x: auto;
 				}
-				.c {
+				[data-island="solid-standings"] .c {
 					font-family: var(--st3-font-ui);
 					font-size: 13px;
 					font-weight: 700;
@@ -108,11 +108,11 @@ export default function ScoretapStandings() {
 					padding-bottom: 10px;
 					border-bottom: 1px solid var(--st3-border);
 				}
-				.d {
+				[data-island="solid-standings"] .d {
 					width: 100%;
 					border-collapse: collapse;
 				}
-				.e {
+				[data-island="solid-standings"] .e {
 					font-family: var(--st3-font-ui);
 					font-size: 10px;
 					font-weight: 700;
@@ -123,12 +123,12 @@ export default function ScoretapStandings() {
 					padding: 0 0 8px;
 					border-bottom: 1px solid var(--st3-border);
 				}
-				.f { width: 28px; }
-				.i, .h { text-align: right; }
-				.i { width: 60px; }
-				.h { width: 36px; }
-				.j:last-child .k { border-bottom: none; }
-				.k {
+				[data-island="solid-standings"] .f { width: 28px; }
+				[data-island="solid-standings"] .i, [data-island="solid-standings"] .h { text-align: right; }
+				[data-island="solid-standings"] .i { width: 60px; }
+				[data-island="solid-standings"] .h { width: 36px; }
+				[data-island="solid-standings"] .j:last-child .k { border-bottom: none; }
+				[data-island="solid-standings"] .k {
 					font-family: var(--st3-font-ui);
 					font-size: 13px;
 					color: var(--st3-text);
@@ -136,13 +136,13 @@ export default function ScoretapStandings() {
 					border-bottom: 1px solid var(--st3-border);
 					vertical-align: middle;
 				}
-				.r { text-align: right; }
-				.n { text-align: right; }
-				.l canvas { display: block; }
-				.r canvas { display: block; margin-left: auto; }
-				.o { color: var(--st3-live); font-size: 11px; }
-				.p { color: #ef4444; font-size: 11px; }
-				.q { color: var(--st3-muted); font-size: 11px; }
+				[data-island="solid-standings"] .r { text-align: right; }
+				[data-island="solid-standings"] .n { text-align: right; }
+				[data-island="solid-standings"] .l canvas { display: block; }
+				[data-island="solid-standings"] .r canvas { display: block; margin-left: auto; }
+				[data-island="solid-standings"] .o { color: var(--st3-live); font-size: 11px; }
+				[data-island="solid-standings"] .p { color: #ef4444; font-size: 11px; }
+				[data-island="solid-standings"] .q { color: var(--st3-muted); font-size: 11px; }
 			`}</style>
 		</div>
 	);

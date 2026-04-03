@@ -5,24 +5,33 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { fakeGet } from '../../../../data/api';
-import { formatDate, getBreaking, getLatest } from '../../../../data/news/articles';
+import {
+	formatDate,
+	getBreaking,
+	getLatest,
+} from '../../../../data/news/articles';
 import '../../../../styles/l2/news.css';
 
 const ready = ref(false);
 const breaking = getBreaking();
-const topHeadlines = getLatest(3).map((a) => ({ ...a, dateStr: formatDate(a.published) }));
+const topHeadlines = getLatest(3).map((a) => ({
+	...a,
+	dateStr: formatDate(a.published),
+}));
 
 function goToArticle(id: string) {
-  const url = new URL(window.location.href);
-  url.searchParams.set('id', id);
-  url.searchParams.delete('cat');
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
-  window.scrollTo(0, 0);
+	const url = new URL(window.location.href);
+	url.searchParams.set('id', id);
+	url.searchParams.delete('cat');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
+	window.scrollTo(0, 0);
 }
 
 onMounted(() => {
-  fakeGet(null).then(() => { ready.value = true; });
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
 });
 </script>
 

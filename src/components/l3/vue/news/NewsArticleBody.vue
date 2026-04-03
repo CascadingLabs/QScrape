@@ -19,7 +19,7 @@ onMounted(() => {
 	}
 });
 
-function _bodyParagraphs(a: ArticleMeta): string[] {
+function bodyParagraphs(a: ArticleMeta): string[] {
 	return [
 		a.excerpt,
 		`The ${a.category.toLowerCase()} desk at the Mountainhome Herald has been following this story closely. Sources close to the situation confirmed the details on ${a.published.slice(0, 10)}.`,

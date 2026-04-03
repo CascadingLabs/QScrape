@@ -1,12 +1,12 @@
 <script lang="ts">
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
+import { addToCart } from '../../../../data/eshop/l3cart';
 import {
 	formatPrice,
 	getProductBySku,
 	type ProductMeta,
 } from '../../../../data/eshop/products';
-import { addToCart } from '../../../../data/eshop/l3cart';
 
 export let sku: string;
 
@@ -27,7 +27,9 @@ function handleAdd() {
 	}
 	addToCart(data.product.sku);
 	added = true;
-	setTimeout(() => { added = false; }, 1500);
+	setTimeout(() => {
+		added = false;
+	}, 1500);
 }
 
 function handleOrderNow() {

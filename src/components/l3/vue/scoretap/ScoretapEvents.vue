@@ -39,7 +39,7 @@ onMounted(() => {
 	});
 });
 
-function _filtered() {
+function filtered() {
 	if (!rows.value) {
 		return [];
 	}
@@ -49,7 +49,7 @@ function _filtered() {
 	return rows.value.filter((r) => r.game === activeGame.value);
 }
 
-function _gameLabel(game: Game): string {
+function gameLabel(game: Game): string {
 	return gameLabels[game];
 }
 </script>
@@ -90,7 +90,9 @@ function _gameLabel(game: Game): string {
 
 <style>
 @import '../../../../styles/l3/scoretap.css';
+</style>
 
+<style scoped>
 .a {
 	min-height: 160px;
 	display: flex;

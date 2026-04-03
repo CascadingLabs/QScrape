@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
-import { getLiveGeomantic, type LiveGeomantic } from '../../../../data/news/geomantic';
+import {
+	getLiveGeomantic,
+	type LiveGeomantic,
+} from '../../../../data/news/geomantic';
 
 const geo = ref<LiveGeomantic | null>(null);
 

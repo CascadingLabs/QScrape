@@ -3,19 +3,39 @@
   @component TaxesTransferTax
 -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import '../../../../styles/l2/taxes.css';
+import { onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import '../../../../styles/l2/taxes.css';
 
-  const transferTax = [
-    { range: '0 – 500.00 GP', rate: '0.5 GP per 100 GP', example: '2.50 GP on 500 GP' },
-    { range: '500.01 – 5,000.00 GP', rate: '0.5 GP per 100 GP', example: '25.00 GP on 5,000 GP' },
-    { range: '5,000.01 – 50,000.00 GP', rate: '0.5 GP per 100 GP', example: '250.00 GP on 50,000 GP' },
-    { range: '50,000.01 GP and above', rate: '0.75 GP per 100 GP', example: '750.00 GP on 100,000 GP' },
-  ];
+const transferTax = [
+	{
+		range: '0 – 500.00 GP',
+		rate: '0.5 GP per 100 GP',
+		example: '2.50 GP on 500 GP',
+	},
+	{
+		range: '500.01 – 5,000.00 GP',
+		rate: '0.5 GP per 100 GP',
+		example: '25.00 GP on 5,000 GP',
+	},
+	{
+		range: '5,000.01 – 50,000.00 GP',
+		rate: '0.5 GP per 100 GP',
+		example: '250.00 GP on 50,000 GP',
+	},
+	{
+		range: '50,000.01 GP and above',
+		rate: '0.75 GP per 100 GP',
+		example: '750.00 GP on 100,000 GP',
+	},
+];
 
-  let ready = false;
-  onMount(() => { fakeGet(null).then(() => { ready = true; }); });
+let ready = false;
+onMount(() => {
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+});
 </script>
 
 {#if !ready}

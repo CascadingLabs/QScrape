@@ -3,27 +3,36 @@
   @component NewsBreakingTicker
 -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { formatDate, getBreaking, getLatest } from '../../../../data/news/articles';
-  import '../../../../styles/l2/news.css';
+import { onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import {
+	formatDate,
+	getBreaking,
+	getLatest,
+} from '../../../../data/news/articles';
+import '../../../../styles/l2/news.css';
 
-  let ready = false;
-  const breaking = getBreaking();
-  const topHeadlines = getLatest(3).map((a) => ({ ...a, dateStr: formatDate(a.published) }));
+let ready = false;
+const breaking = getBreaking();
+const topHeadlines = getLatest(3).map((a) => ({
+	...a,
+	dateStr: formatDate(a.published),
+}));
 
-  function goToArticle(id: string) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('id', id);
-    url.searchParams.delete('cat');
-    history.pushState(null, '', url.toString());
-    window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
-    window.scrollTo(0, 0);
-  }
+function goToArticle(id: string) {
+	const url = new URL(window.location.href);
+	url.searchParams.set('id', id);
+	url.searchParams.delete('cat');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('news:article', { detail: id }));
+	window.scrollTo(0, 0);
+}
 
-  onMount(() => {
-    fakeGet(null).then(() => { ready = true; });
-  });
+onMount(() => {
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+});
 </script>
 
 {#if !ready}

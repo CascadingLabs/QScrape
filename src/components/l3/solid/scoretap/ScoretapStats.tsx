@@ -81,7 +81,7 @@ export default function ScoretapStats() {
 	});
 
 	return (
-		<div>
+		<div data-island="solid-stats">
 			<Show when={!stats()}>
 				<div class="a">Loading…</div>
 			</Show>
@@ -107,7 +107,7 @@ export default function ScoretapStats() {
 				</div>
 			</Show>
 			<style>{`
-				.a {
+				[data-island="solid-stats"] .a {
 					min-height: 100px;
 					display: flex;
 					align-items: center;
@@ -115,13 +115,13 @@ export default function ScoretapStats() {
 					font-family: var(--st3-font-ui);
 					font-size: 14px;
 				}
-				.b {
+				[data-island="solid-stats"] .b {
 					background: var(--st3-surface);
 					border: 1px solid var(--st3-border);
 					border-radius: var(--st3-radius);
 					padding: 16px;
 				}
-				.c {
+				[data-island="solid-stats"] .c {
 					font-family: var(--st3-font-ui);
 					font-size: 13px;
 					font-weight: 700;
@@ -132,7 +132,7 @@ export default function ScoretapStats() {
 					padding-bottom: 10px;
 					border-bottom: 1px solid var(--st3-border);
 				}
-				.d {
+				[data-island="solid-stats"] .d {
 					list-style: none;
 					padding: 0;
 					margin: 0;
@@ -140,7 +140,7 @@ export default function ScoretapStats() {
 					flex-direction: column;
 					gap: 0;
 				}
-				.e {
+				[data-island="solid-stats"] .e {
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
@@ -148,20 +148,20 @@ export default function ScoretapStats() {
 					border-bottom: 1px solid var(--st3-border);
 					gap: 12px;
 				}
-				.e:last-child { border-bottom: none; }
-				.f {
+				[data-island="solid-stats"] .e:last-child { border-bottom: none; }
+				[data-island="solid-stats"] .f {
 					display: flex;
 					flex-direction: column;
 					gap: 2px;
 					overflow: hidden;
 				}
-				.g {
+				[data-island="solid-stats"] .g {
 					font-family: var(--st3-font-ui);
 					font-size: 14px;
 					font-weight: 600;
 					color: var(--st3-text);
 				}
-				.h {
+				[data-island="solid-stats"] .h {
 					font-family: var(--st3-font-ui);
 					font-size: 11px;
 					font-weight: 700;
@@ -169,15 +169,15 @@ export default function ScoretapStats() {
 					letter-spacing: 0.06em;
 					color: var(--st3-muted);
 				}
-				.i {
+				[data-island="solid-stats"] .i {
 					font-family: var(--st3-font-ui);
 					font-size: 11px;
 					color: var(--st3-muted);
 				}
-				.j {
+				[data-island="solid-stats"] .j {
 					flex-shrink: 0;
 				}
-				.j canvas { display: block; }
+				[data-island="solid-stats"] .j canvas { display: block; }
 			`}</style>
 		</div>
 	);

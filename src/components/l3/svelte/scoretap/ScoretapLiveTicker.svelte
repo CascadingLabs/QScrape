@@ -5,7 +5,7 @@ import { liveMatches, type Match } from '../../../../data/scoretap/data';
 
 type TickerRow = Match & { fakeScoreA: number; fakeScoreB: number };
 
-let _rows: TickerRow[] | null = null;
+let rows: TickerRow[] | null = null;
 
 onMount(() => {
 	const data: TickerRow[] = liveMatches.map((m) => ({
@@ -14,7 +14,7 @@ onMount(() => {
 		fakeScoreB: m.scoreB + Math.floor((m.id.length % 3) + 1),
 	}));
 	fakeGetMs(data, 800, 250).then((d) => {
-		_rows = d;
+		rows = d;
 	});
 });
 </script>

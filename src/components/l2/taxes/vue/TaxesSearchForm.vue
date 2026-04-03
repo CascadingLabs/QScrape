@@ -17,63 +17,83 @@ const first = ref('');
 const index = ref('ALL');
 
 function getUrlSearch() {
-  const p = new URLSearchParams(window.location.search);
-  return {
-    lastFirm: p.get('lastFirm') ?? '',
-    first: p.get('first') ?? '',
-    index: p.get('index') ?? 'ALL',
-  };
+	const p = new URLSearchParams(window.location.search);
+	return {
+		lastFirm: p.get('lastFirm') ?? '',
+		first: p.get('first') ?? '',
+		index: p.get('index') ?? 'ALL',
+	};
 }
 
 function dispatchSearch(lf: string, fi: string, ix: string) {
-  const url = new URL(window.location.href);
-  if (lf) { url.searchParams.set('lastFirm', lf); } else { url.searchParams.delete('lastFirm'); }
-  if (fi) { url.searchParams.set('first', fi); } else { url.searchParams.delete('first'); }
-  if (ix !== 'ALL') { url.searchParams.set('index', ix); } else { url.searchParams.delete('index'); }
-  url.searchParams.delete('file');
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('taxes:search', { detail: { lastFirm: lf, first: fi, index: ix } }));
+	const url = new URL(window.location.href);
+	if (lf) {
+		url.searchParams.set('lastFirm', lf);
+	} else {
+		url.searchParams.delete('lastFirm');
+	}
+	if (fi) {
+		url.searchParams.set('first', fi);
+	} else {
+		url.searchParams.delete('first');
+	}
+	if (ix !== 'ALL') {
+		url.searchParams.set('index', ix);
+	} else {
+		url.searchParams.delete('index');
+	}
+	url.searchParams.delete('file');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(
+		new CustomEvent('taxes:search', {
+			detail: { lastFirm: lf, first: fi, index: ix },
+		}),
+	);
 }
 
 function handleSubmit(e: Event) {
-  e.preventDefault();
-  dispatchSearch(lastFirm.value, first.value, index.value);
+	e.preventDefault();
+	dispatchSearch(lastFirm.value, first.value, index.value);
 }
 
 function handleClear() {
-  lastFirm.value = '';
-  first.value = '';
-  index.value = 'ALL';
-  dispatchSearch('', '', 'ALL');
+	lastFirm.value = '';
+	first.value = '';
+	index.value = 'ALL';
+	dispatchSearch('', '', 'ALL');
 }
 
 function onPop() {
-  const s = getUrlSearch();
-  lastFirm.value = s.lastFirm;
-  first.value = s.first;
-  index.value = s.index;
+	const s = getUrlSearch();
+	lastFirm.value = s.lastFirm;
+	first.value = s.first;
+	index.value = s.index;
 }
 
 function onSearch(e: Event) {
-  const d = (e as CustomEvent<{ lastFirm: string; first: string; index: string }>).detail;
-  lastFirm.value = d.lastFirm;
-  first.value = d.first;
-  index.value = d.index;
+	const d = (
+		e as CustomEvent<{ lastFirm: string; first: string; index: string }>
+	).detail;
+	lastFirm.value = d.lastFirm;
+	first.value = d.first;
+	index.value = d.index;
 }
 
 onMounted(() => {
-  const s = getUrlSearch();
-  lastFirm.value = s.lastFirm;
-  first.value = s.first;
-  index.value = s.index;
-  fakeGet(null).then(() => { ready.value = true; });
-  window.addEventListener('popstate', onPop);
-  window.addEventListener('taxes:search', onSearch);
+	const s = getUrlSearch();
+	lastFirm.value = s.lastFirm;
+	first.value = s.first;
+	index.value = s.index;
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
+	window.addEventListener('popstate', onPop);
+	window.addEventListener('taxes:search', onSearch);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('popstate', onPop);
-  window.removeEventListener('taxes:search', onSearch);
+	window.removeEventListener('popstate', onPop);
+	window.removeEventListener('taxes:search', onSearch);
 });
 </script>
 

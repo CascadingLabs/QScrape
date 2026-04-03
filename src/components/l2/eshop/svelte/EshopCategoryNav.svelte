@@ -3,45 +3,54 @@
   @component EshopCategoryNav
 -->
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-  import { fakeGet } from '../../../../data/api';
-  import { categories } from '../../../../data/eshop/products';
-  import '../../../../styles/l2/eshop.css';
+import { onDestroy, onMount } from 'svelte';
+import { fakeGet } from '../../../../data/api';
+import { categories } from '../../../../data/eshop/products';
+import '../../../../styles/l2/eshop.css';
 
-  let ready = false;
-  let active = 'All';
+let ready = false;
+let active = 'All';
 
-  function getActiveCat() {
-    return new URLSearchParams(window.location.search).get('cat') ?? 'All';
-  }
+function getActiveCat() {
+	return new URLSearchParams(window.location.search).get('cat') ?? 'All';
+}
 
-  function navigate(cat: string) {
-    const url = new URL(window.location.href);
-    if (cat === 'All') { url.searchParams.delete('cat'); }
-    else { url.searchParams.set('cat', cat); }
-    history.pushState(null, '', url.toString());
-    active = cat;
-    window.dispatchEvent(
-      new CustomEvent('eshop:cat', { detail: cat === 'All' ? null : cat }),
-    );
-  }
+function navigate(cat: string) {
+	const url = new URL(window.location.href);
+	if (cat === 'All') {
+		url.searchParams.delete('cat');
+	} else {
+		url.searchParams.set('cat', cat);
+	}
+	history.pushState(null, '', url.toString());
+	active = cat;
+	window.dispatchEvent(
+		new CustomEvent('eshop:cat', { detail: cat === 'All' ? null : cat }),
+	);
+}
 
-  function onPop() { active = getActiveCat(); }
-  function onCat(e: Event) { active = (e as CustomEvent<string | null>).detail ?? 'All'; }
+function onPop() {
+	active = getActiveCat();
+}
+function onCat(e: Event) {
+	active = (e as CustomEvent<string | null>).detail ?? 'All';
+}
 
-  onMount(() => {
-    active = getActiveCat();
-    fakeGet(null).then(() => { ready = true; });
-    window.addEventListener('popstate', onPop);
-    window.addEventListener('eshop:cat', onCat);
-  });
+onMount(() => {
+	active = getActiveCat();
+	fakeGet(null).then(() => {
+		ready = true;
+	});
+	window.addEventListener('popstate', onPop);
+	window.addEventListener('eshop:cat', onCat);
+});
 
-  onDestroy(() => {
-    window.removeEventListener('popstate', onPop);
-    window.removeEventListener('eshop:cat', onCat);
-  });
+onDestroy(() => {
+	window.removeEventListener('popstate', onPop);
+	window.removeEventListener('eshop:cat', onCat);
+});
 
-  const allCats = ['All', ...categories] as string[];
+const allCats = ['All', ...categories] as string[];
 </script>
 
 {#if !ready}

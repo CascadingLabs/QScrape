@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
-import { formatPrice, getProductBySku } from '../../../../data/eshop/products';
 import {
 	CART_EVENT,
-	VIEW_EVENT,
-	ORDER_EVENT,
-	type ViewState,
 	getCart,
 	getView,
+	ORDER_EVENT,
 	updateQty,
-	validateInput,
 	type ValidateType,
+	VIEW_EVENT,
+	type ViewState,
+	validateInput,
 } from '../../../../data/eshop/l3cart';
+import { formatPrice, getProductBySku } from '../../../../data/eshop/products';
 
 type PriceRow = {
 	sku: string;

@@ -5,7 +5,11 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { fakeGet } from '../../../../data/api';
-import type { DeedRecord, IndexType, StatusType } from '../../../../data/taxes/deeds';
+import type {
+	DeedRecord,
+	IndexType,
+	StatusType,
+} from '../../../../data/taxes/deeds';
 import { deeds, indexLabels, searchDeeds } from '../../../../data/taxes/deeds';
 import '../../../../styles/l2/taxes.css';
 
@@ -18,92 +22,110 @@ const results = ref<DeedRecord[]>(deeds);
 const page = ref(1);
 
 const currentRecord = computed(() =>
-  currentFile.value ? deeds.find((d) => d.fileNum === currentFile.value) ?? null : null
+	currentFile.value
+		? (deeds.find((d) => d.fileNum === currentFile.value) ?? null)
+		: null,
 );
 
 const totalPages = computed(() => Math.ceil(results.value.length / PER_PAGE));
 const pageItems = computed(() =>
-  results.value.slice((page.value - 1) * PER_PAGE, page.value * PER_PAGE)
+	results.value.slice((page.value - 1) * PER_PAGE, page.value * PER_PAGE),
 );
 
 const statusColors: Record<StatusType, [string, string]> = {
-  RECORDED: ['var(--er-recorded-bg)', 'var(--er-recorded)'],
-  SATISFIED: ['var(--er-satisfied-bg)', 'var(--er-satisfied)'],
-  DELINQUENT: ['var(--er-delinquent-bg)', 'var(--er-delinquent)'],
+	RECORDED: ['var(--er-recorded-bg)', 'var(--er-recorded)'],
+	SATISFIED: ['var(--er-satisfied-bg)', 'var(--er-satisfied)'],
+	DELINQUENT: ['var(--er-delinquent-bg)', 'var(--er-delinquent)'],
 };
 
 function getUrlState() {
-  const p = new URLSearchParams(window.location.search);
-  return {
-    file: p.get('file'),
-    lastFirm: p.get('lastFirm') ?? '',
-    first: p.get('first') ?? '',
-    index: p.get('index') ?? 'ALL',
-  };
+	const p = new URLSearchParams(window.location.search);
+	return {
+		file: p.get('file'),
+		lastFirm: p.get('lastFirm') ?? '',
+		first: p.get('first') ?? '',
+		index: p.get('index') ?? 'ALL',
+	};
 }
 
 function applySearch(lf: string, fi: string, ix: string) {
-  results.value = searchDeeds({ lastFirm: lf, first: fi, index: ix !== 'ALL' ? ix : undefined });
-  view.value = 'list';
-  page.value = 1;
+	results.value = searchDeeds({
+		lastFirm: lf,
+		first: fi,
+		index: ix !== 'ALL' ? ix : undefined,
+	});
+	view.value = 'list';
+	page.value = 1;
 }
 
 function viewRecord(fileNum: string) {
-  const url = new URL(window.location.href);
-  url.searchParams.set('file', fileNum);
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('taxes:view', { detail: fileNum }));
-  window.scrollTo(0, 0);
+	const url = new URL(window.location.href);
+	url.searchParams.set('file', fileNum);
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('taxes:view', { detail: fileNum }));
+	window.scrollTo(0, 0);
 }
 
 function onBack() {
-  history.back();
+	history.back();
 }
 
 function onPop() {
-  const s = getUrlState();
-  if (s.file) {
-    view.value = 'detail';
-    currentFile.value = s.file;
-  } else {
-    view.value = 'list';
-    results.value = searchDeeds({ lastFirm: s.lastFirm, first: s.first, index: s.index !== 'ALL' ? s.index : undefined });
-    page.value = 1;
-  }
+	const s = getUrlState();
+	if (s.file) {
+		view.value = 'detail';
+		currentFile.value = s.file;
+	} else {
+		view.value = 'list';
+		results.value = searchDeeds({
+			lastFirm: s.lastFirm,
+			first: s.first,
+			index: s.index !== 'ALL' ? s.index : undefined,
+		});
+		page.value = 1;
+	}
 }
 
 function onSearch(e: Event) {
-  const d = (e as CustomEvent<{ lastFirm: string; first: string; index: string }>).detail;
-  applySearch(d.lastFirm, d.first, d.index);
+	const d = (
+		e as CustomEvent<{ lastFirm: string; first: string; index: string }>
+	).detail;
+	applySearch(d.lastFirm, d.first, d.index);
 }
 
 function onView(e: Event) {
-  currentFile.value = (e as CustomEvent<string>).detail;
-  view.value = 'detail';
+	currentFile.value = (e as CustomEvent<string>).detail;
+	view.value = 'detail';
 }
 
 function indexLabel(t: string) {
-  return `${t} — ${indexLabels[t as IndexType]}`;
+	return `${t} — ${indexLabels[t as IndexType]}`;
 }
 
 onMounted(() => {
-  const s = getUrlState();
-  if (s.file) {
-    view.value = 'detail';
-    currentFile.value = s.file;
-  } else {
-    results.value = searchDeeds({ lastFirm: s.lastFirm, first: s.first, index: s.index !== 'ALL' ? s.index : undefined });
-  }
-  fakeGet(null).then(() => { ready.value = true; });
-  window.addEventListener('popstate', onPop);
-  window.addEventListener('taxes:search', onSearch);
-  window.addEventListener('taxes:view', onView);
+	const s = getUrlState();
+	if (s.file) {
+		view.value = 'detail';
+		currentFile.value = s.file;
+	} else {
+		results.value = searchDeeds({
+			lastFirm: s.lastFirm,
+			first: s.first,
+			index: s.index !== 'ALL' ? s.index : undefined,
+		});
+	}
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
+	window.addEventListener('popstate', onPop);
+	window.addEventListener('taxes:search', onSearch);
+	window.addEventListener('taxes:view', onView);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('popstate', onPop);
-  window.removeEventListener('taxes:search', onSearch);
-  window.removeEventListener('taxes:view', onView);
+	window.removeEventListener('popstate', onPop);
+	window.removeEventListener('taxes:search', onSearch);
+	window.removeEventListener('taxes:view', onView);
 });
 </script>
 

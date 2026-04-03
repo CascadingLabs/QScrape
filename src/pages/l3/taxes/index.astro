@@ -36,15 +36,11 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     </header>
 
     <main class="l">
+      <TaxesSearchForm client:only="react" />
+      <TaxesResults client:only="vue" />
       <div class="m">
-        <section class="n">
-          <TaxesSearchForm client:only="react" />
-          <TaxesResults client:only="vue" />
-        </section>
-        <aside class="o">
-          <TaxesPagination client:only="svelte" />
-          <TaxesSidebar client:only="solid-js" />
-        </aside>
+        <TaxesPagination client:only="svelte" />
+        <TaxesSidebar client:only="solid-js" />
       </div>
     </main>
 
@@ -68,6 +64,7 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     font-family: var(--er3-font);
     font-size: 16px;
     line-height: 1.6;
+    overflow-x: hidden;
   }
 
   .a {
@@ -88,6 +85,7 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
     font-size: 28px;
     line-height: 1;
     filter: hue-rotate(160deg);
+    color: transparent;
   }
 
   .d {
@@ -146,30 +144,21 @@ import ThemeToggle from '../../../components/ThemeToggle.astro';
   .k { color: var(--er3-primary); border-bottom-color: var(--er3-primary); }
 
   .l {
-    max-width: 1100px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
 
   .m {
     display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 32px;
-  }
-  @media (max-width: 768px) {
-    .m { grid-template-columns: 1fr; }
-  }
-
-  .n {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: 1fr 1fr;
     gap: 24px;
-    min-width: 0;
   }
-  .o {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  @media (max-width: 600px) {
+    .m { grid-template-columns: 1fr; }
   }
 
   .p {

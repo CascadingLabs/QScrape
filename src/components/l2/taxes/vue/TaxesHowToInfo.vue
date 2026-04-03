@@ -8,7 +8,11 @@ import { fakeGet } from '../../../../data/api';
 import '../../../../styles/l2/taxes.css';
 
 const ready = ref(false);
-onMounted(() => { fakeGet(null).then(() => { ready.value = true; }); });
+onMounted(() => {
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
+});
 </script>
 
 <template>

@@ -12,7 +12,9 @@ const ready = ref(false);
 const staff = reporters;
 
 onMounted(() => {
-  fakeGet(null).then(() => { ready.value = true; });
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
 });
 </script>
 

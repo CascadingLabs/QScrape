@@ -12,16 +12,18 @@ const ready = ref(false);
 const featured = getFeatured().slice(0, 4);
 
 function goToProduct(sku: string) {
-  const url = new URL(window.location.href);
-  url.searchParams.set('sku', sku);
-  url.searchParams.delete('cat');
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('eshop:product', { detail: sku }));
-  window.scrollTo(0, 0);
+	const url = new URL(window.location.href);
+	url.searchParams.set('sku', sku);
+	url.searchParams.delete('cat');
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('eshop:product', { detail: sku }));
+	window.scrollTo(0, 0);
 }
 
 onMounted(() => {
-  fakeGet(null).then(() => { ready.value = true; });
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
 });
 </script>
 

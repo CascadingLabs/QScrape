@@ -12,15 +12,17 @@ const ready = ref(false);
 const recent = deeds.slice(0, 8);
 
 function goToRecord(fileNum: string) {
-  const url = new URL(window.location.href);
-  url.searchParams.set('file', fileNum);
-  history.pushState(null, '', url.toString());
-  window.dispatchEvent(new CustomEvent('taxes:view', { detail: fileNum }));
-  window.scrollTo(0, 0);
+	const url = new URL(window.location.href);
+	url.searchParams.set('file', fileNum);
+	history.pushState(null, '', url.toString());
+	window.dispatchEvent(new CustomEvent('taxes:view', { detail: fileNum }));
+	window.scrollTo(0, 0);
 }
 
 onMounted(() => {
-  fakeGet(null).then(() => { ready.value = true; });
+	fakeGet(null).then(() => {
+		ready.value = true;
+	});
 });
 </script>
 
