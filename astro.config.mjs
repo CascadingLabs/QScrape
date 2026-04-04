@@ -12,9 +12,9 @@ export default defineConfig({
 	site: 'https://qscrape.dev',
 	integrations: [
 		sitemap(),
-		react({ include: ['**/l2/react/**', '**/l3/react/**'] }),
+		react({ include: ['**/l2/*/react/**', '**/l3/react/**'] }),
 		vue(),
 		svelte(),
-		solid({ include: ['**/l3/solid/**'] }),
+		solid({ include: ['**/l2/*/solid/**', '**/l3/solid/**'] }),
 	],
 });

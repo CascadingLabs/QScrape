@@ -1,6 +1,3 @@
-// @qscrape L3 / react island / scoretap — game filter tabs
-// Anti-bot: CSS-assembled text — game names rendered in shuffled DOM order,
-// CSS flex order restores visual sequence. textContent returns words scrambled.
 import { useEffect, useState } from 'react';
 import { fakeGetMs } from '../../../../data/api';
 import type { Game } from '../../../../data/scoretap/data';
@@ -23,9 +20,9 @@ function AssembledText({ text }: { text: string }) {
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.e}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.f}>
 					{word}
 				</span>
 			))}
@@ -56,15 +53,11 @@ export default function ScoretapGameFilter() {
 	}, []);
 
 	if (!tabs) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	return (
-		<nav
-			className={styles.root}
-			data-island="react-game-filter"
-			aria-label="Filter by game"
-		>
+		<nav className={styles.b} data-island="react-game-filter">
 			{tabs.map((tab) => {
 				const isActive = tab.key === activeGame;
 				const href = tab.game
@@ -74,8 +67,8 @@ export default function ScoretapGameFilter() {
 					<a
 						key={tab.key}
 						href={href}
-						className={`${styles.tab} ${isActive ? styles.tabActive : ''}`}
-						data-game={tab.key}
+						className={`${styles.c} ${isActive ? styles.d : ''}`}
+						data-0={tab.key}
 						aria-current={isActive ? 'page' : undefined}
 					>
 						<AssembledText text={tab.label} />

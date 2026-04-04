@@ -1,5 +1,6 @@
 ---
 import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
 import { formatDateTime, getBreaking } from '../_data/articles';
 import AdUnit from './AdUnit.astro';
 
@@ -152,6 +153,8 @@ const footerAd = footerAds[Math.floor(Math.random() * footerAds.length)];
       <a href="/l1/news/rss/" style="color:#ff6600;">RSS Feeds</a>
     </div>
   </div>
+
+  <ThemeToggle />
 
   <!-- Shared article navigation script -->
   <script is:inline>

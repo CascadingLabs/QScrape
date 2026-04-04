@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / eshop — featured + promoted products banner (catalog page)
-// Anti-bot: product SKUs and rating scores drawn to <canvas> — not present in DOM text at all
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -9,6 +7,39 @@ import {
 	type ProductMeta,
 } from '../../../../data/eshop/products';
 import '../../../../styles/l3/eshop.css';
+
+function CanvasText(props: {
+	text: string;
+	width?: number;
+	fontSize?: number;
+	color?: string;
+	fontWeight?: string;
+}) {
+	let canvas: HTMLCanvasElement | undefined;
+	onMount(() => {
+		if (!canvas) {
+			return;
+		}
+		const ctx = canvas.getContext('2d');
+		if (!ctx) {
+			return;
+		}
+		const size = props.fontSize ?? 12;
+		const weight = props.fontWeight ?? '400';
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.font = `${weight} ${size}px "DM Sans", system-ui, sans-serif`;
+		ctx.fillStyle = props.color ?? 'var(--vm3-text)';
+		ctx.fillText(props.text, 0, size + 2);
+	});
+	return (
+		<canvas
+			ref={canvas}
+			width={props.width ?? 200}
+			height={(props.fontSize ?? 12) + 6}
+			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
+		/>
+	);
+}
 
 function SkuCanvas(props: { sku: string }) {
 	let canvas: HTMLCanvasElement | undefined;
@@ -31,7 +62,6 @@ function SkuCanvas(props: { sku: string }) {
 			width={140}
 			height={16}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
-			aria-label="sku"
 		/>
 	);
 }
@@ -57,7 +87,6 @@ function RatingCanvas(props: { rating: number; count: number }) {
 			width={120}
 			height={18}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
-			aria-label="rating"
 		/>
 	);
 }
@@ -78,36 +107,46 @@ export default function EshopFeaturedBanner() {
 	});
 
 	return (
-		<div data-island="solid-featured-banner">
+		<div>
 			<Show when={!items()}>
-				<div class="vm3-feat-loading">Loading…</div>
+				<div class="a">Loading…</div>
 			</Show>
 			<Show when={items()}>
-				<div class="vm3-feat-root">
-					<h3 class="vm3-feat-title">Featured &amp; Promoted</h3>
-					<ul class="vm3-feat-list">
+				<div class="b">
+					<h3 class="c">Featured &amp; Promoted</h3>
+					<ul class="d">
 						<For each={items() ?? []}>
 							{(item) => (
-								<li class="vm3-feat-item" data-section={item.section}>
-									<a
-										href={`/l3/eshop/product/${item.sku}/`}
-										class="vm3-feat-link"
-									>
+								<li class="e" data-0={item.section}>
+									<a href={`/l3/eshop/product/${item.sku}/`} class="f">
 										<img
 											src={item.image}
 											alt={item.name}
-											class="vm3-feat-img"
+											class="g"
 											loading="lazy"
 										/>
-										<div class="vm3-feat-info">
-											<span class="vm3-feat-name">{item.name}</span>
-											<span class="vm3-feat-sku">
+										<div class="h">
+											<span class="i">
+												<CanvasText
+													text={item.name}
+													width={200}
+													fontSize={13}
+													fontWeight="600"
+												/>
+											</span>
+											<span class="j">
 												<SkuCanvas sku={item.sku} />
 											</span>
-											<span class="vm3-feat-price">
-												{formatPrice(item.salePrice ?? item.basePrice)}
+											<span class="k">
+												<CanvasText
+													text={formatPrice(item.salePrice ?? item.basePrice)}
+													width={180}
+													fontSize={12}
+													fontWeight="600"
+													color="oklch(55% 0.18 145)"
+												/>
 											</span>
-											<span class="vm3-feat-rating">
+											<span class="l">
 												<RatingCanvas
 													rating={item.rating}
 													count={item.reviewCount}
@@ -122,7 +161,7 @@ export default function EshopFeaturedBanner() {
 				</div>
 			</Show>
 			<style>{`
-				.vm3-feat-loading {
+				.a {
 					min-height: 80px;
 					display: flex;
 					align-items: center;
@@ -130,13 +169,13 @@ export default function EshopFeaturedBanner() {
 					font-family: var(--vm3-font);
 					font-size: 14px;
 				}
-				.vm3-feat-root {
+				.b {
 					background: var(--vm3-surface2);
 					border: 1px solid var(--vm3-border);
 					border-radius: var(--vm3-radius);
 					padding: 16px;
 				}
-				.vm3-feat-title {
+				.c {
 					font-family: var(--vm3-font);
 					font-size: 14px;
 					font-weight: 700;
@@ -147,7 +186,7 @@ export default function EshopFeaturedBanner() {
 					padding-bottom: 8px;
 					border-bottom: 2px solid var(--vm3-primary);
 				}
-				.vm3-feat-list {
+				.d {
 					list-style: none;
 					padding: 0;
 					margin: 0;
@@ -155,11 +194,11 @@ export default function EshopFeaturedBanner() {
 					flex-direction: column;
 					gap: 0;
 				}
-				.vm3-feat-item {
+				.e {
 					border-bottom: 1px solid var(--vm3-border);
 				}
-				.vm3-feat-item:last-child { border-bottom: none; }
-				.vm3-feat-link {
+				.e:last-child { border-bottom: none; }
+				.f {
 					display: flex;
 					gap: 10px;
 					align-items: center;
@@ -167,21 +206,21 @@ export default function EshopFeaturedBanner() {
 					text-decoration: none;
 					color: inherit;
 				}
-				.vm3-feat-link:hover .vm3-feat-name { color: var(--vm3-primary); }
-				.vm3-feat-img {
+				.f:hover .i { color: var(--vm3-primary); }
+				.g {
 					width: 52px;
 					height: 40px;
 					object-fit: cover;
 					border-radius: 4px;
 					flex-shrink: 0;
 				}
-				.vm3-feat-info {
+				.h {
 					display: flex;
 					flex-direction: column;
 					gap: 2px;
 					min-width: 0;
 				}
-				.vm3-feat-name {
+				.i {
 					font-family: var(--vm3-font);
 					font-size: 13px;
 					font-weight: 600;
@@ -192,16 +231,16 @@ export default function EshopFeaturedBanner() {
 					text-overflow: ellipsis;
 					transition: color 0.15s;
 				}
-				.vm3-feat-sku {
+				.j {
 					display: block;
 				}
-				.vm3-feat-price {
+				.k {
 					font-family: var(--vm3-font);
 					font-size: 12px;
 					font-weight: 600;
 					color: var(--vm3-cta);
 				}
-				.vm3-feat-rating {
+				.l {
 					display: block;
 				}
 			`}</style>

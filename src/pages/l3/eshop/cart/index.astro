@@ -1,0 +1,166 @@
+---
+import EshopCartItems from '../../../../components/l3/react/eshop/EshopCartItems';
+import EshopCartCheckout from '../../../../components/l3/solid/eshop/EshopCartCheckout';
+import EshopCartSummary from '../../../../components/l3/svelte/eshop/EshopCartSummary.svelte';
+import EshopCartPrices from '../../../../components/l3/vue/eshop/EshopCartPrices.vue';
+import '../../../../styles/l3/eshop.css';
+import L3Guard from '../../../../components/l3/L3Guard.astro';
+import ShadowShield from '../../../../components/l3/ShadowShield.astro';
+import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cart — VaultMart L3</title>
+    <meta name="description" content="Your shopping cart — VaultMart L3." />
+    <ThemeInit />
+  </head>
+  <body>
+    <header class="a">
+      <div class="b">
+        <a href="/l3/eshop/" class="c">VaultMart</a>
+        <nav class="d">
+          <a href="/l3/eshop/" class="e">Home</a>
+          <a href="/l3/eshop/cart/" class="e f">Cart</a>
+          <a href="/l3/" class="e">← L3</a>
+        </nav>
+        <span class="g">L3 · Islands Edition</span>
+      </div>
+    </header>
+
+    <main class="h">
+      <div class="i">
+        <section class="j">
+          <EshopCartItems client:only="react" />
+          <EshopCartPrices client:only="vue" />
+        </section>
+        <aside class="k">
+          <EshopCartSummary client:only="svelte" />
+          <EshopCartCheckout client:only="solid-js" />
+        </aside>
+      </div>
+    </main>
+
+    <footer class="l">
+      <div class="m">
+        <span>© 2026 VaultMart</span>
+        <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
+      </div>
+    </footer>
+    <ThemeToggle />
+    <L3Guard />
+    <ShadowShield />
+  </body>
+</html>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--vm3-bg);
+    color: var(--vm3-text);
+    font-family: var(--vm3-font);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .a {
+    background: var(--vm3-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--vm3-glass-border);
+  }
+  .b {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .c {
+    font-family: var(--vm3-font);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--vm3-primary);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+    margin-right: auto;
+  }
+
+  .d {
+    display: flex;
+    gap: 4px;
+  }
+  .e {
+    padding: 7px 14px;
+    font-family: var(--vm3-font);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--vm3-muted);
+    text-decoration: none;
+    border-radius: var(--vm3-radius);
+    transition: color 0.15s, background 0.15s;
+  }
+  .e:hover { color: var(--vm3-text); background: var(--vm3-surface2); }
+  .f { color: var(--vm3-text); }
+
+  .g {
+    font-family: var(--vm3-font);
+    font-size: 11px;
+    color: var(--vm3-muted);
+    font-style: italic;
+  }
+
+  .h {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  .i {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 32px;
+  }
+  @media (max-width: 900px) {
+    .i { grid-template-columns: 1fr; }
+  }
+
+  .j {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+  }
+
+  .k {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .l {
+    border-top: 1px solid var(--vm3-glass-border);
+    background: var(--vm3-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    margin-top: 48px;
+  }
+  .m {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--vm3-font);
+    font-size: 12px;
+    color: var(--vm3-muted);
+  }
+</style>

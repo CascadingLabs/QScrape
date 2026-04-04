@@ -1,6 +1,3 @@
-// @qscrape L3 / react island / eshop — category navigation tabs
-// Anti-bot: CSS-assembled text — category label words in shuffled DOM order, CSS flex order restores.
-// element.textContent returns words scrambled; scrapers must read CSS order properties.
 import { useEffect, useState } from 'react';
 import { fakeGetMs } from '../../../../data/api';
 import { categories } from '../../../../data/eshop/products';
@@ -13,7 +10,6 @@ function seedHash(s: string): number {
 	);
 }
 
-/** Renders text with words in shuffled DOM order but correct CSS flex order. */
 function AssembledText({ text }: { text: string }) {
 	const words = text.split(' ');
 	const seed = seedHash(text);
@@ -24,9 +20,9 @@ function AssembledText({ text }: { text: string }) {
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.e}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.f}>
 					{word}
 				</span>
 			))}
@@ -47,14 +43,14 @@ export default function EshopCategoryNav() {
 	}, []);
 
 	if (!ready) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	return (
-		<nav className={styles.root} data-island="react-category-nav">
+		<nav className={styles.b}>
 			<a
 				href="/l3/eshop/"
-				className={`${styles.tab}${!activeCat ? ` ${styles.tabActive}` : ''}`}
+				className={`${styles.c}${!activeCat ? ` ${styles.d}` : ''}`}
 			>
 				All
 			</a>
@@ -62,8 +58,8 @@ export default function EshopCategoryNav() {
 				<a
 					key={cat}
 					href={`/l3/eshop/?cat=${encodeURIComponent(cat)}`}
-					className={`${styles.tab}${activeCat === cat ? ` ${styles.tabActive}` : ''}`}
-					data-cat={cat}
+					className={`${styles.c}${activeCat === cat ? ` ${styles.d}` : ''}`}
+					data-0={cat}
 				>
 					<AssembledText text={cat} />
 				</a>

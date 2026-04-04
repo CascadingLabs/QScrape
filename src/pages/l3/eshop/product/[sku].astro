@@ -5,7 +5,10 @@ import EshopProductDetails from '../../../../components/l3/svelte/eshop/EshopPro
 import EshopProductName from '../../../../components/l3/vue/eshop/EshopProductName.vue';
 import { type ProductMeta, products } from '../../../../data/eshop/products';
 import '../../../../styles/l3/eshop.css';
+import L3Guard from '../../../../components/l3/L3Guard.astro';
+import ShadowShield from '../../../../components/l3/ShadowShield.astro';
 import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
 
 export function getStaticPaths() {
 	return products.map((p) => ({
@@ -30,45 +33,48 @@ const { product } = Astro.props;
     <ThemeInit />
   </head>
   <body>
-    <header class="vm3-masthead">
-      <div class="vm3-masthead-inner">
-        <a href="/l3/eshop/" class="vm3-logo">VaultMart</a>
-        <nav class="vm3-nav">
-          <a href="/l3/eshop/" class="vm3-nav-item">Home</a>
-          <a href="/l3/eshop/?cart" class="vm3-nav-item">Cart</a>
-          <a href="/l3/" class="vm3-nav-item">← L3</a>
+    <header class="a">
+      <div class="b">
+        <a href="/l3/eshop/" class="c">VaultMart</a>
+        <nav class="d">
+          <a href="/l3/eshop/" class="e">Home</a>
+          <a href="/l3/eshop/cart/" class="e">Cart</a>
+          <a href="/l3/" class="e">← L3</a>
         </nav>
-        <span class="vm3-edition">L3 · Islands Edition</span>
+        <span class="f">L3 · Islands Edition</span>
       </div>
     </header>
 
-    <main class="vm3-main">
-      <div class="vm3-breadcrumb">
+    <main class="g">
+      <div class="h">
         <a href="/l3/eshop/">Catalog</a>
-        <span aria-hidden="true">›</span>
+        <span>›</span>
         <a href={`/l3/eshop/?cat=${encodeURIComponent(product.category)}`}>{product.category}</a>
-        <span aria-hidden="true">›</span>
+        <span>›</span>
         <span>{product.sku}</span>
       </div>
 
-      <div class="vm3-layout">
-        <section class="vm3-primary">
+      <div class="i">
+        <section class="j">
           <EshopProductImage client:only="react" product={product} />
           <EshopProductName client:only="vue" sku={product.sku} />
         </section>
-        <aside class="vm3-sidebar-col">
+        <aside class="k">
           <EshopProductDetails client:only="svelte" sku={product.sku} />
           <EshopProductRating client:only="solid-js" sku={product.sku} />
         </aside>
       </div>
     </main>
 
-    <footer class="vm3-footer">
-      <div class="vm3-footer-inner">
+    <footer class="l">
+      <div class="m">
         <span>© 2026 VaultMart</span>
         <span>QScrape L3 · Islands: React · Vue · Svelte · Solid</span>
       </div>
     </footer>
+    <ThemeToggle />
+    <L3Guard />
+    <ShadowShield />
   </body>
 </html>
 
@@ -83,11 +89,11 @@ const { product } = Astro.props;
     line-height: 1.6;
   }
 
-  .vm3-masthead {
+  .a {
     background: var(--vm3-surface);
     border-bottom: 1px solid var(--vm3-border);
   }
-  .vm3-masthead-inner {
+  .b {
     max-width: 1200px;
     margin: 0 auto;
     padding: 14px 24px;
@@ -96,7 +102,7 @@ const { product } = Astro.props;
     gap: 24px;
   }
 
-  .vm3-logo {
+  .c {
     font-family: var(--vm3-font);
     font-size: 22px;
     font-weight: 700;
@@ -106,11 +112,11 @@ const { product } = Astro.props;
     margin-right: auto;
   }
 
-  .vm3-nav {
+  .d {
     display: flex;
     gap: 4px;
   }
-  .vm3-nav-item {
+  .e {
     padding: 7px 14px;
     font-family: var(--vm3-font);
     font-size: 13px;
@@ -120,16 +126,16 @@ const { product } = Astro.props;
     border-radius: var(--vm3-radius);
     transition: color 0.15s, background 0.15s;
   }
-  .vm3-nav-item:hover { color: var(--vm3-text); background: var(--vm3-surface2); }
+  .e:hover { color: var(--vm3-text); background: var(--vm3-surface2); }
 
-  .vm3-edition {
+  .f {
     font-family: var(--vm3-font);
     font-size: 11px;
     color: var(--vm3-muted);
     font-style: italic;
   }
 
-  .vm3-main {
+  .g {
     max-width: 1200px;
     margin: 0 auto;
     padding: 32px 24px;
@@ -138,7 +144,7 @@ const { product } = Astro.props;
     gap: 20px;
   }
 
-  .vm3-breadcrumb {
+  .h {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -146,41 +152,41 @@ const { product } = Astro.props;
     font-size: 13px;
     color: var(--vm3-muted);
   }
-  .vm3-breadcrumb a {
+  .h a {
     color: var(--vm3-primary);
     text-decoration: none;
   }
-  .vm3-breadcrumb a:hover { text-decoration: underline; }
+  .h a:hover { text-decoration: underline; }
 
-  .vm3-layout {
+  .i {
     display: grid;
     grid-template-columns: 1fr 320px;
     gap: 32px;
     align-items: start;
   }
   @media (max-width: 900px) {
-    .vm3-layout { grid-template-columns: 1fr; }
+    .i { grid-template-columns: 1fr; }
   }
 
-  .vm3-primary {
+  .j {
     display: flex;
     flex-direction: column;
     gap: 20px;
     min-width: 0;
   }
 
-  .vm3-sidebar-col {
+  .k {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
 
-  .vm3-footer {
+  .l {
     border-top: 1px solid var(--vm3-border);
     background: var(--vm3-surface);
     margin-top: 48px;
   }
-  .vm3-footer-inner {
+  .m {
     max-width: 1200px;
     margin: 0 auto;
     padding: 16px 24px;

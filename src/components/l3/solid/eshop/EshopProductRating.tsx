@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / eshop — product rating + related products (product detail page)
-// Anti-bot: rating value and review count drawn to <canvas> — not present in DOM text at all
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -8,6 +6,39 @@ import {
 	type ProductMeta,
 } from '../../../../data/eshop/products';
 import '../../../../styles/l3/eshop.css';
+
+function CanvasText(props: {
+	text: string;
+	width?: number;
+	fontSize?: number;
+	color?: string;
+	fontWeight?: string;
+}) {
+	let canvas: HTMLCanvasElement | undefined;
+	onMount(() => {
+		if (!canvas) {
+			return;
+		}
+		const ctx = canvas.getContext('2d');
+		if (!ctx) {
+			return;
+		}
+		const size = props.fontSize ?? 12;
+		const weight = props.fontWeight ?? '400';
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.font = `${weight} ${size}px "DM Sans", system-ui, sans-serif`;
+		ctx.fillStyle = props.color ?? 'var(--vm3-text)';
+		ctx.fillText(props.text, 0, size + 2);
+	});
+	return (
+		<canvas
+			ref={canvas}
+			width={props.width ?? 200}
+			height={(props.fontSize ?? 12) + 6}
+			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
+		/>
+	);
+}
 
 function RatingCanvas(props: { rating: number; count: number }) {
 	let canvas: HTMLCanvasElement | undefined;
@@ -23,16 +54,13 @@ function RatingCanvas(props: { rating: number; count: number }) {
 		const h = canvas.height;
 		ctx.clearRect(0, 0, w, h);
 
-		// Draw star bar background
 		ctx.fillStyle = '#2a2a2a';
 		ctx.fillRect(0, 0, w, h);
 
-		// Draw filled stars proportional to rating
 		const starFill = (props.rating / 5) * w;
 		ctx.fillStyle = 'oklch(58% 0.22 25)';
 		ctx.fillRect(0, 0, starFill, h);
 
-		// Draw rating text over bar
 		ctx.font = 'bold 13px "DM Sans", system-ui, sans-serif';
 		ctx.fillStyle = '#fff';
 		ctx.textBaseline = 'middle';
@@ -48,7 +76,6 @@ function RatingCanvas(props: { rating: number; count: number }) {
 			width={240}
 			height={28}
 			style={{ display: 'block', 'border-radius': '4px' }}
-			aria-label="product rating"
 		/>
 	);
 }
@@ -73,33 +100,41 @@ export default function EshopProductRating(props: { sku: string }) {
 	});
 
 	return (
-		<div data-island="solid-product-rating">
+		<div>
 			<Show when={!data()}>
-				<div class="vm3-rat-loading">Loading…</div>
+				<div class="a">Loading…</div>
 			</Show>
 			<Show when={data()}>
-				<div class="vm3-rat-root" data-sku={data()?.product.sku}>
-					<div class="vm3-rat-section">
-						<span class="vm3-rat-label">Rating</span>
+				<div class="b" data-0={data()?.product.sku}>
+					<div class="d">
+						<span class="c">Rating</span>
 						<RatingCanvas
 							rating={data()?.product.rating}
 							count={data()?.product.reviewCount}
 						/>
 					</div>
 					<Show when={data()?.related.length > 0}>
-						<div class="vm3-rat-related">
-							<span class="vm3-rat-label">
-								More in {data()?.product.category}
+						<div class="e">
+							<span class="c">
+								<CanvasText
+									text={`More in ${data()?.product.category}`}
+									width={200}
+									fontSize={11}
+									fontWeight="700"
+									color="var(--vm3-muted)"
+								/>
 							</span>
-							<ul class="vm3-rat-rel-list">
+							<ul class="f">
 								<For each={data()?.related}>
 									{(rel) => (
 										<li>
-											<a
-												href={`/l3/eshop/product/${rel.sku}/`}
-												class="vm3-rat-rel-link"
-											>
-												{rel.name}
+											<a href={`/l3/eshop/product/${rel.sku}/`} class="g">
+												<CanvasText
+													text={rel.name}
+													width={220}
+													fontSize={13}
+													color="oklch(58% 0.2 255)"
+												/>
 											</a>
 										</li>
 									)}
@@ -110,7 +145,7 @@ export default function EshopProductRating(props: { sku: string }) {
 				</div>
 			</Show>
 			<style>{`
-				.vm3-rat-loading {
+				.a {
 					min-height: 80px;
 					display: flex;
 					align-items: center;
@@ -118,7 +153,7 @@ export default function EshopProductRating(props: { sku: string }) {
 					font-family: var(--vm3-font);
 					font-size: 14px;
 				}
-				.vm3-rat-root {
+				.b {
 					background: var(--vm3-surface2);
 					border: 1px solid var(--vm3-border);
 					border-radius: var(--vm3-radius);
@@ -127,7 +162,7 @@ export default function EshopProductRating(props: { sku: string }) {
 					flex-direction: column;
 					gap: 16px;
 				}
-				.vm3-rat-label {
+				.c {
 					display: block;
 					font-family: var(--vm3-font);
 					font-size: 11px;
@@ -137,16 +172,16 @@ export default function EshopProductRating(props: { sku: string }) {
 					color: var(--vm3-muted);
 					margin-bottom: 6px;
 				}
-				.vm3-rat-section {
+				.d {
 					display: flex;
 					flex-direction: column;
 					gap: 4px;
 				}
-				.vm3-rat-related {
+				.e {
 					display: flex;
 					flex-direction: column;
 				}
-				.vm3-rat-rel-list {
+				.f {
 					list-style: none;
 					padding: 0;
 					margin: 0;
@@ -154,13 +189,13 @@ export default function EshopProductRating(props: { sku: string }) {
 					flex-direction: column;
 					gap: 6px;
 				}
-				.vm3-rat-rel-link {
+				.g {
 					font-family: var(--vm3-font);
 					font-size: 13px;
 					color: var(--vm3-primary);
 					text-decoration: none;
 				}
-				.vm3-rat-rel-link:hover {
+				.g:hover {
 					text-decoration: underline;
 				}
 			`}</style>

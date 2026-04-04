@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / scoretap — ranked standings table
-// Anti-bot: rank numbers and point totals drawn via ctx.fillText() to canvas — not in DOM text
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import { cs2Rankings } from '../../../../data/scoretap/data';
@@ -28,7 +26,6 @@ function RankCanvas(props: { value: number | string; width?: number }) {
 			width={props.width ?? 52}
 			height={18}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
-			aria-label={String(props.value)}
 		/>
 	);
 }
@@ -43,40 +40,38 @@ export default function ScoretapStandings() {
 	return (
 		<div data-island="solid-standings">
 			<Show when={!rows()}>
-				<div class="st3-stand-loading">Loading…</div>
+				<div class="a">Loading…</div>
 			</Show>
 			<Show when={rows()}>
-				<div class="st3-stand-panel">
-					<h3 class="st3-stand-title">CS2 World Rankings</h3>
-					<table class="st3-stand-table">
+				<div class="b">
+					<h3 class="c">CS2 World Rankings</h3>
+					<table class="d">
 						<thead>
 							<tr>
-								<th class="st3-stand-th st3-th-rank">#</th>
-								<th class="st3-stand-th st3-th-team">Team</th>
-								<th class="st3-stand-th st3-th-chg">±</th>
-								<th class="st3-stand-th st3-th-pts">Points</th>
+								<th class="e f">#</th>
+								<th class="e g">Team</th>
+								<th class="e h">±</th>
+								<th class="e i">Points</th>
 							</tr>
 						</thead>
 						<tbody>
 							<For each={rows() ?? []}>
 								{(row) => (
-									<tr class="st3-stand-row" data-team={row.team}>
-										<td class="st3-stand-td st3-td-rank">
+									<tr class="j" data-0={row.team}>
+										<td class="k l">
 											<RankCanvas value={row.rank} width={24} />
 										</td>
-										<td class="st3-stand-td st3-td-team">{row.team}</td>
-										<td class="st3-stand-td st3-td-chg">
+										<td class="k m">{row.team}</td>
+										<td class="k n">
 											{row.change === 'up' && (
-												<span class="st3-chg-up">▲{row.delta}</span>
+												<span class="o">▲{row.delta}</span>
 											)}
 											{row.change === 'down' && (
-												<span class="st3-chg-down">▼{row.delta}</span>
+												<span class="p">▼{row.delta}</span>
 											)}
-											{row.change === 'same' && (
-												<span class="st3-chg-same">–</span>
-											)}
+											{row.change === 'same' && <span class="q">–</span>}
 										</td>
-										<td class="st3-stand-td st3-td-pts">
+										<td class="k r">
 											<RankCanvas value={row.points} width={52} />
 										</td>
 									</tr>
@@ -87,7 +82,7 @@ export default function ScoretapStandings() {
 				</div>
 			</Show>
 			<style>{`
-				.st3-stand-loading {
+				[data-island="solid-standings"] .a {
 					min-height: 100px;
 					display: flex;
 					align-items: center;
@@ -95,14 +90,14 @@ export default function ScoretapStandings() {
 					font-family: var(--st3-font-ui);
 					font-size: 14px;
 				}
-				.st3-stand-panel {
+				[data-island="solid-standings"] .b {
 					background: var(--st3-surface);
 					border: 1px solid var(--st3-border);
 					border-radius: var(--st3-radius);
 					padding: 16px;
 					overflow-x: auto;
 				}
-				.st3-stand-title {
+				[data-island="solid-standings"] .c {
 					font-family: var(--st3-font-ui);
 					font-size: 13px;
 					font-weight: 700;
@@ -113,11 +108,11 @@ export default function ScoretapStandings() {
 					padding-bottom: 10px;
 					border-bottom: 1px solid var(--st3-border);
 				}
-				.st3-stand-table {
+				[data-island="solid-standings"] .d {
 					width: 100%;
 					border-collapse: collapse;
 				}
-				.st3-stand-th {
+				[data-island="solid-standings"] .e {
 					font-family: var(--st3-font-ui);
 					font-size: 10px;
 					font-weight: 700;
@@ -128,12 +123,12 @@ export default function ScoretapStandings() {
 					padding: 0 0 8px;
 					border-bottom: 1px solid var(--st3-border);
 				}
-				.st3-th-rank { width: 28px; }
-				.st3-th-pts, .st3-th-chg { text-align: right; }
-				.st3-th-pts { width: 60px; }
-				.st3-th-chg { width: 36px; }
-				.st3-stand-row:last-child .st3-stand-td { border-bottom: none; }
-				.st3-stand-td {
+				[data-island="solid-standings"] .f { width: 28px; }
+				[data-island="solid-standings"] .i, [data-island="solid-standings"] .h { text-align: right; }
+				[data-island="solid-standings"] .i { width: 60px; }
+				[data-island="solid-standings"] .h { width: 36px; }
+				[data-island="solid-standings"] .j:last-child .k { border-bottom: none; }
+				[data-island="solid-standings"] .k {
 					font-family: var(--st3-font-ui);
 					font-size: 13px;
 					color: var(--st3-text);
@@ -141,13 +136,13 @@ export default function ScoretapStandings() {
 					border-bottom: 1px solid var(--st3-border);
 					vertical-align: middle;
 				}
-				.st3-td-pts { text-align: right; }
-				.st3-td-chg { text-align: right; }
-				.st3-td-rank canvas { display: block; }
-				.st3-td-pts canvas { display: block; margin-left: auto; }
-				.st3-chg-up { color: var(--st3-live); font-size: 11px; }
-				.st3-chg-down { color: #ef4444; font-size: 11px; }
-				.st3-chg-same { color: var(--st3-muted); font-size: 11px; }
+				[data-island="solid-standings"] .r { text-align: right; }
+				[data-island="solid-standings"] .n { text-align: right; }
+				[data-island="solid-standings"] .l canvas { display: block; }
+				[data-island="solid-standings"] .r canvas { display: block; margin-left: auto; }
+				[data-island="solid-standings"] .o { color: var(--st3-live); font-size: 11px; }
+				[data-island="solid-standings"] .p { color: #ef4444; font-size: 11px; }
+				[data-island="solid-standings"] .q { color: var(--st3-muted); font-size: 11px; }
 			`}</style>
 		</div>
 	);

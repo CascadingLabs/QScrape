@@ -1,3 +1,11 @@
+import {
+	isActiveHour,
+	mulberry32,
+	seededInt,
+	seededSample,
+	windowSeed,
+} from '../seeded';
+
 export interface ArticleMeta {
 	id: string;
 	category: string;
@@ -12,6 +20,7 @@ export interface ArticleMeta {
 	imageCredit: string;
 	excerpt: string;
 	breaking?: boolean;
+	breakingEligible?: boolean;
 }
 
 export const categories = [
@@ -98,6 +107,7 @@ export const articles: ArticleMeta[] = [
 		imageCredit: 'Fortress Guard / Public Affairs',
 		excerpt:
 			'Three dwarves arrested in connection with an alleged gem-skimming operation at the Grand Trophy Hall. An estimated 80 to 120 carats of raw emerald and sapphire diverted over six months through inventory substitution scheme.',
+		breakingEligible: true,
 	},
 	{
 		id: 'MHH-003',
@@ -146,6 +156,7 @@ export const articles: ArticleMeta[] = [
 		imageCredit: 'Bureau of Deep Works',
 		excerpt:
 			'Level 2 (Elevated Concern) seismic advisory issued for Z-Level 45 and adjacent corridors after anomalous tectonic stress readings detected at monitoring stations 45-C and 45-D. Approximately 1,200 dwarves affected. No evacuation recommended at this time.',
+		breakingEligible: true,
 	},
 	{
 		id: 'MHH-006',
@@ -167,6 +178,7 @@ export const articles: ArticleMeta[] = [
 		imageCredit: 'Herald Staff',
 		excerpt:
 			'Goblin envoy Snatchtooth the Mild expelled after sealed Arcane Council session minutes found in his diplomatic pouch during routine Upper Gate inspection. Truce negotiations with Goblin Confederation suspended indefinitely.',
+		breakingEligible: true,
 	},
 	{
 		id: 'MHH-007',
@@ -285,6 +297,7 @@ export const articles: ArticleMeta[] = [
 		imageCredit: 'Fortress Guard / Public Affairs',
 		excerpt:
 			'Eight-month Operation Hollow Stone dismantles fraud network responsible for 6,200 Gold Sovereigns in losses. Twelve arrested across four z-levels including two former Bureau technicians. At least 47 merchants identified as victims.',
+		breakingEligible: true,
 	},
 	{
 		id: 'MHH-014',
@@ -307,6 +320,7 @@ export const articles: ArticleMeta[] = [
 		imageCredit: 'Bureau of Subterranean Agriculture',
 		excerpt:
 			'Aggressive Deeprock Gray Mold infestation in Growing Sectors 7\u201311 forces 18% downward revision in harvest forecast. Strategic reserves sufficient for 14 months. Ale Guild reformulating seasonal batches. Rationing under consideration.',
+		breakingEligible: true,
 	},
 	{
 		id: 'MHH-015',
@@ -448,7 +462,22 @@ export function getByCategory(cat: string): ArticleMeta[] {
 }
 
 export function getBreaking(): ArticleMeta[] {
-	return articles.filter((a) => a.breaking);
+	const permanent = articles.filter((a) => a.breaking);
+	const pool = articles.filter((a) => {
+		if (!a.breakingEligible || a.breaking) {
+			return false;
+		}
+		if (a.id === 'MHH-005' || a.id === 'MHH-014') {
+			return isActiveHour(6, 20);
+		}
+		if (a.id === 'MHH-006') {
+			return isActiveHour(0, 12);
+		}
+		return true;
+	});
+	const rng = mulberry32(windowSeed(60));
+	const rotation = seededSample(pool, seededInt(1, 2, rng), rng);
+	return [...permanent, ...rotation].slice(0, 4);
 }
 
 export function formatDate(iso: string): string {

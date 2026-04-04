@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / news — staff spotlight panel (home page)
-// Anti-bot: email addresses drawn to <canvas> — not present in DOM text at all
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import { reporters } from '../../../../data/news/articles';
@@ -26,7 +24,6 @@ function EmailCanvas(props: { email: string }) {
 			width={220}
 			height={18}
 			style={{ display: 'inline-block', vertical: 'middle' }}
-			aria-label="email"
 		/>
 	);
 }
@@ -39,22 +36,22 @@ export default function NewsStaffPanel() {
 	});
 
 	return (
-		<div data-island="solid-staff">
+		<div>
 			<Show when={!staff()}>
-				<div class="hn3-staff-loading">Loading…</div>
+				<div class="a">Loading…</div>
 			</Show>
 			<Show when={staff()}>
-				<div class="hn3-staff-panel">
-					<h3 class="hn3-staff-title">Newsroom</h3>
-					<ul class="hn3-staff-list">
+				<div class="b">
+					<h3 class="c">Newsroom</h3>
+					<ul class="d">
 						<For each={staff() ?? []}>
 							{(person) => (
-								<li class="hn3-staff-item" data-reporter={person.name}>
-									<span class="hn3-staff-name">{person.name}</span>
-									<span class="hn3-staff-role">
+								<li class="e" data-0={person.name}>
+									<span class="f">{person.name}</span>
+									<span class="g">
 										{person.title} · {person.beat}
 									</span>
-									<span class="hn3-staff-email">
+									<span class="h">
 										<EmailCanvas email={person.email} />
 									</span>
 								</li>
@@ -64,7 +61,7 @@ export default function NewsStaffPanel() {
 				</div>
 			</Show>
 			<style>{`
-				.hn3-staff-loading {
+				.a {
 					min-height: 100px;
 					display: flex;
 					align-items: center;
@@ -72,12 +69,12 @@ export default function NewsStaffPanel() {
 					font-family: var(--hn3-font-body);
 					font-size: 14px;
 				}
-				.hn3-staff-panel {
+				.b {
 					background: var(--hn3-surface2);
 					border: 1px solid var(--hn3-border);
 					padding: 20px;
 				}
-				.hn3-staff-title {
+				.c {
 					font-family: var(--hn3-font-display);
 					font-size: 15px;
 					font-weight: 700;
@@ -87,7 +84,7 @@ export default function NewsStaffPanel() {
 					border-bottom: 2px solid var(--hn3-accent);
 					letter-spacing: -0.2px;
 				}
-				.hn3-staff-list {
+				.d {
 					list-style: none;
 					padding: 0;
 					margin: 0;
@@ -95,27 +92,27 @@ export default function NewsStaffPanel() {
 					flex-direction: column;
 					gap: 0;
 				}
-				.hn3-staff-item {
+				.e {
 					display: flex;
 					flex-direction: column;
 					gap: 2px;
 					padding: 10px 0;
 					border-bottom: 1px solid var(--hn3-border);
 				}
-				.hn3-staff-item:last-child { border-bottom: none; }
-				.hn3-staff-name {
+				.e:last-child { border-bottom: none; }
+				.f {
 					font-family: var(--hn3-font-body);
 					font-size: 14px;
 					font-weight: 600;
 					color: var(--hn3-text);
 				}
-				.hn3-staff-role {
+				.g {
 					font-family: var(--hn3-font-body);
 					font-size: 12px;
 					color: var(--hn3-muted);
 					font-style: italic;
 				}
-				.hn3-staff-email {
+				.h {
 					display: block;
 					margin-top: 2px;
 				}

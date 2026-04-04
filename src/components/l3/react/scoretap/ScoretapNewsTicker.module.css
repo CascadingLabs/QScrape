@@ -1,0 +1,122 @@
+.loading {
+	display: flex;
+	align-items: center;
+	min-height: 80px;
+	color: var(--st3-muted);
+	font-family: var(--st3-font-ui);
+	font-size: 14px;
+}
+
+.root {
+	background: var(--st3-surface);
+	border: 1px solid var(--st3-border);
+	border-radius: var(--st3-radius);
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.empty {
+	color: var(--st3-muted);
+	font-family: var(--st3-font-ui);
+	font-size: 13px;
+	padding: 12px 0;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 10px;
+	border-bottom: 1px solid var(--st3-border);
+}
+
+.sectionTitle {
+	font-family: var(--st3-font-ui);
+	font-size: 13px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
+	color: var(--st3-muted);
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	min-height: 80px;
+}
+
+.gameBadge {
+	font-family: var(--st3-font-ui);
+	font-size: 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+.headline {
+	font-family: var(--st3-font-ui);
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--st3-text);
+	line-height: 1.4;
+}
+
+.time {
+	font-family: var(--st3-font-ui);
+	font-size: 11px;
+	color: var(--st3-muted);
+}
+
+.controls {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	padding-top: 10px;
+	border-top: 1px solid var(--st3-border);
+}
+
+.arrow {
+	background: var(--st3-surface2);
+	border: 1px solid var(--st3-border);
+	border-radius: var(--st3-radius);
+	color: var(--st3-text);
+	font-size: 16px;
+	width: 36px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-family: var(--st3-font-ui);
+	transition:
+		background 0.15s,
+		border-color 0.15s,
+		color 0.15s;
+}
+.arrow:hover {
+	background: var(--st3-live-dim);
+	border-color: var(--st3-live);
+	color: var(--st3-live);
+}
+
+.counter {
+	font-family: var(--st3-font-score);
+	font-size: 12px;
+	color: var(--st3-muted);
+	min-width: 48px;
+	text-align: center;
+}
+
+.assembled {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.25em;
+	align-items: baseline;
+}
+.assembledWord {
+	display: inline;
+}

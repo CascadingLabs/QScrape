@@ -1,0 +1,70 @@
+.loading {
+	display: flex;
+	align-items: center;
+	min-height: 80px;
+	color: var(--hn3-muted);
+	font-family: var(--hn3-font-body);
+	font-size: 14px;
+}
+
+.root {
+	overflow: hidden;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: var(--hn3-font-body);
+	font-size: 12px;
+}
+
+.headRow {
+	background: var(--hn3-surface);
+}
+
+.th {
+	padding: 6px 10px;
+	text-align: left;
+	color: var(--hn3-muted);
+	font-weight: 600;
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	border-bottom: 1px solid var(--hn3-border);
+}
+.thRight {
+	text-align: right;
+}
+
+.row {
+	border-bottom: 1px solid var(--hn3-border);
+}
+.row:last-child {
+	border-bottom: none;
+}
+
+.td {
+	padding: 5px 10px;
+	color: var(--hn3-text);
+	white-space: nowrap;
+}
+.tdRight {
+	text-align: right;
+	color: var(--hn3-muted);
+}
+
+.status {
+	font-weight: 700;
+	font-size: 10px;
+	letter-spacing: 0.04em;
+}
+
+.assembled {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.25em;
+	align-items: baseline;
+}
+.assembledWord {
+	display: inline;
+}

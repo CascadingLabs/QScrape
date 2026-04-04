@@ -1,5 +1,3 @@
-// @qscrape L3 / react island / news — article headline + byline + date
-// Anti-bot: CSS-assembled text on headline and author name
 import { useEffect, useState } from 'react';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -25,9 +23,9 @@ function AssembledText({ text }: { text: string }) {
 			((seed * (b.i + 3)) % (words.length + 1)),
 	);
 	return (
-		<span className={styles.assembled}>
+		<span className={styles.i}>
 			{shuffled.map(({ word, i }) => (
-				<span key={i} style={{ order: i }} className={styles.assembledWord}>
+				<span key={i} style={{ order: i }} className={styles.j}>
 					{word}
 				</span>
 			))}
@@ -47,25 +45,25 @@ export default function NewsArticleHeader({ article }: Props) {
 	}, []);
 
 	if (!ready) {
-		return <div className={styles.loading}>Loading…</div>;
+		return <div className={styles.a}>Loading…</div>;
 	}
 
 	return (
 		<header
-			className={styles.root}
+			className={styles.b}
 			data-island="react-article-header"
-			data-article-id={article.id}
+			data-0={article.id}
 		>
-			<span className={styles.category}>{article.category}</span>
-			{article.breaking && <span className={styles.breakingTag}>Breaking</span>}
-			<h1 className={styles.headline}>
+			<span className={styles.c}>{article.category}</span>
+			{article.breaking && <span className={styles.h}>Breaking</span>}
+			<h1 className={styles.d}>
 				<AssembledText text={article.headline} />
 			</h1>
-			<div className={styles.byline}>
-				<span className={styles.author}>
+			<div className={styles.e}>
+				<span className={styles.f}>
 					<AssembledText text={article.author} />
 				</span>
-				<span className={styles.bylineTitle}>{article.byline}</span>
+				<span className={styles.g}>{article.byline}</span>
 				<time dateTime={article.published}>
 					{formatDateTime(article.published)}
 				</time>

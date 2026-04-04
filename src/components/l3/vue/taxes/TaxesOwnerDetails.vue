@@ -1,7 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / taxes — owner details panel (viewer page)
-// Anti-bot: owner name rendered via CSS ::before pseudo-element — content: attr(data-owner)
-// element.textContent on .er3-owner-name returns empty string
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -28,35 +25,34 @@ onMounted(() => {
 
 <template>
   <div data-island="vue-owner-details">
-    <div v-if="notFound" class="er3-owner-error">Record not found.</div>
-    <div v-else-if="!deed" class="er3-owner-loading">Loading…</div>
-    <div v-else class="er3-owner-panel">
-      <h2 class="er3-owner-title">Owner / Party Information</h2>
-      <dl class="er3-owner-dl">
-        <div class="er3-owner-row">
-          <dt class="er3-owner-dt">Last Name / Firm</dt>
-          <dd class="er3-owner-dd">
-            <!-- Anti-bot: owner name via pseudo-element, not textContent -->
-            <span class="er3-owner-name" :data-owner="deed.lastFirm"></span>
+    <div v-if="notFound" class="b">Record not found.</div>
+    <div v-else-if="!deed" class="a">Loading…</div>
+    <div v-else class="c">
+      <h2 class="d">Owner / Party Information</h2>
+      <dl class="e">
+        <div class="f">
+          <dt class="g">Last Name / Firm</dt>
+          <dd class="h">
+            <span class="j" :data-0="deed.lastFirm"></span>
           </dd>
         </div>
-        <div class="er3-owner-row" v-if="deed.first">
-          <dt class="er3-owner-dt">First Name</dt>
-          <dd class="er3-owner-dd">
-            <span class="er3-owner-name" :data-owner="deed.first"></span>
+        <div class="f" v-if="deed.first">
+          <dt class="g">First Name</dt>
+          <dd class="h">
+            <span class="j" :data-0="deed.first"></span>
           </dd>
         </div>
-        <div class="er3-owner-row">
-          <dt class="er3-owner-dt">File Number</dt>
-          <dd class="er3-owner-dd er3-dd-mono">{{ deed.fileNum }}</dd>
+        <div class="f">
+          <dt class="g">File Number</dt>
+          <dd class="h i">{{ deed.fileNum }}</dd>
         </div>
-        <div class="er3-owner-row">
-          <dt class="er3-owner-dt">Document Index</dt>
-          <dd class="er3-owner-dd er3-dd-mono">{{ deed.index }}</dd>
+        <div class="f">
+          <dt class="g">Document Index</dt>
+          <dd class="h i">{{ deed.index }}</dd>
         </div>
-        <div class="er3-owner-row">
-          <dt class="er3-owner-dt">Satisfaction Status</dt>
-          <dd class="er3-owner-dd">{{ deed.sat ? 'Satisfied' : 'Unsatisfied' }}</dd>
+        <div class="f">
+          <dt class="g">Satisfaction Status</dt>
+          <dd class="h">{{ deed.sat ? 'Satisfied' : 'Unsatisfied' }}</dd>
         </div>
       </dl>
     </div>
@@ -65,9 +61,11 @@ onMounted(() => {
 
 <style>
 @import '../../../../styles/l3/taxes.css';
+</style>
 
-.er3-owner-loading,
-.er3-owner-error {
+<style scoped>
+.a,
+.b {
 	min-height: 100px;
 	display: flex;
 	align-items: center;
@@ -76,14 +74,14 @@ onMounted(() => {
 	font-size: 14px;
 }
 
-.er3-owner-panel {
+.c {
 	background: var(--er3-surface);
 	border: 1px solid var(--er3-border);
 	border-radius: var(--er3-radius);
 	padding: 24px;
 }
 
-.er3-owner-title {
+.d {
 	font-family: var(--er3-font);
 	font-size: 15px;
 	font-weight: 700;
@@ -94,13 +92,13 @@ onMounted(() => {
 	letter-spacing: -0.2px;
 }
 
-.er3-owner-dl {
+.e {
 	display: flex;
 	flex-direction: column;
 	gap: 0;
 }
 
-.er3-owner-row {
+.f {
 	display: flex;
 	justify-content: space-between;
 	align-items: baseline;
@@ -108,11 +106,11 @@ onMounted(() => {
 	padding: 9px 0;
 	border-bottom: 1px solid var(--er3-border);
 }
-.er3-owner-row:last-child {
+.f:last-child {
 	border-bottom: none;
 }
 
-.er3-owner-dt {
+.g {
 	font-family: var(--er3-font);
 	font-size: 12px;
 	font-weight: 600;
@@ -123,25 +121,24 @@ onMounted(() => {
 	flex-shrink: 0;
 }
 
-.er3-owner-dd {
+.h {
 	font-family: var(--er3-font);
 	font-size: 14px;
 	color: var(--er3-text);
 	text-align: right;
 }
-.er3-dd-mono {
+.i {
 	font-family: var(--er3-font-mono);
 	font-size: 13px;
 }
 
-/* Anti-bot: owner name via pseudo-element, not textContent */
-.er3-owner-name {
+.j {
 	display: inline;
 	font-family: var(--er3-font);
 	font-size: 14px;
 	color: var(--er3-text);
 }
-.er3-owner-name::before {
-	content: attr(data-owner);
+.j::before {
+	content: attr(data-0);
 }
 </style>

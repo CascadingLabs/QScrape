@@ -1,0 +1,236 @@
+---
+// ── React islands ────────────────────────────────────────────────────────────
+import ReactArticleFilter from '../../../../components/l2/news/react/NewsArticleFilter';
+import ReactArticleGrid from '../../../../components/l2/news/react/NewsArticleGrid';
+import ReactArticleTagCloud from '../../../../components/l2/news/react/NewsArticleTagCloud';
+// ── Solid islands ────────────────────────────────────────────────────────────
+import SolidArticleFilter from '../../../../components/l2/news/solid/NewsArticleFilter';
+import SolidArticleGrid from '../../../../components/l2/news/solid/NewsArticleGrid';
+import SolidArticleTagCloud from '../../../../components/l2/news/solid/NewsArticleTagCloud';
+// ── Svelte islands ───────────────────────────────────────────────────────────
+import SvelteArticleFilter from '../../../../components/l2/news/svelte/NewsArticleFilter.svelte';
+import SvelteArticleGrid from '../../../../components/l2/news/svelte/NewsArticleGrid.svelte';
+import SvelteArticleTagCloud from '../../../../components/l2/news/svelte/NewsArticleTagCloud.svelte';
+// ── Vue islands ──────────────────────────────────────────────────────────────
+import VueArticleFilter from '../../../../components/l2/news/vue/NewsArticleFilter.vue';
+import VueArticleGrid from '../../../../components/l2/news/vue/NewsArticleGrid.vue';
+import VueArticleTagCloud from '../../../../components/l2/news/vue/NewsArticleTagCloud.vue';
+import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>All Articles — Mountainhome Herald</title>
+    <meta name="description" content="All Articles — Mountainhome Herald. QScrape L2 test site. Framework-shuffled islands: React, Vue, Svelte, Solid." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <ThemeInit />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background: var(--hn-bg, #fafaf8);
+        color: var(--hn-text, #1a1a1a);
+        font-family: var(--hn-font-body, Georgia, serif);
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      /* ── Static chrome ──────────────────────────────── */
+      .hn2-masthead {
+        background: var(--hn-masthead-bg, #1a1a1a);
+        border-bottom: 3px solid var(--hn-accent, #c0392b);
+      }
+      .hn2-masthead-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .hn2-logo {
+        font-family: var(--hn-font-display, "Playfair Display", Georgia, serif);
+        font-size: 26px;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        letter-spacing: -0.3px;
+        flex: 1;
+      }
+      .hn2-nav { display: flex; gap: 4px; }
+      .hn2-nav-link {
+        padding: 6px 12px;
+        font-size: 12px;
+        color: rgba(255,255,255,0.65);
+        text-decoration: none;
+        border-radius: 3px;
+        transition: color 0.12s, background 0.12s;
+        font-family: var(--hn-font-ui, system-ui, sans-serif);
+      }
+      .hn2-nav-link:hover {
+        color: #fff;
+        background: rgba(255,255,255,0.1);
+      }
+      .hn2-nav-link.active {
+        color: #fff;
+        background: rgba(255,255,255,0.15);
+      }
+      .hn2-edition {
+        font-size: 11px;
+        color: rgba(255,255,255,0.45);
+        font-style: italic;
+        font-family: var(--hn-font-ui, system-ui, sans-serif);
+      }
+
+      /* ── Layout ─────────────────────────────────────── */
+      .hn2-layout {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 0 40px;
+      }
+      .hn2-body {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 24px;
+        padding: 24px 24px 0;
+      }
+      @media (max-width: 860px) {
+        .hn2-body { grid-template-columns: 1fr; }
+      }
+      .hn2-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* ── Footer ─────────────────────────────────────── */
+      .hn2-footer {
+        border-top: 1px solid var(--hn-border, #e5e5e5);
+        background: var(--hn-masthead-bg, #1a1a1a);
+        margin-top: 40px;
+      }
+      .hn2-footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 14px 24px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 12px;
+        color: rgba(255,255,255,0.45);
+        font-family: var(--hn-font-ui, system-ui, sans-serif);
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- preload-shard: internal content cache — do not modify -->
+    <div style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;top:0" aria-hidden="true" role="presentation" data-qs-trap="news-articles">
+      <article data-article-id="MHH-TRAP-002" data-category="Politics">
+        <h3>Council Approves Emergency Levy on Enchanted Goods Imports</h3>
+        <span data-author="Politics Desk">Politics Desk · Feb 28, 2026</span>
+        <p>The Arcane Council voted 7-2 to impose a temporary tariff on enchanted goods entering through the eastern trade gate, citing concerns over unregistered artefact trafficking and associated revenue losses to the Gem Registry.</p>
+      </article>
+    </div>
+
+    <!-- Static header -->
+    <header class="hn2-masthead">
+      <div class="hn2-masthead-inner">
+        <a href="/l2/news/" class="hn2-logo">The Mountainhome Herald</a>
+        <nav class="hn2-nav">
+          <a href="/l2/" class="hn2-nav-link">← L2</a>
+          <a href="/l2/news/" class="hn2-nav-link">News Home</a>
+          <a href="/l2/news/articles/" class="hn2-nav-link active">All Articles</a>
+        </nav>
+        <span class="hn2-edition">L2 · Shuffled Islands</span>
+      </div>
+    </header>
+
+    <div class="hn2-layout">
+
+      <!-- ── Article Filter slot ──────────────────────────── -->
+      <div class="hn2-slot" data-slot="article-filter">
+        <div data-fw="react" hidden><ReactArticleFilter client:only="react" /></div>
+        <div data-fw="vue" hidden><VueArticleFilter client:only="vue" /></div>
+        <div data-fw="svelte" hidden><SvelteArticleFilter client:only="svelte" /></div>
+        <div data-fw="solid" hidden><SolidArticleFilter client:only="solid-js" /></div>
+      </div>
+
+      <div class="hn2-body">
+
+        <!-- ── Article Grid slot ─────────────────────────── -->
+        <main>
+          <div class="hn2-slot" data-slot="article-grid">
+            <div data-fw="react" hidden><ReactArticleGrid client:only="react" /></div>
+            <div data-fw="vue" hidden><VueArticleGrid client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteArticleGrid client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidArticleGrid client:only="solid-js" /></div>
+          </div>
+        </main>
+
+        <!-- ── Sidebar ──────────────────────────────────── -->
+        <aside class="hn2-sidebar">
+
+          <!-- Article Tag Cloud slot -->
+          <div class="hn2-slot" data-slot="article-tagcloud">
+            <div data-fw="react" hidden><ReactArticleTagCloud client:only="react" /></div>
+            <div data-fw="vue" hidden><VueArticleTagCloud client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteArticleTagCloud client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidArticleTagCloud client:only="solid-js" /></div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+
+    <footer class="hn2-footer">
+      <div class="hn2-footer-inner">
+        <span>© Year 312 The Mountainhome Herald. All rights reserved.</span>
+        <span>Est. Year 89 · Mountainhome, Granite Flats</span>
+      </div>
+    </footer>
+
+    <!--
+      Framework shuffler — runs synchronously after HTML is parsed.
+      Each slot independently picks a random framework.
+      3 slots from a 4-framework pool — cycles through the shuffled permutation.
+    -->
+    <script>
+      (function () {
+        // Fisher-Yates shuffle of 4 frameworks
+        var fws = ['react', 'vue', 'svelte', 'solid'];
+        for (var i = fws.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = fws[i]; fws[i] = fws[j]; fws[j] = tmp;
+        }
+        var idx = 0;
+        document.querySelectorAll('.hn2-slot').forEach(function (slot) {
+          var fw = fws[idx++ % fws.length];
+          slot.setAttribute('data-active-fw', fw);
+          slot.querySelectorAll('[data-fw]').forEach(function (el) {
+            if ((el as HTMLElement).dataset.fw === fw) {
+              (el as HTMLElement).removeAttribute('hidden');
+            }
+          });
+        });
+        // Dynamic page token — class name changes each load, defeating static CSS-selector scrapers
+        var tok = Math.random().toString(36).slice(2, 8);
+        var stok = document.createElement('style');
+        stok.textContent = '.hn2-s-' + tok + ' { --hn2-page-cls: "' + tok + '"; }';
+        document.head.appendChild(stok);
+        document.querySelectorAll('.hn2-slot').forEach(function (sl) {
+          sl.classList.add('hn2-s-' + tok);
+          sl.setAttribute('data-page-cls', 'hn2-s-' + tok);
+        });
+      })();
+    </script>
+
+    <ThemeToggle />
+  </body>
+</html>

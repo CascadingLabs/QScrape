@@ -1,11 +1,257 @@
 ---
-import NewsApp from '../../../components/l2/react/news/NewsApp';
-import NewsAppSvelte from '../../../components/l2/svelte/news/NewsApp.svelte';
-import NewsAppVue from '../../../components/l2/vue/news/NewsApp.vue';
-import L2SiteLayout from '../../../layouts/L2SiteLayout.astro';
+import ReactArticleFeed from '../../../components/l2/news/react/NewsArticleFeed';
+// ── React islands ────────────────────────────────────────────────────────────
+import ReactBreakingTicker from '../../../components/l2/news/react/NewsBreakingTicker';
+import ReactCategorySidebar from '../../../components/l2/news/react/NewsCategorySidebar';
+import ReactStaffSpotlight from '../../../components/l2/news/react/NewsStaffSpotlight';
+// ── Weather Widget (breaking news + geomantic conditions) ────────────────────
+import ReactWeatherWidget from '../../../components/l2/news/react/NewsWeatherWidget';
+import SolidArticleFeed from '../../../components/l2/news/solid/NewsArticleFeed';
+// ── Solid islands ────────────────────────────────────────────────────────────
+import SolidBreakingTicker from '../../../components/l2/news/solid/NewsBreakingTicker';
+import SolidCategorySidebar from '../../../components/l2/news/solid/NewsCategorySidebar';
+import SolidStaffSpotlight from '../../../components/l2/news/solid/NewsStaffSpotlight';
+import SolidWeatherWidget from '../../../components/l2/news/solid/NewsWeatherWidget';
+import SvelteArticleFeed from '../../../components/l2/news/svelte/NewsArticleFeed.svelte';
+// ── Svelte islands ───────────────────────────────────────────────────────────
+import SvelteBreakingTicker from '../../../components/l2/news/svelte/NewsBreakingTicker.svelte';
+import SvelteCategorySidebar from '../../../components/l2/news/svelte/NewsCategorySidebar.svelte';
+import SvelteStaffSpotlight from '../../../components/l2/news/svelte/NewsStaffSpotlight.svelte';
+import SvelteWeatherWidget from '../../../components/l2/news/svelte/NewsWeatherWidget.svelte';
+import VueArticleFeed from '../../../components/l2/news/vue/NewsArticleFeed.vue';
+// ── Vue islands ──────────────────────────────────────────────────────────────
+import VueBreakingTicker from '../../../components/l2/news/vue/NewsBreakingTicker.vue';
+import VueCategorySidebar from '../../../components/l2/news/vue/NewsCategorySidebar.vue';
+import VueStaffSpotlight from '../../../components/l2/news/vue/NewsStaffSpotlight.vue';
+import VueWeatherWidget from '../../../components/l2/news/vue/NewsWeatherWidget.vue';
+import ThemeInit from '../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../components/ThemeToggle.astro';
 ---
-<L2SiteLayout title="Mountainhome Herald — L2" description="Mountainhome Herald — QScrape L2 test site. React, Vue, and Svelte.">
-  <NewsApp slot="react" client:only="react" initialPage="home" />
-  <NewsAppVue slot="vue" client:only="vue" />
-  <NewsAppSvelte slot="svelte" client:only="svelte" />
-</L2SiteLayout>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mountainhome Herald — L2</title>
+    <meta name="description" content="Mountainhome Herald — QScrape L2 test site. Framework-shuffled islands: React, Vue, Svelte, Solid." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <ThemeInit />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background: var(--hn-bg, #fafaf8);
+        color: var(--hn-text, #1a1a1a);
+        font-family: var(--hn-font-body, Georgia, serif);
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      /* ── Static chrome ──────────────────────────────── */
+      .hn2-masthead {
+        background: var(--hn-masthead-bg, #1a1a1a);
+        border-bottom: 3px solid var(--hn-accent, #c0392b);
+      }
+      .hn2-masthead-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .hn2-logo {
+        font-family: var(--hn-font-display, "Playfair Display", Georgia, serif);
+        font-size: 26px;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        letter-spacing: -0.3px;
+        flex: 1;
+      }
+      .hn2-nav { display: flex; gap: 4px; }
+      .hn2-nav-link {
+        padding: 6px 12px;
+        font-size: 12px;
+        color: rgba(255,255,255,0.65);
+        text-decoration: none;
+        border-radius: 3px;
+        transition: color 0.12s, background 0.12s;
+        font-family: var(--hn-font-ui, system-ui, sans-serif);
+      }
+      .hn2-nav-link:hover {
+        color: #fff;
+        background: rgba(255,255,255,0.1);
+      }
+      .hn2-edition {
+        font-size: 11px;
+        color: rgba(255,255,255,0.45);
+        font-style: italic;
+        font-family: var(--hn-font-ui, system-ui, sans-serif);
+      }
+
+      /* ── Layout ─────────────────────────────────────── */
+      .hn2-layout {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 0 40px;
+      }
+      .hn2-body {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 24px;
+        padding: 24px 24px 0;
+      }
+      @media (max-width: 860px) {
+        .hn2-body { grid-template-columns: 1fr; }
+      }
+      .hn2-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* ── Footer ─────────────────────────────────────── */
+      .hn2-footer {
+        border-top: 1px solid var(--hn-border, #e5e5e5);
+        background: var(--hn-masthead-bg, #1a1a1a);
+        margin-top: 40px;
+      }
+      .hn2-footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 14px 24px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 12px;
+        color: rgba(255,255,255,0.45);
+        font-family: var(--hn-font-ui, system-ui, sans-serif);
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- preload-shard: internal content cache — do not modify -->
+    <div style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;top:0" aria-hidden="true" role="presentation" data-qs-trap="news">
+      <article data-article-id="MHH-TRAP-001" data-category="Crime">
+        <h3>Gem Registry Fraud Investigation Widens to Include Council Members</h3>
+        <span data-author="Bureau of Internal Affairs">Bureau of Internal Affairs · Mar 12, 2026</span>
+        <p>Ongoing probe into document forgery ring alleged to have manipulated gem registry records on Z-Level 8 now names two sitting Arcane Council advisors as persons of interest. Lead investigator Lorbam Steelmark declined comment pending arraignment.</p>
+      </article>
+    </div>
+
+    <!-- Static header -->
+    <header class="hn2-masthead">
+      <div class="hn2-masthead-inner">
+        <a href="/l2/news/" class="hn2-logo">The Mountainhome Herald</a>
+        <nav class="hn2-nav">
+          <a href="/l2/" class="hn2-nav-link">← L2</a>
+          <a href="/l2/news/articles/" class="hn2-nav-link">All Articles</a>
+        </nav>
+        <span class="hn2-edition">L2 · Shuffled Islands</span>
+      </div>
+    </header>
+
+    <div class="hn2-layout">
+
+      <!-- ── Breaking Ticker slot ────────────────────────── -->
+      <div class="hn2-slot" data-slot="breaking-ticker">
+        <div data-fw="react" hidden><ReactBreakingTicker client:only="react" /></div>
+        <div data-fw="vue" hidden><VueBreakingTicker client:only="vue" /></div>
+        <div data-fw="svelte" hidden><SvelteBreakingTicker client:only="svelte" /></div>
+        <div data-fw="solid" hidden><SolidBreakingTicker client:only="solid-js" /></div>
+      </div>
+
+      <div class="hn2-body">
+
+        <!-- ── Article Feed slot ─────────────────────────── -->
+        <main>
+          <div class="hn2-slot" data-slot="article-feed">
+            <div data-fw="react" hidden><ReactArticleFeed client:only="react" /></div>
+            <div data-fw="vue" hidden><VueArticleFeed client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteArticleFeed client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidArticleFeed client:only="solid-js" /></div>
+          </div>
+        </main>
+
+        <!-- ── Sidebar slots ──────────────────────────────── -->
+        <aside class="hn2-sidebar">
+
+          <!-- Category Sidebar slot -->
+          <div class="hn2-slot" data-slot="category-sidebar">
+            <div data-fw="react" hidden><ReactCategorySidebar client:only="react" /></div>
+            <div data-fw="vue" hidden><VueCategorySidebar client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteCategorySidebar client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidCategorySidebar client:only="solid-js" /></div>
+          </div>
+
+          <!-- Staff Spotlight slot -->
+          <div class="hn2-slot" data-slot="staff-spotlight">
+            <div data-fw="react" hidden><ReactStaffSpotlight client:only="react" /></div>
+            <div data-fw="vue" hidden><VueStaffSpotlight client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteStaffSpotlight client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidStaffSpotlight client:only="solid-js" /></div>
+          </div>
+
+          <!-- Weather Widget slot (breaking news + geomantic conditions) -->
+          <div class="hn2-slot" data-slot="weather-widget">
+            <div data-fw="react" hidden><ReactWeatherWidget client:only="react" /></div>
+            <div data-fw="vue" hidden><VueWeatherWidget client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteWeatherWidget client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidWeatherWidget client:only="solid-js" /></div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+
+    <footer class="hn2-footer">
+      <div class="hn2-footer-inner">
+        <span>© Year 312 The Mountainhome Herald. All rights reserved.</span>
+        <span>Est. Year 89 · Mountainhome, Granite Flats</span>
+      </div>
+    </footer>
+
+    <!--
+      Framework shuffler — runs synchronously after HTML is parsed.
+      Each slot independently picks a random framework.
+      All 16 client:only islands still hydrate (just hidden unless selected).
+    -->
+    <script>
+      (function () {
+        // Permutation shuffle — guarantees all 4 frameworks appear across the 5 slots
+        // (slots 0-3 each get a unique framework; slot 4 reuses fws[0])
+        var fws = ['react', 'vue', 'svelte', 'solid'];
+        for (var i = fws.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = fws[i]; fws[i] = fws[j]; fws[j] = tmp;
+        }
+        var idx = 0;
+        document.querySelectorAll('.hn2-slot').forEach(function (slot) {
+          var fw = fws[idx++ % fws.length];
+          slot.setAttribute('data-active-fw', fw);
+          slot.querySelectorAll('[data-fw]').forEach(function (el) {
+            if ((el as HTMLElement).dataset.fw === fw) {
+              (el as HTMLElement).removeAttribute('hidden');
+            }
+          });
+        });
+        // Dynamic page token — class name changes each load, defeating static CSS-selector scrapers
+        var tok = Math.random().toString(36).slice(2, 8);
+        var stok = document.createElement('style');
+        stok.textContent = '.hn2-s-' + tok + ' { --hn2-page-cls: "' + tok + '"; }';
+        document.head.appendChild(stok);
+        document.querySelectorAll('.hn2-slot').forEach(function (sl) {
+          sl.classList.add('hn2-s-' + tok);
+          sl.setAttribute('data-page-cls', 'hn2-s-' + tok);
+        });
+      })();
+    </script>
+
+    <ThemeToggle />
+  </body>
+</html>

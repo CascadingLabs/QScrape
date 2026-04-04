@@ -1,3 +1,5 @@
+import { mulberry32, seededInt, windowSeed } from '../seeded';
+
 export interface Team {
 	id: string;
 	name: string;
@@ -588,3 +590,40 @@ export const cs2Rankings: {
 	{ rank: 9, team: 'Team Liquid', points: 1080, change: 'same' },
 	{ rank: 10, team: 'Spirit', points: 1020, change: 'up', delta: 1 },
 ];
+
+// Score caps per match (mirrors the ticker caps in ScoretapLiveScores)
+const scoreCaps: Record<string, number> = {
+	'match-001': 30, // CS2
+	'match-002': 30, // Valorant
+	'match-003': 5, // Rocket League
+};
+
+// Per-game half-time midpoint for seeding plausible mid-match scores
+const halfCaps: Record<Game, number> = {
+	cs2: 15,
+	valorant: 12,
+	lol: 0, // not used as live game
+	dota2: 0,
+	rl: 4,
+};
+
+/**
+ * Returns seeded initial live scores for the current 8-minute time window.
+ * Produces plausible mid-match scores that differ across windows so each visitor
+ * sees the match at a different point, then the ticker continues from there.
+ */
+export function getInitialLiveScores(): Record<
+	string,
+	{ a: number; b: number }
+> {
+	const rng = mulberry32(windowSeed(8));
+	return Object.fromEntries(
+		liveMatches.map((m) => {
+			const cap = scoreCaps[m.id] ?? 30;
+			const half = halfCaps[m.game] ?? Math.floor(cap / 2);
+			const a = seededInt(0, half, rng);
+			const b = seededInt(0, Math.min(half, cap - a), rng);
+			return [m.id, { a, b }];
+		}),
+	);
+}

@@ -1,5 +1,6 @@
 ---
 import ThemeInit from '../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../components/ThemeToggle.astro';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -13,23 +14,23 @@ import ThemeInit from '../../../components/ThemeInit.astro';
 <body>
     <div id="container">
         <div class="headerBar">Grand Duchy of Eldoria - Arcane Registry of Deeds</div>
-        
+
         <div class="navBar">
             <a href="/l1/taxes/">Home</a>
             <a href="/l1/taxes/tax-search">Tax Search</a>
             <a href="/l1/taxes/how-to">How To</a>
             <a href="/l1/taxes/recording-fees">Recording Fees</a>
         </div>
-        
+
         <div class="breadcrumbs">
             <a href="/l1/taxes/">Home</a>
         </div>
-        
+
         <div class="pageTitle">Welcome to Eldoria Arcane Registry of Deeds</div>
-        
+
         <div class="formSection">
             <p>The Grand Duchy of Eldoria Arcane Registry of Deeds (ROD) provides public access to property records, tax information, and deed documents for all mystical parcels within the Duchy.</p>
-            
+
             <table class="formTable" style="width: 100%; margin: 10px 0;">
                 <tr>
                     <td colspan="2" style="padding: 10px 0;">
@@ -56,7 +57,7 @@ import ThemeInit from '../../../components/ThemeInit.astro';
                 </tr>
             </table>
         </div>
-        
+
         <div class="formSection">
             <strong>Office Information</strong><br>
             <span class="aspNetLabel">Arcane Registry of Deeds Office<br>
@@ -66,11 +67,12 @@ import ThemeInit from '../../../components/ThemeInit.astro';
             Sending Stone: rod@eldoria.gov<br>
             Hours: M-F 8:30AM-5:00PM (surface time)</span>
         </div>
-        
+
         <div class="footerBar">
             &copy; 2026 Grand Duchy of Eldoria. All rights reserved.<br>
             Eldoria ROD v2.0.2004
         </div>
     </div>
+    <ThemeToggle />
 </body>
 </html>

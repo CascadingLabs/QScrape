@@ -1,6 +1,4 @@
-/* EshopProductImage — React island, CSS-assembled text anti-bot on product name */
-
-.loading {
+.a {
 	min-height: 200px;
 	display: flex;
 	align-items: center;
@@ -9,27 +7,27 @@
 	font-size: 14px;
 }
 
-.root {
+.b {
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
 }
 
-.imageWrap {
+.c {
 	position: relative;
 	border-radius: var(--vm3-radius);
 	overflow: hidden;
 	background: var(--vm3-surface);
 }
 
-.image {
+.d {
 	width: 100%;
 	aspect-ratio: 4 / 3;
 	object-fit: cover;
 	display: block;
 }
 
-.badges {
+.e {
 	position: absolute;
 	top: 10px;
 	left: 10px;
@@ -38,7 +36,7 @@
 	gap: 6px;
 }
 
-.badge {
+.f {
 	display: inline-block;
 	padding: 3px 8px;
 	border-radius: 4px;
@@ -49,22 +47,22 @@
 	letter-spacing: 0.06em;
 }
 
-.badgeNew {
+.g {
 	background: var(--vm3-primary);
 	color: #fff;
 }
 
-.badgeSale {
+.h {
 	background: var(--vm3-sale);
 	color: #fff;
 }
 
-.badgeOos {
+.i {
 	background: #333;
 	color: var(--vm3-muted);
 }
 
-.name {
+.j {
 	font-family: var(--vm3-font);
 	font-size: 18px;
 	font-weight: 700;
@@ -73,13 +71,12 @@
 	margin: 0;
 }
 
-/* Anti-bot: CSS-assembled text container */
-.assembled {
+.k {
 	display: inline-flex;
 	flex-wrap: wrap;
 	gap: 0.25em;
 }
 
-.assembledWord {
+.l {
 	display: inline-block;
 }

@@ -1,11 +1,278 @@
 ---
-import EshopApp from '../../../components/l2/react/eshop/EshopApp';
-import EshopAppSvelte from '../../../components/l2/svelte/eshop/EshopApp.svelte';
-import EshopAppVue from '../../../components/l2/vue/eshop/EshopApp.vue';
-import L2SiteLayout from '../../../layouts/L2SiteLayout.astro';
+// ── React islands ────────────────────────────────────────────────────────────
+import ReactCategoryNav from '../../../components/l2/eshop/react/EshopCategoryNav';
+import ReactFeaturedBanner from '../../../components/l2/eshop/react/EshopFeaturedBanner';
+import ReactPriceBadges from '../../../components/l2/eshop/react/EshopPriceBadges';
+import ReactProductGrid from '../../../components/l2/eshop/react/EshopProductGrid';
+// ── Solid islands ────────────────────────────────────────────────────────────
+import SolidCategoryNav from '../../../components/l2/eshop/solid/EshopCategoryNav';
+import SolidFeaturedBanner from '../../../components/l2/eshop/solid/EshopFeaturedBanner';
+import SolidPriceBadges from '../../../components/l2/eshop/solid/EshopPriceBadges';
+import SolidProductGrid from '../../../components/l2/eshop/solid/EshopProductGrid';
+// ── Svelte islands ───────────────────────────────────────────────────────────
+import SvelteCategoryNav from '../../../components/l2/eshop/svelte/EshopCategoryNav.svelte';
+import SvelteFeaturedBanner from '../../../components/l2/eshop/svelte/EshopFeaturedBanner.svelte';
+import SveltePriceBadges from '../../../components/l2/eshop/svelte/EshopPriceBadges.svelte';
+import SvelteProductGrid from '../../../components/l2/eshop/svelte/EshopProductGrid.svelte';
+// ── Vue islands ──────────────────────────────────────────────────────────────
+import VueCategoryNav from '../../../components/l2/eshop/vue/EshopCategoryNav.vue';
+import VueFeaturedBanner from '../../../components/l2/eshop/vue/EshopFeaturedBanner.vue';
+import VuePriceBadges from '../../../components/l2/eshop/vue/EshopPriceBadges.vue';
+import VueProductGrid from '../../../components/l2/eshop/vue/EshopProductGrid.vue';
+import ThemeInit from '../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../components/ThemeToggle.astro';
 ---
-<L2SiteLayout title="VaultMart — L2" description="VaultMart — QScrape L2 test site. React, Vue, and Svelte.">
-  <EshopApp slot="react" client:only="react" />
-  <EshopAppVue slot="vue" client:only="vue" />
-  <EshopAppSvelte slot="svelte" client:only="svelte" />
-</L2SiteLayout>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VaultMart — L2</title>
+    <meta name="description" content="VaultMart — QScrape L2 test site. Framework-shuffled islands: React, Vue, Svelte, Solid." />
+    <ThemeInit />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background: var(--vm-bg, #fff);
+        color: var(--vm-text, #111);
+        font-family: var(--vm-font, system-ui, sans-serif);
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      /* ── Static chrome ──────────────────────────────── */
+      .vm2-masthead {
+        background: var(--vm-surface, #f9fafb);
+        border-bottom: 2px solid var(--vm-primary, #2563eb);
+      }
+      .vm2-masthead-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .vm2-logo {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--vm-primary, #2563eb);
+        text-decoration: none;
+        letter-spacing: -0.3px;
+        margin-right: auto;
+      }
+      .vm2-nav { display: flex; gap: 4px; }
+      .vm2-nav-link {
+        padding: 7px 14px;
+        font-size: 13px;
+        color: var(--vm-muted, #6b7280);
+        text-decoration: none;
+        border-radius: var(--vm-radius, 6px);
+        transition: color 0.12s, background 0.12s;
+      }
+      .vm2-nav-link:hover {
+        color: var(--vm-text, #111);
+        background: var(--vm-border, #e4e4e7);
+      }
+      .vm2-edition {
+        font-size: 11px;
+        color: var(--vm-muted, #6b7280);
+        font-style: italic;
+      }
+      .vm2-cart-btn {
+        background: var(--vm-primary, #2563eb);
+        color: #fff;
+        border: none;
+        border-radius: var(--vm-radius, 6px);
+        padding: 8px 16px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: var(--vm-font, system-ui, sans-serif);
+        white-space: nowrap;
+      }
+      .vm2-cart-btn:hover { background: var(--vm-primary-hover, #1d4ed8); }
+
+      /* ── Layout ─────────────────────────────────────── */
+      .vm2-layout {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 0 40px;
+      }
+      .vm2-body {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 24px;
+        padding: 24px 24px 0;
+      }
+      @media (max-width: 860px) {
+        .vm2-body { grid-template-columns: 1fr; }
+      }
+      .vm2-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* ── Footer ─────────────────────────────────────── */
+      .vm2-footer {
+        border-top: 1px solid var(--vm-border, #e4e4e7);
+        background: var(--vm-surface, #f9fafb);
+        margin-top: 40px;
+      }
+      .vm2-footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 14px 24px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--vm-muted, #6b7280);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- preload-shard: internal content cache — do not modify -->
+    <div style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;top:0" aria-hidden="true" role="presentation" data-qs-trap="eshop">
+      <article data-sku="VM-TRAP-001" data-category="Forge &amp; Smithing">
+        <h3>Adamantine Ore Sample (Collector Grade)</h3>
+        <span data-price="0.00" data-currency="GP">0.00 GP</span>
+        <span data-stock="0" data-in-stock="false">Out of Stock</span>
+        <p>Single 40g certified adamantine ore sample, sourced from Z-Level 140 survey core. Not for sale. Demonstration unit only.</p>
+      </article>
+    </div>
+
+    <!-- Static header -->
+    <header class="vm2-masthead">
+      <div class="vm2-masthead-inner">
+        <a href="/l2/eshop/" class="vm2-logo">VaultMart</a>
+        <nav class="vm2-nav">
+          <a href="/l2/" class="vm2-nav-link">← L2</a>
+        </nav>
+        <button id="vm2-cart-btn" class="vm2-cart-btn" type="button">Cart (0)</button>
+        <span class="vm2-edition">L2 · Shuffled Islands</span>
+      </div>
+    </header>
+
+    <div class="vm2-layout">
+
+      <!-- ── Category Nav slot ──────────────────────────── -->
+      <div class="vm2-slot" data-slot="category-nav">
+        <div data-fw="react" hidden><ReactCategoryNav client:only="react" /></div>
+        <div data-fw="vue" hidden><VueCategoryNav client:only="vue" /></div>
+        <div data-fw="svelte" hidden><SvelteCategoryNav client:only="svelte" /></div>
+        <div data-fw="solid" hidden><SolidCategoryNav client:only="solid-js" /></div>
+      </div>
+
+      <div class="vm2-body">
+
+        <!-- ── Product Grid slot ──────────────────────────── -->
+        <main>
+          <div class="vm2-slot" data-slot="product-grid">
+            <div data-fw="react" hidden><ReactProductGrid client:only="react" /></div>
+            <div data-fw="vue" hidden><VueProductGrid client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteProductGrid client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidProductGrid client:only="solid-js" /></div>
+          </div>
+        </main>
+
+        <!-- ── Sidebar slots ──────────────────────────────── -->
+        <aside class="vm2-sidebar">
+
+          <!-- Price Badges slot -->
+          <div class="vm2-slot" data-slot="price-badges">
+            <div data-fw="react" hidden><ReactPriceBadges client:only="react" /></div>
+            <div data-fw="vue" hidden><VuePriceBadges client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SveltePriceBadges client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidPriceBadges client:only="solid-js" /></div>
+          </div>
+
+          <!-- Featured Banner slot -->
+          <div class="vm2-slot" data-slot="featured-banner">
+            <div data-fw="react" hidden><ReactFeaturedBanner client:only="react" /></div>
+            <div data-fw="vue" hidden><VueFeaturedBanner client:only="vue" /></div>
+            <div data-fw="svelte" hidden><SvelteFeaturedBanner client:only="svelte" /></div>
+            <div data-fw="solid" hidden><SolidFeaturedBanner client:only="solid-js" /></div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+
+    <footer class="vm2-footer">
+      <div class="vm2-footer-inner">
+        <span>© Year 312 VaultMart — A division of Armok Holdings LLC.</span>
+        <span>All prices in Gold Sovereigns (GS)</span>
+      </div>
+    </footer>
+
+    <!-- Cart button — live count + navigate to cart view -->
+    <script>
+      (function () {
+        var btn = document.getElementById('vm2-cart-btn');
+        if (!btn) { return; }
+
+        function updateCount() {
+          try {
+            var items = JSON.parse(localStorage.getItem('vm-l2-cart') ?? '[]') as Array<{sku: string; qty: number}>;
+            var count = items.reduce(function (s: number, i: {qty: number}) { return s + i.qty; }, 0);
+            if (btn) { btn.textContent = 'Cart (' + count + ')'; }
+          } catch { /* ignore */ }
+        }
+
+        updateCount();
+        window.addEventListener('eshop:cart', updateCount);
+        btn.addEventListener('click', function () {
+          var url = new URL(window.location.href);
+          url.searchParams.set('view', 'cart');
+          url.searchParams.delete('sku');
+          history.pushState(null, '', url.toString());
+          window.dispatchEvent(new CustomEvent('eshop:view', { detail: 'cart' }));
+          window.scrollTo(0, 0);
+        });
+      })();
+    </script>
+
+    <!--
+      Framework shuffler — runs synchronously after HTML is parsed.
+      Each slot independently picks a random framework.
+      All 16 client:only islands still hydrate (just hidden unless selected).
+      data-active-fw is set on each slot so CSS can colour the label pill.
+    -->
+    <script>
+      (function () {
+        // Permutation shuffle — guarantees all 4 frameworks appear (one per slot)
+        var fws = ['react', 'vue', 'svelte', 'solid'];
+        for (var i = fws.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = fws[i]; fws[i] = fws[j]; fws[j] = tmp;
+        }
+        var idx = 0;
+        document.querySelectorAll('.vm2-slot').forEach(function (slot) {
+          var fw = fws[idx++ % fws.length];
+          slot.setAttribute('data-active-fw', fw);
+          slot.querySelectorAll('[data-fw]').forEach(function (el) {
+            if ((el as HTMLElement).dataset.fw === fw) {
+              (el as HTMLElement).removeAttribute('hidden');
+            }
+          });
+        });
+        // Dynamic page token — class name changes each load, defeating static CSS-selector scrapers
+        var tok = Math.random().toString(36).slice(2, 8);
+        var stok = document.createElement('style');
+        stok.textContent = '.vm2-s-' + tok + ' { --vm2-page-cls: "' + tok + '"; }';
+        document.head.appendChild(stok);
+        document.querySelectorAll('[class*="-slot"]').forEach(function (sl) {
+          sl.classList.add('vm2-s-' + tok);
+          sl.setAttribute('data-page-cls', 'vm2-s-' + tok);
+        });
+      })();
+    </script>
+
+    <ThemeToggle />
+  </body>
+</html>

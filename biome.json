@@ -73,6 +73,17 @@
 			}
 		},
 		{
+			"includes": ["**/*.svelte", "**/*.vue"],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noUnusedVariables": "off",
+						"noUnusedImports": "off"
+					}
+				}
+			}
+		},
+		{
 			"includes": ["src/components/l2/**"],
 			"linter": {
 				"rules": {

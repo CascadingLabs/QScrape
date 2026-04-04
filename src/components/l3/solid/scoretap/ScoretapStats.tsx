@@ -1,5 +1,3 @@
-// @qscrape L3 / solid island / scoretap — top performers / stats panel
-// Anti-bot: stats values drawn via ctx.fillText() to canvas — not in DOM text
 import { createSignal, For, onMount, Show } from 'solid-js';
 import { fakeGetMs } from '../../../../data/api';
 import '../../../../styles/l3/scoretap.css';
@@ -71,7 +69,6 @@ function StatCanvas(props: { value: string; width?: number }) {
 			width={props.width ?? 60}
 			height={20}
 			style={{ display: 'inline-block', 'vertical-align': 'middle' }}
-			aria-label={props.value}
 		/>
 	);
 }
@@ -86,21 +83,21 @@ export default function ScoretapStats() {
 	return (
 		<div data-island="solid-stats">
 			<Show when={!stats()}>
-				<div class="st3-stats-loading">Loading…</div>
+				<div class="a">Loading…</div>
 			</Show>
 			<Show when={stats()}>
-				<div class="st3-stats-panel">
-					<h3 class="st3-stats-title">Top Performers</h3>
-					<ul class="st3-stats-list">
+				<div class="b">
+					<h3 class="c">Top Performers</h3>
+					<ul class="d">
 						<For each={stats() ?? []}>
 							{(row) => (
-								<li class="st3-stats-item" data-stat-id={row.id}>
-									<div class="st3-stats-left">
-										<span class="st3-stats-name">{row.label}</span>
-										<span class="st3-stats-game">{row.game}</span>
-										<span class="st3-stats-detail">{row.detail}</span>
+								<li class="e" data-0={row.id}>
+									<div class="f">
+										<span class="g">{row.label}</span>
+										<span class="h">{row.game}</span>
+										<span class="i">{row.detail}</span>
 									</div>
-									<div class="st3-stats-val">
+									<div class="j">
 										<StatCanvas value={row.value} width={64} />
 									</div>
 								</li>
@@ -110,7 +107,7 @@ export default function ScoretapStats() {
 				</div>
 			</Show>
 			<style>{`
-				.st3-stats-loading {
+				[data-island="solid-stats"] .a {
 					min-height: 100px;
 					display: flex;
 					align-items: center;
@@ -118,13 +115,13 @@ export default function ScoretapStats() {
 					font-family: var(--st3-font-ui);
 					font-size: 14px;
 				}
-				.st3-stats-panel {
+				[data-island="solid-stats"] .b {
 					background: var(--st3-surface);
 					border: 1px solid var(--st3-border);
 					border-radius: var(--st3-radius);
 					padding: 16px;
 				}
-				.st3-stats-title {
+				[data-island="solid-stats"] .c {
 					font-family: var(--st3-font-ui);
 					font-size: 13px;
 					font-weight: 700;
@@ -135,7 +132,7 @@ export default function ScoretapStats() {
 					padding-bottom: 10px;
 					border-bottom: 1px solid var(--st3-border);
 				}
-				.st3-stats-list {
+				[data-island="solid-stats"] .d {
 					list-style: none;
 					padding: 0;
 					margin: 0;
@@ -143,7 +140,7 @@ export default function ScoretapStats() {
 					flex-direction: column;
 					gap: 0;
 				}
-				.st3-stats-item {
+				[data-island="solid-stats"] .e {
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
@@ -151,20 +148,20 @@ export default function ScoretapStats() {
 					border-bottom: 1px solid var(--st3-border);
 					gap: 12px;
 				}
-				.st3-stats-item:last-child { border-bottom: none; }
-				.st3-stats-left {
+				[data-island="solid-stats"] .e:last-child { border-bottom: none; }
+				[data-island="solid-stats"] .f {
 					display: flex;
 					flex-direction: column;
 					gap: 2px;
 					overflow: hidden;
 				}
-				.st3-stats-name {
+				[data-island="solid-stats"] .g {
 					font-family: var(--st3-font-ui);
 					font-size: 14px;
 					font-weight: 600;
 					color: var(--st3-text);
 				}
-				.st3-stats-game {
+				[data-island="solid-stats"] .h {
 					font-family: var(--st3-font-ui);
 					font-size: 11px;
 					font-weight: 700;
@@ -172,15 +169,15 @@ export default function ScoretapStats() {
 					letter-spacing: 0.06em;
 					color: var(--st3-muted);
 				}
-				.st3-stats-detail {
+				[data-island="solid-stats"] .i {
 					font-family: var(--st3-font-ui);
 					font-size: 11px;
 					color: var(--st3-muted);
 				}
-				.st3-stats-val {
+				[data-island="solid-stats"] .j {
 					flex-shrink: 0;
 				}
-				.st3-stats-val canvas { display: block; }
+				[data-island="solid-stats"] .j canvas { display: block; }
 			`}</style>
 		</div>
 	);

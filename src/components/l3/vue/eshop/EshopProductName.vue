@@ -1,7 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / eshop — product name + category (product detail page)
-// Anti-bot: category badge rendered via CSS ::before pseudo-element content
-// element.textContent on .vm3-prod-cat returns empty string; requires getComputedStyle(el,'::before').content
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -22,21 +19,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <div data-island="vue-product-name">
-    <div v-if="!product" class="vm3-pname-loading">Loading…</div>
-    <div v-else class="vm3-pname-root" :data-sku="product.sku">
-      <!-- Anti-bot: category text lives in CSS ::before, textContent is empty -->
-      <span class="vm3-prod-cat" :data-cat="product.category"></span>
-      <h2 class="vm3-prod-name">{{ product.name }}</h2>
-      <p class="vm3-prod-excerpt">{{ product.excerpt }}</p>
+  <div>
+    <div v-if="!product" class="a">Loading…</div>
+    <div v-else class="b" :data-0="product.sku">
+      <span class="c" :data-1="product.category"></span>
+      <h2 class="d e" :data-2="product.name"></h2>
+      <p class="f e" :data-2="product.excerpt"></p>
     </div>
   </div>
 </template>
 
 <style>
 @import '../../../../styles/l3/eshop.css';
+</style>
 
-.vm3-pname-loading {
+<style scoped>
+.a {
 	min-height: 80px;
 	display: flex;
 	align-items: center;
@@ -45,14 +43,13 @@ onMounted(() => {
 	font-size: 14px;
 }
 
-.vm3-pname-root {
+.b {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 }
 
-/* Anti-bot: category text via pseudo-element, not textContent */
-.vm3-prod-cat {
+.c {
 	display: inline-block;
 	font-family: var(--vm3-font);
 	font-size: 12px;
@@ -61,11 +58,14 @@ onMounted(() => {
 	letter-spacing: 0.08em;
 	color: var(--vm3-primary);
 }
-.vm3-prod-cat::before {
-	content: attr(data-cat);
+.c::before {
+	content: attr(data-1);
+}
+.e::before {
+	content: attr(data-2);
 }
 
-.vm3-prod-name {
+.d {
 	font-family: var(--vm3-font);
 	font-size: 26px;
 	font-weight: 700;
@@ -75,7 +75,7 @@ onMounted(() => {
 	margin: 0;
 }
 
-.vm3-prod-excerpt {
+.f {
 	font-family: var(--vm3-font);
 	font-size: 14px;
 	color: var(--vm3-muted);

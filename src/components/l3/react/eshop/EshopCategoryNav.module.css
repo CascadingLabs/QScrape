@@ -1,6 +1,4 @@
-/* EshopCategoryNav — React island, CSS-assembled text anti-bot */
-
-.loading {
+.a {
 	min-height: 48px;
 	display: flex;
 	align-items: center;
@@ -9,7 +7,7 @@
 	font-size: 14px;
 }
 
-.root {
+.b {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px;
@@ -18,7 +16,7 @@
 	margin-bottom: 20px;
 }
 
-.tab {
+.c {
 	display: inline-flex;
 	align-items: center;
 	padding: 6px 14px;
@@ -34,24 +32,23 @@
 		border-color 0.15s,
 		color 0.15s;
 }
-.tab:hover {
+.c:hover {
 	border-color: var(--vm3-border-hover);
 	color: var(--vm3-text);
 }
 
-.tabActive {
+.d {
 	background: var(--vm3-primary);
 	border-color: var(--vm3-primary);
 	color: #fff;
 }
 
-/* Anti-bot: CSS-assembled text container */
-.assembled {
+.e {
 	display: inline-flex;
 	flex-wrap: wrap;
 	gap: 0.25em;
 }
 
-.assembledWord {
+.f {
 	display: inline-block;
 }

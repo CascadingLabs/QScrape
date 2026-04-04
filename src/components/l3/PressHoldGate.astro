@@ -1,0 +1,124 @@
+---
+const enabled = import.meta.env.PUBLIC_L3_GUARD !== 'false';
+---
+{enabled && <Fragment>
+<div id="_phg" class="phg-overlay">
+  <div class="phg-card">
+    <h2 class="phg-title">Verify you're human</h2>
+    <p class="phg-subtitle">Press and hold for 5 seconds</p>
+    <div class="phg-ring-wrap">
+      <svg class="phg-svg" viewBox="0 0 120 120">
+        <circle class="phg-track" cx="60" cy="60" r="54"
+          fill="none" stroke-width="6" />
+        <circle class="phg-progress" id="_phg_ring" cx="60" cy="60" r="54"
+          fill="none" stroke-width="6"
+          stroke-dasharray="339.292"
+          stroke-dashoffset="339.292"
+          stroke-linecap="round"
+          transform="rotate(-90 60 60)" />
+      </svg>
+      <button class="phg-btn" id="_phg_btn" type="button">
+        <span class="phg-icon">&#9679;</span>
+      </button>
+    </div>
+    <p class="phg-hint" id="_phg_hint">Hold to verify</p>
+  </div>
+</div>
+<script is:inline>
+(function(){var K='hn3-verified',D=5000,C=339.292,o=document.getElementById('_phg'),r=document.getElementById('_phg_ring'),b=document.getElementById('_phg_btn'),h=document.getElementById('_phg_hint');if(sessionStorage.getItem(K)){o.remove();return}document.body.setAttribute('data-gated','true');var st=0,rf=0,hl=!1;function tk(){if(!hl)return;var el=Date.now()-st,p=Math.min(el/D,1);r.style.strokeDashoffset=String(C*(1-p));if(p>=1){sessionStorage.setItem(K,'1');document.body.removeAttribute('data-gated');o.style.opacity='0';o.style.transition='opacity 0.4s ease';setTimeout(function(){o.remove()},400);return}rf=requestAnimationFrame(tk)}function sd(e){e.preventDefault();hl=!0;st=Date.now();h.textContent='Keep holding\u2026';b.classList.add('phg-btn-active');rf=requestAnimationFrame(tk)}function ed(e){e.preventDefault();if(!hl)return;hl=!1;cancelAnimationFrame(rf);r.style.strokeDashoffset=String(C);h.textContent='Hold to verify';b.classList.remove('phg-btn-active')}b.addEventListener('mousedown',sd);b.addEventListener('touchstart',sd);b.addEventListener('mouseup',ed);b.addEventListener('mouseleave',ed);b.addEventListener('touchend',ed);b.addEventListener('touchcancel',ed)})();
+</script>
+<style>
+  body[data-gated="true"] main,
+  body[data-gated="true"] footer,
+  body[data-gated="true"] .cl-theme-toggle-float {
+    display: none !important;
+  }
+
+  .phg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--hn3-bg);
+    font-family: var(--hn3-font-body);
+  }
+
+  .phg-card {
+    text-align: center;
+    max-width: 360px;
+    padding: 40px;
+  }
+
+  .phg-title {
+    font-family: var(--hn3-font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--hn3-text);
+    margin-bottom: 8px;
+  }
+
+  .phg-subtitle {
+    font-size: 14px;
+    color: var(--hn3-muted);
+    margin-bottom: 32px;
+  }
+
+  .phg-ring-wrap {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+  }
+
+  .phg-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .phg-track {
+    stroke: var(--hn3-border);
+  }
+
+  .phg-progress {
+    stroke: var(--hn3-accent);
+  }
+
+  .phg-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--hn3-border);
+    background: var(--hn3-surface);
+    color: var(--hn3-muted);
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+  }
+
+  .phg-btn:hover {
+    border-color: var(--hn3-accent);
+  }
+
+  .phg-btn-active {
+    border-color: var(--hn3-accent);
+    background: var(--hn3-accent-dim);
+  }
+
+  .phg-hint {
+    font-size: 13px;
+    color: var(--hn3-muted);
+  }
+</style>
+</Fragment>}

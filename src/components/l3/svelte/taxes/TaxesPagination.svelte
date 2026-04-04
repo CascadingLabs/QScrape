@@ -1,7 +1,4 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / taxes — pagination controls
-// Anti-bot: decoy overlay — real page numbers at z-index 1, fake numbers at z-index 2
-// (color: transparent, pointer-events: none). DOM has both; scraper must resolve z-index.
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import { deeds } from '../../../../data/taxes/deeds';
@@ -31,35 +28,34 @@ onMount(() => {
 
 <div data-island="svelte-pagination">
   {#if !pages}
-    <div class="er3-page-loading">Loading…</div>
+    <div class="a">Loading…</div>
   {:else}
-    <nav class="er3-pagination" aria-label="Pagination">
+    <nav class="b" aria-label="Pagination">
       <a
         href="?page={currentPage - 1}"
-        class="er3-page-btn er3-page-prev"
-        class:er3-page-disabled={currentPage <= 1}
+        class="c"
+        class:d={currentPage <= 1}
         aria-disabled={currentPage <= 1}
       >← Prev</a>
 
       {#each pages as item}
-        <span class="er3-page-num-wrap">
+        <span class="e">
           <a
             href="?page={item.page}"
-            class="er3-page-num"
-            class:er3-page-active={item.page === currentPage}
+            class="f"
+            class:g={item.page === currentPage}
             aria-current={item.page === currentPage ? 'page' : undefined}
           >
-            <!-- Anti-bot decoy: real page below, fake page overlaid -->
-            <span class="er3-pagenum-real">{item.page}</span>
-            <span class="er3-pagenum-decoy" aria-hidden="true">{item.fakePage}</span>
+            <span class="h">{item.page}</span>
+            <span class="i" aria-hidden="true">{item.fakePage}</span>
           </a>
         </span>
       {/each}
 
       <a
         href="?page={currentPage + 1}"
-        class="er3-page-btn er3-page-next"
-        class:er3-page-disabled={currentPage >= pages.length}
+        class="c"
+        class:d={currentPage >= pages.length}
         aria-disabled={currentPage >= pages.length}
       >Next →</a>
     </nav>
@@ -69,7 +65,7 @@ onMount(() => {
 <style>
   @import '../../../../styles/l3/taxes.css';
 
-  .er3-page-loading {
+  .a {
     min-height: 48px;
     display: flex;
     align-items: center;
@@ -78,7 +74,7 @@ onMount(() => {
     font-size: 13px;
   }
 
-  .er3-pagination {
+  .b {
     display: flex;
     align-items: center;
     gap: 4px;
@@ -86,7 +82,7 @@ onMount(() => {
     padding: 12px 0;
   }
 
-  .er3-page-btn {
+  .c {
     font-family: var(--er3-font);
     font-size: 13px;
     font-weight: 500;
@@ -98,21 +94,21 @@ onMount(() => {
     text-decoration: none;
     transition: background 0.15s;
   }
-  .er3-page-btn:hover {
+  .c:hover {
     background: var(--er3-primary-dim);
   }
-  .er3-page-disabled {
+  .d {
     color: var(--er3-muted);
     pointer-events: none;
     opacity: 0.5;
   }
 
-  .er3-page-num-wrap {
+  .e {
     position: relative;
     display: inline-block;
   }
 
-  .er3-page-num {
+  .f {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -127,25 +123,24 @@ onMount(() => {
     text-decoration: none;
     position: relative;
   }
-  .er3-page-num:hover {
+  .f:hover {
     background: var(--er3-primary-dim);
     border-color: var(--er3-primary);
   }
-  .er3-page-active {
+  .g {
     background: var(--er3-primary-dim);
     border-color: var(--er3-primary);
     color: var(--er3-primary);
     font-weight: 600;
   }
 
-  /* Anti-bot: decoy overlay on page numbers */
-  .er3-pagenum-real {
+  .h {
     position: relative;
     z-index: 1;
     font-family: var(--er3-font-mono);
     font-size: 13px;
   }
-  .er3-pagenum-decoy {
+  .i {
     position: absolute;
     top: 0;
     left: 0;

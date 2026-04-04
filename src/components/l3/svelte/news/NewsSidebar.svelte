@@ -1,7 +1,4 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / news — category sidebar (home page)
-// Anti-bot: decoy overlay — real article count at z-index 1, fake count at z-index 2
-// (color: transparent, pointer-events: none). DOM has both; scraper must resolve z-index.
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import { categories, getByCategory } from '../../../../data/news/articles';
@@ -24,25 +21,24 @@ onMount(() => {
 
 <div data-island="svelte-sidebar">
   {#if !catData}
-    <div class="hn3-sidebar-loading">Loading…</div>
+    <div class="a">Loading…</div>
   {:else}
-    <div class="hn3-sidebar">
-      <h3 class="hn3-sidebar-title">Browse by Category</h3>
-      <ul class="hn3-cat-list">
+    <div class="b">
+      <h3 class="c">Browse by Category</h3>
+      <ul class="d">
         {#each catData as cat}
-          <li class="hn3-cat-item">
-            <a href="/l3/news/articles/?cat={encodeURIComponent(cat.name)}" class="hn3-cat-link">
+          <li class="e">
+            <a href="/l3/news/articles/?cat={encodeURIComponent(cat.name)}" class="f">
               {cat.name}
             </a>
-            <!-- Anti-bot decoy: real count below, fake count overlaid -->
-            <span class="hn3-count-wrap">
-              <span class="hn3-count-real">{cat.count}</span>
-              <span class="hn3-count-decoy" aria-hidden="true">{cat.fakeCount}</span>
+            <span class="g">
+              <span class="h">{cat.count}</span>
+              <span class="i" aria-hidden="true">{cat.fakeCount}</span>
             </span>
           </li>
         {/each}
       </ul>
-      <a href="/l3/news/articles/" class="hn3-all-link">All articles →</a>
+      <a href="/l3/news/articles/" class="j">All articles →</a>
     </div>
   {/if}
 </div>
@@ -50,7 +46,7 @@ onMount(() => {
 <style>
   @import '../../../../styles/l3/news.css';
 
-  .hn3-sidebar-loading {
+  .a {
     min-height: 120px;
     display: flex;
     align-items: center;
@@ -59,7 +55,7 @@ onMount(() => {
     font-size: 14px;
   }
 
-  .hn3-sidebar {
+  .b {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -68,7 +64,7 @@ onMount(() => {
     padding: 20px;
   }
 
-  .hn3-sidebar-title {
+  .c {
     font-family: var(--hn3-font-display);
     font-size: 15px;
     font-weight: 700;
@@ -79,7 +75,7 @@ onMount(() => {
     border-bottom: 2px solid var(--hn3-accent);
   }
 
-  .hn3-cat-list {
+  .d {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -88,42 +84,41 @@ onMount(() => {
     gap: 0;
   }
 
-  .hn3-cat-item {
+  .e {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px 0;
     border-bottom: 1px solid var(--hn3-border);
   }
-  .hn3-cat-item:last-child {
+  .e:last-child {
     border-bottom: none;
   }
 
-  .hn3-cat-link {
+  .f {
     font-family: var(--hn3-font-body);
     font-size: 14px;
     color: var(--hn3-text);
     text-decoration: none;
   }
-  .hn3-cat-link:hover {
+  .f:hover {
     color: var(--hn3-accent);
   }
 
-  /* Anti-bot: decoy overlay on article count */
-  .hn3-count-wrap {
+  .g {
     position: relative;
     display: inline-block;
     min-width: 24px;
     text-align: right;
   }
-  .hn3-count-real {
+  .h {
     font-family: var(--hn3-font-body);
     font-size: 13px;
     color: var(--hn3-muted);
     position: relative;
     z-index: 1;
   }
-  .hn3-count-decoy {
+  .i {
     position: absolute;
     top: 0;
     left: 0;
@@ -137,7 +132,7 @@ onMount(() => {
     user-select: none;
   }
 
-  .hn3-all-link {
+  .j {
     font-family: var(--hn3-font-body);
     font-size: 13px;
     color: var(--hn3-accent);
@@ -145,7 +140,7 @@ onMount(() => {
     font-weight: 600;
     margin-top: 4px;
   }
-  .hn3-all-link:hover {
+  .j:hover {
     text-decoration: underline;
   }
 </style>

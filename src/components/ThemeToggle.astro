@@ -1,0 +1,175 @@
+---
+---
+<button
+    class="cl-theme-toggle-float"
+    type="button"
+    aria-label="Toggle theme"
+    id="cl-theme-toggle-site"
+>
+    <svg
+        class="cl-theme-icon cl-icon-sun"
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+    >
+        <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path
+            d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path
+            d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path
+            d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path
+            d="m19.07 4.93-1.41 1.41"></path>
+    </svg>
+    <svg
+        class="cl-theme-icon cl-icon-moon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+    >
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+    </svg>
+    <svg
+        class="cl-theme-icon cl-icon-auto"
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+    >
+        <rect x="2" y="3" width="20" height="14" rx="2"></rect><path
+            d="M8 21h8"></path><path d="M12 17v4"></path>
+    </svg>
+</button>
+
+<style>
+    .cl-theme-toggle-float {
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: rgba(255, 255, 255, 0.85);
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        transition:
+            background 0.2s,
+            border-color 0.2s,
+            color 0.2s,
+            box-shadow 0.2s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    :global([data-theme='light']) .cl-theme-toggle-float {
+        background: rgba(255, 255, 255, 0.75);
+        border-color: rgba(0, 0, 0, 0.14);
+        color: rgba(0, 0, 0, 0.7);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .cl-theme-toggle-float:hover {
+        background: rgba(0, 0, 0, 0.75);
+        color: #fff;
+    }
+
+    :global([data-theme='light']) .cl-theme-toggle-float:hover {
+        background: rgba(255, 255, 255, 0.95);
+        color: #000;
+    }
+
+    /* Icon visibility — driven by data-theme-preference on <html> */
+    .cl-theme-icon {
+        display: none;
+    }
+
+    :global([data-theme-preference='dark']) .cl-icon-moon {
+        display: block;
+    }
+
+    :global([data-theme-preference='light']) .cl-icon-sun {
+        display: block;
+    }
+
+    :global([data-theme-preference='auto']) .cl-icon-auto {
+        display: block;
+    }
+</style>
+
+<script is:inline>
+    (function () {
+        var order = ['dark', 'light', 'auto'];
+
+        function getCookie(name) {
+            var m = document.cookie.match(
+                new RegExp('(?:^|; )' + name + '=([^;]*)'),
+            );
+            return m ? decodeURIComponent(m[1]) : null;
+        }
+
+        function getStored() {
+            var c = getCookie('cl-theme');
+            var s = c || localStorage.getItem('starlight-theme');
+            return s === 'light' || s === 'dark' ? s : 'auto';
+        }
+
+        function apply(pref) {
+            var resolved =
+                pref === 'auto'
+                    ? window.matchMedia('(prefers-color-scheme: light)').matches
+                        ? 'light'
+                        : 'dark'
+                    : pref;
+            document.documentElement.dataset.theme = resolved;
+            document.documentElement.dataset.themePreference = pref;
+            var val = pref === 'light' || pref === 'dark' ? pref : 'auto';
+            document.cookie =
+                'cl-theme=' + val + '; path=/; max-age=31536000; SameSite=Lax';
+            localStorage.setItem(
+                'starlight-theme',
+                pref === 'light' || pref === 'dark' ? pref : '',
+            );
+        }
+
+        document
+            .getElementById('cl-theme-toggle-site')
+            .addEventListener('click', function () {
+                var current = getStored();
+                var next = order[(order.indexOf(current) + 1) % order.length];
+                apply(next);
+            });
+
+        window
+            .matchMedia('(prefers-color-scheme: light)')
+            .addEventListener('change', function () {
+                if (getStored() === 'auto') apply('auto');
+            });
+
+        window.addEventListener('storage', function (e) {
+            if (e.key === 'starlight-theme') apply(getStored());
+        });
+    })();
+</script>

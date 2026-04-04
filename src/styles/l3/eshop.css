@@ -16,6 +16,16 @@
 	--vm3-border-hover: #444444;
 	--vm3-font: "DM Sans", system-ui, sans-serif;
 	--vm3-radius: 8px;
+	--vm3-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+	--vm3-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4);
+	--vm3-glow: 0 0 20px oklch(58% 0.2 255 / 0.15);
+	--vm3-glass: rgba(22, 22, 22, 0.85);
+	--vm3-glass-border: rgba(255, 255, 255, 0.06);
+	--vm3-cta-gradient: linear-gradient(
+		135deg,
+		oklch(55% 0.18 145),
+		oklch(50% 0.22 165)
+	);
 }
 
 /* Island scope — no body/global resets here, those live in the shell */
@@ -29,6 +39,16 @@
 	--vm3-muted: #666666;
 	--vm3-border: #d4d4d4;
 	--vm3-border-hover: #aaaaaa;
+	--vm3-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+	--vm3-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.1);
+	--vm3-glow: 0 0 20px oklch(58% 0.2 255 / 0.08);
+	--vm3-glass: rgba(255, 255, 255, 0.85);
+	--vm3-glass-border: rgba(0, 0, 0, 0.06);
+	--vm3-cta-gradient: linear-gradient(
+		135deg,
+		oklch(55% 0.18 145),
+		oklch(50% 0.22 165)
+	);
 }
 @media (prefers-color-scheme: light) {
 	:root:not([data-theme]) {
@@ -39,5 +59,15 @@
 		--vm3-muted: #666666;
 		--vm3-border: #d4d4d4;
 		--vm3-border-hover: #aaaaaa;
+		--vm3-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+		--vm3-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.1);
+		--vm3-glow: 0 0 20px oklch(58% 0.2 255 / 0.08);
+		--vm3-glass: rgba(255, 255, 255, 0.85);
+		--vm3-glass-border: rgba(0, 0, 0, 0.06);
+		--vm3-cta-gradient: linear-gradient(
+			135deg,
+			oklch(55% 0.18 145),
+			oklch(50% 0.22 165)
+		);
 	}
 }

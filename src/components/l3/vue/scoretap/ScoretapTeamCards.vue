@@ -1,8 +1,4 @@
 <script setup lang="ts">
-// @qscrape L3 / vue island / scoretap — team card grid
-// Anti-bot: game badge rendered via CSS ::before pseudo-element content
-// element.textContent on .st3-card-game returns empty string;
-// requires getComputedStyle(el,'::before').content to read the game label.
 import { onMounted, ref } from 'vue';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -27,25 +23,24 @@ function _gameLabel(game: Game): string {
 
 <template>
   <div data-island="vue-team-cards">
-    <div v-if="!allTeams" class="st3-cards-loading">Loading…</div>
-    <div v-else class="st3-cards-grid">
+    <div v-if="!allTeams" class="a">Loading…</div>
+    <div v-else class="b">
       <div
         v-for="team in allTeams"
         :key="team.id"
-        class="st3-team-card"
-        :data-team-id="team.id"
-        :data-game="team.game"
+        class="c"
+        :data-0="team.id"
+        :data-1="team.game"
       >
-        <div class="st3-card-top">
-          <span class="st3-card-abbr">{{ team.abbr }}</span>
-          <!-- Anti-bot: game label via pseudo-element, textContent empty -->
-          <span class="st3-card-game" :data-game-label="gameLabel(team.game as Game)"></span>
+        <div class="d">
+          <span class="e">{{ team.abbr }}</span>
+          <span class="f" :data-2="gameLabel(team.game as Game)"></span>
         </div>
-        <div class="st3-card-name">{{ team.name }}</div>
-        <div v-if="team.rank" class="st3-card-rank">
-          <span class="st3-rank-label">Rank</span>
-          <span class="st3-rank-value">#{{ team.rank }}</span>
-          <span v-if="team.rankPoints" class="st3-rank-pts">{{ team.rankPoints }} pts</span>
+        <div class="g">{{ team.name }}</div>
+        <div v-if="team.rank" class="h">
+          <span class="i">Rank</span>
+          <span class="j">#{{ team.rank }}</span>
+          <span v-if="team.rankPoints" class="k">{{ team.rankPoints }} pts</span>
         </div>
       </div>
     </div>
@@ -54,8 +49,10 @@ function _gameLabel(game: Game): string {
 
 <style>
 @import '../../../../styles/l3/scoretap.css';
+</style>
 
-.st3-cards-loading {
+<style scoped>
+.a {
 	min-height: 120px;
 	display: flex;
 	align-items: center;
@@ -64,13 +61,13 @@ function _gameLabel(game: Game): string {
 	font-size: 14px;
 }
 
-.st3-cards-grid {
+.b {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 	gap: 12px;
 }
 
-.st3-team-card {
+.c {
 	background: var(--st3-surface);
 	border: 1px solid var(--st3-border);
 	border-radius: var(--st3-radius);
@@ -80,30 +77,29 @@ function _gameLabel(game: Game): string {
 	gap: 8px;
 	transition: border-color 0.15s;
 }
-.st3-team-card:hover {
+.c:hover {
 	border-color: var(--st3-muted);
 }
 
-.st3-card-top {
+.d {
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
 }
 
-.st3-card-abbr {
+.e {
 	font-family: var(--st3-font-score);
 	font-size: 16px;
 	font-weight: 700;
 	color: var(--st3-text);
 }
-.st3-team-card[data-game="cs2"] .st3-card-abbr { color: var(--st3-cs2); }
-.st3-team-card[data-game="valorant"] .st3-card-abbr { color: var(--st3-valorant); }
-.st3-team-card[data-game="lol"] .st3-card-abbr { color: var(--st3-lol); }
-.st3-team-card[data-game="dota2"] .st3-card-abbr { color: var(--st3-dota2); }
-.st3-team-card[data-game="rl"] .st3-card-abbr { color: var(--st3-rl); }
+.c[data-1="cs2"] .e { color: var(--st3-cs2); }
+.c[data-1="valorant"] .e { color: var(--st3-valorant); }
+.c[data-1="lol"] .e { color: var(--st3-lol); }
+.c[data-1="dota2"] .e { color: var(--st3-dota2); }
+.c[data-1="rl"] .e { color: var(--st3-rl); }
 
-/* Anti-bot: game label text via ::before pseudo-element */
-.st3-card-game {
+.f {
 	display: inline-block;
 	font-family: var(--st3-font-ui);
 	font-size: 9px;
@@ -115,16 +111,16 @@ function _gameLabel(game: Game): string {
 	background: var(--st3-surface2);
 	color: var(--st3-muted);
 }
-.st3-card-game::before {
-	content: attr(data-game-label);
+.f::before {
+	content: attr(data-2);
 }
-.st3-team-card[data-game="cs2"] .st3-card-game { color: var(--st3-cs2); }
-.st3-team-card[data-game="valorant"] .st3-card-game { color: var(--st3-valorant); }
-.st3-team-card[data-game="lol"] .st3-card-game { color: var(--st3-lol); }
-.st3-team-card[data-game="dota2"] .st3-card-game { color: var(--st3-dota2); }
-.st3-team-card[data-game="rl"] .st3-card-game { color: var(--st3-rl); }
+.c[data-1="cs2"] .f { color: var(--st3-cs2); }
+.c[data-1="valorant"] .f { color: var(--st3-valorant); }
+.c[data-1="lol"] .f { color: var(--st3-lol); }
+.c[data-1="dota2"] .f { color: var(--st3-dota2); }
+.c[data-1="rl"] .f { color: var(--st3-rl); }
 
-.st3-card-name {
+.g {
 	font-family: var(--st3-font-ui);
 	font-size: 13px;
 	font-weight: 500;
@@ -132,14 +128,14 @@ function _gameLabel(game: Game): string {
 	line-height: 1.3;
 }
 
-.st3-card-rank {
+.h {
 	display: flex;
 	align-items: center;
 	gap: 6px;
 	margin-top: auto;
 }
 
-.st3-rank-label {
+.i {
 	font-family: var(--st3-font-ui);
 	font-size: 10px;
 	color: var(--st3-muted);
@@ -147,14 +143,14 @@ function _gameLabel(game: Game): string {
 	letter-spacing: 0.06em;
 }
 
-.st3-rank-value {
+.j {
 	font-family: var(--st3-font-score);
 	font-size: 13px;
 	font-weight: 700;
 	color: var(--st3-text);
 }
 
-.st3-rank-pts {
+.k {
 	font-family: var(--st3-font-ui);
 	font-size: 11px;
 	color: var(--st3-muted);

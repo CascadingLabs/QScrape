@@ -2,7 +2,103 @@
 import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 ---
 
-<QScrapeLayout title="L3 — QScrape">
+<QScrapeLayout
+	title="L3 — Anti-Bot Scraper Test Sites | QScrape"
+	description="QScrape Level 3: four anti-bot test sites using Astro Islands (React, Vue, Svelte, Solid). Each island owns a different data slice and uses a distinct obfuscation technique — CSS-assembled text, pseudo-element content, decoy overlays, and canvas-rendered text."
+>
+	<Fragment slot="head">
+		<meta name="keywords" content="anti-bot scraper test, web scraping obfuscation, canvas scraping, CSS order scraping, pseudo-element scraping, Astro islands scraper benchmark" />
+		<link rel="canonical" href="https://qscrape.dev/l3/" />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://qscrape.dev/l3/" />
+		<meta property="og:title" content="L3 — Anti-Bot Scraper Test Sites | QScrape" />
+		<meta property="og:description" content="Four advanced scraper test sites using Astro Islands with CSS-assembled text, pseudo-element content, decoy overlays, and canvas-rendered text. No unsolvable CAPTCHAs." />
+		<meta property="og:site_name" content="QScrape" />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="L3 — Anti-Bot Scraper Test Sites | QScrape" />
+		<meta name="twitter:description" content="Four advanced scraper test sites using Astro Islands with CSS-assembled text, pseudo-element content, decoy overlays, and canvas-rendered text. No unsolvable CAPTCHAs." />
+
+		<!-- JSON-LD: CollectionPage -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "CollectionPage",
+			"name": "QScrape Level 3 — Anti-Bot Scraper Test Sites",
+			"url": "https://qscrape.dev/l3/",
+			"description": "Level 3 of QScrape provides four anti-bot test sites built with Astro Islands. Each page splits its data across four independent framework islands (React, Vue, Svelte, Solid). Every island uses a distinct data-obfuscation technique: React splits words into CSS flex-ordered spans, Vue renders data via CSS pseudo-element attr(), Svelte layers a transparent decoy over the real value, and Solid draws text to an HTML canvas. There are no unsolvable CAPTCHAs.",
+			"isPartOf": {
+				"@type": "WebSite",
+				"name": "QScrape",
+				"url": "https://qscrape.dev/"
+			},
+			"hasPart": [
+				{
+					"@type": "WebSite",
+					"name": "Mountainhome Herald (L3)",
+					"url": "https://qscrape.dev/l3/news/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "VaultMart (L3)",
+					"url": "https://qscrape.dev/l3/eshop/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "ScoreTap (L3)",
+					"url": "https://qscrape.dev/l3/scoretap/"
+				},
+				{
+					"@type": "WebSite",
+					"name": "Eldoria Registry of Deeds (L3)",
+					"url": "https://qscrape.dev/l3/taxes/"
+				}
+			]
+		})} />
+
+		<!-- JSON-LD: FAQPage (AEO) -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "FAQPage",
+			"mainEntity": [
+				{
+					"@type": "Question",
+					"name": "What is QScrape Level 3?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "QScrape Level 3 (L3) is a set of four anti-bot test sites built with Astro Islands. Each page composes four independent client:only islands — one per framework (React, Vue, Svelte, Solid) — each owning a different slice of the page data and using a distinct obfuscation technique. A complete record requires hydrating all four runtimes, waiting for four staggered async gates, and defeating four different anti-bot tricks."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "What anti-bot techniques does QScrape L3 use?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "L3 uses four per-framework obfuscation techniques plus five page-level defenses. Per-framework: React splits text into CSS flex-ordered spans (scrambled textContent), Vue renders data via CSS pseudo-element attr() (empty textContent), Svelte overlays a transparent decoy at higher z-index (DOM has both real and fake values), Solid draws text to canvas (nothing in DOM). Page-level: DevTools detection replaces the page with a 404 on keyboard shortcuts (F12, Ctrl+Shift+I/J/C) and docked DevTools window size changes; right-click context menu is disabled; honeypot buttons with opacity 0.001 are present in the DOM as scraper traps; eshop pages wrap content in a closed Shadow DOM so document.querySelector() cannot reach product data; and news article pages require a 5-second press-and-hold interaction before content is shown. All source code comments are stripped."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "Does QScrape L3 use CAPTCHAs?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "No. QScrape Level 3 uses no CAPTCHAs, browser fingerprinting, or rate limiting. All challenges are DOM/rendering-based obfuscation techniques and DevTools detection that a sufficiently capable scraper can defeat programmatically."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "How long do L3 islands take to load?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "L3 islands use staggered async delays: Solid resolves after 300–500 ms, React after 400–650 ms, Vue after 600–850 ms, and Svelte after 800–1050 ms. The worst-case total wait is approximately 1050 ms. Scrapers must wait for all four islands to settle before reconstructing a complete record."
+					}
+				}
+			]
+		})} />
+	</Fragment>
+
 	<header>
 		<div class="breadcrumb">
 			<a href="/">QScrape</a> / L3
@@ -13,7 +109,7 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 		</div>
 	</header>
 
-	<section>
+	<section aria-label="What is QScrape Level 3">
 		<p>
 			Level 3 sites use <a href="https://docs.astro.build/en/concepts/islands/" target="_blank" rel="noopener">Astro Islands</a> to split each page across four independent framework components — <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, and <a href="https://www.solidjs.com/" target="_blank" rel="noopener">Solid</a> — each owning a different slice of the data. On top of that, each framework island uses a distinct data-obfuscation technique to frustrate scrapers. A scraper must hydrate all four runtimes, wait for four staggered async gates, and defeat four different anti-bot tricks to reconstruct a complete record.
 		</p>
@@ -21,22 +117,47 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 
 	<section>
 		<h2>Anti-Bot Techniques</h2>
+		<h3>Per-Framework Obfuscation</h3>
 		<ul class="nav-links">
 			<li>
-				<span class="nav-path">React</span>
+				<a class="nav-path" href="https://react.dev/" target="_blank" rel="noopener">React</a>
 				<span class="nav-name">CSS-assembled text — words split into spans, DOM order shuffled, CSS <code>flex order</code> restores visual order; <code>textContent</code> returns scrambled words</span>
 			</li>
 			<li>
-				<span class="nav-path">Vue</span>
+				<a class="nav-path" href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>
 				<span class="nav-name">Pseudo-element content — data rendered via <code>::before &#123; content: attr(data-x) &#125;</code>; <code>textContent</code> returns empty string</span>
 			</li>
 			<li>
-				<span class="nav-path">Svelte</span>
+				<a class="nav-path" href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>
 				<span class="nav-name">Decoy overlay — real value at z-index 1, fake value at z-index 2 with <code>color: transparent</code>; DOM has both, scraper must resolve z-order</span>
 			</li>
 			<li>
-				<span class="nav-path">Solid</span>
+				<a class="nav-path" href="https://www.solidjs.com/" target="_blank" rel="noopener">Solid</a>
 				<span class="nav-name">Canvas-rendered text — numbers and IDs drawn via <code>ctx.fillText()</code>; not present in the DOM at all</span>
+			</li>
+		</ul>
+
+		<h3>Page-Level Defenses</h3>
+		<ul class="nav-links">
+			<li>
+				<a class="nav-path" href="https://developer.chrome.com/docs/devtools/" target="_blank" rel="noopener">DevTools Detection</a>
+				<span class="nav-name">Opening browser DevTools triggers a 404 page takeover — the entire document is replaced with a static "404 Not Found" response. Detection runs on an 800 ms polling interval.</span>
+			</li>
+			<li>
+				<a class="nav-path" href="https://en.wikipedia.org/wiki/Honeypot_(computing)" target="_blank" rel="noopener">Honeypot Buttons</a>
+				<span class="nav-name">Hidden interactive elements (<code>opacity: 0.001</code>) with realistic class names and actions. Visible in the DOM but invisible to users. Scrapers that interact with these reveal themselves.</span>
+			</li>
+			<li>
+				<a class="nav-path" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM" target="_blank" rel="noopener">Shadow DOM Encapsulation</a>
+				<span class="nav-name">Eshop pages wrap <code>&lt;main&gt;</code> content inside a closed <code>Shadow DOM</code> after islands hydrate. <code>document.querySelector()</code> returns nothing — scrapers must locate the shadow host and pierce the closed shadow root to reach product data.</span>
+			</li>
+			<li>
+				<a class="nav-path" href="https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events" target="_blank" rel="noopener">Press-and-Hold Gate</a>
+				<span class="nav-name">News article pages require a 5-second press-and-hold interaction before content is revealed. A full-screen overlay with a circular progress ring blocks <code>&lt;main&gt;</code> until the hold completes. State is persisted in <code>sessionStorage</code>.</span>
+			</li>
+			<li>
+				<a class="nav-path" href="https://en.wikipedia.org/wiki/Obfuscation_(software)" target="_blank" rel="noopener">No Source Comments</a>
+				<span class="nav-name">All L3 component source code is stripped of comments — no <code>//</code>, <code>/* */</code>, or <code>&lt;!-- --&gt;</code> hints about anti-bot techniques or implementation details.</span>
 			</li>
 		</ul>
 	</section>

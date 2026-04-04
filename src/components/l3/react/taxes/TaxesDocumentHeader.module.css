@@ -1,5 +1,4 @@
-/* TaxesDocumentHeader — L3 React island */
-.loading {
+.a {
 	display: flex;
 	align-items: center;
 	min-height: 100px;
@@ -8,7 +7,7 @@
 	font-size: 14px;
 }
 
-.root {
+.b {
 	background: var(--er3-surface);
 	border: 1px solid var(--er3-border);
 	border-radius: var(--er3-radius);
@@ -18,21 +17,21 @@
 	gap: 16px;
 }
 
-.topRow {
+.c {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
 }
 
-.fileNum {
+.d {
 	font-family: var(--er3-font-mono);
 	font-size: 13px;
 	color: var(--er3-muted);
 	letter-spacing: 0.04em;
 }
 
-.statusBadge {
+.e {
 	font-family: var(--er3-font);
 	font-size: 11px;
 	font-weight: 700;
@@ -41,20 +40,20 @@
 	padding: 3px 10px;
 	border-radius: 2px;
 }
-.statusRecorded {
+.f {
 	color: var(--er3-recorded);
 	background: var(--er3-recorded-bg);
 }
-.statusSatisfied {
+.g {
 	color: var(--er3-satisfied);
 	background: var(--er3-satisfied-bg);
 }
-.statusDelinquent {
+.h {
 	color: var(--er3-delinquent);
 	background: var(--er3-delinquent-bg);
 }
 
-.docType {
+.i {
 	font-family: var(--er3-font);
 	font-size: 28px;
 	font-weight: 700;
@@ -64,7 +63,7 @@
 	line-height: 1.2;
 }
 
-.meta {
+.j {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 	gap: 12px 24px;
@@ -72,13 +71,13 @@
 	border-top: 1px solid var(--er3-border);
 }
 
-.metaItem {
+.k {
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
 }
 
-.metaLabel {
+.l {
 	font-family: var(--er3-font);
 	font-size: 11px;
 	font-weight: 600;
@@ -87,19 +86,18 @@
 	letter-spacing: 0.06em;
 }
 
-.metaValue {
+.m {
 	font-family: var(--er3-font-mono);
 	font-size: 14px;
 	color: var(--er3-text);
 }
 
-/* Anti-bot: CSS-assembled text */
-.assembled {
+.n {
 	display: inline-flex;
 	flex-wrap: wrap;
 	gap: 0.25em;
 	align-items: baseline;
 }
-.assembledWord {
+.o {
 	display: inline;
 }

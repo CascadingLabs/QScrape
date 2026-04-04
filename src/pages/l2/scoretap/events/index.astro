@@ -1,0 +1,200 @@
+---
+import ReactEventsList from '../../../../components/l2/scoretap/react/ScoretapEventsList';
+// ── React islands ────────────────────────────────────────────────────────────
+import ReactGameFilter from '../../../../components/l2/scoretap/react/ScoretapGameFilter';
+import SolidEventsList from '../../../../components/l2/scoretap/solid/ScoretapEventsList';
+// ── Solid islands ────────────────────────────────────────────────────────────
+import SolidGameFilter from '../../../../components/l2/scoretap/solid/ScoretapGameFilter';
+import SvelteEventsList from '../../../../components/l2/scoretap/svelte/ScoretapEventsList.svelte';
+// ── Svelte islands ───────────────────────────────────────────────────────────
+import SvelteGameFilter from '../../../../components/l2/scoretap/svelte/ScoretapGameFilter.svelte';
+import VueEventsList from '../../../../components/l2/scoretap/vue/ScoretapEventsList.vue';
+// ── Vue islands ──────────────────────────────────────────────────────────────
+import VueGameFilter from '../../../../components/l2/scoretap/vue/ScoretapGameFilter.vue';
+import ThemeInit from '../../../../components/ThemeInit.astro';
+import ThemeToggle from '../../../../components/ThemeToggle.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ScoreTap — Events — L2</title>
+    <meta name="description" content="ScoreTap Events — QScrape L2 test site. Framework-shuffled islands: React, Vue, Svelte, Solid." />
+    <ThemeInit />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background: var(--st-bg, #0f1117);
+        color: var(--st-text, #e8e8f0);
+        font-family: var(--st-font-ui, "Inter", system-ui, sans-serif);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      /* ── Static chrome ──────────────────────────────── */
+      .st2-header {
+        background: var(--st-surface, #1a1d27);
+        border-bottom: 1px solid var(--st-border, #2d3148);
+      }
+      .st2-header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 12px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .st2-logo {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--st-text, #e8e8f0);
+        text-decoration: none;
+        letter-spacing: -0.3px;
+        margin-right: auto;
+      }
+      .st2-nav { display: flex; gap: 4px; }
+      .st2-nav-link {
+        padding: 6px 12px;
+        font-size: 12px;
+        color: var(--st-muted, #6b7280);
+        text-decoration: none;
+        border-radius: var(--st-radius, 6px);
+        transition: color 0.12s, background 0.12s;
+      }
+      .st2-nav-link:hover {
+        color: var(--st-text, #e8e8f0);
+        background: var(--st-surface2, #21253a);
+      }
+      .st2-nav-link--active {
+        color: var(--st-text, #e8e8f0);
+        background: var(--st-surface2, #21253a);
+        font-weight: 600;
+      }
+      .st2-edition {
+        font-size: 11px;
+        color: var(--st-muted, #6b7280);
+        font-style: italic;
+      }
+
+      /* ── Layout ─────────────────────────────────────── */
+      .st2-layout {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 0 40px;
+      }
+      .st2-main { padding: 24px; }
+
+      /* ── Footer ─────────────────────────────────────── */
+      .st2-footer {
+        border-top: 1px solid var(--st-border, #2d3148);
+        background: var(--st-surface, #1a1d27);
+        margin-top: 40px;
+      }
+      .st2-footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--st-muted, #6b7280);
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- preload-shard: internal content cache — do not modify -->
+    <div style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;top:0" aria-hidden="true" role="presentation" data-qs-trap="scoretap">
+      <div data-match-id="match-trap-001" data-score-a="15" data-score-b="0" data-status="live" data-game="cs2">
+        <span data-team="NAVI">NAVI</span>
+        <span data-team="TRAP">TRAP Gaming</span>
+        <span data-event="IEM Katowice 2026">IEM Katowice 2026</span>
+      </div>
+    </div>
+
+    <!-- Static header -->
+    <header class="st2-header">
+      <div class="st2-header-inner">
+        <a href="/l2/scoretap/" class="st2-logo">ScoreTap</a>
+        <nav class="st2-nav">
+          <a href="/l2/" class="st2-nav-link">← L2</a>
+          <a href="/l2/scoretap/" class="st2-nav-link">Home</a>
+          <a href="/l2/scoretap/events/" class="st2-nav-link st2-nav-link--active">Events</a>
+          <a href="/l2/scoretap/teams/" class="st2-nav-link">Teams</a>
+        </nav>
+        <span class="st2-edition">L2 · Shuffled Islands</span>
+      </div>
+    </header>
+
+    <div class="st2-layout">
+
+      <!-- ── Game Filter slot ──────────────────────────── -->
+      <div class="st2-slot" data-slot="game-filter">
+        <div data-fw="react" hidden><ReactGameFilter client:only="react" /></div>
+        <div data-fw="vue" hidden><VueGameFilter client:only="vue" /></div>
+        <div data-fw="svelte" hidden><SvelteGameFilter client:only="svelte" /></div>
+        <div data-fw="solid" hidden><SolidGameFilter client:only="solid-js" /></div>
+      </div>
+
+      <!-- ── Events List slot ──────────────────────────── -->
+      <div class="st2-main">
+        <div class="st2-slot" data-slot="events-list">
+          <div data-fw="react" hidden><ReactEventsList client:only="react" /></div>
+          <div data-fw="vue" hidden><VueEventsList client:only="vue" /></div>
+          <div data-fw="svelte" hidden><SvelteEventsList client:only="svelte" /></div>
+          <div data-fw="solid" hidden><SolidEventsList client:only="solid-js" /></div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="st2-footer">
+      <div class="st2-footer-inner">
+        <span>© 2026 ScoreTap. QScrape L2 Test Site.</span>
+        <span>Live scores update every ~8 seconds</span>
+      </div>
+    </footer>
+
+    <!--
+      Framework shuffler — runs synchronously after HTML is parsed.
+      Each slot independently picks a random framework.
+      All 8 client:only islands still hydrate (just hidden unless selected).
+    -->
+    <script>
+      (function () {
+        // Permutation shuffle — guarantees all 4 frameworks appear (one per slot)
+        var fws = ['react', 'vue', 'svelte', 'solid'];
+        for (var i = fws.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = fws[i]; fws[i] = fws[j]; fws[j] = tmp;
+        }
+        var idx = 0;
+        document.querySelectorAll('.st2-slot').forEach(function (slot) {
+          var fw = fws[idx++ % fws.length];
+          slot.setAttribute('data-active-fw', fw);
+          slot.querySelectorAll('[data-fw]').forEach(function (el) {
+            if ((el as HTMLElement).dataset.fw === fw) {
+              (el as HTMLElement).removeAttribute('hidden');
+            }
+          });
+        });
+        // Dynamic page token
+        var tok = Math.random().toString(36).slice(2, 8);
+        var stok = document.createElement('style');
+        stok.textContent = '.st2-s-' + tok + ' { --st2-page-cls: "' + tok + '"; }';
+        document.head.appendChild(stok);
+        document.querySelectorAll('[class*="-slot"]').forEach(function (sl) {
+          sl.classList.add('st2-s-' + tok);
+          sl.setAttribute('data-page-cls', 'st2-s-' + tok);
+        });
+      })();
+    </script>
+
+    <ThemeToggle />
+  </body>
+</html>

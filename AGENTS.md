@@ -8,7 +8,7 @@ QScrape is a web scraper evaluation suite. It hosts fictional test sites across 
 | Level | Status | Description |
 |-------|--------|-------------|
 | L1 | Live | Standard HTML/CSS/JS. Static Astro build. No frameworks, no anti-bot measures. |
-| L2 | Live | Modern web frameworks (React, Vue, Svelte). All content client-side only (`client:only`). Scrapers must execute JS. |
+| L2 | Live | Modern web frameworks (React, Vue, Svelte, Solid). All content client-side only (`client:only`). Scrapers must execute JS. Each page section is an independent island assigned to a randomly shuffled framework — all 4 frameworks appear on every page load. |
 | L3 | Live | Anti-bot sites. Astro islands (React + Vue + Svelte + Solid). No recaptchas or unsolvable challenge puzzles. |
 
 ## Index Pages
@@ -17,10 +17,7 @@ QScrape is a web scraper evaluation suite. It hosts fictional test sites across 
 |-------|------|-------------|
 | `/` | `src/pages/index.astro` | Root index: project overview, levels list, all sites, resources |
 | `/l1/` | `src/pages/l1/index.astro` | L1 index: level explanation, list of L1 sites with descriptions |
-| `/l2/` | `src/pages/l2/index.astro` | L2 index: full 12-site matrix table (React × Vue × Svelte × 4 sites) |
-| `/l2/react/` | `src/pages/l2/react/index.astro` | React framework index: lists all 4 React L2 sites |
-| `/l2/vue/` | `src/pages/l2/vue/index.astro` | Vue framework index: lists all 4 Vue L2 sites |
-| `/l2/svelte/` | `src/pages/l2/svelte/index.astro` | Svelte framework index: lists all 4 Svelte L2 sites |
+| `/l2/` | `src/pages/l2/index.astro` | L2 index: level explanation and list of L2 sites |
 
 ### Shared CSS
 Both index pages use `public/qscrape.css` — the dark-theme stylesheet for QScrape meta/navigation pages. This is separate from `public/global.css`, which is the legacy ASP.NET stylesheet used by L1 site pages.
@@ -38,33 +35,35 @@ See each site's `AGENTS.md` for full page structure, data schemas, URL encoding 
 
 ## L2 Sites
 
-All L2 sites are SPAs mounted with `client:only`. HTML source is empty — scrapers must execute JavaScript.
+All L2 page sections are independent `client:only` islands. HTML source is empty shell — scrapers must execute JavaScript to see any content.
 
-### L2 runtime behaviour (important for scraper authors)
+### L2 architecture (important for scraper authors)
 
-**Async loading gate** — every L2 component calls `fakeGet(null)` on mount, which resolves after a simulated 300–550 ms network delay. Until it resolves the component renders a plain "Loading…" div. Scrapers must wait for the real content to appear before extracting data. The fake API is at `src/data/api.ts`.
+**Islands, not SPAs** — each page is divided into named slots (e.g. `product-grid`, `category-nav`). Every slot embeds four copies of its component (one per framework), all `hidden` initially. An inline synchronous script runs a Fisher-Yates shuffle and reveals exactly one framework per slot. All four framework runtimes still hydrate; only the revealed copy is visible.
 
-**Client-side URL routing** — navigation inside each SPA uses `history.pushState` rather than full page loads. Each sub-URL maps to a different SPA "page":
+**Framework distribution** — the shuffler assigns a unique framework to each slot via permutation, so all 4 frameworks (React, Vue, Svelte, Solid) appear on every page load. The active framework is recorded in `data-active-fw` on each slot element.
 
-| Site | Sub-URLs |
-|------|----------|
-| news | `articles?cat=…`, `article?id=…`, `about`, `staff`, `contact` |
-| eshop | `catalog?cat=…`, `product?sku=…`, `cart`, `search?q=…` |
-| scoretap | `events`, `teams` |
-| taxes | `search`, `viewer?file=…`, `how-to`, `recording-fees` |
+**Async loading gate** — every island calls `fakeGet(null)` on mount, which resolves after a simulated 300–550 ms delay. Until resolved the island renders a plain "Loading…" div. Scrapers must wait for all visible islands to settle before extracting data. The fake API is at `src/data/api.ts`.
 
-The Astro shells at each sub-URL also mount the same SPA component (`client:only`), so deep-linking a specific URL loads the correct page directly. `popstate` listeners keep the back/forward buttons functional.
+**Client-side URL routing** — navigation within a site uses `history.pushState` (query-param based). `popstate` listeners keep back/forward buttons functional. Taxes sub-pages (`/l2/taxes/how-to/` and `/l2/taxes/recording-fees/`) are separate Astro pages with their own single island slot.
 
-**Game filter (scoretap)** — a single `activeGame` state controls filtering across all pages (Home, Events, Teams). The header tabs and per-page filter tabs all update the same state, matching the behaviour across all three frameworks.
+| Site | URL state keys |
+|------|----------------|
+| news | `?id=…` (article detail), `?cat=…` (category filter) |
+| eshop | `?sku=…` (product detail), `?view=cart\|checkout` |
+| scoretap | `?match=…`, `?team=…`, `?event=…`, `?game=…` |
+| taxes | `?file=…` (deed viewer), `?lastFirm=…&first=…&index=…` (search) |
+
+**Game filter (scoretap)** — a single `activeGame` state controls filtering. The header tabs and per-section filter tabs update state via custom events, keeping all slots in sync regardless of which framework handles each slot.
 
 ### Shared data layer
 
 | File | Used by |
 |------|---------|
-| `src/data/news/articles.ts` | All 3 news implementations + L1 |
-| `src/data/eshop/products.ts` | All 3 eshop implementations + L1 |
-| `src/data/scoretap/data.ts` | All 3 scoretap implementations |
-| `src/data/taxes/deeds.ts` | All 3 taxes implementations |
+| `src/data/news/articles.ts` | All 4 news implementations + L1 |
+| `src/data/eshop/products.ts` | All 4 eshop implementations + L1 |
+| `src/data/scoretap/data.ts` | All 4 scoretap implementations |
+| `src/data/taxes/deeds.ts` | All 4 taxes implementations |
 
 ### CSS design tokens
 
@@ -77,15 +76,26 @@ The Astro shells at each sub-URL also mount the same SPA component (`client:only
 
 ### Component locations
 
-| Framework | News | Eshop | ScoreTap | Taxes |
-|-----------|------|-------|----------|-------|
-| React | `src/components/l2/react/news/NewsApp.tsx` | `…/eshop/EshopApp.tsx` | `…/scoretap/ScoretapApp.tsx` | `…/taxes/TaxesApp.tsx` |
-| Vue | `src/components/l2/vue/news/NewsApp.vue` | `…/eshop/EshopApp.vue` | `…/scoretap/ScoretapApp.vue` | `…/taxes/TaxesApp.vue` |
-| Svelte | `src/components/l2/svelte/news/NewsApp.svelte` | `…/eshop/EshopApp.svelte` | `…/scoretap/ScoretapApp.svelte` | `…/taxes/TaxesApp.svelte` |
+Components are organised **site-first**: `src/components/l2/{site}/{framework}/`. Each directory contains multiple `*.tsx` / `*.vue` / `*.svelte` files, one per slot.
+
+| Site | React | Vue | Svelte | Solid |
+|------|-------|-----|--------|-------|
+| News | `src/components/l2/news/react/` | `…/vue/` | `…/svelte/` | `…/solid/` |
+| Eshop | `src/components/l2/eshop/react/` | `…/vue/` | `…/svelte/` | `…/solid/` |
+| ScoreTap | `src/components/l2/scoretap/react/` | `…/vue/` | `…/svelte/` | `…/solid/` |
+| Taxes | `src/components/l2/taxes/react/` | `…/vue/` | `…/svelte/` | `…/solid/` |
+
+**News slots**: `NewsBreakingTicker`, `NewsArticleFeed`, `NewsCategorySidebar`, `NewsStaffSpotlight`, `NewsWeatherWidget` (breaking news + geomantic conditions)
+
+**Eshop slots**: `EshopCategoryNav`, `EshopFeaturedBanner`, `EshopPriceBadges`, `EshopProductGrid` (full cart/checkout flow)
+
+**ScoreTap slots**: `ScoretapGameFilter`, `ScoretapLiveScores`, `ScoretapUpcoming`, `ScoretapRankings` (home page); `ScoretapEventsList` (`/events/`); `ScoretapTeamsList` (`/teams/`)
+
+**Taxes slots**: `TaxesSearchForm`, `TaxesResultsGrid`, `TaxesIndexSidebar`, `TaxesRecentRecords` (+ sub-page single-slot islands: `TaxesHowTo`, `TaxesRecordingFees`)
 
 ## L3 Sites
 
-L3 uses Astro Islands architecture. Each page composes four independent `client:only` islands — one per framework — each owning a different slice of the page data. Scrapers must hydrate all four runtimes and wait for four staggered async gates to reconstruct a complete record. Navigation between routes is full page loads (not SPA routing). Solid.js is used here for the first time in the project.
+L3 uses Astro Islands architecture. Each page composes four independent `client:only` islands — one per framework — each owning a different slice of the page data. Scrapers must hydrate all four runtimes and wait for four staggered async gates to reconstruct a complete record. Navigation between routes is full page loads (not SPA routing).
 
 ### L3 anti-bot techniques (per framework)
 
@@ -95,6 +105,35 @@ L3 uses Astro Islands architecture. Each page composes four independent `client:
 | Vue | Pseudo-element content — key data set as `data-x` attribute, rendered via `::before { content: attr(data-x) }` | Must use `getComputedStyle(el, '::before').content` |
 | Svelte | Decoy overlay — real value at z-index 1, visually-identical fake value at z-index 2 with `color: transparent; position: absolute` | Must resolve z-index stacking to identify the real value |
 | Solid | Canvas-rendered text — numbers and IDs drawn via `ctx.fillText()` to `<canvas>`; nothing in DOM | Must render canvas and OCR or use accessibility label (`aria-label`) |
+
+### L3 page-level defenses
+
+Every L3 page includes `L3Guard.astro` (`src/components/l3/L3Guard.astro`), which adds three page-level anti-bot measures. Additional per-site defenses (`ShadowShield.astro`, `PressHoldGate.astro`) are applied to specific sites.
+
+| Defence | Mechanism | How to defeat | Sites |
+|---------|-----------|---------------|-------|
+| DevTools detection → 404 | Intercepts F12, Ctrl+Shift+I/J/C, Cmd+Opt+I/J/C keyboard shortcuts and replaces the entire document with a static 404 page. Also monitors `outerWidth − innerWidth` delta (polled every 500 ms + resize listener) to detect docked DevTools. | Disable JavaScript keyboard event listeners, or use a headless browser that doesn't trigger key events. For docked detection, use undocked DevTools or set matching outer/inner dimensions. | All L3 |
+| Right-click disabled | `contextmenu` event is `preventDefault()`-ed, blocking the "Inspect Element" menu item. | Override the listener via `removeEventListener` or inject before the guard script runs. | All L3 |
+| Honeypot buttons | A fixed `<div>` with `opacity: 0.001` contains four fake interactive elements (`Submit`, `Load All`, `Export`, `Reset`) with realistic class names and `data-action` attributes. Invisible to users, visible in the DOM to scrapers. | Filter elements by computed opacity or skip elements inside `aria-hidden="true"` containers. | All L3 |
+| Shadow DOM encapsulation | After all islands hydrate (~2.5 s), `ShadowShield.astro` moves `<main>` content into a closed `attachShadow({ mode: 'closed' })` custom element. `document.querySelector()` from the main document returns nothing. | Monkey-patch `Element.prototype.attachShadow` before the page script runs to capture the shadow root reference, or use `element.getRootNode()` from inside the shadow tree. | Eshop |
+| Press-and-hold gate | `PressHoldGate.astro` renders a full-screen overlay requiring a 5-second continuous press-and-hold before `<main>` is revealed. Progress is shown via an SVG ring animation. Completion is stored in `sessionStorage` so repeat visits bypass the gate. | Set `sessionStorage.setItem('hn3-verified', '1')` before navigation, or dispatch synthetic `mousedown`/`mouseup` events with a 5 s gap. | News (articles) |
+| No source comments | All L3 component source files are stripped of `//`, `/* */`, and `<!-- -->` comments — no hints about anti-bot technique or implementation details. | N/A (code analysis required to understand obfuscation). | All L3 |
+
+### L3Guard environment variable
+
+L3Guard is controlled by the `PUBLIC_L3_GUARD` environment variable. It defaults to enabled (guard active) when the variable is unset or any value other than `"false"`.
+
+| Variable | Default | Effect |
+|----------|---------|--------|
+| `PUBLIC_L3_GUARD` | (unset = enabled) | Set to `false` to disable L3Guard (honeypot buttons, DevTools detection, right-click blocking), ShadowShield (eshop shadow DOM), and PressHoldGate (news hold-to-verify) at build time. Useful for local development and testing. |
+
+To disable locally, add to `.env`:
+
+```
+PUBLIC_L3_GUARD=false
+```
+
+The check runs at Astro build time in `L3Guard.astro` frontmatter — when disabled, the component renders nothing (no honeypot div, no inline script).
 
 ### L3 async loading gates (`fakeGetMs`)
 
@@ -184,8 +223,7 @@ Dynamic routes use `getStaticPaths()` — resolved at build time with props pass
 ### L3 implementation notes
 
 - Solid directive is `client:only="solid-js"` (not `"solid"`)
-- React and Solid both process `.tsx` — `astro.config.mjs` uses `include` scoping to prevent JSX transform conflict: `react({ include: ['**/l2/react/**', '**/l3/react/**'] })` and `solid({ include: ['**/l3/solid/**'] })`
-- Each island has a `data-island="…"` attribute on its root element for scraper targeting
+- React and Solid both process `.tsx` — `astro.config.mjs` uses `include` scoping to prevent JSX transform conflict: `react({ include: ['**/l2/react/**', '**/l3/react/**'] })` and `solid({ include: ['**/l2/solid/**', '**/l3/solid/**'] })`
 - Shared data layer is identical to L1/L2 — no new data files
 
 ## CSS Architecture
@@ -223,9 +261,10 @@ src/pages/
     svelte/scoretap/       — ScoreTap (Svelte) — 3 shells
     svelte/taxes/          — Eldoria Registry (Svelte) — 5 shells
 src/components/l2/
-  react/{news,eshop,scoretap,taxes}/   — React SPAs
-  vue/{news,eshop,scoretap,taxes}/     — Vue SPAs
-  svelte/{news,eshop,scoretap,taxes}/  — Svelte SPAs
+  news/{react,vue,svelte,solid}/       — News islands (all frameworks)
+  eshop/{react,vue,svelte,solid}/      — Eshop islands (all frameworks)
+  scoretap/{react,vue,svelte,solid}/   — ScoreTap islands (all frameworks)
+  taxes/{react,vue,svelte,solid}/      — Taxes islands (all frameworks)
 src/data/
   news/articles.ts         — Shared news data (L1 re-exports from here)
   eshop/products.ts        — Shared eshop data (L1 re-exports from here)

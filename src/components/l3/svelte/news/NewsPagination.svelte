@@ -1,6 +1,4 @@
 <script lang="ts">
-// @qscrape L3 / svelte island / news — pagination controls (articles page)
-// Anti-bot: decoy overlay on page numbers
 import { onMount } from 'svelte';
 import { fakeGetMs } from '../../../../data/api';
 import {
@@ -36,18 +34,17 @@ function _pageHref(p: number): string {
 
 <div data-island="svelte-pagination">
   {#if !ready}
-    <div class="hn3-pag-loading">Loading…</div>
+    <div class="a">Loading…</div>
   {:else if pages.length > 1}
-    <nav class="hn3-pagination" aria-label="Article pages">
+    <nav class="b">
       {#each pages as p}
         <a
           href={pageHref(p)}
-          class="hn3-page-btn {p === currentPage ? 'hn3-page-active' : ''}"
+          class="c {p === currentPage ? 'd' : ''}"
         >
-          <!-- Anti-bot: decoy overlay on page number -->
-          <span class="hn3-num-wrap">
-            <span class="hn3-num-real">{p}</span>
-            <span class="hn3-num-decoy" aria-hidden="true">{p + 10}</span>
+          <span class="e">
+            <span class="f">{p}</span>
+            <span class="g" aria-hidden="true">{p + 10}</span>
           </span>
         </a>
       {/each}
@@ -58,7 +55,7 @@ function _pageHref(p: number): string {
 <style>
   @import '../../../../styles/l3/news.css';
 
-  .hn3-pag-loading {
+  .a {
     min-height: 40px;
     display: flex;
     align-items: center;
@@ -67,14 +64,14 @@ function _pageHref(p: number): string {
     font-size: 14px;
   }
 
-  .hn3-pagination {
+  .b {
     display: flex;
     gap: 8px;
     justify-content: center;
     padding: 24px 0 0;
   }
 
-  .hn3-page-btn {
+  .c {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -87,28 +84,27 @@ function _pageHref(p: number): string {
     color: var(--hn3-text);
     text-decoration: none;
   }
-  .hn3-page-btn:hover {
+  .c:hover {
     border-color: var(--hn3-accent);
     color: var(--hn3-accent);
   }
-  .hn3-page-active {
+  .d {
     background: var(--hn3-accent);
     border-color: var(--hn3-accent);
     color: #fff;
   }
 
-  /* Anti-bot: decoy overlay on page number */
-  .hn3-num-wrap {
+  .e {
     position: relative;
     display: inline-block;
     width: 20px;
     text-align: center;
   }
-  .hn3-num-real {
+  .f {
     position: relative;
     z-index: 1;
   }
-  .hn3-num-decoy {
+  .g {
     position: absolute;
     top: 0;
     left: 0;
