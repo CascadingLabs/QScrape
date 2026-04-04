@@ -76,7 +76,7 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 					"name": "What anti-bot techniques does QScrape L3 use?",
 					"acceptedAnswer": {
 						"@type": "Answer",
-						"text": "L3 uses four per-framework obfuscation techniques plus three page-level defenses. Per-framework: React splits text into CSS flex-ordered spans (scrambled textContent), Vue renders data via CSS pseudo-element attr() (empty textContent), Svelte overlays a transparent decoy at higher z-index (DOM has both real and fake values), Solid draws text to canvas (nothing in DOM). Page-level: DevTools detection replaces the page with a 404 on keyboard shortcuts (F12, Ctrl+Shift+I/J/C) and docked DevTools window size changes; right-click context menu is disabled; and honeypot buttons with opacity 0.001 are present in the DOM as scraper traps. All source code comments are stripped."
+						"text": "L3 uses four per-framework obfuscation techniques plus five page-level defenses. Per-framework: React splits text into CSS flex-ordered spans (scrambled textContent), Vue renders data via CSS pseudo-element attr() (empty textContent), Svelte overlays a transparent decoy at higher z-index (DOM has both real and fake values), Solid draws text to canvas (nothing in DOM). Page-level: DevTools detection replaces the page with a 404 on keyboard shortcuts (F12, Ctrl+Shift+I/J/C) and docked DevTools window size changes; right-click context menu is disabled; honeypot buttons with opacity 0.001 are present in the DOM as scraper traps; eshop pages wrap content in a closed Shadow DOM so document.querySelector() cannot reach product data; and news article pages require a 5-second press-and-hold interaction before content is shown. All source code comments are stripped."
 					}
 				},
 				{
@@ -146,6 +146,14 @@ import QScrapeLayout from '../../layouts/QScrapeLayout.astro';
 			<li>
 				<a class="nav-path" href="https://en.wikipedia.org/wiki/Honeypot_(computing)" target="_blank" rel="noopener">Honeypot Buttons</a>
 				<span class="nav-name">Hidden interactive elements (<code>opacity: 0.001</code>) with realistic class names and actions. Visible in the DOM but invisible to users. Scrapers that interact with these reveal themselves.</span>
+			</li>
+			<li>
+				<a class="nav-path" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM" target="_blank" rel="noopener">Shadow DOM Encapsulation</a>
+				<span class="nav-name">Eshop pages wrap <code>&lt;main&gt;</code> content inside a closed <code>Shadow DOM</code> after islands hydrate. <code>document.querySelector()</code> returns nothing — scrapers must locate the shadow host and pierce the closed shadow root to reach product data.</span>
+			</li>
+			<li>
+				<a class="nav-path" href="https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events" target="_blank" rel="noopener">Press-and-Hold Gate</a>
+				<span class="nav-name">News article pages require a 5-second press-and-hold interaction before content is revealed. A full-screen overlay with a circular progress ring blocks <code>&lt;main&gt;</code> until the hold completes. State is persisted in <code>sessionStorage</code>.</span>
 			</li>
 			<li>
 				<a class="nav-path" href="https://en.wikipedia.org/wiki/Obfuscation_(software)" target="_blank" rel="noopener">No Source Comments</a>

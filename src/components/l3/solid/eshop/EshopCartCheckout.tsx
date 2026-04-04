@@ -110,6 +110,7 @@ function OrderIdCanvas(props: { orderId: string }) {
 }
 
 export default function EshopCartCheckout() {
+	let rootEl: HTMLDivElement | undefined;
 	const [ready, setReady] = createSignal(false);
 	const [total, setTotal] = createSignal(0);
 	const [count, setCount] = createSignal(0);
@@ -131,8 +132,11 @@ export default function EshopCartCheckout() {
 	}
 
 	function handleOrderNow() {
+		const root = rootEl?.getRootNode() ?? document;
 		const inputs = Array.from(
-			document.querySelectorAll<HTMLInputElement>('input[data-9]'),
+			(root as Document | ShadowRoot).querySelectorAll<HTMLInputElement>(
+				'input[data-9]',
+			),
 		);
 		const msgs: string[] = [];
 		for (const el of inputs) {
@@ -174,7 +178,7 @@ export default function EshopCartCheckout() {
 	});
 
 	return (
-		<div>
+		<div ref={rootEl}>
 			<Show when={!ready()}>
 				<div class="a">Loading…</div>
 			</Show>

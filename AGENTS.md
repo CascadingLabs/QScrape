@@ -108,14 +108,16 @@ L3 uses Astro Islands architecture. Each page composes four independent `client:
 
 ### L3 page-level defenses
 
-Every L3 page includes `L3Guard.astro` (`src/components/l3/L3Guard.astro`), which adds three page-level anti-bot measures:
+Every L3 page includes `L3Guard.astro` (`src/components/l3/L3Guard.astro`), which adds three page-level anti-bot measures. Additional per-site defenses (`ShadowShield.astro`, `PressHoldGate.astro`) are applied to specific sites.
 
-| Defence | Mechanism | How to defeat |
-|---------|-----------|---------------|
-| DevTools detection → 404 | Intercepts F12, Ctrl+Shift+I/J/C, Cmd+Opt+I/J/C keyboard shortcuts and replaces the entire document with a static 404 page. Also monitors `outerWidth − innerWidth` delta (polled every 500 ms + resize listener) to detect docked DevTools. | Disable JavaScript keyboard event listeners, or use a headless browser that doesn't trigger key events. For docked detection, use undocked DevTools or set matching outer/inner dimensions. |
-| Right-click disabled | `contextmenu` event is `preventDefault()`-ed, blocking the "Inspect Element" menu item. | Override the listener via `removeEventListener` or inject before the guard script runs. |
-| Honeypot buttons | A fixed `<div>` with `opacity: 0.001` contains four fake interactive elements (`Submit`, `Load All`, `Export`, `Reset`) with realistic class names and `data-action` attributes. Invisible to users, visible in the DOM to scrapers. | Filter elements by computed opacity or skip elements inside `aria-hidden="true"` containers. |
-| No source comments | All L3 component source files are stripped of `//`, `/* */`, and `<!-- -->` comments — no hints about anti-bot technique or implementation details. | N/A (code analysis required to understand obfuscation). |
+| Defence | Mechanism | How to defeat | Sites |
+|---------|-----------|---------------|-------|
+| DevTools detection → 404 | Intercepts F12, Ctrl+Shift+I/J/C, Cmd+Opt+I/J/C keyboard shortcuts and replaces the entire document with a static 404 page. Also monitors `outerWidth − innerWidth` delta (polled every 500 ms + resize listener) to detect docked DevTools. | Disable JavaScript keyboard event listeners, or use a headless browser that doesn't trigger key events. For docked detection, use undocked DevTools or set matching outer/inner dimensions. | All L3 |
+| Right-click disabled | `contextmenu` event is `preventDefault()`-ed, blocking the "Inspect Element" menu item. | Override the listener via `removeEventListener` or inject before the guard script runs. | All L3 |
+| Honeypot buttons | A fixed `<div>` with `opacity: 0.001` contains four fake interactive elements (`Submit`, `Load All`, `Export`, `Reset`) with realistic class names and `data-action` attributes. Invisible to users, visible in the DOM to scrapers. | Filter elements by computed opacity or skip elements inside `aria-hidden="true"` containers. | All L3 |
+| Shadow DOM encapsulation | After all islands hydrate (~2.5 s), `ShadowShield.astro` moves `<main>` content into a closed `attachShadow({ mode: 'closed' })` custom element. `document.querySelector()` from the main document returns nothing. | Monkey-patch `Element.prototype.attachShadow` before the page script runs to capture the shadow root reference, or use `element.getRootNode()` from inside the shadow tree. | Eshop |
+| Press-and-hold gate | `PressHoldGate.astro` renders a full-screen overlay requiring a 5-second continuous press-and-hold before `<main>` is revealed. Progress is shown via an SVG ring animation. Completion is stored in `sessionStorage` so repeat visits bypass the gate. | Set `sessionStorage.setItem('hn3-verified', '1')` before navigation, or dispatch synthetic `mousedown`/`mouseup` events with a 5 s gap. | News (articles) |
+| No source comments | All L3 component source files are stripped of `//`, `/* */`, and `<!-- -->` comments — no hints about anti-bot technique or implementation details. | N/A (code analysis required to understand obfuscation). | All L3 |
 
 ### L3Guard environment variable
 
@@ -123,7 +125,7 @@ L3Guard is controlled by the `PUBLIC_L3_GUARD` environment variable. It defaults
 
 | Variable | Default | Effect |
 |----------|---------|--------|
-| `PUBLIC_L3_GUARD` | (unset = enabled) | Set to `false` to disable L3Guard (honeypot buttons, DevTools detection, right-click blocking) at build time. Useful for local development and testing. |
+| `PUBLIC_L3_GUARD` | (unset = enabled) | Set to `false` to disable L3Guard (honeypot buttons, DevTools detection, right-click blocking), ShadowShield (eshop shadow DOM), and PressHoldGate (news hold-to-verify) at build time. Useful for local development and testing. |
 
 To disable locally, add to `.env`:
 
