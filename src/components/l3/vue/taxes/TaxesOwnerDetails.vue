@@ -61,7 +61,9 @@ onMounted(() => {
 
 <style>
 @import '../../../../styles/l3/taxes.css';
+</style>
 
+<style scoped>
 .a,
 .b {
 	min-height: 100px;

@@ -52,7 +52,9 @@ function bodyParagraphs(a: ArticleMeta): string[] {
 
 <style>
 @import '../../../../styles/l3/news.css';
+</style>
 
+<style scoped>
 .a {
 	min-height: 160px;
 	display: flex;

@@ -75,7 +75,9 @@ onMounted(() => {
 
 <style>
 @import '../../../../styles/l3/taxes.css';
+</style>
 
+<style scoped>
 .a {
 	min-height: 200px;
 	display: flex;

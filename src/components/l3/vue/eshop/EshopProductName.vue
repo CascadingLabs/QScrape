@@ -31,7 +31,9 @@ onMounted(() => {
 
 <style>
 @import '../../../../styles/l3/eshop.css';
+</style>
 
+<style scoped>
 .a {
 	min-height: 80px;
 	display: flex;

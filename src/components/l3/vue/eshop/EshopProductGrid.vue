@@ -84,7 +84,9 @@ function handleOrderNow(sku: string) {
 
 <style>
 @import '../../../../styles/l3/eshop.css';
+</style>
 
+<style scoped>
 .a { min-height: 200px; display: flex; align-items: center; color: var(--vm3-muted); font-family: var(--vm3-font); font-size: 14px; }
 
 .b { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }

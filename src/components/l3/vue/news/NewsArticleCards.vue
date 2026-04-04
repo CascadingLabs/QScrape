@@ -10,6 +10,10 @@ import {
 const items = ref<ArticleMeta[] | null>(null);
 const activeCat = ref<string | null>(null);
 
+function formatDate(d: string) {
+	return new Date(d).toLocaleDateString('en-CA');
+}
+
 onMounted(() => {
 	const cat = new URLSearchParams(window.location.search).get('cat');
 	activeCat.value = cat;
@@ -54,7 +58,9 @@ onMounted(() => {
 
 <style>
 @import '../../../../styles/l3/news.css';
+</style>
 
+<style scoped>
 .a {
 	min-height: 200px;
 	display: flex;
