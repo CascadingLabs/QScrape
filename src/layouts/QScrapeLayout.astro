@@ -12,8 +12,7 @@ const { title, description } = Astro.props;
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" id="qs-favicon" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -56,6 +55,56 @@ const { title, description } = Astro.props;
         </script>
 
         <ThemeInit />
+
+        <script is:inline>
+            (function () {
+                var _qsFaviconCache = {};
+
+                function _sanitizeSvg(text) {
+                    text = text.replace(/@import\s+url\([^)]*\)\s*;?/g, '');
+                    text = text.replace(/\bwidth="100%"/, 'width="500" height="500"');
+                    return text;
+                }
+
+                function _drawToFavicon(svgText) {
+                    var canvas = document.createElement('canvas');
+                    canvas.width = 32;
+                    canvas.height = 32;
+                    var ctx = canvas.getContext('2d');
+                    var src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgText)));
+                    var img = new Image();
+                    img.onload = function () {
+                        ctx.drawImage(img, 0, 0, 32, 32);
+                        var link = document.getElementById('qs-favicon');
+                        if (link) link.href = canvas.toDataURL('image/png');
+                    };
+                    img.src = src;
+                }
+
+                function renderQsFavicon() {
+                    var theme = document.documentElement.dataset.theme || 'dark';
+                    var path = theme === 'light' ? '/favicon-light.svg' : '/favicon.svg';
+                    if (_qsFaviconCache[path]) { _drawToFavicon(_qsFaviconCache[path]); return; }
+                    fetch(path)
+                        .then(function (r) { return r.text(); })
+                        .then(function (text) {
+                            _qsFaviconCache[path] = _sanitizeSvg(text);
+                            _drawToFavicon(_qsFaviconCache[path]);
+                        });
+                }
+
+                renderQsFavicon();
+
+                new MutationObserver(function (mutations) {
+                    for (var i = 0; i < mutations.length; i++) {
+                        if (mutations[i].attributeName === 'data-theme') {
+                            renderQsFavicon();
+                            break;
+                        }
+                    }
+                }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+            })();
+        </script>
     </head>
     <body>
         <!-- Hidden Google Translate initialisation target -->
