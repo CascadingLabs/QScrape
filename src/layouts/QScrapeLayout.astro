@@ -524,22 +524,32 @@ const { title, description } = Astro.props;
             });
         }
 
-        function apply(pref) {
+        function apply(pref, animate) {
             var resolved =
                 pref === "auto"
                     ? window.matchMedia("(prefers-color-scheme: light)").matches
                         ? "light"
                         : "dark"
                     : pref;
-            document.documentElement.dataset.theme = resolved;
-            document.documentElement.dataset.themePreference = pref;
-            syncThemedImages(resolved);
+            function commit() {
+                document.documentElement.dataset.theme = resolved;
+                document.documentElement.dataset.themePreference = pref;
+                syncThemedImages(resolved);
+            }
             var val = pref === "light" || pref === "dark" ? pref : "auto";
             document.cookie = "cl-theme=" + val + "; path=/; max-age=31536000; SameSite=Lax";
             localStorage.setItem(
                 "starlight-theme",
                 pref === "light" || pref === "dark" ? pref : "",
             );
+            // View Transitions API: GPU-composited crossfade of two page
+            // snapshots, instead of per-element CSS transitions.
+            var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (animate && !reduced && typeof document.startViewTransition === "function") {
+                document.startViewTransition(commit);
+            } else {
+                commit();
+            }
         }
 
         document
@@ -547,17 +557,17 @@ const { title, description } = Astro.props;
             .addEventListener("click", function () {
                 var current = getStored();
                 var next = order[(order.indexOf(current) + 1) % order.length];
-                apply(next);
+                apply(next, true);
             });
 
         window
             .matchMedia("(prefers-color-scheme: light)")
             .addEventListener("change", function () {
-                if (getStored() === "auto") apply("auto");
+                if (getStored() === "auto") apply("auto", false);
             });
 
         window.addEventListener("storage", function (e) {
-            if (e.key === "starlight-theme") apply(getStored());
+            if (e.key === "starlight-theme") apply(getStored(), false);
         });
 
         // Sync images on initial load (data-theme already set by ThemeInit)
