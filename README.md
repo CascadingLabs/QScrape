@@ -57,3 +57,7 @@ pnpm check     # biome check + autofix
 pnpm lint      # biome lint only
 pnpm format    # biome format
 ```
+
+## Contact
+
+[contact@cascadinglabs.com](mailto:contact@cascadinglabs.com)
