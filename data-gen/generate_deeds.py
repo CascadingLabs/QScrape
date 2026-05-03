@@ -7,11 +7,21 @@ os.makedirs(output_dir, exist_ok=True)
 
 RECORDS = [
     {
-        "file_num": "26-008492", "title": "QUITCLAIM DEED", "doc_type": "DEED",
-        "last_name": "ARMOK HOLDINGS LLC", "first_name": "", "index": "DEED", "sat": "",
-        "amount": "15.00 Gold Sovereigns", "status": "RECORDED",
-        "z_level": "Z-114 (Magma Sea Sector)", "book": "1374", "page_num": 184,
-        "inst": "2026-008492", "fee": "15.00 GP", "record_date": "10/15/2026",
+        "file_num": "26-008492",
+        "title": "QUITCLAIM DEED",
+        "doc_type": "DEED",
+        "last_name": "ARMOK HOLDINGS LLC",
+        "first_name": "",
+        "index": "DEED",
+        "sat": "",
+        "amount": "15.00 Gold Sovereigns",
+        "status": "RECORDED",
+        "z_level": "Z-114 (Magma Sea Sector)",
+        "book": "1374",
+        "page_num": 184,
+        "inst": "2026-008492",
+        "fee": "15.00 GP",
+        "record_date": "10/15/2026",
         "grantor": "The Mountainhome Regional Authority",
         "grantee": "ARMOK HOLDINGS LLC",
         "claim_id": "CLM-889-MAGMA",
@@ -23,11 +33,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-009104", "title": "MORTGAGE FIXTURE FILING", "doc_type": "MTG",
-        "last_name": "MCMINER", "first_name": "URIST", "index": "MTG", "sat": "SAT",
-        "amount": "50.00 Copper Coins", "status": "SATISFIED",
-        "z_level": "Z-12 (Upper Sand Layers)", "book": "1374", "page_num": 302,
-        "inst": "2026-009104", "fee": "25.00 GP", "record_date": "11/02/2026",
+        "file_num": "26-009104",
+        "title": "MORTGAGE FIXTURE FILING",
+        "doc_type": "MTG",
+        "last_name": "MCMINER",
+        "first_name": "URIST",
+        "index": "MTG",
+        "sat": "SAT",
+        "amount": "50.00 Copper Coins",
+        "status": "SATISFIED",
+        "z_level": "Z-12 (Upper Sand Layers)",
+        "book": "1374",
+        "page_num": 302,
+        "inst": "2026-009104",
+        "fee": "25.00 GP",
+        "record_date": "11/02/2026",
         "grantor": "URIST MCMINER",
         "grantee": "FIRST NATIONAL BANK OF THE MOUNTAINHOMES",
         "claim_id": "CLM-210-SAND",
@@ -39,11 +59,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-010033", "title": "CLAIM OF MECHANIC'S LIEN", "doc_type": "LIEN",
-        "last_name": "BOATMURDERED TRUST", "first_name": "", "index": "LIEN", "sat": "",
-        "amount": "9,999.99 Gold Sovereigns", "status": "DELINQUENT",
-        "z_level": "Z-40 (Flooded River Caverns)", "book": "1375", "page_num": 12,
-        "inst": "2026-010033", "fee": "10.00 GP", "record_date": "12/01/2026",
+        "file_num": "26-010033",
+        "title": "CLAIM OF MECHANIC'S LIEN",
+        "doc_type": "LIEN",
+        "last_name": "BOATMURDERED TRUST",
+        "first_name": "",
+        "index": "LIEN",
+        "sat": "",
+        "amount": "9,999.99 Gold Sovereigns",
+        "status": "DELINQUENT",
+        "z_level": "Z-40 (Flooded River Caverns)",
+        "book": "1375",
+        "page_num": 12,
+        "inst": "2026-010033",
+        "fee": "10.00 GP",
+        "record_date": "12/01/2026",
         "grantor": "Cog & Lever Contracting",
         "grantee": "BOATMURDERED TRUST",
         "claim_id": "CLM-001-RIVER",
@@ -58,16 +88,31 @@ RECORDS = [
             ("5", "Obsidian Pressure Plates", "350.00 GP", "1,750.00 GP"),
             ("2", "Emergency Magma Floodgates", "2,624.99 GP", "5,249.98 GP"),
             ("12", "Reinforced Stone Supports", "83.33 GP", "999.96 GP"),
-            ("-", "Subterranean Engineering Labor (320 hrs)", "3.125 GP/hr", "1,000.05 GP"),
+            (
+                "-",
+                "Subterranean Engineering Labor (320 hrs)",
+                "3.125 GP/hr",
+                "1,000.05 GP",
+            ),
         ],
         "lien_total": "9,999.99 GP",
     },
     {
-        "file_num": "26-010241", "title": "WARRANTY DEED", "doc_type": "DEED",
-        "last_name": "KOGANUSAN ESTATES LLC", "first_name": "", "index": "DEED", "sat": "",
-        "amount": "250.00 Gold Sovereigns", "status": "RECORDED",
-        "z_level": "Z-55 (Koganusan Deep Sector)", "book": "1375", "page_num": 44,
-        "inst": "2026-010241", "fee": "15.00 GP", "record_date": "12/10/2026",
+        "file_num": "26-010241",
+        "title": "WARRANTY DEED",
+        "doc_type": "DEED",
+        "last_name": "KOGANUSAN ESTATES LLC",
+        "first_name": "",
+        "index": "DEED",
+        "sat": "",
+        "amount": "250.00 Gold Sovereigns",
+        "status": "RECORDED",
+        "z_level": "Z-55 (Koganusan Deep Sector)",
+        "book": "1375",
+        "page_num": 44,
+        "inst": "2026-010241",
+        "fee": "15.00 GP",
+        "record_date": "12/10/2026",
         "grantor": "KOGANUSAN ORIGINAL SETTLERS CORP",
         "grantee": "KOGANUSAN ESTATES LLC",
         "claim_id": "CLM-304-KOGAN",
@@ -79,11 +124,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-010502", "title": "PURCHASE MONEY MORTGAGE", "doc_type": "MTG",
-        "last_name": "DOREN", "first_name": "MENG", "index": "MTG", "sat": "",
-        "amount": "1,200.00 Gold Sovereigns", "status": "RECORDED",
-        "z_level": "Z-28 (Mid-Fortress Residential)", "book": "1375", "page_num": 88,
-        "inst": "2026-010502", "fee": "25.00 GP", "record_date": "12/22/2026",
+        "file_num": "26-010502",
+        "title": "PURCHASE MONEY MORTGAGE",
+        "doc_type": "MTG",
+        "last_name": "DOREN",
+        "first_name": "MENG",
+        "index": "MTG",
+        "sat": "",
+        "amount": "1,200.00 Gold Sovereigns",
+        "status": "RECORDED",
+        "z_level": "Z-28 (Mid-Fortress Residential)",
+        "book": "1375",
+        "page_num": 88,
+        "inst": "2026-010502",
+        "fee": "25.00 GP",
+        "record_date": "12/22/2026",
         "grantor": "MENG DOREN",
         "grantee": "MOUNTAINHOME SAVINGS & TRUST",
         "claim_id": "CLM-502-MID",
@@ -95,11 +150,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-010618", "title": "GRANT OF EASEMENT", "doc_type": "ESMT",
-        "last_name": "STEELTHUNDER CLAN", "first_name": "", "index": "ESMT", "sat": "",
-        "amount": "75.00 Gold Sovereigns", "status": "RECORDED",
-        "z_level": "Z-35 (Eastern Cavern Network)", "book": "1375", "page_num": 122,
-        "inst": "2026-010618", "fee": "15.00 GP", "record_date": "01/08/2027",
+        "file_num": "26-010618",
+        "title": "GRANT OF EASEMENT",
+        "doc_type": "ESMT",
+        "last_name": "STEELTHUNDER CLAN",
+        "first_name": "",
+        "index": "ESMT",
+        "sat": "",
+        "amount": "75.00 Gold Sovereigns",
+        "status": "RECORDED",
+        "z_level": "Z-35 (Eastern Cavern Network)",
+        "book": "1375",
+        "page_num": 122,
+        "inst": "2026-010618",
+        "fee": "15.00 GP",
+        "record_date": "01/08/2027",
         "grantor": "STEELTHUNDER CLAN",
         "grantee": "ELDORIA MUNICIPAL UTILITIES AUTHORITY",
         "claim_id": "CLM-618-EAST",
@@ -111,11 +176,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-010744", "title": "RELEASE OF LIEN", "doc_type": "REL",
-        "last_name": "HEADSHOOTS LLC", "first_name": "", "index": "REL", "sat": "SAT",
-        "amount": "0.00 Gold Sovereigns", "status": "SATISFIED",
-        "z_level": "Z-22 (Trophy Hall District)", "book": "1375", "page_num": 155,
-        "inst": "2026-010744", "fee": "10.00 GP", "record_date": "01/15/2027",
+        "file_num": "26-010744",
+        "title": "RELEASE OF LIEN",
+        "doc_type": "REL",
+        "last_name": "HEADSHOOTS LLC",
+        "first_name": "",
+        "index": "REL",
+        "sat": "SAT",
+        "amount": "0.00 Gold Sovereigns",
+        "status": "SATISFIED",
+        "z_level": "Z-22 (Trophy Hall District)",
+        "book": "1375",
+        "page_num": 155,
+        "inst": "2026-010744",
+        "fee": "10.00 GP",
+        "record_date": "01/15/2027",
         "grantor": "PRECISION BOLT WORKS INC",
         "grantee": "HEADSHOOTS LLC",
         "claim_id": "CLM-744-TROPH",
@@ -127,11 +202,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-010831", "title": "ASSIGNMENT OF MORTGAGE", "doc_type": "ASGN",
-        "last_name": "IRONHAND", "first_name": "AVAR", "index": "ASGN", "sat": "",
-        "amount": "500.00 Gold Sovereigns", "status": "RECORDED",
-        "z_level": "Z-19 (Ironhand Family Compound)", "book": "1375", "page_num": 189,
-        "inst": "2026-010831", "fee": "20.00 GP", "record_date": "01/28/2027",
+        "file_num": "26-010831",
+        "title": "ASSIGNMENT OF MORTGAGE",
+        "doc_type": "ASGN",
+        "last_name": "IRONHAND",
+        "first_name": "AVAR",
+        "index": "ASGN",
+        "sat": "",
+        "amount": "500.00 Gold Sovereigns",
+        "status": "RECORDED",
+        "z_level": "Z-19 (Ironhand Family Compound)",
+        "book": "1375",
+        "page_num": 189,
+        "inst": "2026-010831",
+        "fee": "20.00 GP",
+        "record_date": "01/28/2027",
         "grantor": "MOUNTAINHOME SAVINGS & TRUST",
         "grantee": "AVAR IRONHAND",
         "claim_id": "CLM-831-IRON",
@@ -143,11 +228,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-010999", "title": "CLAIM OF MECHANIC'S LIEN", "doc_type": "LIEN",
-        "last_name": "FUNGIWOOD TRUST", "first_name": "", "index": "LIEN", "sat": "",
-        "amount": "3,400.50 Gold Sovereigns", "status": "DELINQUENT",
-        "z_level": "Z-60 (Fungiwood Cavern Biome)", "book": "1376", "page_num": 5,
-        "inst": "2026-010999", "fee": "10.00 GP", "record_date": "02/03/2027",
+        "file_num": "26-010999",
+        "title": "CLAIM OF MECHANIC'S LIEN",
+        "doc_type": "LIEN",
+        "last_name": "FUNGIWOOD TRUST",
+        "first_name": "",
+        "index": "LIEN",
+        "sat": "",
+        "amount": "3,400.50 Gold Sovereigns",
+        "status": "DELINQUENT",
+        "z_level": "Z-60 (Fungiwood Cavern Biome)",
+        "book": "1376",
+        "page_num": 5,
+        "inst": "2026-010999",
+        "fee": "10.00 GP",
+        "record_date": "02/03/2027",
         "grantor": "SPORE & SPROUT EXCAVATION CO",
         "grantee": "FUNGIWOOD TRUST",
         "claim_id": "CLM-999-FUNGI",
@@ -158,20 +253,40 @@ RECORDS = [
             "That this claim of lien is filed within the statutory period required by the Grand Duchy of Eldoria Subterranean Construction Lien Act, and Affiant claims a valid mechanic's lien upon the above-described property and all improvements thereon for the full delinquent amount stated herein.",
         ],
         "schedule_a": [
-            ("800", "Bio-Luminescent Spore Medium (cubic spans)", "1.50 GP", "1,200.00 GP"),
+            (
+                "800",
+                "Bio-Luminescent Spore Medium (cubic spans)",
+                "1.50 GP",
+                "1,200.00 GP",
+            ),
             ("15", "Mycological Corridor Framework Units", "80.00 GP", "1,200.00 GP"),
             ("3", "Subterranean Climate Control Nodes", "166.83 GP", "500.49 GP"),
             ("40", "Reinforced Fungal Growth Trellises", "12.50 GP", "500.00 GP"),
-            ("-", "Installation & Cultivation Labor (100 hrs)", "0.001 GP/hr", "0.01 GP"),
+            (
+                "-",
+                "Installation & Cultivation Labor (100 hrs)",
+                "0.001 GP/hr",
+                "0.01 GP",
+            ),
         ],
         "lien_total": "3,400.50 GP",
     },
     {
-        "file_num": "26-011102", "title": "GENERAL WARRANTY DEED", "doc_type": "DEED",
-        "last_name": "SPEARBREAKER", "first_name": "MOLDATH", "index": "DEED", "sat": "",
-        "amount": "800.00 Gold Sovereigns", "status": "RECORDED",
-        "z_level": "Z-48 (Spearbreaker Holdings Zone)", "book": "1376", "page_num": 38,
-        "inst": "2027-011102", "fee": "15.00 GP", "record_date": "02/14/2027",
+        "file_num": "26-011102",
+        "title": "GENERAL WARRANTY DEED",
+        "doc_type": "DEED",
+        "last_name": "SPEARBREAKER",
+        "first_name": "MOLDATH",
+        "index": "DEED",
+        "sat": "",
+        "amount": "800.00 Gold Sovereigns",
+        "status": "RECORDED",
+        "z_level": "Z-48 (Spearbreaker Holdings Zone)",
+        "book": "1376",
+        "page_num": 38,
+        "inst": "2027-011102",
+        "fee": "15.00 GP",
+        "record_date": "02/14/2027",
         "grantor": "ELDORIA LAND DISPOSITION AUTHORITY",
         "grantee": "MOLDATH SPEARBREAKER",
         "claim_id": "CLM-102-SPEAR",
@@ -183,11 +298,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-011287", "title": "MORTGAGE (SATISFIED)", "doc_type": "MTG",
-        "last_name": "DWARVEN IRON GUILD", "first_name": "", "index": "MTG", "sat": "SAT",
-        "amount": "2,500.00 Gold Sovereigns", "status": "SATISFIED",
-        "z_level": "Z-70 (Guild Hall Complex)", "book": "1376", "page_num": 71,
-        "inst": "2027-011287", "fee": "25.00 GP", "record_date": "02/20/2027",
+        "file_num": "26-011287",
+        "title": "MORTGAGE (SATISFIED)",
+        "doc_type": "MTG",
+        "last_name": "DWARVEN IRON GUILD",
+        "first_name": "",
+        "index": "MTG",
+        "sat": "SAT",
+        "amount": "2,500.00 Gold Sovereigns",
+        "status": "SATISFIED",
+        "z_level": "Z-70 (Guild Hall Complex)",
+        "book": "1376",
+        "page_num": 71,
+        "inst": "2027-011287",
+        "fee": "25.00 GP",
+        "record_date": "02/20/2027",
         "grantor": "DWARVEN IRON GUILD",
         "grantee": "GRAND DUCHY COMMERCIAL BANK",
         "claim_id": "CLM-287-GUILD",
@@ -199,11 +324,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-011344", "title": "AFFIDAVIT OF TITLE", "doc_type": "AFF",
-        "last_name": "STONECLEAVE", "first_name": "RIMTAR", "index": "AFF", "sat": "",
-        "amount": "10.00 Gold Sovereigns", "status": "RECORDED",
-        "z_level": "Z-15 (Stonecleave Family Claim)", "book": "1376", "page_num": 99,
-        "inst": "2027-011344", "fee": "10.00 GP", "record_date": "02/27/2027",
+        "file_num": "26-011344",
+        "title": "AFFIDAVIT OF TITLE",
+        "doc_type": "AFF",
+        "last_name": "STONECLEAVE",
+        "first_name": "RIMTAR",
+        "index": "AFF",
+        "sat": "",
+        "amount": "10.00 Gold Sovereigns",
+        "status": "RECORDED",
+        "z_level": "Z-15 (Stonecleave Family Claim)",
+        "book": "1376",
+        "page_num": 99,
+        "inst": "2027-011344",
+        "fee": "10.00 GP",
+        "record_date": "02/27/2027",
         "grantor": "RIMTAR STONECLEAVE",
         "grantee": "N/A",
         "claim_id": "CLM-344-STONE",
@@ -215,11 +350,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-011521", "title": "CLAIM OF MECHANIC'S LIEN", "doc_type": "LIEN",
-        "last_name": "IDEN METALCRAFTERS LLC", "first_name": "", "index": "LIEN", "sat": "",
-        "amount": "6,750.00 Gold Sovereigns", "status": "DELINQUENT",
-        "z_level": "Z-80 (Deep Forge District)", "book": "1376", "page_num": 133,
-        "inst": "2027-011521", "fee": "10.00 GP", "record_date": "03/05/2027",
+        "file_num": "26-011521",
+        "title": "CLAIM OF MECHANIC'S LIEN",
+        "doc_type": "LIEN",
+        "last_name": "IDEN METALCRAFTERS LLC",
+        "first_name": "",
+        "index": "LIEN",
+        "sat": "",
+        "amount": "6,750.00 Gold Sovereigns",
+        "status": "DELINQUENT",
+        "z_level": "Z-80 (Deep Forge District)",
+        "book": "1376",
+        "page_num": 133,
+        "inst": "2027-011521",
+        "fee": "10.00 GP",
+        "record_date": "03/05/2027",
         "grantor": "IDEN METALCRAFTERS LLC",
         "grantee": "DEEPFORGE PROPERTY HOLDINGS",
         "claim_id": "CLM-521-FORGE",
@@ -239,11 +384,21 @@ RECORDS = [
         "lien_total": "6,750.00 GP",
     },
     {
-        "file_num": "26-011689", "title": "TRUSTEE'S DEED", "doc_type": "DEED",
-        "last_name": "GODEN BOULDERBACK TRUST", "first_name": "", "index": "DEED", "sat": "",
-        "amount": "1,500.00 Gold Sovereigns", "status": "RECORDED",
-        "z_level": "Z-33 (Boulderback Estate Sector)", "book": "1376", "page_num": 177,
-        "inst": "2027-011689", "fee": "15.00 GP", "record_date": "03/09/2027",
+        "file_num": "26-011689",
+        "title": "TRUSTEE'S DEED",
+        "doc_type": "DEED",
+        "last_name": "GODEN BOULDERBACK TRUST",
+        "first_name": "",
+        "index": "DEED",
+        "sat": "",
+        "amount": "1,500.00 Gold Sovereigns",
+        "status": "RECORDED",
+        "z_level": "Z-33 (Boulderback Estate Sector)",
+        "book": "1376",
+        "page_num": 177,
+        "inst": "2027-011689",
+        "fee": "15.00 GP",
+        "record_date": "03/09/2027",
         "grantor": "GODEN BOULDERBACK, TRUSTEE",
         "grantee": "GODEN BOULDERBACK TRUST",
         "claim_id": "CLM-689-BOULD",
@@ -255,11 +410,21 @@ RECORDS = [
         ],
     },
     {
-        "file_num": "26-011872", "title": "NOTICE OF COMMENCEMENT", "doc_type": "NTC",
-        "last_name": "ZULBAN TUNNELWORKS LLC", "first_name": "", "index": "NTC", "sat": "",
-        "amount": "25.00 Gold Sovereigns", "status": "RECORDED",
-        "z_level": "Z-92 (New Tunnelworks Extension)", "book": "1376", "page_num": 211,
-        "inst": "2027-011872", "fee": "10.00 GP", "record_date": "03/11/2027",
+        "file_num": "26-011872",
+        "title": "NOTICE OF COMMENCEMENT",
+        "doc_type": "NTC",
+        "last_name": "ZULBAN TUNNELWORKS LLC",
+        "first_name": "",
+        "index": "NTC",
+        "sat": "",
+        "amount": "25.00 Gold Sovereigns",
+        "status": "RECORDED",
+        "z_level": "Z-92 (New Tunnelworks Extension)",
+        "book": "1376",
+        "page_num": 211,
+        "inst": "2027-011872",
+        "fee": "10.00 GP",
+        "record_date": "03/11/2027",
         "grantor": "ZULBAN TUNNELWORKS LLC",
         "grantee": "N/A",
         "claim_id": "CLM-872-TUNN",
@@ -317,13 +482,15 @@ def _notary_block(pdf):
     pdf.set_font("Arial", "B", 10)
     pdf.cell(0, 6, "NOTARY ACKNOWLEDGMENT", 0, 1, "L")
     pdf.set_font("Arial", "", 10)
-    pdf.multi_cell(0, 5,
+    pdf.multi_cell(
+        0,
+        5,
         "STATE OF ELDORIA, COUNTY OF THE DEEP\n"
         "Before me, the undersigned Notarial Magistrate, personally appeared the person(s) "
         "whose name(s) appear above, known to me to be the person(s) who executed the "
         "foregoing instrument, and acknowledged that they executed the same for the purposes "
         "therein stated.\n"
-        "Sworn and subscribed before me this _____ day of _____________, 20___."
+        "Sworn and subscribed before me this _____ day of _____________, 20___.",
     )
     pdf.ln(5)
     pdf.cell(80, 8, "___________________________________", 0, 1, "L")
@@ -353,20 +520,24 @@ def _signature_block(pdf, grantor_label, grantee_label):
 
 
 def create_deed(rec):
-    pdf = EldoriaRODPDF(rec["book"], rec["page_num"], rec["inst"], rec["fee"], rec["record_date"])
+    pdf = EldoriaRODPDF(
+        rec["book"], rec["page_num"], rec["inst"], rec["fee"], rec["record_date"]
+    )
     pdf.add_page()
     _base_header(pdf, rec)
 
     pdf.set_font("Arial", "B", 10)
     pdf.cell(0, 6, "LEGAL DESCRIPTION", 0, 1, "L")
     pdf.set_font("Arial", "", 10)
-    pdf.multi_cell(0, 5,
+    pdf.multi_cell(
+        0,
+        5,
         f"All that certain tract or parcel of subterranean real property situated in the "
         f"Grand Duchy of Eldoria, identified as Parcel {rec['claim_id']}, located at "
         f"{rec['z_level']}, bounded on all sides by the natural rock formations of said "
         f"Z-level sector, together with all mineral rights, subsoil interests, and "
         f"appurtenances thereto belonging or in anywise appertaining. Cubic footage: "
-        f"approximately 40,000 cubic dwarven spans of improved subterranean property."
+        f"approximately 40,000 cubic dwarven spans of improved subterranean property.",
     )
     pdf.ln(4)
 
@@ -381,18 +552,22 @@ def create_deed(rec):
 
 
 def create_mortgage(rec):
-    pdf = EldoriaRODPDF(rec["book"], rec["page_num"], rec["inst"], rec["fee"], rec["record_date"])
+    pdf = EldoriaRODPDF(
+        rec["book"], rec["page_num"], rec["inst"], rec["fee"], rec["record_date"]
+    )
     pdf.add_page()
     _base_header(pdf, rec)
 
     pdf.set_font("Arial", "B", 10)
     pdf.cell(0, 6, "LEGAL DESCRIPTION OF MORTGAGED PREMISES", 0, 1, "L")
     pdf.set_font("Arial", "", 10)
-    pdf.multi_cell(0, 5,
+    pdf.multi_cell(
+        0,
+        5,
         f"All that certain subterranean parcel identified as {rec['claim_id']}, situated "
         f"at {rec['z_level']}, comprising all improvements, fixtures, and appurtenances "
         f"thereto belonging, together with all mineral rights appurtenant to said parcel "
-        f"not previously reserved of record."
+        f"not previously reserved of record.",
     )
     pdf.ln(4)
 
@@ -423,19 +598,25 @@ def create_mortgage(rec):
         pdf.cell(0, 10, "** SATISFIED IN FULL -- LIEN DISCHARGED **", 0, 1, "C")
         pdf.set_font("Arial", "", 10)
         pdf.set_text_color(0, 0, 0)
-        pdf.multi_cell(0, 5,
+        pdf.multi_cell(
+            0,
+            5,
             "This mortgage has been paid in full. The Mortgagee hereby releases, "
             "discharges, and cancels this mortgage lien. All obligations of the "
-            "Mortgagor hereunder are extinguished and of no further force or effect."
+            "Mortgagor hereunder are extinguished and of no further force or effect.",
         )
 
-    _signature_block(pdf, f"Mortgagor: {rec['grantor']}", f"Mortgagee: {rec['grantee']}")
+    _signature_block(
+        pdf, f"Mortgagor: {rec['grantor']}", f"Mortgagee: {rec['grantee']}"
+    )
     _notary_block(pdf)
     pdf.output(os.path.join(output_dir, f"{rec['file_num']}.pdf"))
 
 
 def create_lien(rec):
-    pdf = EldoriaRODPDF(rec["book"], rec["page_num"], rec["inst"], rec["fee"], rec["record_date"])
+    pdf = EldoriaRODPDF(
+        rec["book"], rec["page_num"], rec["inst"], rec["fee"], rec["record_date"]
+    )
     pdf.add_page()
     _base_header(pdf, rec)
 
@@ -486,7 +667,9 @@ def create_lien(rec):
 
 
 def create_affidavit(rec):
-    pdf = EldoriaRODPDF(rec["book"], rec["page_num"], rec["inst"], rec["fee"], rec["record_date"])
+    pdf = EldoriaRODPDF(
+        rec["book"], rec["page_num"], rec["inst"], rec["fee"], rec["record_date"]
+    )
     pdf.add_page()
     _base_header(pdf, rec)
 
@@ -498,10 +681,12 @@ def create_affidavit(rec):
     pdf.set_font("Arial", "B", 10)
     pdf.cell(0, 6, "LEGAL DESCRIPTION OF SUBJECT PROPERTY", 0, 1, "L")
     pdf.set_font("Arial", "", 10)
-    pdf.multi_cell(0, 5,
+    pdf.multi_cell(
+        0,
+        5,
         f"Real property identified as Parcel {rec['claim_id']}, situated at "
         f"{rec['z_level']}, in the Grand Duchy of Eldoria, as more particularly "
-        f"described in the deed of record at Book 1369, Page 44, Registry of Deeds."
+        f"described in the deed of record at Book 1369, Page 44, Registry of Deeds.",
     )
     pdf.ln(4)
 

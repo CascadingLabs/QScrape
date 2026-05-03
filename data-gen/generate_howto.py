@@ -14,7 +14,14 @@ class HowToPDF(FPDF):
     def header(self):
         self.set_font("Courier", "B", 8)
         self.set_text_color(100, 100, 100)
-        self.cell(0, 6, "Grand Duchy of Eldoria -- Arcane Registry of Deeds -- How To Guide", 0, 1, "C")
+        self.cell(
+            0,
+            6,
+            "Grand Duchy of Eldoria -- Arcane Registry of Deeds -- How To Guide",
+            0,
+            1,
+            "C",
+        )
         self.set_draw_color(150, 150, 150)
         self.line(10, self.get_y(), 200, self.get_y())
         self.ln(3)
@@ -24,7 +31,14 @@ class HowToPDF(FPDF):
         self.set_y(-15)
         self.set_font("Arial", "I", 8)
         self.set_text_color(120, 120, 120)
-        self.cell(0, 10, f"Eldoria ROD How To Guide  |  Page {self.page_no()}  |  eldoria.gov/rod", 0, 0, "C")
+        self.cell(
+            0,
+            10,
+            f"Eldoria ROD How To Guide  |  Page {self.page_no()}  |  eldoria.gov/rod",
+            0,
+            0,
+            "C",
+        )
         self.set_text_color(0, 0, 0)
 
 
@@ -91,7 +105,9 @@ def make_guide(filename, index_type, full_name, sections):
 
 GUIDES = [
     (
-        "how-to-deed.pdf", "DEED", "Recording a Deed",
+        "how-to-deed.pdf",
+        "DEED",
+        "Recording a Deed",
         [
             (
                 "What Is a Deed?",
@@ -105,7 +121,7 @@ GUIDES = [
                 "- Warranty Deed: Grantor guarantees clear title and will defend against all claims.\n"
                 "- Quitclaim Deed: Transfers only the interest the Grantor currently holds; no warranty.\n"
                 "- Trustee's Deed: Used when a trustee conveys trust property on behalf of a trust.\n"
-                "- Sheriff's Deed: Issued following a judicial sale or enforcement proceeding."
+                "- Sheriff's Deed: Issued following a judicial sale or enforcement proceeding.",
             ),
             (
                 "Required Elements",
@@ -118,7 +134,7 @@ GUIDES = [
                 "5. Habendum clause ('To have and to hold...').\n"
                 "6. Signature of Grantor before two witnesses.\n"
                 "7. Notarial acknowledgment by a licensed Notarial Magistrate of the Grand Duchy.\n"
-                "8. Return address for the recorded instrument."
+                "8. Return address for the recorded instrument.",
             ),
             (
                 "Step-by-Step Filing Process",
@@ -129,7 +145,7 @@ GUIDES = [
                 "5. Submit the original instrument, cover sheet, and fee payment to the ROD counter.\n"
                 "6. The ROD clerk will stamp 'FILED, RECORDED, INDEXED' and assign a Book/Page/Inst number.\n"
                 "7. The original recorded deed is returned to the Grantee within 14 working days.\n"
-                "8. Verify recording by searching the online index at eldoria.gov/rod."
+                "8. Verify recording by searching the online index at eldoria.gov/rod.",
             ),
             (
                 "Common Errors & How to Avoid Them",
@@ -137,19 +153,21 @@ GUIDES = [
                 "- Missing notary seal: The Notarial Magistrate must affix their official obsidian seal.\n"
                 "- Illegible instrument: Documents must be inscribed in permanent ink on vellum or stone-pressed paper.\n"
                 "- Wrong fee: Recalculate if the deed has exhibits or attachments; each page counts separately.\n"
-                "- Expired notary: Verify the Notarial Magistrate's commission has not lapsed before signing."
+                "- Expired notary: Verify the Notarial Magistrate's commission has not lapsed before signing.",
             ),
             (
                 "Fees & Turnaround",
                 "Standard recording fee: 15.00 Gold Sovereigns (first page) + 2.00 GP per additional page.\n"
                 "Expedited same-day recording: Additional 50.00 GP surcharge.\n"
                 "Certified copy of recorded deed: 5.00 GP per copy.\n"
-                "Typical processing time: 3-5 working days for standard filings."
+                "Typical processing time: 3-5 working days for standard filings.",
             ),
-        ]
+        ],
     ),
     (
-        "how-to-mtg.pdf", "MTG", "Filing and Managing a Mortgage",
+        "how-to-mtg.pdf",
+        "MTG",
+        "Filing and Managing a Mortgage",
         [
             (
                 "What Is a Mortgage?",
@@ -159,7 +177,7 @@ GUIDES = [
                 "or creditors. An unrecorded mortgage is junior to all recorded instruments.\n"
                 "\n"
                 "The mortgage does not transfer title; it creates a lien. If the Mortgagor defaults, the "
-                "Mortgagee may initiate foreclosure proceedings before the Grand Duchy Court of Claims."
+                "Mortgagee may initiate foreclosure proceedings before the Grand Duchy Court of Claims.",
             ),
             (
                 "Required Elements",
@@ -169,7 +187,7 @@ GUIDES = [
                 "4. Uniform Covenants section covering insurance, maintenance, hazard events, and acceleration.\n"
                 "5. Signature of Mortgagor before two witnesses.\n"
                 "6. Notarial acknowledgment.\n"
-                "7. Lender's name and address for lien index purposes."
+                "7. Lender's name and address for lien index purposes.",
             ),
             (
                 "Step-by-Step Filing Process",
@@ -179,7 +197,7 @@ GUIDES = [
                 "4. Pay recording fee: 25.00 GP base + 2.00 GP per page.\n"
                 "5. Submit to ROD counter. The lien will appear in the index within 2 working days.\n"
                 "6. Mortgagee retains the original; Mortgagor receives a certified copy.\n"
-                "7. Upon full repayment, file a Satisfaction of Mortgage (see REL guide)."
+                "7. Upon full repayment, file a Satisfaction of Mortgage (see REL guide).",
             ),
             (
                 "Uniform Covenants Requirement",
@@ -190,7 +208,7 @@ GUIDES = [
                 "3. HAZARD EVENTS: Mortgagor must notify Mortgagee within 72 hours of any structural incident.\n"
                 "4. ACCELERATION: Upon default, Mortgagee may declare the full balance immediately due.\n"
                 "5. ASSIGNMENT: Mortgagee may assign the mortgage without Mortgagor consent.\n"
-                "6. COMPLIANCE: Mortgagor must comply with all Grand Duchy subterranean safety codes."
+                "6. COMPLIANCE: Mortgagor must comply with all Grand Duchy subterranean safety codes.",
             ),
             (
                 "Obtaining a Satisfaction",
@@ -200,12 +218,14 @@ GUIDES = [
                 "2. The Satisfaction must reference the original Book, Page, and Instrument number.\n"
                 "3. File the Satisfaction with the ROD; fee is 10.00 GP.\n"
                 "4. The index will reflect 'SAT' status within 2 working days.\n"
-                "5. Failure to timely file a Satisfaction exposes the Mortgagee to penalties under Eldoria Code Section 44-B."
+                "5. Failure to timely file a Satisfaction exposes the Mortgagee to penalties under Eldoria Code Section 44-B.",
             ),
-        ]
+        ],
     ),
     (
-        "how-to-lien.pdf", "LIEN", "Filing a Mechanic's Lien",
+        "how-to-lien.pdf",
+        "LIEN",
+        "Filing a Mechanic's Lien",
         [
             (
                 "What Is a Mechanic's Lien?",
@@ -215,7 +235,7 @@ GUIDES = [
                 "governed by the Grand Duchy Subterranean Construction Lien Act (SCLA), Articles 14-22.\n"
                 "\n"
                 "A properly filed lien attaches to the property itself, not just the owner personally. This "
-                "means the lien can follow the property even if it is sold, making it a powerful collection tool."
+                "means the lien can follow the property even if it is sold, making it a powerful collection tool.",
             ),
             (
                 "Who May File",
@@ -226,7 +246,7 @@ GUIDES = [
                 "- Licensed engineers and surveyors providing professional services to the project.\n"
                 "\n"
                 "To preserve lien rights, subcontractors and suppliers MUST serve a Notice to Owner (form ELD-NTO-01) "
-                "within 45 days of first furnishing labor or materials."
+                "within 45 days of first furnishing labor or materials.",
             ),
             (
                 "Filing Deadlines",
@@ -234,7 +254,7 @@ GUIDES = [
                 "2. Claim of Lien: Must be recorded within 90 days after the last date labor or materials were furnished.\n"
                 "3. Lawsuit to enforce the lien: Must be filed within 1 year of recording the Claim of Lien.\n"
                 "\n"
-                "Missing any of these deadlines will result in loss of lien rights. The ROD does not waive statutory deadlines."
+                "Missing any of these deadlines will result in loss of lien rights. The ROD does not waive statutory deadlines.",
             ),
             (
                 "Required Elements of the Claim of Lien",
@@ -247,7 +267,7 @@ GUIDES = [
                 "7. Schedule A: Itemized table of materials and labor (quantity, description, unit price, total).\n"
                 "8. Signature before a Notarial Magistrate.\n"
                 "\n"
-                "The delinquent amount must be stated in bold or prominent type as required by SCLA Article 17."
+                "The delinquent amount must be stated in bold or prominent type as required by SCLA Article 17.",
             ),
             (
                 "Step-by-Step Filing Process",
@@ -258,7 +278,7 @@ GUIDES = [
                 "5. Pay recording fee: 10.00 GP (flat fee for lien filings).\n"
                 "6. Submit to ROD. The lien appears in the index within 1 working day.\n"
                 "7. Serve a copy of the recorded lien on the property owner within 15 days of recording.\n"
-                "8. If not paid within 30 days, consult legal counsel regarding enforcement proceedings."
+                "8. If not paid within 30 days, consult legal counsel regarding enforcement proceedings.",
             ),
             (
                 "Contesting or Releasing a Lien",
@@ -266,12 +286,14 @@ GUIDES = [
                 "- Transfer of Lien to Bond: Post a cash bond equal to 150% of the lien amount to remove the lien from title.\n"
                 "- Notice of Contest: File a Notice of Contest of Lien to shorten the lienor's enforcement deadline to 60 days.\n"
                 "- Direct Payment and Release: Pay the lienor and obtain a Release of Lien (see REL guide).\n"
-                "- Court Action: Petition the Grand Duchy Court of Claims to discharge a fraudulent or improper lien."
+                "- Court Action: Petition the Grand Duchy Court of Claims to discharge a fraudulent or improper lien.",
             ),
-        ]
+        ],
     ),
     (
-        "how-to-esmt.pdf", "ESMT", "Registering an Easement",
+        "how-to-esmt.pdf",
+        "ESMT",
+        "Registering an Easement",
         [
             (
                 "What Is an Easement?",
@@ -285,7 +307,7 @@ GUIDES = [
                 "- Access Easement: Right of way for ingress and egress through tunnels.\n"
                 "- Drainage Easement: For water management and aquifer control infrastructure.\n"
                 "- Magma Routing Easement: For municipal lava management systems.\n"
-                "- View/Light Easement: Protecting sightlines to surface apertures."
+                "- View/Light Easement: Protecting sightlines to surface apertures.",
             ),
             (
                 "Required Elements",
@@ -296,7 +318,7 @@ GUIDES = [
                 "5. Duration (perpetual or term; if term, specify expiration conditions).\n"
                 "6. Maintenance obligations of each party.\n"
                 "7. Indemnification provisions.\n"
-                "8. Signature of the servient estate owner; notarization required."
+                "8. Signature of the servient estate owner; notarization required.",
             ),
             (
                 "Easement Area Description Requirements",
@@ -308,7 +330,7 @@ GUIDES = [
                 "- Depth extent of the easement (top and bottom Z-level if applicable).\n"
                 "- Reference to a recorded survey (Survey No. must be on file with the ROD).\n"
                 "\n"
-                "Easements described only by general reference ('the area used for pipes') will be rejected."
+                "Easements described only by general reference ('the area used for pipes') will be rejected.",
             ),
             (
                 "Step-by-Step Filing Process",
@@ -319,7 +341,7 @@ GUIDES = [
                 "5. Pay recording fee: 15.00 GP base + 2.00 GP per page.\n"
                 "6. Submit survey, instrument, and cover sheet to the ROD counter.\n"
                 "7. The easement is indexed under both the dominant and servient parcel IDs.\n"
-                "8. Grantee should verify the easement appears in the index for the servient estate before commencing any work."
+                "8. Grantee should verify the easement appears in the index for the servient estate before commencing any work.",
             ),
             (
                 "Terminating an Easement",
@@ -330,12 +352,14 @@ GUIDES = [
                 "- Expiration: If the easement was granted for a defined term, it terminates automatically on the end date.\n"
                 "- Condemnation: If the Grand Duchy acquires the servient estate for public use.\n"
                 "\n"
-                "A recorded Release or court order of termination should be filed promptly to clear the title."
+                "A recorded Release or court order of termination should be filed promptly to clear the title.",
             ),
-        ]
+        ],
     ),
     (
-        "how-to-asgn.pdf", "ASGN", "Filing an Assignment of Mortgage",
+        "how-to-asgn.pdf",
+        "ASGN",
+        "Filing an Assignment of Mortgage",
         [
             (
                 "What Is an Assignment of Mortgage?",
@@ -346,7 +370,7 @@ GUIDES = [
                 "current holder of the lien.\n"
                 "\n"
                 "Importantly, an assignment transfers both the right to collect payments AND the right to foreclose "
-                "upon default. An unrecorded assignment may create complications in enforcement proceedings."
+                "upon default. An unrecorded assignment may create complications in enforcement proceedings.",
             ),
             (
                 "Required Elements",
@@ -356,7 +380,7 @@ GUIDES = [
                 "4. Description of the mortgaged property (may incorporate by reference to the original mortgage).\n"
                 "5. Consideration recital.\n"
                 "6. Assignor's warranty that the mortgage is valid, subsisting, and has not been previously assigned.\n"
-                "7. Signature of Assignor; notarization required."
+                "7. Signature of Assignor; notarization required.",
             ),
             (
                 "Step-by-Step Filing Process",
@@ -366,7 +390,7 @@ GUIDES = [
                 "4. Pay recording fee: 20.00 GP flat.\n"
                 "5. Submit to ROD counter. The assignment will be cross-indexed to the original mortgage.\n"
                 "6. Future payments from the Mortgagor should be remitted to the Assignee after the recording date.\n"
-                "7. Notify the Mortgagor in writing of the assignment and provide the Assignee's payment address."
+                "7. Notify the Mortgagor in writing of the assignment and provide the Assignee's payment address.",
             ),
             (
                 "Mortgagor Notification Requirements",
@@ -379,7 +403,7 @@ GUIDES = [
                 "- Contact information for payment inquiries.\n"
                 "\n"
                 "Failure to notify the Mortgagor does not invalidate the assignment but may limit the "
-                "Assignee's right to collect late fees during the notification gap."
+                "Assignee's right to collect late fees during the notification gap.",
             ),
             (
                 "Partial Assignments",
@@ -387,12 +411,14 @@ GUIDES = [
                 "Partial assignments are common in loan participation arrangements. The instrument must clearly "
                 "state the percentage interest being assigned and the pro-rata share of the outstanding balance. "
                 "Both the Assignor and Assignee become co-holders of the mortgage lien and must act jointly in "
-                "any enforcement or satisfaction proceedings unless the instrument provides otherwise."
+                "any enforcement or satisfaction proceedings unless the instrument provides otherwise.",
             ),
-        ]
+        ],
     ),
     (
-        "how-to-rel.pdf", "REL", "Releasing a Lien or Mortgage",
+        "how-to-rel.pdf",
+        "REL",
+        "Releasing a Lien or Mortgage",
         [
             (
                 "What Is a Release?",
@@ -405,7 +431,7 @@ GUIDES = [
                 "- Mortgages (upon full loan payoff).\n"
                 "- Mechanic's liens (upon payment or settlement).\n"
                 "- Judgment liens (upon satisfaction of a court judgment).\n"
-                "- Easements (upon express termination by the dominant estate holder)."
+                "- Easements (upon express termination by the dominant estate holder).",
             ),
             (
                 "Mortgagee's Obligation to Release",
@@ -417,7 +443,7 @@ GUIDES = [
                 "\n"
                 "Penalties for non-compliance: 100 Gold Sovereigns per month of delay after the 60-day period, "
                 "payable to the Mortgagor. The Mortgagor may also petition the Court of Claims for a judicial "
-                "release if the Mortgagee is unreachable or refuses to act."
+                "release if the Mortgagee is unreachable or refuses to act.",
             ),
             (
                 "Required Elements of a Release",
@@ -427,7 +453,7 @@ GUIDES = [
                 "4. Clear statement that the obligation has been fully paid and satisfied.\n"
                 "5. Certification that no further amounts are owed under the original instrument.\n"
                 "6. Signature of the Releasor; notarization required.\n"
-                "7. If releasing a partial satisfaction, clearly state the remaining balance."
+                "7. If releasing a partial satisfaction, clearly state the remaining balance.",
             ),
             (
                 "Step-by-Step Filing Process",
@@ -437,7 +463,7 @@ GUIDES = [
                 "4. Complete ROD Cover Sheet; check 'REL' as index type; list the original instrument number.\n"
                 "5. Pay recording fee: 10.00 GP flat.\n"
                 "6. Submit to ROD counter. The index will be updated to reflect 'SAT' status within 1 working day.\n"
-                "7. Retain the recorded Release in your permanent property files."
+                "7. Retain the recorded Release in your permanent property files.",
             ),
             (
                 "What If the Lienholder Cannot Be Located?",
@@ -448,12 +474,14 @@ GUIDES = [
                 "3. The Court may issue an Order of Satisfaction, which has the same effect as a recorded Release.\n"
                 "4. Record the Court Order with the ROD; fee is 15.00 GP.\n"
                 "\n"
-                "The judicial release process typically takes 60-90 days."
+                "The judicial release process typically takes 60-90 days.",
             ),
-        ]
+        ],
     ),
     (
-        "how-to-ntc.pdf", "NTC", "Filing a Notice of Commencement",
+        "how-to-ntc.pdf",
+        "NTC",
+        "Filing a Notice of Commencement",
         [
             (
                 "What Is a Notice of Commencement?",
@@ -466,7 +494,7 @@ GUIDES = [
                 "1. It notifies the public (and potential lienors) that construction has begun, establishing the "
                 "project's legal commencement date.\n"
                 "2. It limits the owner's exposure to lien claims by requiring subcontractors and suppliers to "
-                "serve a Notice to Owner within 45 days of first furnishing."
+                "serve a Notice to Owner within 45 days of first furnishing.",
             ),
             (
                 "When Is It Required?",
@@ -477,7 +505,7 @@ GUIDES = [
                 "\n"
                 "A NOC is optional (but recommended) for smaller projects. Without a recorded NOC, the project "
                 "has no defined commencement date, which can extend lienors' filing windows and complicate "
-                "priority disputes."
+                "priority disputes.",
             ),
             (
                 "Required Elements",
@@ -488,7 +516,7 @@ GUIDES = [
                 "5. Name and address of any construction lender (if applicable).\n"
                 "6. Estimated total cost of construction (first-phase cost if phased project).\n"
                 "7. Expected commencement date.\n"
-                "8. Signature of property owner; notarization required."
+                "8. Signature of property owner; notarization required.",
             ),
             (
                 "Step-by-Step Filing Process",
@@ -498,7 +526,7 @@ GUIDES = [
                 "4. Pay recording fee: 10.00 GP flat.\n"
                 "5. Post a certified copy of the recorded NOC at the job site in a conspicuous location.\n"
                 "6. Provide a copy to the general contractor for distribution to subcontractors.\n"
-                "7. If the project is paused for more than 90 days, file a Notice of Recommencement."
+                "7. If the project is paused for more than 90 days, file a Notice of Recommencement.",
             ),
             (
                 "Amending or Terminating a NOC",
@@ -508,12 +536,14 @@ GUIDES = [
                 "\n"
                 "TERMINATION: When all construction is complete and all lienors have been paid, the owner may "
                 "record a Notice of Termination (form ELD-N-03). This closes the lien window for the project. "
-                "The ROD will update the index to reflect 'TERMINATED' status. Recording fee: 10.00 GP."
+                "The ROD will update the index to reflect 'TERMINATED' status. Recording fee: 10.00 GP.",
             ),
-        ]
+        ],
     ),
     (
-        "how-to-aff.pdf", "AFF", "Filing an Affidavit of Title",
+        "how-to-aff.pdf",
+        "AFF",
+        "Filing an Affidavit of Title",
         [
             (
                 "What Is an Affidavit of Title?",
@@ -525,7 +555,7 @@ GUIDES = [
                 "the title search date and the closing date.\n"
                 "- By a lender as a condition of issuing a mortgage.\n"
                 "- In connection with an estate or trust transfer to confirm no competing claims.\n"
-                "- To correct or supplement an ambiguous deed or prior instrument of record."
+                "- To correct or supplement an ambiguous deed or prior instrument of record.",
             ),
             (
                 "What Must Be Disclosed",
@@ -539,7 +569,7 @@ GUIDES = [
                 "6. Any rights granted to others (verbal easements, licenses, informal access agreements).\n"
                 "7. Estate or probate matters that could affect title.\n"
                 "\n"
-                "Omitting a known encumbrance constitutes perjury under Eldoria Code Section 88-F."
+                "Omitting a known encumbrance constitutes perjury under Eldoria Code Section 88-F.",
             ),
             (
                 "Legal Consequences of False Statements",
@@ -550,7 +580,7 @@ GUIDES = [
                 "rights and mandatory service in the Tunnel Defense Corps (minimum 5 years).\n"
                 "- Civil liability to any party who relied on the Affidavit and suffered damages as a result.\n"
                 "- Rescission of any transaction closed in reliance on the false Affidavit.\n"
-                "- Permanent disqualification from serving as Notarial Magistrate or ROD-licensed appraiser."
+                "- Permanent disqualification from serving as Notarial Magistrate or ROD-licensed appraiser.",
             ),
             (
                 "Required Elements",
@@ -560,7 +590,7 @@ GUIDES = [
                 "4. Sworn statements addressing each required disclosure category (see above).\n"
                 "5. Statement of the purpose for which the Affidavit is being made.\n"
                 "6. Affiant's signature.\n"
-                "7. Notarial acknowledgment with the Magistrate's obsidian seal."
+                "7. Notarial acknowledgment with the Magistrate's obsidian seal.",
             ),
             (
                 "Step-by-Step Filing Process",
@@ -570,9 +600,9 @@ GUIDES = [
                 "4. Complete ROD Cover Sheet; check 'AFF' as index type.\n"
                 "5. Pay recording fee: 10.00 GP flat.\n"
                 "6. The recorded Affidavit will be indexed under the property's parcel ID.\n"
-                "7. Provide certified copies to the buyer, lender, or other parties requiring the Affidavit."
+                "7. Provide certified copies to the buyer, lender, or other parties requiring the Affidavit.",
             ),
-        ]
+        ],
     ),
 ]
 
