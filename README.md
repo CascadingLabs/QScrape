@@ -17,6 +17,9 @@
 
 Web scraper evaluation suite. Fictional test sites across three difficulty levels for benchmarking scraper capabilities.
 
+> [!WARNING]
+> QScrape is research tooling for API design and web reverse engineering. **You assume all legal risk for how you use it.** Respect `robots.txt`, rate limits, and IP bans; and please don't bypass them with Tor or a VPN. Read [DISCLAIMER.md](DISCLAIMER.md) before pointing it at anything.
+
 Made by [Cascading Labs](https://cascadinglabs.com), used for [Yosoi](https://github.com/CascadingLabs/Yosoi).
 
 ## Sites
@@ -57,6 +60,10 @@ pnpm check     # biome check + autofix
 pnpm lint      # biome lint only
 pnpm format    # biome format
 ```
+
+## Community
+
+- **Responsible use:** see [DISCLAIMER.md](DISCLAIMER.md)
 
 ## Contact
 
