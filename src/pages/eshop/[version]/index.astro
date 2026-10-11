@@ -1,0 +1,55 @@
+---
+import { versions, type ShopVersion } from '../../../data/eshop/catalog';
+import type { GetStaticPaths } from 'astro';
+import ShopLayout from '../../../layouts/ShopLayout.astro';
+import StaticCatalog from '../../../modules/html-eshop/StaticCatalog.astro';
+import ShopClient from '../../../modules/javascript-eshop/ShopClient';
+import TurnstileShop from '../../../modules/turnstile-eshop/TurnstileShop';
+
+export const getStaticPaths = (() => {
+	return versions.map((version) => ({
+		params: { version },
+		props: { version },
+	}));
+}) satisfies GetStaticPaths;
+
+interface Props {
+	version: ShopVersion;
+}
+
+const { version } = Astro.props;
+const title = 'Objects — Shop';
+const description =
+	'Good things for everyday living. Explore thoughtful objects for your desk, home, and everyday carry.';
+---
+
+<ShopLayout title={title} description={description} shopVersion={version}>
+	<Fragment slot="head">
+		<link rel="canonical" href={`https://qscrape.dev/eshop/${version}/`} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={`https://qscrape.dev/eshop/${version}/`} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:site_name" content="Objects" />
+	</Fragment>
+	{version === 'html' ? (
+		<StaticCatalog version={version} />
+	) : (
+		<>
+			<noscript>
+				<p class="shop-notice">
+					This shop needs JavaScript enabled to load the collection.
+				</p>
+			</noscript>
+			{version === 'turnstile' ? <TurnstileShop client:only="react" page="catalog" version={version}>
+				<p slot="fallback" class="shop-root shop-loading" role="status">
+					Loading shop…
+				</p>
+			</TurnstileShop> : <ShopClient client:only="react" page="catalog" version={version}>
+				<p slot="fallback" class="shop-root shop-loading" role="status">
+					Loading shop…
+				</p>
+			</ShopClient>}
+		</>
+	)}
+</ShopLayout>

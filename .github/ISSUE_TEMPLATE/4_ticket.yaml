@@ -1,6 +1,6 @@
 name: Ticket
 description: Internal planning ticket for tracked work
-labels: ["ticket"]
+labels: ['ticket']
 body:
   - type: textarea
     id: usecase

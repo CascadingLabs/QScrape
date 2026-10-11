@@ -50,3 +50,7 @@ TODO.md
 # ==========================================
 .DS_Store
 Thumbs.db
+
+# Local development server
+.wtf-server.log
+.wtf-server.pid

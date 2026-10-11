@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-yaml
       - id: check-toml
@@ -14,28 +14,30 @@ repos:
 
   - repo: local
     hooks:
-      - id: biome-check
-        name: biome check
-        entry: bun run biome check --write --no-errors-on-unmatched
+      - id: vite-plus-check
+        name: Vite+ format and lint check
+        entry: vp run check
         language: system
-        files: \.(js|ts|cjs|mjs|jsx|tsx|json|jsonc|css|astro)$
+        pass_filenames: false
+        files: \.(js|ts|cjs|mjs|jsx|tsx|json|jsonc|css|astro|svelte|vue|md|yaml|yml)$
         stages: [pre-commit]
 
-      - id: biome-ci-check
-        name: biome ci check
-        entry: bun run biome check --no-errors-on-unmatched
+      - id: vite-plus-ci-check
+        name: Vite+ format and lint check
+        entry: vp run check
         language: system
-        files: \.(js|ts|cjs|mjs|jsx|tsx|json|jsonc|css|astro)$
+        pass_filenames: false
+        files: \.(js|ts|cjs|mjs|jsx|tsx|json|jsonc|css|astro|svelte|vue|md|yaml|yml)$
         stages: [manual]
 
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.30.0
+    rev: v8.30.1
     hooks:
       - id: gitleaks
         stages: [pre-commit, manual]
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.13.6
+    rev: v4.19.2
     hooks:
       - id: commitizen
         stages: [commit-msg]

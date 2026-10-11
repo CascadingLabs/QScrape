@@ -1,10 +1,13 @@
 ---
 name: change-planning
-description: Use when planning a QScrape change that may affect scraper benchmarks, level behavior, framework parity, or site data.
+description: Use when planning a QScrape change that may affect scraper benchmarks, version behavior, catalogue consistency, or site data.
 ---
+
 # QScrape Change Planning
+
 Before editing, identify:
-- target level and site
+
+- target site and rendering version
 - whether framework parity matters
 - shared data or CSS touched
 - scraper-facing behavior that must remain intentional

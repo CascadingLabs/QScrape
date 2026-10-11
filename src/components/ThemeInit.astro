@@ -1,52 +1,118 @@
----
----
 <script is:inline>
-	(function () {
-		function getCookie(name) {
-			var m = document.cookie.match(new RegExp("(?:^|; )" + name + "=([^;]*)"));
-			return m ? decodeURIComponent(m[1]) : null;
+	(() => {
+		const root = document.documentElement;
+		const system = window.matchMedia('(prefers-color-scheme: dark)');
+		const valid = (value) => ['light', 'dark', 'auto'].includes(value);
+		const params = new URLSearchParams(location.search);
+		const incoming = params.get('cl-theme');
+		const cookie = document.cookie.match(
+			/(?:^|;\s*)cl-theme=(light|dark|auto)(?:;|$)/,
+		);
+		let preference = valid(incoming) ? incoming : cookie?.[1] || 'auto';
+		function persist() {
+			document.cookie = `cl-theme=${preference}; Path=/; Max-Age=31536000; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`;
+			try {
+				localStorage.setItem(
+					'starlight-theme',
+					preference === 'auto' ? '' : preference,
+				);
+			} catch {
+				/* Cookies remain the preference source. */
+			}
 		}
-
-		// Cross-site sync: read cl-theme and cl-lang from inbound links
-		var params = new URLSearchParams(window.location.search);
-		var dirty = false;
-
-		var inbound = params.get("cl-theme");
-		if (inbound === "light" || inbound === "dark" || inbound === "auto") {
-			var storeVal = inbound === "light" || inbound === "dark" ? inbound : "auto";
-			document.cookie = "cl-theme=" + storeVal + "; path=/; max-age=31536000; SameSite=Lax";
-			localStorage.setItem("starlight-theme", inbound === "auto" ? "" : inbound);
-			params.delete("cl-theme");
-			dirty = true;
+		if (valid(incoming)) {
+			params.delete('cl-theme');
+			const query = params.toString();
+			history.replaceState(
+				history.state,
+				'',
+				`${location.pathname}${query ? `?${query}` : ''}${location.hash}`,
+			);
 		}
-
-		var inboundLang = params.get("cl-lang");
-		if (inboundLang && /^[a-z]{2}(-[A-Za-z]{2,})?$/.test(inboundLang)) {
-			document.cookie = "cl-lang=" + inboundLang + "; path=/; max-age=31536000; SameSite=Lax";
-			params.delete("cl-lang");
-			dirty = true;
+		const hosts = new Set([
+			'cascadinglabs.com',
+			'www.cascadinglabs.com',
+			'qscrape.dev',
+			'www.qscrape.dev',
+		]);
+		function carryPreference(link) {
+			if (!(link instanceof HTMLAnchorElement)) return;
+			let url;
+			try {
+				url = new URL(link.href, location.href);
+			} catch {
+				return;
+			}
+			if (
+				url.protocol !== 'https:' ||
+				!hosts.has(url.hostname) ||
+				url.origin === location.origin
+			)
+				return;
+			url.searchParams.set('cl-theme', preference);
+			link.href = url.href;
 		}
-
-		if (dirty) {
-			var clean = params.toString();
-			history.replaceState(null, "", window.location.pathname + (clean ? "?" + clean : "") + window.location.hash);
+		function apply() {
+			const theme =
+				preference === 'auto'
+					? system.matches
+						? 'dark'
+						: 'light'
+					: preference;
+			root.dataset.theme = theme;
+			root.dataset.themePreference = preference;
+			const icon = document.getElementById('site-favicon');
+			if (icon)
+				icon.href =
+					icon.dataset.brand === 'qscrape'
+						? theme === 'light'
+							? '/favicon-light.svg'
+							: '/favicon.svg'
+						: `/favicon-${icon.dataset.brand}-${theme}.svg`;
+			document.querySelectorAll('[data-theme-logo]').forEach((image) => {
+				image.src = theme === 'light' ? '/favicon-light.svg' : '/favicon.svg';
+			});
+			const label =
+				preference === 'auto'
+					? 'Auto'
+					: preference === 'light'
+						? 'Light'
+						: 'Dark';
+			document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+				button.setAttribute(
+					'aria-label',
+					`Color theme: ${label}. Click to change.`,
+				);
+				button.setAttribute('title', `Color theme: ${label}`);
+			});
+			document.querySelectorAll('a[href]').forEach(carryPreference);
 		}
-
-		var c = getCookie("cl-theme");
-		var s = c || localStorage.getItem("starlight-theme");
-		var pref = s === "light" || s === "dark" ? s : "auto";
-		var resolved =
-			pref === "auto"
-				? window.matchMedia("(prefers-color-scheme: light)").matches
-					? "light"
-					: "dark"
-				: pref;
-		document.documentElement.dataset.theme = resolved;
-		document.documentElement.dataset.themePreference = pref;
-
-		// Always ensure cookie + localStorage exist (handles cleared/missing state)
-		var cookieVal = pref === "light" || pref === "dark" ? pref : "auto";
-		document.cookie = "cl-theme=" + cookieVal + "; path=/; max-age=31536000; SameSite=Lax";
-		localStorage.setItem("starlight-theme", pref === "auto" ? "" : pref);
+		persist();
+		apply();
+		system.addEventListener('change', () => {
+			if (preference === 'auto') apply();
+		});
+		document.addEventListener('DOMContentLoaded', apply);
+		document.addEventListener('astro:page-load', apply);
+		document.addEventListener(
+			'click',
+			(event) => {
+				if (!(event.target instanceof Element)) return;
+				if (event.target.closest('[data-theme-toggle]')) {
+					preference =
+						preference === 'auto'
+							? 'light'
+							: preference === 'light'
+								? 'dark'
+								: 'auto';
+					persist();
+					apply();
+				}
+				const link = event.target.closest('a[href]');
+				if (link) carryPreference(link);
+			},
+			true,
+		);
+		window.addEventListener('pageshow', apply);
 	})();
 </script>

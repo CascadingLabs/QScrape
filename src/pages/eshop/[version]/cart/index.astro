@@ -1,0 +1,57 @@
+---
+import { versions, type ShopVersion } from '../../../../data/eshop/catalog';
+import type { GetStaticPaths } from 'astro';
+import ShopLayout from '../../../../layouts/ShopLayout.astro';
+import StaticCart from '../../../../modules/html-eshop/StaticCart.astro';
+import ShopClient from '../../../../modules/javascript-eshop/ShopClient';
+import TurnstileShop from '../../../../modules/turnstile-eshop/TurnstileShop';
+
+export const getStaticPaths = (() => {
+	return versions.map((version) => ({
+		params: { version },
+		props: { version },
+	}));
+}) satisfies GetStaticPaths;
+
+interface Props {
+	version: ShopVersion;
+}
+
+const { version } = Astro.props;
+const title = 'Your cart — Objects';
+const description = 'Review the objects in your cart.';
+---
+
+<ShopLayout title={title} description={description} shopVersion={version}>
+	<Fragment slot="head">
+		<link rel="canonical" href={`https://qscrape.dev/eshop/${version}/cart/`} />
+		<meta property="og:type" content="website" />
+		<meta
+			property="og:url"
+			content={`https://qscrape.dev/eshop/${version}/cart/`}
+		/>
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:site_name" content="Objects" />
+	</Fragment>
+	{version === 'html' ? (
+		<StaticCart version={version} />
+	) : (
+		<>
+			<noscript>
+				<p class="shop-notice">
+					This shop needs JavaScript enabled to view and update the local cart.
+				</p>
+			</noscript>
+			{version === 'turnstile' ? <TurnstileShop client:only="react" page="cart" version={version}>
+				<p slot="fallback" class="shop-root shop-loading" role="status">
+					Loading shop…
+				</p>
+			</TurnstileShop> : <ShopClient client:only="react" page="cart" version={version}>
+				<p slot="fallback" class="shop-root shop-loading" role="status">
+					Loading shop…
+				</p>
+			</ShopClient>}
+		</>
+	)}
+</ShopLayout>

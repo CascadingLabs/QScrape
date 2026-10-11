@@ -1,0 +1,227 @@
+@import '@fontsource/dm-mono/latin-400.css';
+@import '@fontsource/dm-mono/latin-500.css';
+
+.site-shell {
+	max-width: 600px;
+	margin-inline: auto;
+}
+.site-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	margin-bottom: 28px;
+	padding-bottom: 20px;
+}
+.wordmark {
+	font-size: 18px;
+	font-weight: 500;
+	text-decoration: none;
+}
+.home-title {
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 1.3;
+	letter-spacing: -0.8px;
+	margin: 0;
+}
+.home-copy {
+	color: var(--qs-text-muted);
+	font-size: 15px;
+}
+.home-copy p + p {
+	margin-top: 20px;
+}
+.home-lead {
+	color: var(--qs-text);
+}
+.home-footer {
+	margin-top: 36px;
+	font-size: 13px;
+}
+.project-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+.project-card {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 44px;
+	padding: 9px 12px;
+	border: 1px solid var(--qs-border);
+	font-weight: 500;
+	text-decoration: none;
+}
+.project-card:hover,
+.project-card:focus-visible {
+	background: var(--qs-bg-subtle);
+	border-color: var(--qs-accent-text);
+	text-decoration: none;
+}
+.project-arrow {
+	margin-left: 4px;
+	color: var(--qs-accent-text);
+}
+.version-list {
+	display: grid;
+	gap: 12px;
+	margin-top: 28px;
+}
+.version-link {
+	display: block;
+	padding: 14px 16px;
+	border: 1px solid var(--qs-border);
+	text-decoration: none;
+}
+.version-link:hover {
+	background: var(--qs-bg-subtle);
+	text-decoration: none;
+}
+.version-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+.version-heading h2 {
+	font-size: 15px;
+	font-weight: 500;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+.version-link p {
+	color: var(--qs-text-muted);
+	font-size: 13px;
+	margin-top: 6px;
+}
+.project-footer {
+	margin-top: 32px;
+	border-top: 1px solid var(--qs-border);
+	padding-top: 20px;
+	font-size: 12px;
+	color: var(--qs-text-dim);
+}
+.project-footer nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	margin-bottom: 12px;
+}
+.project-footer a {
+	color: inherit;
+}
+.skip-link {
+	position: absolute;
+	top: -100px;
+	left: 24px;
+	background: var(--qs-bg);
+	padding: 8px;
+}
+.skip-link:focus {
+	top: 8px;
+}
+:focus-visible {
+	outline: 2px solid var(--qs-accent-text);
+	outline-offset: 4px;
+}
+
+.home-brand {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+.home-brand img {
+	flex-shrink: 0;
+}
+.project-actions {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	flex-shrink: 0;
+}
+.project-actions a,
+.theme-toggle {
+	display: grid;
+	place-items: center;
+	width: 36px;
+	height: 36px;
+	color: var(--qs-text-dim);
+	border: 1px solid transparent;
+	background: transparent;
+	cursor: pointer;
+}
+.project-actions a:hover,
+.theme-toggle:hover {
+	color: var(--qs-text);
+	border-color: var(--qs-border);
+	background: var(--qs-bg-subtle);
+}
+.project-actions svg {
+	width: 16px;
+	height: 16px;
+	grid-area: 1 / 1;
+}
+.theme-toggle > .theme-light,
+.theme-toggle > .theme-dark {
+	display: none;
+}
+[data-theme-preference='light'] .theme-toggle > .theme-auto,
+[data-theme-preference='dark'] .theme-toggle > .theme-auto {
+	display: none;
+}
+[data-theme-preference='light'] .theme-toggle > .theme-light,
+[data-theme-preference='dark'] .theme-toggle > .theme-dark {
+	display: block;
+}
+@media (max-width: 400px) {
+	.site-header {
+		gap: 12px;
+	}
+	.home-brand {
+		gap: 10px;
+	}
+	.home-brand img {
+		width: 36px;
+		height: 36px;
+	}
+	.project-actions a,
+	.theme-toggle {
+		width: 32px;
+		height: 36px;
+	}
+}
+
+.version-details {
+	margin: 16px 0;
+	font-size: 12px;
+}
+.version-details > div {
+	display: grid;
+	grid-template-columns: 104px minmax(0, 1fr);
+	gap: 12px;
+	margin-top: 8px;
+}
+.version-details dt {
+	color: var(--qs-text-dim);
+}
+.version-details dd {
+	margin: 0;
+	color: var(--qs-text-muted);
+}
+.version-open {
+	font-size: 12px;
+}
+.version-module {
+	display: inline-block;
+	margin-left: 16px;
+	font-size: 12px;
+}
+@media (max-width: 480px) {
+	.version-module {
+		display: block;
+		margin: 12px 0 0;
+	}
+}

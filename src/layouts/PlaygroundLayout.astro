@@ -1,0 +1,48 @@
+---
+import '../styles/playground.css';
+import ThemeInit from '../components/ThemeInit.astro';
+import ProjectActions from '../components/ProjectActions.astro';
+interface Props {
+	title: string;
+	description?: string;
+}
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			id="site-favicon"
+			data-brand="qscrape"
+			rel="icon"
+			href="/favicon.ico"
+			sizes="any"
+		/>
+		<link rel="stylesheet" href="/qscrape.css" />
+		<ThemeInit />
+		<title>{title}</title>
+		{description && <meta name="description" content={description} />}
+		<slot name="head" />
+	</head>
+	<body>
+		<a class="skip-link" href="#main">
+			Skip to content
+		</a>
+		<div class="site-shell">
+			<main id="main">
+				<header class="site-header">
+					<slot name="heading">
+						<a class="wordmark" href="/">
+							QScrape
+						</a>
+					</slot>
+					<ProjectActions />
+				</header>
+				<slot />
+			</main>
+		</div>
+	</body>
+</html>

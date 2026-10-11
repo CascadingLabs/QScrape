@@ -20,4 +20,4 @@ Be the kind of person the rest of us can point to when someone asks whether this
 
 ---
 
-*Questions or concerns about responsible use: [contact@cascadinglabs.com](mailto:contact@cascadinglabs.com). Security issues: see [SECURITY.md](SECURITY.md).*
+_Questions or concerns about responsible use: [contact@cascadinglabs.com](mailto:contact@cascadinglabs.com). Security issues: see [SECURITY.md](SECURITY.md)._

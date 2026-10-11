@@ -1,0 +1,96 @@
+---
+import PlaygroundLayout from '../../layouts/PlaygroundLayout.astro';
+const repository = 'https://github.com/CascadingLabs/QScrape';
+const revision =
+	import.meta.env.PUBLIC_SOURCE_REVISION ??
+	process.env.CF_PAGES_COMMIT_SHA ??
+	process.env.GITHUB_SHA;
+const sourceRef =
+	typeof revision === 'string' && /^[a-f0-9]{40}$/i.test(revision)
+		? revision
+		: 'main';
+const moduleURL = (module: string) =>
+	`${repository}/tree/${sourceRef}/src/modules/${module}`;
+const options = [
+	{
+		slug: 'html',
+		name: 'HTML eShop',
+		description:
+			'A product catalogue you can read directly from the HTML response.',
+		renderer: 'Astro-rendered HTML',
+		extraction: 'No JavaScript required',
+		interactions: 'Ordinary JavaScript for filters and the sample cart',
+		module: 'html-eshop',
+	},
+	{
+		slug: 'javascript',
+		name: 'JavaScript eShop',
+		description: 'A product catalogue that renders in the browser.',
+		renderer: 'React island + fixture REST API',
+		extraction: 'JavaScript required',
+		interactions: 'React handles search, filtering, and the sample cart',
+		module: 'javascript-eshop',
+	},
+	{slug:'turnstile', name:'Turnstile JavaScript eShop',description:'A browser-rendered shop with a Turnstile-verified catalogue request.',renderer:'React island + fixture REST API',extraction:'JavaScript and browser verification required',interactions:'Turnstile verifies access; React handles browsing and cart updates',module:'turnstile-eshop'},
+];
+---
+
+<PlaygroundLayout
+	title="eShop — QScrape"
+	description="Compare the HTML and JavaScript versions of the same synthetic eShop."
+>
+	<h1 slot="heading" class="home-title">
+		eShop
+	</h1>
+	<section class="version-list" aria-label="eShop versions">
+		{options.map((option) => (
+			<article class="version-link">
+				<div class="version-heading">
+					<h2>{option.name}</h2>
+				</div>
+				<p>{option.description}</p>
+				<dl class="version-details">
+					<div>
+						<dt>Rendering</dt>
+						<dd>{option.renderer}</dd>
+					</div>
+					<div>
+						<dt>Extraction</dt>
+						<dd>{option.extraction}</dd>
+					</div>
+					<div>
+						<dt>Interactions</dt>
+						<dd>{option.interactions}</dd>
+					</div>
+					<div>
+						<dt>Navigation</dt>
+						<dd>Separate pages with ordinary links</dd>
+					</div>
+					<div>
+						<dt>Fixtures</dt>
+						<dd>
+							<a href="/eshop/fixtures.json">Expected product data</a>
+						</dd>
+					</div>
+				</dl>
+				<a class="project-card version-open" href={`/eshop/${option.slug}/`}>
+					Open {option.name}
+					<span class="project-arrow" aria-hidden="true">
+						→
+					</span>
+				</a>
+				<a
+					class="version-module"
+					href={moduleURL(option.module)}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					GitHub implementation ↗
+				</a>
+			</article>
+		))}
+	</section>
+	<div class="home-footer">
+		<a href="/">← QScrape</a>
+	</div>
+</PlaygroundLayout>

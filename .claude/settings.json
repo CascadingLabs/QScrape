@@ -1,5 +1,5 @@
 {
-  "enabledPlugins": {
-    "context7@claude-plugins-official": true
-  }
+	"enabledPlugins": {
+		"context7@claude-plugins-official": true
+	}
 }

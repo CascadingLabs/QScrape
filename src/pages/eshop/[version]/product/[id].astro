@@ -1,0 +1,88 @@
+---
+import {
+	getProduct,
+	products,
+	versions,
+	type Product,
+	type ShopVersion,
+} from '../../../../data/eshop/catalog';
+import type { GetStaticPaths } from 'astro';
+import ShopLayout from '../../../../layouts/ShopLayout.astro';
+import StaticProduct from '../../../../modules/html-eshop/StaticProduct.astro';
+import ShopClient from '../../../../modules/javascript-eshop/ShopClient';
+import TurnstileShop from '../../../../modules/turnstile-eshop/TurnstileShop';
+
+export const getStaticPaths = (() => {
+	return versions.flatMap((version) =>
+		products.map((product) => ({
+			params: { version, id: product.id },
+			props: { version, productId: product.id },
+		})),
+	);
+}) satisfies GetStaticPaths;
+
+interface Props {
+	version: ShopVersion;
+	productId: string;
+}
+
+const { version, productId } = Astro.props;
+const htmlProduct: Product | undefined =
+	version === 'html' ? getProduct(productId) : undefined;
+if (version === 'html' && !htmlProduct)
+	throw new Error(`No eShop product exists for route id ${productId}`);
+
+const title = htmlProduct
+	? `${htmlProduct.name} — Objects`
+	: `Objects — Product`;
+const description =
+	htmlProduct?.description ??
+	'Explore thoughtful objects from the Objects everyday collection.';
+---
+
+<ShopLayout title={title} description={description} shopVersion={version}>
+	<Fragment slot="head">
+		<link
+			rel="canonical"
+			href={`https://qscrape.dev/eshop/${version}/product/${productId}/`}
+		/>
+		<meta property="og:type" content={htmlProduct ? 'product' : 'website'} />
+		<meta
+			property="og:url"
+			content={`https://qscrape.dev/eshop/${version}/product/${productId}/`}
+		/>
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:site_name" content="Objects" />
+	</Fragment>
+	{htmlProduct ? (
+		<StaticProduct version="html" product={htmlProduct} />
+	) : (
+		<>
+			<noscript>
+				<p class="shop-notice">
+					This shop needs JavaScript enabled to load product details.
+				</p>
+			</noscript>
+			{version === 'turnstile' ? <TurnstileShop
+				client:only="react"
+				page="product"
+				version={version}
+				productId={productId}
+			>
+				<p slot="fallback" class="shop-root shop-loading" role="status">
+					Loading shop…
+				</p>
+			</TurnstileShop> : <ShopClient
+				client:only="react"
+				page="product"
+				version={version}
+				productId={productId}
+			>
+				<p slot="fallback" class="shop-root shop-loading" role="status">
+					Loading shop…
+				</p>
+			</ShopClient>}
+		</>
+	)}
+</ShopLayout>
