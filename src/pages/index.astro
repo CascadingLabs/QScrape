@@ -7,14 +7,15 @@ const description = "A small playground for testing web scrapers.";
 	title="QScrape — Scraper playground"
 	description={description}
 >
-	<h1 slot="heading" class="home-title">
-		QScrape
+	<h1 slot="heading" class="home-title home-brand">
+		<img data-theme-logo src="/favicon.svg" alt="" width="48" height="48" />
+		<span>QScrape</span>
 	</h1>
 	<Fragment slot="head">
 		<link rel="canonical" href="https://qscrape.dev/" />
 	</Fragment>
 	<div class="home-copy">
-		<p class="home-lead">{description}</p>
+		<p class="home-lead">{description} By <a href="https://cascadinglabs.com">Cascading Labs</a>.</p>
 	</div>
 	<div class="home-footer">
 		<nav class="project-list" aria-label="Test sites">
