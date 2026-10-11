@@ -5,8 +5,9 @@ import ProjectActions from '../components/ProjectActions.astro';
 interface Props {
 	title: string;
 	description?: string;
+	favicon?: string;
 }
-const { title, description } = Astro.props;
+const { title, description, favicon } = Astro.props;
 ---
 
 <!doctype html>
@@ -15,11 +16,12 @@ const { title, description } = Astro.props;
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link
-			id="site-favicon"
-			data-brand="qscrape"
+			id={favicon ? undefined : 'site-favicon'}
+			data-brand={favicon ? undefined : 'qscrape'}
 			rel="icon"
-			href="/favicon.ico"
-			sizes="any"
+			href={favicon ?? '/favicon.ico'}
+			type={favicon ? 'image/x-icon' : undefined}
+			sizes={favicon ? '16x16 32x32 48x48 64x64' : 'any'}
 		/>
 		<link rel="stylesheet" href="/qscrape.css" />
 		<ThemeInit />
