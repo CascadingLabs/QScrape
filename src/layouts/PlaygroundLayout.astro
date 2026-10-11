@@ -1,54 +1,29 @@
 ---
 import '../styles/playground.css';
-
-interface Props {
-	title: string;
-	description?: string;
-	shopVersion?: 'html' | 'javascript' | 'protected';
-}
-
-const { title, description, shopVersion } = Astro.props;
+interface Props { title: string; description?: string; }
+const { title, description } = Astro.props;
 ---
-
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="generator" content={Astro.generator} />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="stylesheet" href="/qscrape.css" />
 		<title>{title}</title>
 		{description && <meta name="description" content={description} />}
 		<slot name="head" />
 	</head>
-	<body data-shop-version={shopVersion}>
-		<a class="skip-link" href="#main-content">Skip to content</a>
+	<body>
+		<a class="skip-link" href="#main">Skip to content</a>
 		<div class="site-shell">
-			<header class="site-header page-width">
-				<a class="brand" href="/" aria-label="QScrape home">
-					<img src="/favicon.svg" alt="" width="32" height="32" />
-					<span>QScrape</span>
-				</a>
-				<a class="header-link" href="/eshop/">
-					<span>Playground</span>
-					<span class="arrow-mark" aria-hidden="true">↗</span>
-				</a>
-			</header>
-
-			<main id="main-content" class="page-width">
+			<main id="main">
+				<header class="site-header"><slot name="heading"><a class="wordmark" href="/">QScrape</a></slot></header>
 				<slot />
 			</main>
-
-			<footer class="site-footer page-width">
-				<p class="footer-note">
-					<span class="footer-dot" aria-hidden="true"></span>
-					Synthetic products. No real purchases.
-				</p>
-				<nav class="footer-links" aria-label="More from QScrape">
-					<a href="https://github.com/CascadingLabs/QScrape" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-					<a href="https://cascadinglabs.com/yosoi" target="_blank" rel="noopener noreferrer">Yosoi docs <span aria-hidden="true">↗</span></a>
-					<a href="https://cascadinglabs.com" target="_blank" rel="noopener noreferrer">Cascading Labs <span aria-hidden="true">↗</span></a>
-				</nav>
+			<footer class="project-footer">
+				<nav aria-label="Resources"><a href="https://github.com/CascadingLabs/QScrape">GitHub</a><a href="https://cascadinglabs.com/yosoi">Yosoi docs</a><a href="https://cascadinglabs.com">Cascading Labs</a></nav>
+				<p>Synthetic sites for scraper evaluation.</p>
 			</footer>
 		</div>
 	</body>

@@ -1,9 +1,8 @@
 ---
-import PlaygroundLayout from '../../../../layouts/PlaygroundLayout.astro';
+import ShopLayout from '../../../../layouts/ShopLayout.astro';
 import StaticProduct from '../../../../components/eshop/StaticProduct.astro';
 import ShopClient from '../../../../components/eshop/ShopClient';
 import { getProduct, products, versions, type Product, type ShopVersion } from '../../../../data/eshop/catalog';
-import '../../../../styles/shop.css';
 
 export function getStaticPaths() {
 	return versions.flatMap((version) => products.map((product) => ({
@@ -30,7 +29,7 @@ const title = htmlProduct ? `${htmlProduct.name} — ${versionLabels[version]}` 
 const description = htmlProduct?.description ?? 'Explore thoughtful objects from the Objects everyday collection.';
 ---
 
-<PlaygroundLayout title={title} description={description} shopVersion={version}>
+<ShopLayout title={title} description={description} shopVersion={version}>
 	<Fragment slot="head">
 		<link rel="canonical" href={`https://qscrape.dev/eshop/${version}/product/${productId}/`} />
 		<meta property="og:type" content={htmlProduct ? 'product' : 'website'} />
@@ -45,4 +44,4 @@ const description = htmlProduct?.description ?? 'Explore thoughtful objects from
 			<noscript><p class="shop-protection-note">{versionLabels[version]} needs JavaScript enabled to load product details.</p></noscript>
 			<ShopClient client:only="react" page="product" version={version} productId={productId} />
 		</>}
-</PlaygroundLayout>
+</ShopLayout>

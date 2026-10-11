@@ -1,0 +1,24 @@
+---
+import '../styles/shop.css';
+import type { ShopVersion } from '../data/eshop/catalog';
+interface Props { title: string; description?: string; shopVersion: ShopVersion; }
+const { title, description, shopVersion } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<title>{title}</title>
+		{description && <meta name="description" content={description} />}
+		<slot name="head" />
+	</head>
+	<body class="shop-app" data-shop-version={shopVersion}>
+		<a class="shop-skip-link" href="#shop-main">Skip to shop</a>
+		<div class="shop-app-width">
+			<nav class="shop-app-return" aria-label="Playground"><a href="/eshop/">← QScrape / eShop versions</a></nav>
+			<main id="shop-main"><slot /></main>
+		</div>
+	</body>
+</html>

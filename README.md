@@ -22,6 +22,10 @@ The first site is **Objects**, an eShop of everyday essentials. There are no rea
 
 Every version has product pages and a local sample cart. HTML catalogue extraction and navigation work with JavaScript disabled; cart interactions require JavaScript. Cart state stays in your browser and is separate for each version.
 
+## Styling
+
+The homepage and version picker use `PlaygroundLayout` and the original QScrape stylesheet, with a compact layout based on CascadingLabsFE. The shop versions use `ShopLayout` and their own `shop.css` theme, typography, navigation, and page width. Shop pages do not load the QScrape index stylesheet or its header/footer.
+
 ## Development
 
 Use Bun 1.4.3 and Node.js 24.11 or newer in the 24.x line.

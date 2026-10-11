@@ -1,3 +1,60 @@
+/* Standalone shop theme. No QScrape index styles are imported here. */
+.shop-app,
+.shop-root {
+	--page-bg: #fff;
+	--surface: #f8fafc;
+	--ink: #1f2937;
+	--muted: #64748b;
+	--line: #e2e8f0;
+	--accent: #2563eb;
+	--moss: var(--accent);
+	--sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	--mono: var(--sans);
+}
+body.shop-app {
+	margin: 0;
+	background: var(--page-bg);
+	color: var(--ink);
+	font: 14px/1.55 var(--sans);
+}
+.shop-app-width {
+	width: min(1120px, calc(100% - 48px));
+	margin-inline: auto;
+}
+.shop-app-return {
+	padding-top: 24px;
+	font-size: 12px;
+}
+.shop-app-return a {
+	color: var(--muted);
+	text-decoration: none;
+}
+.shop-app-return a:hover {
+	color: var(--accent);
+}
+.shop-skip-link {
+	position: absolute;
+	top: -100px;
+	left: 24px;
+	background: var(--page-bg);
+	padding: 8px;
+}
+.shop-skip-link:focus {
+	top: 8px;
+}
+.shop-root .eyebrow {
+	color: var(--muted);
+	font-size: 11px;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	margin: 0 0 12px;
+}
+@media (max-width: 480px) {
+	.shop-app-width {
+		width: calc(100% - 32px);
+	}
+}
+
 .shop-root {
 	color: var(--ink);
 	font-family: var(--sans);

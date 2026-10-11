@@ -7,17 +7,15 @@ const options = [
 ];
 ---
 <PlaygroundLayout title="eShop — QScrape" description="Choose the HTML, JavaScript, or Protected version of the eShop.">
-	<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">QScrape</a><span aria-hidden="true">/</span><span aria-current="page">eShop</span></nav>
-	<section class="intro" aria-labelledby="picker-title">
-		<h1 id="picker-title">eShop</h1>
-		<p>Choose a version. Each one uses the same six products.</p>
-	</section>
-	<nav class="site-list" aria-label="eShop versions">
+	<h1 slot="heading" class="home-title">eShop</h1>
+	<div class="home-copy"><p>Choose a version. Each one uses the same six products.</p></div>
+	<nav class="version-list" aria-label="eShop versions">
 		{options.map((option) => (
-			<a class="site-row" href={`/eshop/${option.slug}/`}>
-				<div class="row-heading"><h2>{option.name}</h2><span class="row-arrow" aria-hidden="true">↗</span></div>
+			<a class="version-link" href={`/eshop/${option.slug}/`}>
+				<div class="version-heading"><h2>{option.name}</h2><span class="project-arrow" aria-hidden="true">→</span></div>
 				<p>{option.description}</p>
 			</a>
 		))}
 	</nav>
+	<div class="home-footer"><a href="/">← QScrape</a></div>
 </PlaygroundLayout>
