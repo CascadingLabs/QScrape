@@ -1,17 +1,4 @@
 .shop-root {
-	--page-bg: #f4f1e9;
-	--surface: #fbfaf6;
-	--ink: #202521;
-	--muted: #687067;
-	--line: #d6d4ca;
-	--accent: #c95b36;
-	--moss: #62745c;
-	--serif:
-		'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
-	--sans:
-		ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-		sans-serif;
-	--mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
 	color: var(--ink);
 	font-family: var(--sans);
 	font-size: 14px;
@@ -54,8 +41,8 @@
 	border-bottom: 1px solid var(--line);
 }
 .shop-wordmark {
-	font-family: var(--serif);
-	font-size: 30px;
+	font-family: var(--mono);
+	font-size: 22px;
 	letter-spacing: -0.055em;
 	text-decoration: none;
 }
@@ -104,10 +91,10 @@
 .shop-product-copy h1,
 .shop-cart-heading h1 {
 	margin: 0;
-	font-family: var(--serif);
-	font-size: clamp(42px, 6vw, 72px);
+	font-family: var(--mono);
+	font-size: clamp(26px, 4vw, 36px);
 	font-weight: 400;
-	letter-spacing: -0.065em;
+	letter-spacing: -0.025em;
 	line-height: 0.99;
 }
 .shop-heading p,
@@ -210,7 +197,7 @@
 }
 .shop-product-name {
 	margin: 0;
-	font-family: var(--serif);
+	font-family: var(--mono);
 	font-size: 19px;
 	font-weight: 400;
 	letter-spacing: -0.025em;
@@ -436,7 +423,7 @@
 }
 .shop-cart-item-name {
 	margin: 2px 0 3px;
-	font-family: var(--serif);
+	font-family: var(--mono);
 	font-size: 20px;
 	font-weight: 400;
 	text-decoration: none;
@@ -486,7 +473,7 @@
 }
 .shop-cart-summary h2 {
 	margin: 0 0 18px;
-	font-family: var(--serif);
+	font-family: var(--mono);
 	font-size: 21px;
 	font-weight: 400;
 }
@@ -570,7 +557,7 @@
 		min-height: 52px;
 	}
 	.shop-wordmark {
-		font-size: 26px;
+		font-size: 22px;
 	}
 	.shop-nav {
 		gap: 14px;

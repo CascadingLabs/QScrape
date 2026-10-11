@@ -255,7 +255,7 @@ function ShopContent({
 	const catalog = (
 		<>
 			<section className="shop-heading" aria-labelledby="collection-title">
-				<h1 id="collection-title">A little more considered.</h1>
+				<h1 id="collection-title">Catalogue</h1>
 				<p>
 					Useful things, made to feel at home. Meet the everyday pieces we keep
 					close, wherever the day takes us.
@@ -398,8 +398,8 @@ function ShopContent({
 		<>
 			<section className="shop-cart-heading" aria-labelledby="cart-title">
 				<p className="eyebrow">Your Objects</p>
-				<h1 id="cart-title">A few good things.</h1>
-				<p>Take a look at what you’ve gathered.</p>
+				<h1 id="cart-title">Cart</h1>
+				<p>Review the products in your cart.</p>
 			</section>
 			{cartProducts.length === 0 ? (
 				<div className="shop-empty-cart" data-shop-part="cart-empty">

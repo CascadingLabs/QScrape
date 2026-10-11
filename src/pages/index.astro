@@ -1,42 +1,18 @@
 ---
 import PlaygroundLayout from '../layouts/PlaygroundLayout.astro';
-
-const description = 'QScrape is a realistic, fictional eShop for testing product extraction, browsing, and cart workflows with a web scraper.';
+const description = 'A small playground for testing web scrapers against HTML, JavaScript, and protected sites.';
 ---
-
-<PlaygroundLayout title="QScrape — Real sites. Better scrapers." description={description}>
-	<Fragment slot="head">
-		<link rel="canonical" href="https://qscrape.dev/" />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://qscrape.dev/" />
-		<meta property="og:title" content="QScrape — Real sites. Better scrapers." />
-		<meta property="og:description" content={description} />
-		<meta property="og:site_name" content="QScrape" />
-	</Fragment>
-
-	<div class="home-page">
-		<section class="home-intro" aria-labelledby="home-title">
-			<p class="eyebrow">Scraper playground <span aria-hidden="true">·</span> beta</p>
-			<h1 id="home-title">Real sites.<br /><em>Better scrapers.</em></h1>
-			<p>
-				Objects is a realistic fictional eShop for testing product extraction, browsing, and cart workflows. Choose a version and put your scraper to work.
-			</p>
-		</section>
-
-		<section aria-labelledby="objects-title">
-				<a class="shop-feature" href="/eshop/" aria-labelledby="objects-title" aria-describedby="objects-description">
-				<div class="shop-feature-copy">
-						<p class="micro-label">Objects eShop</p>
-						<h2 id="objects-title" class="shop-feature-title" aria-label="Objects eShop">Objects</h2>
-					<p id="objects-description">Thoughtful things for everyday living. Take a look around.</p>
-						<span class="feature-cta">Explore eShop <span aria-hidden="true">↗</span></span>
-				</div>
-				<div class="shop-feature-art" aria-hidden="true">
-					<div class="shop-object shop-object-lamp"><img src="/products/lamp.svg" alt="" width="360" height="440" fetchpriority="high" /></div>
-					<div class="shop-object shop-object-mug"><img src="/products/mug.svg" alt="" width="220" height="220" /></div>
-					<div class="shop-object shop-object-notebook"><img src="/products/notebook.svg" alt="" width="290" height="250" /></div>
-				</div>
-			</a>
-		</section>
-	</div>
+<PlaygroundLayout title="QScrape — Scraper playground" description={description}>
+	<Fragment slot="head"><link rel="canonical" href="https://qscrape.dev/" /></Fragment>
+	<section class="intro" aria-labelledby="home-title">
+		<p class="eyebrow">Beta</p>
+		<h1 id="home-title">QScrape</h1>
+		<p>{description} Start with the eShop.</p>
+	</section>
+	<nav class="site-list" aria-label="Test sites">
+		<a class="site-row" href="/eshop/">
+			<div class="row-heading"><h2>eShop</h2><span class="row-arrow" aria-hidden="true">↗</span></div>
+			<p>A fictional catalogue, product pages, and a cart. Three versions of the same shop.</p>
+		</a>
+	</nav>
 </PlaygroundLayout>

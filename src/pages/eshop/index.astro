@@ -1,64 +1,23 @@
 ---
 import PlaygroundLayout from '../../layouts/PlaygroundLayout.astro';
-
-const description = 'Choose an Objects storefront to explore in the QScrape playground.';
+const options = [
+	{ slug: 'html', name: 'HTML eShop', description: 'Product content is in the HTML response. No JavaScript needed for extraction.' },
+	{ slug: 'javascript', name: 'JavaScript eShop', description: 'Product content loads in the browser. Let the page render before extracting.' },
+	{ slug: 'protected', name: 'Protected eShop', description: 'The same shop with deliberate extraction challenges.' },
+];
 ---
-
-<PlaygroundLayout title="Choose a storefront — Objects by QScrape" description={description}>
-	<Fragment slot="head">
-		<link rel="canonical" href="https://qscrape.dev/eshop/" />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://qscrape.dev/eshop/" />
-		<meta property="og:title" content="Choose a storefront — Objects by QScrape" />
-		<meta property="og:description" content={description} />
-		<meta property="og:site_name" content="QScrape" />
-	</Fragment>
-
-	<div class="shop-picker-page">
-		<nav class="breadcrumb" aria-label="Breadcrumb">
-			<a href="/">QScrape</a>
-			<span aria-hidden="true">/</span>
-			<span aria-current="page">Objects</span>
-		</nav>
-
-		<section class="picker-intro" aria-labelledby="picker-title">
-			<p class="eyebrow">Objects <span aria-hidden="true">·</span> the eShop</p>
-			<h1 id="picker-title">Choose how<br /><em>your scraper visits.</em></h1>
-			<p>Each option explores the same Objects collection in a different way. Choose the browser setup you want to evaluate.</p>
-		</section>
-
-		<section aria-label="Choose an Objects storefront">
-			<div class="shop-options">
-				<a class="shop-option" href="/eshop/html/">
-					<span class="shop-option-top">
-						<span class="option-symbol" aria-hidden="true">H</span>
-						<span class="option-arrow" aria-hidden="true">↗</span>
-					</span>
-					<h2>HTML eShop</h2>
-					<p>Read products straight from the page. No JavaScript needed.</p>
-					<span class="shop-option-cta">Open HTML eShop <span aria-hidden="true">→</span></span>
-				</a>
-
-				<a class="shop-option" href="/eshop/javascript/">
-					<span class="shop-option-top">
-						<span class="option-symbol" aria-hidden="true">J</span>
-						<span class="option-arrow" aria-hidden="true">↗</span>
-					</span>
-					<h2>JavaScript eShop</h2>
-					<p>Let the shop load in a browser, then explore the same collection.</p>
-					<span class="shop-option-cta">Open JavaScript eShop <span aria-hidden="true">→</span></span>
-				</a>
-
-				<a class="shop-option" href="/eshop/protected/">
-					<span class="shop-option-top">
-						<span class="option-symbol" aria-hidden="true">P</span>
-						<span class="option-arrow" aria-hidden="true">↗</span>
-					</span>
-					<h2>Protected eShop</h2>
-					<p>Explore the same shop with deliberate extraction challenges.</p>
-					<span class="shop-option-cta">Open Protected eShop <span aria-hidden="true">→</span></span>
-				</a>
-			</div>
-		</section>
-	</div>
+<PlaygroundLayout title="eShop — QScrape" description="Choose the HTML, JavaScript, or Protected version of the eShop.">
+	<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">QScrape</a><span aria-hidden="true">/</span><span aria-current="page">eShop</span></nav>
+	<section class="intro" aria-labelledby="picker-title">
+		<h1 id="picker-title">eShop</h1>
+		<p>Choose a version. Each one uses the same six products.</p>
+	</section>
+	<nav class="site-list" aria-label="eShop versions">
+		{options.map((option) => (
+			<a class="site-row" href={`/eshop/${option.slug}/`}>
+				<div class="row-heading"><h2>{option.name}</h2><span class="row-arrow" aria-hidden="true">↗</span></div>
+				<p>{option.description}</p>
+			</a>
+		))}
+	</nav>
 </PlaygroundLayout>
