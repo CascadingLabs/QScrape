@@ -2,6 +2,7 @@
 import ShopLayout from '../../../../layouts/ShopLayout.astro';
 import StaticProduct from '../../../../components/eshop/StaticProduct.astro';
 import ShopClient from '../../../../components/eshop/ShopClient';
+import ProtectedShop from '../../../../components/eshop/ProtectedShop';
 import { getProduct, products, versions, type Product, type ShopVersion } from '../../../../data/eshop/catalog';
 
 export function getStaticPaths() {
@@ -42,6 +43,6 @@ const description = htmlProduct?.description ?? 'Explore thoughtful objects from
 		? <StaticProduct version="html" product={htmlProduct} />
 		: <>
 			<noscript><p class="shop-protection-note">{versionLabels[version]} needs JavaScript enabled to load product details.</p></noscript>
-			<ShopClient client:only="react" page="product" version={version} productId={productId} />
+			{version === 'protected' ? <ProtectedShop client:only="react" page="product" version={version} productId={productId}><p slot="fallback" class="shop-root shop-loading" role="status">Loading shop…</p></ProtectedShop> : <ShopClient client:only="react" page="product" version={version} productId={productId}><p slot="fallback" class="shop-root shop-loading" role="status">Loading shop…</p></ShopClient>}
 		</>}
 </ShopLayout>

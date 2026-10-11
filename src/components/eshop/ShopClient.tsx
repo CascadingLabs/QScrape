@@ -1,18 +1,14 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-	type ReactNode,
-} from 'react';
-import { createPortal } from 'react-dom';
-import shopStyles from '../../styles/shop.css?inline';
-import type { Product, ShopVersion } from '../../data/eshop/catalog';
+	products,
+	type Product,
+	type ShopVersion,
+} from '../../data/eshop/catalog';
 import { readCart, writeCart, type CartLine } from './cart-store';
 
 type ShopPage = 'catalog' | 'product' | 'cart';
 
-interface Props {
+export interface ShopProps {
 	page: ShopPage;
 	version: ShopVersion;
 	productId?: string;
@@ -67,67 +63,6 @@ function ShopFooter() {
 			<span>Objects · Thoughtful things for everyday living</span>
 			<span>Fictional shop · no real purchases</span>
 		</footer>
-	);
-}
-
-function ProtectedShadow({ children }: { children: ReactNode }) {
-	const [host, setHost] = useState<HTMLDivElement | null>(null);
-	const [root, setRoot] = useState<ShadowRoot | null>(null);
-	const [rootFailure, setRootFailure] = useState(false);
-	const [retry, setRetry] = useState(0);
-	const setHostRef = useCallback(
-		(node: HTMLDivElement | null) => setHost(node),
-		[],
-	);
-
-	useEffect(() => {
-		if (!host) return;
-		try {
-			setRootFailure(false);
-			setRoot(host.shadowRoot ?? host.attachShadow({ mode: 'open' }));
-		} catch {
-			setRootFailure(true);
-		}
-	}, [host, retry]);
-
-	return (
-		<div
-			className="protected-shadow-host"
-			data-shop-part="protected-shadow-host"
-			ref={setHostRef}
-		>
-			{root ? (
-				createPortal(
-					<>
-						<style>{shopStyles}</style>
-						{children}
-					</>,
-					root,
-				)
-			) : rootFailure ? (
-				<div
-					className="shop-error"
-					role="alert"
-					data-shop-part="protected-shadow-error"
-				>
-					<p>This browser could not open the protected view.</p>
-					<button
-						type="button"
-						onClick={() => setRetry((current) => current + 1)}
-					>
-						Try again
-					</button>
-				</div>
-			) : (
-				<p
-					className="shop-loading"
-					role="status"
-					data-shop-part="protected-shadow-status"
-				>
-					Opening the protected shelf…
-				</p>
-			)}
-		</div>
 	);
 }
 
@@ -514,16 +449,7 @@ function ShopContent({
 					? productDetail
 					: cartView}
 			<ShopFooter />
-			{version === 'protected' && (
-				<div
-					className="protected-decoy"
-					aria-hidden="true"
-					data-shop-part="protected-decoy"
-				>
-					<span>Arc desk lamp · $0.99 · 999 available</span>
-					<span>Not a real product or offer.</span>
-				</div>
-			)}
+
 			<p
 				className="shop-added-message"
 				role="status"
@@ -543,36 +469,13 @@ function formatPrice(cents: number): string {
 	}).format(cents / 100);
 }
 
-export default function ShopClient({ page, version, productId }: Props) {
-	const [products, setProducts] = useState<readonly Product[] | null>(null);
-	const [cart, setCart] = useState<CartLine[]>([]);
-	const [error, setError] = useState(false);
-	const [retryCount, setRetryCount] = useState(0);
+export default function ShopClient({ page, version, productId }: ShopProps) {
+	const [cart, setCart] = useState<CartLine[]>(() =>
+		readCart(version, products),
+	);
 	const [status, setStatus] = useState('');
 
 	useEffect(() => {
-		let cancelled = false;
-		setProducts(null);
-		setError(false);
-		const timer = window.setTimeout(() => {
-			import('../../data/eshop/catalog')
-				.then((catalog) => {
-					if (cancelled) return;
-					setProducts(catalog.products);
-					setCart(readCart(version, catalog.products));
-				})
-				.catch(() => {
-					if (!cancelled) setError(true);
-				});
-		}, 700);
-		return () => {
-			cancelled = true;
-			window.clearTimeout(timer);
-		};
-	}, [retryCount, version]);
-
-	useEffect(() => {
-		if (!products) return;
 		const onStorage = (event: StorageEvent) => {
 			if (event.key === `objects:cart:${version}`) {
 				setCart(readCart(version, products));
@@ -584,7 +487,6 @@ export default function ShopClient({ page, version, productId }: Props) {
 
 	const commitCart = useCallback(
 		(next: readonly CartLine[]) => {
-			if (!products) return false;
 			const result = writeCart(version, next, products);
 			setCart(result.cart);
 			return result.persisted;
@@ -594,7 +496,7 @@ export default function ShopClient({ page, version, productId }: Props) {
 
 	const add = useCallback(
 		(product: Product) => {
-			if (!products || product.stock <= 0) return;
+			if (product.stock <= 0) return;
 			const line = cart.find((entry) => entry.productId === product.id);
 			const current = line?.quantity ?? 0;
 			if (current >= product.stock) {
@@ -664,37 +566,6 @@ export default function ShopClient({ page, version, productId }: Props) {
 		[cart, commitCart],
 	);
 
-	if (error) {
-		return (
-			<div
-				className="shop-root shop-error"
-				role="alert"
-				data-shop-part="shop-error-status"
-			>
-				<p>The collection could not be loaded.</p>
-				<button
-					type="button"
-					onClick={() => setRetryCount((current) => current + 1)}
-				>
-					Try again
-				</button>
-			</div>
-		);
-	}
-	if (!products) {
-		return (
-			<div
-				className="shop-root shop-loading"
-				role="status"
-				aria-live="polite"
-				data-shop-part="shop-loading-status"
-			>
-				<span className="shop-loading-mark" aria-hidden="true"></span>
-				<span>Taking a moment to set the table…</span>
-			</div>
-		);
-	}
-
 	const content = (
 		<ShopContent
 			page={page}
@@ -708,22 +579,6 @@ export default function ShopClient({ page, version, productId }: Props) {
 			status={status}
 		/>
 	);
-
-	if (version === 'protected') {
-		return (
-			<>
-				<p
-					className="shop-root shop-protection-note"
-					data-shop-part="protected-challenge-note"
-				>
-					The same collection, with deliberate extraction challenges. Compare
-					your results with the{' '}
-					<a href="/eshop/fixtures.json">published catalogue</a>.
-				</p>
-				<ProtectedShadow>{content}</ProtectedShadow>
-			</>
-		);
-	}
 
 	return content;
 }

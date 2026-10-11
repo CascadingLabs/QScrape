@@ -2,6 +2,7 @@
 import ShopLayout from '../../../../layouts/ShopLayout.astro';
 import StaticCart from '../../../../components/eshop/StaticCart.astro';
 import ShopClient from '../../../../components/eshop/ShopClient';
+import ProtectedShop from '../../../../components/eshop/ProtectedShop';
 import { versions, type ShopVersion } from '../../../../data/eshop/catalog';
 
 export function getStaticPaths() {
@@ -35,6 +36,6 @@ const description = 'Review the objects in your local demo cart.';
 		? <StaticCart version={version} />
 		: <>
 			<noscript><p class="shop-protection-note">{versionLabels[version]} needs JavaScript enabled to view and update the local cart.</p></noscript>
-			<ShopClient client:only="react" page="cart" version={version} />
+			{version === 'protected' ? <ProtectedShop client:only="react" page="cart" version={version}><p slot="fallback" class="shop-root shop-loading" role="status">Loading shop…</p></ProtectedShop> : <ShopClient client:only="react" page="cart" version={version}><p slot="fallback" class="shop-root shop-loading" role="status">Loading shop…</p></ShopClient>}
 		</>}
 </ShopLayout>

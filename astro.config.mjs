@@ -8,8 +8,5 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
 	site: 'https://qscrape.dev',
 	trailingSlash: 'always',
-	integrations: [
-		sitemap(),
-		react({ include: ['**/components/eshop/**/*.tsx'] }),
-	],
+	integrations: [sitemap(), react()],
 });
