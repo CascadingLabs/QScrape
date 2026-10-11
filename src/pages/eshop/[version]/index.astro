@@ -1,24 +1,25 @@
 ---
+import { versions, type ShopVersion } from '../../../data/eshop/catalog';
+import type { GetStaticPaths } from 'astro';
 import ShopLayout from '../../../layouts/ShopLayout.astro';
 import StaticCatalog from '../../../modules/html-eshop/StaticCatalog.astro';
 import ShopClient from '../../../modules/javascript-eshop/ShopClient';
-import { versions, type ShopVersion } from '../../../data/eshop/catalog';
 
-export function getStaticPaths() {
-	return versions.map((version) => ({ params: { version }, props: { version } }));
-}
+export const getStaticPaths = (() => {
+	return versions.map((version) => ({
+		params: { version },
+		props: { version },
+	}));
+}) satisfies GetStaticPaths;
 
 interface Props {
 	version: ShopVersion;
 }
 
 const { version } = Astro.props;
-const versionLabels: Record<ShopVersion, string> = {
-	html: 'HTML eShop',
-	javascript: 'JavaScript eShop',
-};
-const title = `${versionLabels[version]} — Objects`;
-const description = 'Good things for everyday living. Explore thoughtful objects for your desk, home, and everyday carry.';
+const title = 'Objects — Shop';
+const description =
+	'Good things for everyday living. Explore thoughtful objects for your desk, home, and everyday carry.';
 ---
 
 <ShopLayout title={title} description={description} shopVersion={version}>
@@ -30,10 +31,20 @@ const description = 'Good things for everyday living. Explore thoughtful objects
 		<meta property="og:description" content={description} />
 		<meta property="og:site_name" content="Objects" />
 	</Fragment>
-	{version === 'html'
-		? <StaticCatalog version={version} />
-		: <>
-			<noscript><p class="shop-notice">{versionLabels[version]} needs JavaScript enabled to load the collection.</p></noscript>
-			<ShopClient client:only="react" page="catalog" version={version}><p slot="fallback" class="shop-root shop-loading" role="status">Loading shop…</p></ShopClient>
-		</>}
+	{version === 'html' ? (
+		<StaticCatalog version={version} />
+	) : (
+		<>
+			<noscript>
+				<p class="shop-notice">
+					This shop needs JavaScript enabled to load the collection.
+				</p>
+			</noscript>
+			<ShopClient client:only="react" page="catalog" version={version}>
+				<p slot="fallback" class="shop-root shop-loading" role="status">
+					Loading shop…
+				</p>
+			</ShopClient>
+		</>
+	)}
 </ShopLayout>

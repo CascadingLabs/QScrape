@@ -32,22 +32,23 @@ The homepage and version picker use `PlaygroundLayout` and the original QScrape 
 Use Bun 1.4.3 and Node.js 24.11 or newer in the 24.x line.
 
 ```bash
-bun install --frozen-lockfile
-bun run dev
-bun run check
-bun run build
-bun run preview
+vp install --frozen-lockfile
+vp run dev
+vp run check
+vp run build
+vp run preview
 ```
 
 Astro 7 builds with Vite+ core, Rolldown, and Oxc. The only client framework is React. Update `vite-plus` and the `vite` alias/override together. Formatting and lint configuration live in `vite.config.ts`.
 
 ```bash
-bun run format       # Oxfmt, one thread
-bun run lint         # Oxlint, one thread; warnings fail
-bun run check        # Read-only format and lint checks, sequentially
+vp run format       # Oxfmt, one thread
+vp run lint         # Oxlint with React and accessibility rules; warnings fail
+vp run check:types  # Astro and TypeScript diagnostics
+vp run check        # Read-only formatting, lint, and type checks, sequentially
 ```
 
-Oxfmt currently skips Astro templates. Oxlint checks their scripts; the Astro production build validates the templates.
+Oxfmt is the only formatter and Oxlint is the only linter, both provided by Vite+. Oxfmt currently skips Astro templates; keep those consistent manually. Oxlint checks their scripts, and `astro check` validates templates and TypeScript. CI runs these checks before the production build.
 
 ## Content and contracts
 

@@ -7,8 +7,8 @@ description: Use when deciding how to validate a QScrape change across build, li
 
 Consider:
 
-- `bun run check`
-- `bun run build`
+- `vp run check`
+- `vp run build`
 - generated HTML, route, asset, and fixture verification
 - version-specific behavior checks, especially hydration/async/anti-bot expectations
 - consistency across HTML and JavaScript versions

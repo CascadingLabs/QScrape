@@ -1,41 +1,59 @@
 ---
-import { formatPrice, products, type ShopVersion } from '../../data/eshop/catalog';
+import {
+	categories,
+	formatPrice,
+	products,
+	type ShopVersion,
+} from '../../data/eshop/catalog';
 
 interface Props {
 	version: ShopVersion;
 }
 
 const { version } = Astro.props;
-const versionLabels = {
-	html: 'HTML eShop',
-	javascript: 'JavaScript eShop',
-} satisfies Record<ShopVersion, string>;
-const categories = ['All', 'Desk', 'Home', 'Carry'] as const;
 ---
 
-<div class="shop-root shop-frame" data-shop-part="html-shop-catalog" data-shop-version={version}>
+<div
+	class="shop-root shop-frame"
+	data-shop-part="html-shop-catalog"
+	data-shop-version={version}
+>
 	<header class="shop-topline">
-		<a class="shop-wordmark" href={`/eshop/${version}/`}>Objects</a>
+		<a class="shop-wordmark" href={`/eshop/${version}/`}>
+			Objects
+		</a>
 		<nav class="shop-nav" aria-label="Objects shop">
-			<a href={`/eshop/${version}/`} aria-current="page">Shop</a>
-			<a href={`/eshop/${version}/cart/`} data-shop-part="cart-nav">Cart <span class="shop-bag-count" data-html-cart-count>0</span></a>
+			<a href={`/eshop/${version}/`} aria-current="page">
+				Shop
+			</a>
+			<a href={`/eshop/${version}/cart/`} data-shop-part="cart-nav">
+				Cart{' '}
+				<span class="shop-bag-count" data-html-cart-count>
+					0
+				</span>
+			</a>
 		</nav>
 	</header>
 
-	<div class="shop-version-line">
-		<span class="shop-version-pill">{versionLabels[version]}</span>
-		<span class="shop-subtitle">Good things for everyday living.</span>
-	</div>
-
 	<section class="shop-heading" aria-labelledby="collection-title">
 		<h1 id="collection-title">Catalogue</h1>
-		<p>Useful things, made to feel at home. Meet the everyday pieces we keep close, wherever the day takes us.</p>
+		<p>
+			Useful things, made to feel at home. Meet the everyday pieces we keep
+			close, wherever the day takes us.
+		</p>
 	</section>
 
 	<div class="shop-controls">
 		<nav class="shop-categories" aria-label="Shop by category">
 			{categories.map((category) => (
-				<a href={category === 'All' ? `/eshop/${version}/` : `/eshop/${version}/?category=${category}`} data-html-category={category}>
+				<a
+					href={
+						category === 'All'
+							? `/eshop/${version}/`
+							: `/eshop/${version}/?category=${category}`
+					}
+					data-html-category={category}
+				>
 					{category === 'All' ? 'All objects' : category}
 				</a>
 			))}
@@ -45,82 +63,103 @@ const categories = ['All', 'Desk', 'Home', 'Carry'] as const;
 
 	<div class="shop-product-grid" data-html-product-grid>
 		{products.map((product) => (
-			<article class="shop-product-card" data-product-card data-category={product.category} data-product-id={product.id} data-shop-part="product-card">
-				<a class="shop-product-art" href={`/eshop/${version}/product/${product.id}/`} aria-label={`View ${product.name}`}>
-					<img src={product.image} alt={`${product.name}, ${product.color}`} width="600" height="480" loading="eager" />
-					<span class="shop-stock-note">{product.stock > 0 ? `${product.stock} available` : 'Currently unavailable'}</span>
+			<article
+				class="shop-product-card"
+				data-product-card
+				data-category={product.category}
+				data-product-id={product.id}
+				data-shop-part="product-card"
+			>
+				<a
+					class="shop-product-art"
+					href={`/eshop/${version}/product/${product.id}/`}
+					aria-label={`View ${product.name}`}
+				>
+					<img
+						src={product.image}
+						alt={`${product.name}, ${product.color}`}
+						width="600"
+						height="480"
+						loading="eager"
+					/>
+					<span class="shop-stock-note">
+						{product.stock > 0
+							? `${product.stock} available`
+							: 'Currently unavailable'}
+					</span>
 				</a>
 				<div class="shop-product-info">
 					<div>
-						<h2 class="shop-product-name"><a href={`/eshop/${version}/product/${product.id}/`}>{product.name}</a></h2>
-						<p class="shop-product-meta">{product.category} · {product.color}</p>
+						<h2 class="shop-product-name">
+							<a href={`/eshop/${version}/product/${product.id}/`}>
+								{product.name}
+							</a>
+						</h2>
+						<p class="shop-product-meta">
+							{product.category} · {product.color}
+						</p>
 					</div>
 					<span class="shop-price">{formatPrice(product.price)}</span>
 				</div>
 				<div class="shop-card-actions">
 					<a href={`/eshop/${version}/product/${product.id}/`}>Details</a>
-					<button type="button" data-add-to-cart={product.id} disabled={product.stock <= 0}>
+					<button
+						type="button"
+						data-add-to-cart={product.id}
+						disabled={product.stock <= 0}
+					>
 						{product.stock > 0 ? 'Add to cart' : 'Sold out'}
 					</button>
 				</div>
-				<p class="shop-html-live-message" data-cart-message-for={product.id} role="status" aria-live="polite"></p>
+				<p
+					class="shop-html-live-message"
+					data-cart-message-for={product.id}
+					role="status"
+					aria-live="polite"
+				></p>
 			</article>
 		))}
 	</div>
-	<noscript><p class="shop-notice">The product list is ready to browse. Turn on JavaScript to add an object to your local demo cart.</p></noscript>
+	<noscript>
+		<p class="shop-notice">
+			The product list is ready to browse. Turn on JavaScript to add an object
+			to your cart.
+		</p>
+	</noscript>
 
-	<footer class="shop-footer"><span>Objects · Thoughtful things for everyday living</span><span>Fictional shop · no real purchases</span></footer>
+	<footer class="shop-footer">
+		<span>Objects · Thoughtful things for everyday living</span>
+	</footer>
 </div>
 
 <script>
-	import { products } from '../../data/eshop/catalog';
-	import { cartStorageKey, readCart, writeCart } from '../../lib/eshop/cart-store';
+	import { categories } from '../../data/eshop/catalog';
+	import { initializeCartInteractions } from './cart-interactions';
 
-	const root = document.querySelector<HTMLElement>('[data-shop-part="html-shop-catalog"]');
+	const root = document.querySelector<HTMLElement>(
+		'[data-shop-part="html-shop-catalog"]',
+	);
 	if (root) {
-		const version = root.dataset.shopVersion ?? 'html';
+		initializeCartInteractions(root);
 		const grid = root.querySelector<HTMLElement>('[data-html-product-grid]');
-		const categoryLinks = [...root.querySelectorAll<HTMLAnchorElement>('[data-html-category]')];
-		const requestedCategory = new URLSearchParams(window.location.search).get('category');
-		const chosenCategory = ['Desk', 'Home', 'Carry'].includes(requestedCategory ?? '') ? requestedCategory : 'All';
-		if (chosenCategory && chosenCategory !== 'All') {
-			grid?.querySelectorAll<HTMLElement>('[data-product-card]').forEach((card) => {
-				card.hidden = card.dataset.category !== chosenCategory;
-			});
+		const categoryLinks = [
+			...root.querySelectorAll<HTMLAnchorElement>('[data-html-category]'),
+		];
+		const requestedCategory = new URLSearchParams(window.location.search).get(
+			'category',
+		);
+		const chosenCategory =
+			categories.find((category) => category === requestedCategory) ?? 'All';
+		if (chosenCategory !== 'All') {
+			grid
+				?.querySelectorAll<HTMLElement>('[data-product-card]')
+				.forEach((card) => {
+					card.hidden = card.dataset.category !== chosenCategory;
+				});
 		}
 		categoryLinks.forEach((link) => {
-			const active = (chosenCategory ?? 'All') === link.dataset.htmlCategory;
+			const active = chosenCategory === link.dataset.htmlCategory;
 			if (active) link.setAttribute('aria-current', 'page');
-		});
-
-		const syncCount = () => {
-			const cart = readCart(version, products);
-			const count = cart.reduce((sum, line) => sum + line.quantity, 0);
-			root.querySelectorAll<HTMLElement>('[data-html-cart-count]').forEach((element) => { element.textContent = String(count); });
-		};
-		syncCount();
-		window.addEventListener('storage', (event) => {
-			if (event.key === cartStorageKey(version)) syncCount();
-		});
-
-		root.addEventListener('click', (event) => {
-			const target = event.target;
-			if (!(target instanceof Element)) return;
-			const button = target.closest<HTMLButtonElement>('[data-add-to-cart]');
-			if (!button || button.disabled) return;
-			const product = products.find((item) => item.id === button.dataset.addToCart);
-			if (!product || product.stock <= 0) return;
-			const cart = readCart(version, products);
-			const line = cart.find((item) => item.productId === product.id);
-			const next = line
-				? cart.map((item) => item.productId === product.id ? { ...item, quantity: Math.min(item.quantity + 1, product.stock) } : item)
-				: [...cart, { productId: product.id, quantity: 1 }];
-			const result = writeCart(version, next, products);
-			const message = root.querySelector<HTMLElement>(`[data-cart-message-for="${product.id}"]`);
-			if (message) message.textContent = result.persisted
-				? `Added ${product.name} to cart.`
-				: `Browser storage is unavailable, so ${product.name} could not be added.`;
-			syncCount();
 		});
 	}
 </script>

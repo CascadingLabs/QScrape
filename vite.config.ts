@@ -9,6 +9,7 @@ export default defineConfig({
 		ignorePatterns: ['dist/**', '.astro/**', 'node_modules/**'],
 	},
 	lint: {
+		plugins: ['typescript', 'unicorn', 'oxc', 'react', 'jsx-a11y'],
 		ignorePatterns: ['dist/**', '.astro/**', 'node_modules/**'],
 	},
 });

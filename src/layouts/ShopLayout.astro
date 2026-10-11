@@ -1,9 +1,14 @@
 ---
 import '../styles/shop.css';
 import type { ShopVersion } from '../data/eshop/catalog';
-interface Props { title: string; description?: string; shopVersion: ShopVersion; }
+interface Props {
+	title: string;
+	description?: string;
+	shopVersion: ShopVersion;
+}
 const { title, description, shopVersion } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -15,10 +20,13 @@ const { title, description, shopVersion } = Astro.props;
 		<slot name="head" />
 	</head>
 	<body class="shop-app" data-shop-version={shopVersion}>
-		<a class="shop-skip-link" href="#shop-main">Skip to shop</a>
+		<a class="shop-skip-link" href="#shop-main">
+			Skip to shop
+		</a>
 		<div class="shop-app-width">
-			<nav class="shop-app-return" aria-label="Playground"><a href="/eshop/">← QScrape / eShop versions</a></nav>
-			<main id="shop-main"><slot /></main>
+			<main id="shop-main">
+				<slot />
+			</main>
 		</div>
 	</body>
 </html>

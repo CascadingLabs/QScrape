@@ -1,10 +1,11 @@
+import type { APIRoute } from 'astro';
 import { products } from '../../data/eshop/catalog';
 
-export function GET(): Response {
+export const GET: APIRoute = () => {
 	return Response.json({
 		currency: 'USD',
 		priceUnit: 'cents',
 		synthetic: true,
 		products,
 	});
-}
+};

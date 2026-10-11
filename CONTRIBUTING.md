@@ -11,7 +11,7 @@ QScrape is a web scraper evaluation suite that hosts a fictional e-shop across p
 ```bash
 git clone https://github.com/CascadingLabs/QScrape.git
 cd QScrape
-bun install
+vp install
 ```
 
 **Prerequisites:**
@@ -38,13 +38,13 @@ uvx prek run --all-files
 ### Run the dev server
 
 ```bash
-bun run dev
+vp run dev
 ```
 
 ### Build
 
 ```bash
-bun run build
+vp run build
 ```
 
 ## Linting & Formatting
@@ -54,13 +54,13 @@ We use [Vite+](https://viteplus.dev) with Oxfmt for formatting and Oxlint for li
 ### Commands
 
 ```bash
-bun run lint      # Oxlint; fail on warnings
-bun run format    # Oxfmt; write formatting changes
-bun run check     # Read-only format and lint checks
-bun run build     # Astro production build
+vp run lint      # Oxlint; fail on warnings
+vp run format    # Oxfmt; write formatting changes
+vp run check     # Read-only format and lint checks
+vp run build     # Astro production build
 ```
 
-Checks run sequentially with one thread per formatter/linter. Formatting uses tabs, an 80-character print width, single quotes, and semicolons. Vue and Svelte formatting are enabled. Oxfmt currently does not format Astro templates; Oxlint checks framework script blocks rather than template markup. The Astro build remains required to validate the templates.
+Checks run sequentially with one thread per formatter/linter. Formatting uses tabs, an 80-character print width, single quotes, and semicolons. Use only Oxfmt and Oxlint from Vite+; do not add supplemental formatters. Oxfmt currently does not format Astro templates; Oxlint checks framework script blocks rather than template markup. The Astro build remains required to validate the templates.
 
 Core HTML product content must be present in the HTML response. Verify expected IDs, values, links, and assets against the shared catalogue and generated output.
 

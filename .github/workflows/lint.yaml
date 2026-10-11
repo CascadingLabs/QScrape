@@ -11,7 +11,7 @@ on:
 
 jobs:
   check:
-    name: Format, lint, and build
+    name: Format, lint, types, and build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Vite+ format and lint check
-        run: bun run check
+      - name: Vite+ and Astro checks
+        run: ./node_modules/.bin/vp run check
 
       - name: Build
-        run: bun run build
+        run: ./node_modules/.bin/vp run build

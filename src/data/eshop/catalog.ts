@@ -87,12 +87,21 @@ export const products: readonly Product[] = [
 
 export type ShopVersion = 'html' | 'javascript';
 export const versions: readonly ShopVersion[] = ['html', 'javascript'];
+export const versionLabels = {
+	html: 'HTML eShop',
+	javascript: 'JavaScript eShop',
+} satisfies Record<ShopVersion, string>;
+export const categories = ['All', 'Desk', 'Home', 'Carry'] as const;
+export type ShopCategory = (typeof categories)[number];
+
+const priceFormatter = new Intl.NumberFormat('en-US', {
+	style: 'currency',
+	currency: 'USD',
+});
+
 export function getProduct(id: string): Product | undefined {
 	return products.find((product) => product.id === id);
 }
 export function formatPrice(cents: number): string {
-	return new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-	}).format(cents / 100);
+	return priceFormatter.format(cents / 100);
 }

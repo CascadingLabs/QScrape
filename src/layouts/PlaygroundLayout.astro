@@ -1,5 +1,5 @@
 ---
-import "../styles/playground.css";
+import '../styles/playground.css';
 import ThemeInit from '../components/ThemeInit.astro';
 import ProjectActions from '../components/ProjectActions.astro';
 interface Props {
@@ -14,7 +14,13 @@ const { title, description } = Astro.props;
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link id="site-favicon" data-brand="qscrape" rel="icon" href="/favicon.ico" sizes="any" />
+		<link
+			id="site-favicon"
+			data-brand="qscrape"
+			rel="icon"
+			href="/favicon.ico"
+			sizes="any"
+		/>
 		<link rel="stylesheet" href="/qscrape.css" />
 		<ThemeInit />
 		<title>{title}</title>

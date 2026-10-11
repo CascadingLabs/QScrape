@@ -1,10 +1,18 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+	categories,
+	formatPrice,
+	type ShopCategory,
 	products,
 	type Product,
 	type ShopVersion,
 } from '../../data/eshop/catalog';
-import { readCart, writeCart, type CartLine } from '../../lib/eshop/cart-store';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+	cartStorageKey,
+	readCart,
+	writeCart,
+	type CartLine,
+} from '../../lib/eshop/cart-store';
 
 type ShopPage = 'catalog' | 'product' | 'cart';
 
@@ -13,12 +21,6 @@ export interface ShopProps {
 	version: ShopVersion;
 	productId?: string;
 }
-
-const versionLabels: Record<ShopVersion, string> = {
-	html: 'HTML eShop',
-	javascript: 'JavaScript eShop',
-};
-const categories = ['All', 'Desk', 'Home', 'Carry'] as const;
 
 function ShopHeader({
 	version,
@@ -60,7 +62,6 @@ function ShopFooter() {
 	return (
 		<footer className="shop-footer">
 			<span>Objects · Thoughtful things for everyday living</span>
-			<span>Fictional shop · no real purchases</span>
 		</footer>
 	);
 }
@@ -152,21 +153,17 @@ function ShopContent({
 	status: string;
 }) {
 	const [query, setQuery] = useState('');
-	const [category, setCategory] = useState('All');
+	const [category] = useState<ShopCategory>(() => {
+		const requested = new URLSearchParams(window.location.search).get(
+			'category',
+		);
+		return categories.find((entry) => entry === requested) ?? 'All';
+	});
 	const count = cart.reduce((sum, line) => sum + line.quantity, 0);
 	const cartProducts = cart.flatMap((line) => {
 		const product = products.find((entry) => entry.id === line.productId);
 		return product ? [{ product, quantity: line.quantity }] : [];
 	});
-
-	useEffect(() => {
-		setCategory(
-			categories.find(
-				(entry) =>
-					entry === new URLSearchParams(window.location.search).get('category'),
-			) ?? 'All',
-		);
-	}, []);
 
 	const visibleProducts = useMemo(
 		() =>
@@ -238,9 +235,9 @@ function ShopContent({
 						/>
 					))
 				) : (
-					<p className="shop-empty-results" role="status">
+					<output className="shop-empty-results">
 						No objects match that search.
-					</p>
+					</output>
 				)}
 			</div>
 		</>
@@ -318,12 +315,8 @@ function ShopContent({
 			</section>
 		</div>
 	) : (
-		<div
-			className="shop-error"
-			role="status"
-			data-shop-part="product-not-found"
-		>
-			<p>We couldn’t find that object.</p>
+		<div className="shop-error" data-shop-part="product-not-found">
+			<output>We couldn’t find that object.</output>
 			<a href={`/eshop/${version}/`}>Back to the collection</a>
 		</div>
 	);
@@ -421,10 +414,6 @@ function ShopContent({
 							<strong>Total</strong>
 							<strong>{formatPrice(subtotal)}</strong>
 						</p>
-						<p className="shop-checkout-note">
-							A little note: this is a fictional storefront. No payment or
-							delivery takes place.
-						</p>
 					</aside>
 				</div>
 			)}
@@ -438,10 +427,6 @@ function ShopContent({
 			data-shop-version={version}
 		>
 			<ShopHeader version={version} cartCount={count} page={page} />
-			<div className="shop-version-line">
-				<span className="shop-version-pill">{versionLabels[version]}</span>
-				<span className="shop-subtitle">Good things for everyday living.</span>
-			</div>
 			{page === 'catalog'
 				? catalog
 				: page === 'product'
@@ -449,23 +434,15 @@ function ShopContent({
 					: cartView}
 			<ShopFooter />
 
-			<p
+			<output
 				className="shop-added-message"
-				role="status"
 				aria-live="polite"
 				data-shop-part="cart-confirmation"
 			>
 				{status}
-			</p>
+			</output>
 		</div>
 	);
-}
-
-function formatPrice(cents: number): string {
-	return new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-	}).format(cents / 100);
 }
 
 export default function ShopClient({ page, version, productId }: ShopProps) {
@@ -476,13 +453,13 @@ export default function ShopClient({ page, version, productId }: ShopProps) {
 
 	useEffect(() => {
 		const onStorage = (event: StorageEvent) => {
-			if (event.key === `objects:cart:${version}`) {
+			if (event.key === cartStorageKey(version) || event.key === null) {
 				setCart(readCart(version, products));
 			}
 		};
 		window.addEventListener('storage', onStorage);
 		return () => window.removeEventListener('storage', onStorage);
-	}, [products, version]);
+	}, [version]);
 
 	const commitCart = useCallback(
 		(next: readonly CartLine[]) => {
@@ -490,7 +467,7 @@ export default function ShopClient({ page, version, productId }: ShopProps) {
 			setCart(result.cart);
 			return result.persisted;
 		},
-		[products, version],
+		[version],
 	);
 
 	const add = useCallback(
@@ -518,7 +495,7 @@ export default function ShopClient({ page, version, productId }: ShopProps) {
 					: `Added ${product.name} for this visit; browser storage is unavailable.`,
 			);
 		},
-		[cart, commitCart, products],
+		[cart, commitCart],
 	);
 
 	const changeQuantity = useCallback(
@@ -565,7 +542,7 @@ export default function ShopClient({ page, version, productId }: ShopProps) {
 		[cart, commitCart],
 	);
 
-	const content = (
+	return (
 		<ShopContent
 			page={page}
 			version={version}
@@ -578,6 +555,4 @@ export default function ShopClient({ page, version, productId }: ShopProps) {
 			status={status}
 		/>
 	);
-
-	return content;
 }

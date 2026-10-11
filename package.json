@@ -10,7 +10,9 @@
 		"astro": "astro",
 		"lint": "vp lint --threads=1 --deny-warnings",
 		"format": "vp fmt --threads=1",
-		"check": "vp fmt --check --threads=1 && vp lint --threads=1 --deny-warnings"
+		"check:format": "vp fmt --check --threads=1",
+		"check:types": "astro check",
+		"check": "vp fmt --check --threads=1 && vp lint --threads=1 --deny-warnings && astro check"
 	},
 	"dependencies": {
 		"@astrojs/react": "^7.0.1",
@@ -21,6 +23,7 @@
 		"react-dom": "^19.3.0"
 	},
 	"devDependencies": {
+		"@astrojs/check": "^0.9.10",
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
 		"typescript": "^6.0.3",

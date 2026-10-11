@@ -6,24 +6,31 @@ interface Props {
 }
 
 const { version } = Astro.props;
-const versionLabels = {
-	html: 'HTML eShop',
-	javascript: 'JavaScript eShop',
-} satisfies Record<ShopVersion, string>;
 ---
 
-<div class="shop-root shop-frame" data-shop-part="html-shop-cart" data-shop-version={version}>
+<div
+	class="shop-root shop-frame"
+	data-shop-part="html-shop-cart"
+	data-shop-version={version}
+>
 	<header class="shop-topline">
-		<a class="shop-wordmark" href={`/eshop/${version}/`}>Objects</a>
+		<a class="shop-wordmark" href={`/eshop/${version}/`}>
+			Objects
+		</a>
 		<nav class="shop-nav" aria-label="Objects shop">
 			<a href={`/eshop/${version}/`}>Shop</a>
-			<a href={`/eshop/${version}/cart/`} aria-current="page" data-shop-part="cart-nav">Cart <span class="shop-bag-count" data-html-cart-count>0</span></a>
+			<a
+				href={`/eshop/${version}/cart/`}
+				aria-current="page"
+				data-shop-part="cart-nav"
+			>
+				Cart{' '}
+				<span class="shop-bag-count" data-html-cart-count>
+					0
+				</span>
+			</a>
 		</nav>
 	</header>
-	<div class="shop-version-line">
-		<span class="shop-version-pill">{versionLabels[version]}</span>
-		<span class="shop-subtitle">Good things for everyday living.</span>
-	</div>
 	<section class="shop-cart-heading" aria-labelledby="cart-title">
 		<p class="eyebrow">Your Objects</p>
 		<h1 id="cart-title">Cart</h1>
@@ -34,32 +41,67 @@ const versionLabels = {
 		<a href={`/eshop/${version}/`}>Find something useful</a>
 	</div>
 	<div class="shop-cart-layout" data-html-cart-content hidden>
-		<ul class="shop-cart-list" data-html-cart-lines aria-label="Items in your bag"></ul>
+		<ul
+			class="shop-cart-list"
+			data-html-cart-lines
+			aria-label="Items in your bag"
+		></ul>
 		<aside class="shop-cart-summary" aria-label="Order summary">
 			<h2>Order summary</h2>
-			<p class="shop-summary-row"><span>Items</span><span data-html-cart-subtotal>$0.00</span></p>
-			<p class="shop-summary-row"><span>Shipping</span><span>On us</span></p>
-			<p class="shop-summary-row shop-summary-total"><strong>Total</strong><strong data-html-cart-total>$0.00</strong></p>
-			<p class="shop-checkout-note">A little note: this is a fictional storefront. No payment or delivery takes place.</p>
+			<p class="shop-summary-row">
+				<span>Items</span>
+				<span data-html-cart-subtotal>$0.00</span>
+			</p>
+			<p class="shop-summary-row">
+				<span>Shipping</span>
+				<span>On us</span>
+			</p>
+			<p class="shop-summary-row shop-summary-total">
+				<strong>Total</strong>
+				<strong data-html-cart-total>$0.00</strong>
+			</p>
 		</aside>
 	</div>
-	<noscript><p class="shop-notice">Turn on JavaScript to view and update items saved in this browser’s demo cart.</p></noscript>
-	<p class="shop-html-live-message" data-html-cart-status role="status" aria-live="polite"></p>
-	<footer class="shop-footer"><span>Objects · Thoughtful things for everyday living</span><span>Fictional shop · no real purchases</span></footer>
+	<noscript>
+		<p class="shop-notice">
+			Turn on JavaScript to view and update items saved in this browser’s cart.
+		</p>
+	</noscript>
+	<p
+		class="shop-html-live-message"
+		data-html-cart-status
+		role="status"
+		aria-live="polite"
+	></p>
+	<footer class="shop-footer">
+		<span>Objects · Thoughtful things for everyday living</span>
+	</footer>
 </div>
 
 <script>
 	import { formatPrice, products } from '../../data/eshop/catalog';
-	import { cartStorageKey, readCart, writeCart } from '../../lib/eshop/cart-store';
+	import {
+		cartStorageKey,
+		readCart,
+		writeCart,
+	} from '../../lib/eshop/cart-store';
 
-	const root = document.querySelector<HTMLElement>('[data-shop-part="html-shop-cart"]');
+	const root = document.querySelector<HTMLElement>(
+		'[data-shop-part="html-shop-cart"]',
+	);
 	if (root) {
 		const version = root.dataset.shopVersion ?? 'html';
-		const emptyState = root.querySelector<HTMLElement>('[data-html-cart-empty]');
+		const emptyState = root.querySelector<HTMLElement>(
+			'[data-html-cart-empty]',
+		);
 		const content = root.querySelector<HTMLElement>('[data-html-cart-content]');
-		const lines = root.querySelector<HTMLUListElement>('[data-html-cart-lines]');
+		const lines = root.querySelector<HTMLUListElement>(
+			'[data-html-cart-lines]',
+		);
 		const totalNode = root.querySelector<HTMLElement>('[data-html-cart-total]');
-		const subtotalNode = root.querySelector<HTMLElement>('[data-html-cart-subtotal]');
+		const subtotalNode = root.querySelector<HTMLElement>(
+			'[data-html-cart-subtotal]',
+		);
 		const countNode = root.querySelector<HTMLElement>('[data-html-cart-count]');
 		const status = root.querySelector<HTMLElement>('[data-html-cart-status]');
 
@@ -106,15 +148,24 @@ const versionLabels = {
 				const decrease = document.createElement('button');
 				decrease.type = 'button';
 				decrease.dataset.cartAction = 'decrease';
-				decrease.setAttribute('aria-label', `Decrease ${product.name} quantity`);
+				decrease.setAttribute(
+					'aria-label',
+					`Decrease ${product.name} quantity`,
+				);
 				decrease.textContent = '−';
 				const amount = document.createElement('span');
-				amount.setAttribute('aria-label', `${line.quantity} ${product.name} in cart`);
+				amount.setAttribute(
+					'aria-label',
+					`${line.quantity} ${product.name} in cart`,
+				);
 				amount.textContent = String(line.quantity);
 				const increase = document.createElement('button');
 				increase.type = 'button';
 				increase.dataset.cartAction = 'increase';
-				increase.setAttribute('aria-label', `Increase ${product.name} quantity`);
+				increase.setAttribute(
+					'aria-label',
+					`Increase ${product.name} quantity`,
+				);
 				increase.textContent = '+';
 				increase.disabled = line.quantity >= product.stock;
 				const remove = document.createElement('button');
@@ -136,7 +187,9 @@ const versionLabels = {
 		};
 
 		render();
-		window.addEventListener('storage', (event) => { if (event.key === cartStorageKey(version)) render(); });
+		window.addEventListener('storage', (event) => {
+			if (event.key === cartStorageKey(version) || event.key === null) render();
+		});
 		lines?.addEventListener('click', (event) => {
 			const target = event.target;
 			if (!(target instanceof Element)) return;
@@ -149,21 +202,39 @@ const versionLabels = {
 			const product = products.find((entry) => entry.id === productId);
 			if (!line || !product) return;
 			let next = cart;
-			if (button.dataset.cartAction === 'remove' || (button.dataset.cartAction === 'decrease' && line.quantity <= 1)) {
+			if (
+				button.dataset.cartAction === 'remove' ||
+				(button.dataset.cartAction === 'decrease' && line.quantity <= 1)
+			) {
 				next = cart.filter((entry) => entry.productId !== productId);
 			} else if (button.dataset.cartAction === 'decrease') {
-				next = cart.map((entry) => entry.productId === productId ? { ...entry, quantity: Math.max(1, entry.quantity - 1) } : entry);
+				next = cart.map((entry) =>
+					entry.productId === productId
+						? { ...entry, quantity: Math.max(1, entry.quantity - 1) }
+						: entry,
+				);
 			} else if (button.dataset.cartAction === 'increase') {
-				next = cart.map((entry) => entry.productId === productId ? { ...entry, quantity: Math.min(product.stock, entry.quantity + 1) } : entry);
+				next = cart.map((entry) =>
+					entry.productId === productId
+						? {
+								...entry,
+								quantity: Math.min(product.stock, entry.quantity + 1),
+							}
+						: entry,
+				);
 			}
 			const result = writeCart(version, next, products);
 			if (!result.persisted) {
-				if (status) status.textContent = 'Browser storage is unavailable, so this cart change could not be saved.';
+				if (status)
+					status.textContent =
+						'Browser storage is unavailable, so this cart change could not be saved.';
 				return;
 			}
-			if (status) status.textContent = button.dataset.cartAction === 'remove'
-				? `Removed ${product.name} from cart.`
-				: `Updated ${product.name} quantity.`;
+			if (status)
+				status.textContent =
+					button.dataset.cartAction === 'remove'
+						? `Removed ${product.name} from cart.`
+						: `Updated ${product.name} quantity.`;
 			render();
 		});
 	}

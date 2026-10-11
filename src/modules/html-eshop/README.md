@@ -7,6 +7,7 @@ Astro builds the catalogue and product pages as static HTML. Core product extrac
 - [StaticCatalog.astro](StaticCatalog.astro): catalogue markup, product cards, and category/cart interactions.
 - [StaticProduct.astro](StaticProduct.astro): product details, structured product data, and add-to-cart behavior.
 - [StaticCart.astro](StaticCart.astro): local cart contents, quantities, removal, and totals.
+- [Cart interactions](cart-interactions.ts): shared add-to-cart handlers and cart counts for the catalogue and product pages.
 
 ## Shared pieces
 

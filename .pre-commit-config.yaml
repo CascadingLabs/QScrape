@@ -16,7 +16,7 @@ repos:
     hooks:
       - id: vite-plus-check
         name: Vite+ format and lint check
-        entry: bun run check
+        entry: vp run check
         language: system
         pass_filenames: false
         files: \.(js|ts|cjs|mjs|jsx|tsx|json|jsonc|css|astro|svelte|vue|md|yaml|yml)$
@@ -24,7 +24,7 @@ repos:
 
       - id: vite-plus-ci-check
         name: Vite+ format and lint check
-        entry: bun run check
+        entry: vp run check
         language: system
         pass_filenames: false
         files: \.(js|ts|cjs|mjs|jsx|tsx|json|jsonc|css|astro|svelte|vue|md|yaml|yml)$

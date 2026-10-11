@@ -21,17 +21,6 @@ body.shop-app {
 	width: min(1120px, calc(100% - 48px));
 	margin-inline: auto;
 }
-.shop-app-return {
-	padding-top: 24px;
-	font-size: 12px;
-}
-.shop-app-return a {
-	color: var(--muted);
-	text-decoration: none;
-}
-.shop-app-return a:hover {
-	color: var(--accent);
-}
 .shop-skip-link {
 	position: absolute;
 	top: -100px;
@@ -120,21 +109,6 @@ body.shop-app {
 .shop-bag-count {
 	color: var(--accent);
 	font-variant-numeric: tabular-nums;
-}
-.shop-version-line {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	margin: 20px 0 0;
-}
-.shop-version-pill {
-	padding: 5px 9px;
-	border: 1px solid var(--line);
-	color: var(--moss);
-	font-family: var(--mono);
-	font-size: 9px;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
 }
 .shop-subtitle {
 	color: var(--muted);
@@ -549,12 +523,7 @@ body.shop-app {
 	color: var(--ink);
 	font-size: 13px;
 }
-.shop-checkout-note {
-	margin: 16px 0 0;
-	color: var(--muted);
-	font-size: 9px;
-	line-height: 1.6;
-}
+
 .shop-empty-cart {
 	padding: 34px 0;
 	border-top: 1px solid var(--line);
@@ -662,4 +631,9 @@ body.shop-app {
 		flex-direction: column;
 		gap: 5px;
 	}
+}
+output.shop-added-message,
+output.shop-empty-results,
+.shop-error output {
+	display: block;
 }
