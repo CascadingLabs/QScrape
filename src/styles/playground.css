@@ -214,21 +214,14 @@
 .version-open {
 	font-size: 12px;
 }
-.version-sources {
-	border-top: 1px solid var(--qs-border);
-	padding-top: 12px;
-	margin-top: 16px;
-	font-size: 11px;
-	color: var(--qs-text-dim);
+.version-module {
+	display: inline-block;
+	margin-left: 16px;
+	font-size: 12px;
 }
-.version-sources > div + div {
-	margin-top: 6px;
-}
-.version-sources code {
-	overflow-wrap: anywhere;
-}
-.source-note {
-	margin-top: 20px;
-	font-size: 11px;
-	color: var(--qs-text-dim);
+@media (max-width: 480px) {
+	.version-module {
+		display: block;
+		margin: 12px 0 0;
+	}
 }

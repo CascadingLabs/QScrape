@@ -21,7 +21,7 @@ The first site is **Objects**, an eShop of everyday essentials. There are no rea
 
 Every version has product pages and a local sample cart. HTML catalogue extraction and navigation work with JavaScript disabled; cart interactions require JavaScript. Cart state stays in your browser and is separate for each version.
 
-Source references on the version picker use a published commit when `PUBLIC_SOURCE_REVISION`, `CF_PAGES_COMMIT_SHA`, or `GITHUB_SHA` is available. Local builds show the source paths and repository link until the code is published.
+Each version links to its implementation module on GitHub. Build metadata (`PUBLIC_SOURCE_REVISION`, `CF_PAGES_COMMIT_SHA`, or `GITHUB_SHA`) pins that link to a commit; otherwise it uses `main`. Module READMEs describe behavior and link to the implementation.
 
 ## Styling
 

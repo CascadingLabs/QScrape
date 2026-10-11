@@ -2,26 +2,24 @@
 import PlaygroundLayout from '../../layouts/PlaygroundLayout.astro';
 const repository = 'https://github.com/CascadingLabs/QScrape';
 const revision = import.meta.env.PUBLIC_SOURCE_REVISION ?? process.env.CF_PAGES_COMMIT_SHA ?? process.env.GITHUB_SHA;
-const publishedRevision = typeof revision === 'string' && /^[a-f0-9]{40}$/i.test(revision) ? revision : undefined;
-const sourceURL = (path: string) => publishedRevision ? `${repository}/blob/${publishedRevision}/${path.split('/').map(encodeURIComponent).join('/')}` : undefined;
+const sourceRef = typeof revision === 'string' && /^[a-f0-9]{40}$/i.test(revision) ? revision : 'main';
+const moduleURL = (module: string) => `${repository}/tree/${sourceRef}/src/modules/${module}`;
 const options = [
 	{
 		slug: 'html', name: 'HTML eShop',
 		description: 'Astro generates the catalogue and product pages as static HTML at build time. Read product data directly from the response.',
 		renderer: 'Astro-rendered HTML', extraction: 'No JavaScript required',
 		interactions: 'Ordinary JavaScript for filters and the sample cart',
-		implementation: 'src/components/eshop/StaticCatalog.astro',
+		module: 'html-eshop',
 	},
 	{
 		slug: 'javascript', name: 'JavaScript eShop',
 		description: 'Astro hosts one client-only React island. Product content appears when the island renders in the browser.',
 		renderer: 'Astro + React island', extraction: 'JavaScript required',
 		interactions: 'React handles search, filtering, and the sample cart',
-		implementation: 'src/components/eshop/ShopClient.tsx',
+		module: 'javascript-eshop',
 	},
 ];
-const pageSource = 'src/pages/eshop/[version]/index.astro';
-const layoutSource = 'src/layouts/ShopLayout.astro';
 ---
 <PlaygroundLayout title="eShop — QScrape" description="Compare the HTML and JavaScript versions of the same synthetic eShop.">
 	<h1 slot="heading" class="home-title">eShop</h1>
@@ -41,14 +39,9 @@ const layoutSource = 'src/layouts/ShopLayout.astro';
 					<div><dt>Navigation</dt><dd>Separate pages with ordinary links</dd></div>
 				</dl>
 				<a class="project-card version-open" href={`/eshop/${option.slug}/`}>Open {option.name}<span class="project-arrow" aria-hidden="true">→</span></a>
-				<nav class="version-sources" aria-label={`${option.name} source`}>
-					{[{label:'Page',path:pageSource},{label:'Layout',path:layoutSource},{label:'Implementation',path:option.implementation}].map((source) => (
-						<div>{sourceURL(source.path) ? <a href={sourceURL(source.path)} target="_blank" rel="noopener noreferrer">{source.label} source ↗</a> : <><span>{source.label}: </span><code>{source.path}</code></>}</div>
-					))}
-				</nav>
+				<a class="version-module" href={moduleURL(option.module)} target="_blank" rel="noopener noreferrer">GitHub implementation ↗</a>
 			</article>
 		))}
 	</section>
-	{!publishedRevision && <p class="source-note">Source links will point to the matching commit on published builds. <a href={repository}>GitHub repository ↗</a></p>}
 	<div class="home-footer"><a href="/">← QScrape</a></div>
 </PlaygroundLayout>

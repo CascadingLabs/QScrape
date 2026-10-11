@@ -71,7 +71,7 @@ const productSchema = {
 
 <script>
 	import { products } from '../../data/eshop/catalog';
-	import { cartStorageKey, readCart, writeCart } from './cart-store';
+	import { cartStorageKey, readCart, writeCart } from '../../lib/eshop/cart-store';
 
 	const root = document.querySelector<HTMLElement>('[data-shop-part="html-product-detail"]');
 	if (root) {

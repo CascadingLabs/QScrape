@@ -4,7 +4,7 @@ import {
 	type Product,
 	type ShopVersion,
 } from '../../data/eshop/catalog';
-import { readCart, writeCart, type CartLine } from './cart-store';
+import { readCart, writeCart, type CartLine } from '../../lib/eshop/cart-store';
 
 type ShopPage = 'catalog' | 'product' | 'cart';
 

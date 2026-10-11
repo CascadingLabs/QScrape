@@ -74,7 +74,7 @@ const categories = ['All', 'Desk', 'Home', 'Carry'] as const;
 
 <script>
 	import { products } from '../../data/eshop/catalog';
-	import { cartStorageKey, readCart, writeCart } from './cart-store';
+	import { cartStorageKey, readCart, writeCart } from '../../lib/eshop/cart-store';
 
 	const root = document.querySelector<HTMLElement>('[data-shop-part="html-shop-catalog"]');
 	if (root) {
