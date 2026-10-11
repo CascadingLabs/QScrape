@@ -1,0 +1,48 @@
+---
+import PlaygroundLayout from '../../../../layouts/PlaygroundLayout.astro';
+import StaticProduct from '../../../../components/eshop/StaticProduct.astro';
+import ShopClient from '../../../../components/eshop/ShopClient';
+import { getProduct, products, versions, type Product, type ShopVersion } from '../../../../data/eshop/catalog';
+import '../../../../styles/shop.css';
+
+export function getStaticPaths() {
+	return versions.flatMap((version) => products.map((product) => ({
+		params: { version, id: product.id },
+		props: { version, productId: product.id },
+	})));
+}
+
+interface Props {
+	version: ShopVersion;
+	productId: string;
+}
+
+const { version, productId } = Astro.props;
+const htmlProduct: Product | undefined = version === 'html' ? getProduct(productId) : undefined;
+if (version === 'html' && !htmlProduct) throw new Error(`No eShop product exists for route id ${productId}`);
+
+const versionLabels: Record<ShopVersion, string> = {
+	html: 'HTML eShop',
+	javascript: 'JavaScript eShop',
+	protected: 'Protected eShop',
+};
+const title = htmlProduct ? `${htmlProduct.name} — ${versionLabels[version]}` : `${versionLabels[version]} — Objects`;
+const description = htmlProduct?.description ?? 'Explore thoughtful objects from the Objects everyday collection.';
+---
+
+<PlaygroundLayout title={title} description={description} shopVersion={version}>
+	<Fragment slot="head">
+		<link rel="canonical" href={`https://qscrape.dev/eshop/${version}/product/${productId}/`} />
+		<meta property="og:type" content={htmlProduct ? 'product' : 'website'} />
+		<meta property="og:url" content={`https://qscrape.dev/eshop/${version}/product/${productId}/`} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:site_name" content="Objects" />
+	</Fragment>
+	{htmlProduct
+		? <StaticProduct version="html" product={htmlProduct} />
+		: <>
+			<noscript><p class="shop-protection-note">{versionLabels[version]} needs JavaScript enabled to load product details.</p></noscript>
+			<ShopClient client:only="react" page="product" version={version} productId={productId} />
+		</>}
+</PlaygroundLayout>

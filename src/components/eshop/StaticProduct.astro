@@ -1,0 +1,107 @@
+---
+import { formatPrice, type Product, type ShopVersion } from '../../data/eshop/catalog';
+
+interface Props {
+	product: Product;
+	version: ShopVersion;
+}
+
+const { product, version } = Astro.props;
+const versionLabels = {
+	html: 'HTML eShop',
+	javascript: 'JavaScript eShop',
+	protected: 'Protected eShop',
+} satisfies Record<ShopVersion, string>;
+const availability = product.stock > 0 ? 'InStock' : 'OutOfStock';
+const productSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Product',
+	name: product.name,
+	category: product.category,
+	description: product.description,
+	image: product.image,
+	material: product.material,
+	color: product.color,
+	offers: {
+		'@type': 'Offer',
+		priceCurrency: 'USD',
+		price: (product.price / 100).toFixed(2),
+		availability: `https://schema.org/${availability}`,
+	},
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(productSchema)}></script>
+
+<div class="shop-root shop-frame" data-shop-part="html-product-detail" data-product-id={product.id} data-shop-version={version}>
+	<header class="shop-topline">
+		<a class="shop-wordmark" href={`/eshop/${version}/`}>Objects</a>
+		<nav class="shop-nav" aria-label="Objects shop">
+			<a href={`/eshop/${version}/`}>Shop</a>
+			<a href={`/eshop/${version}/cart/`} data-shop-part="cart-nav">Cart <span class="shop-bag-count" data-html-cart-count>0</span></a>
+		</nav>
+	</header>
+	<div class="shop-version-line">
+		<span class="shop-version-pill">{versionLabels[version]}</span>
+		<span class="shop-subtitle">Good things for everyday living.</span>
+	</div>
+	<div class="shop-product-layout">
+		<div class="shop-product-photo"><img src={product.image} alt={`${product.name}, ${product.color}`} width="600" height="480" /></div>
+		<section class="shop-product-copy" aria-labelledby="product-title">
+			<nav class="shop-breadcrumb" aria-label="Breadcrumb">
+				<a href={`/eshop/${version}/`}>All objects</a><span aria-hidden="true">/</span>
+				<a href={`/eshop/${version}/?category=${product.category}`}>{product.category}</a><span aria-hidden="true">/</span>
+				<span aria-current="page">{product.name}</span>
+			</nav>
+			<p class="eyebrow">{product.category} · {product.color}</p>
+			<h1 id="product-title">{product.name}</h1>
+			<p class="shop-detail-price">{formatPrice(product.price)}</p>
+			<p class="shop-product-lede">{product.description}</p>
+			<div class="shop-product-facts">
+				<div><span class="shop-fact-label">Material</span><span class="shop-fact-value">{product.material}</span></div>
+				<div><span class="shop-fact-label">Color</span><span class="shop-fact-value">{product.color}</span></div>
+			</div>
+			<p class="shop-availability" data-available={product.stock > 0 ? 'true' : 'false'}>{product.stock > 0 ? `${product.stock} in stock and ready to find a home.` : 'Currently unavailable.'}</p>
+			<button class="shop-add-button" type="button" data-add-to-cart={product.id} disabled={product.stock <= 0}>{product.stock > 0 ? 'Add to cart' : 'Sold out'}</button>
+			<p class="shop-html-live-message" data-cart-message-for={product.id} role="status" aria-live="polite"></p>
+		</section>
+	</div>
+	<noscript><p class="shop-protection-note">Product details are ready to read. Turn on JavaScript to add this object to your local demo cart.</p></noscript>
+	<footer class="shop-footer"><span>Objects · Thoughtful things for everyday living</span><span>Fictional shop · no real purchases</span></footer>
+</div>
+
+<script>
+	import { products } from '../../data/eshop/catalog';
+	import { cartStorageKey, readCart, writeCart } from './cart-store';
+
+	const root = document.querySelector<HTMLElement>('[data-shop-part="html-product-detail"]');
+	if (root) {
+		const version = root.dataset.shopVersion ?? 'html';
+		const productId = root.dataset.productId;
+		const syncCount = () => {
+			const count = readCart(version, products).reduce((sum, line) => sum + line.quantity, 0);
+			root.querySelectorAll<HTMLElement>('[data-html-cart-count]').forEach((element) => { element.textContent = String(count); });
+		};
+		syncCount();
+		window.addEventListener('storage', (event) => { if (event.key === cartStorageKey(version)) syncCount(); });
+		root.addEventListener('click', (event) => {
+			const target = event.target;
+			if (!(target instanceof Element)) return;
+			const button = target.closest<HTMLButtonElement>('[data-add-to-cart]');
+			if (!button || button.disabled) return;
+			const product = products.find((item) => item.id === productId);
+			if (!product || product.stock <= 0) return;
+			const cart = readCart(version, products);
+			const line = cart.find((item) => item.productId === product.id);
+			const next = line
+				? cart.map((item) => item.productId === product.id ? { ...item, quantity: Math.min(item.quantity + 1, product.stock) } : item)
+				: [...cart, { productId: product.id, quantity: 1 }];
+			const result = writeCart(version, next, products);
+			const message = root.querySelector<HTMLElement>(`[data-cart-message-for="${product.id}"]`);
+			if (message) message.textContent = result.persisted
+				? `Added ${product.name} to cart.`
+				: `Browser storage is unavailable, so ${product.name} could not be added.`;
+			syncCount();
+		});
+	}
+</script>

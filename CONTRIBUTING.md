@@ -35,20 +35,6 @@ uvx prek install
 uvx prek run --all-files
 ```
 
-### Environment variables
-
-| Variable          | Default           | Description                                                                                                                                                                                                                                      |
-| ----------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `PUBLIC_L3_GUARD` | (unset = enabled) | Set to `false` to disable L3Guard anti-bot defenses (DevTools detection, honeypot buttons, right-click blocking) at build time. Useful during local development so you can use browser DevTools on L3 pages without triggering the 404 takeover. |
-
-To disable L3Guard locally, create a `.env` file in the project root:
-
-```
-PUBLIC_L3_GUARD=false
-```
-
-This is a build-time Astro public env var — changes require restarting the dev server.
-
 ### Run the dev server
 
 ```bash
@@ -76,7 +62,7 @@ bun run build     # Astro production build
 
 Checks run sequentially with one thread per formatter/linter. Formatting uses tabs, an 80-character print width, single quotes, and semicolons. Vue and Svelte formatting are enabled. Oxfmt currently does not format Astro templates; Oxlint checks framework script blocks rather than template markup. The Astro build remains required to validate the templates.
 
-Solid's `ref={variable}` assignments happen in the JSX transform, so `no-unassigned-vars` is disabled only for Solid component files.
+Core HTML product content must be present in the HTML response. Verify expected IDs, values, links, and assets against the shared catalogue and generated output.
 
 CI runs the format check, lint check, and production build on every push to `main` and on all PRs.
 
@@ -102,7 +88,7 @@ Blank issues are disabled -please use a template so we have the context we need 
    - **GenAI usage** -check the box and describe how AI was used, if applicable. All AI-generated code must be reviewed line-by-line.
    - **Risks** -any risks or side effects this PR might introduce.
 5. **Link an issue** -reference the issue your PR addresses with `Closes #<number>`.
-6. **Cross-framework consistency** -if you modify an L2 or L3 site, ensure changes apply uniformly across all framework variants (React, Vue, Svelte, and Solid for L3). All implementations should share the same data layer in `src/data/`.
+6. **Shared catalogue** -all versions use the same product data. Verify HTML extraction without JavaScript, browser navigation and cart behavior, and the documented protected challenges.
 
 ### Commit Conventions
 

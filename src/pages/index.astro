@@ -1,204 +1,42 @@
 ---
-import QScrapeLayout from '../layouts/QScrapeLayout.astro';
+import PlaygroundLayout from '../layouts/PlaygroundLayout.astro';
+
+const description = 'QScrape is a realistic, fictional eShop for testing product extraction, browsing, and cart workflows with a web scraper.';
 ---
 
-<QScrapeLayout
-	title="QScrape — Open-Source Web Scraper Test Suite | Cascading Labs"
-	description="QScrape is a free, open-source web scraper evaluation suite. Benchmark your scraper against realistic test sites across three difficulty levels — static HTML, modern frameworks, and anti-bot defences."
->
+<PlaygroundLayout title="QScrape — Real sites. Better scrapers." description={description}>
 	<Fragment slot="head">
-		<meta name="keywords" content="web scraper test, scraper benchmark, web scraping evaluation, test sites for scrapers, scraper difficulty levels, open source scraper testing" />
 		<link rel="canonical" href="https://qscrape.dev/" />
-
-		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="https://qscrape.dev/" />
-		<meta property="og:title" content="QScrape — Open-Source Web Scraper Test Suite" />
-		<meta property="og:description" content="Benchmark your web scraper against realistic test sites across three difficulty levels. Free and open-source from Cascading Labs." />
+		<meta property="og:title" content="QScrape — Real sites. Better scrapers." />
+		<meta property="og:description" content={description} />
 		<meta property="og:site_name" content="QScrape" />
-
-		<!-- Twitter -->
-		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:title" content="QScrape — Open-Source Web Scraper Test Suite" />
-		<meta name="twitter:description" content="Benchmark your web scraper against realistic test sites across three difficulty levels. Free and open-source from Cascading Labs." />
-
-		<!-- JSON-LD: WebSite -->
-		<script type="application/ld+json" set:html={JSON.stringify({
-			"@context": "https://schema.org",
-			"@type": "WebSite",
-			"name": "QScrape",
-			"alternateName": "QScrape Web Scraper Test Suite",
-			"url": "https://qscrape.dev/",
-			"description": "A free, open-source web scraper evaluation suite with realistic test sites across three difficulty levels.",
-			"publisher": {
-				"@type": "Organization",
-				"name": "Cascading Labs",
-				"url": "https://cascadinglabs.com"
-			}
-		})} />
-
-		<!-- JSON-LD: SoftwareApplication -->
-		<script type="application/ld+json" set:html={JSON.stringify({
-			"@context": "https://schema.org",
-			"@type": "SoftwareApplication",
-			"name": "QScrape",
-			"applicationCategory": "DeveloperApplication",
-			"operatingSystem": "Web",
-			"url": "https://qscrape.dev/",
-			"offers": {
-				"@type": "Offer",
-				"price": "0",
-				"priceCurrency": "USD"
-			},
-			"author": {
-				"@type": "Organization",
-				"name": "Cascading Labs",
-				"url": "https://cascadinglabs.com"
-			},
-			"codeRepository": "https://github.com/CascadingLabs/QScrape",
-			"license": "https://opensource.org/licenses/MIT"
-		})} />
-
-		<!-- JSON-LD: FAQPage (AEO) -->
-		<script type="application/ld+json" set:html={JSON.stringify({
-			"@context": "https://schema.org",
-			"@type": "FAQPage",
-			"mainEntity": [
-				{
-					"@type": "Question",
-					"name": "What is QScrape?",
-					"acceptedAnswer": {
-						"@type": "Answer",
-						"text": "QScrape is a free, open-source web scraper evaluation suite built by Cascading Labs. It provides realistic test websites across three difficulty levels so developers can benchmark and validate their web scrapers before deploying them against production targets."
-					}
-				},
-				{
-					"@type": "Question",
-					"name": "What are QScrape's difficulty levels?",
-					"acceptedAnswer": {
-						"@type": "Answer",
-						"text": "Level 1 (L1) uses standard HTML, CSS, and JavaScript with no frameworks or anti-bot measures. Level 2 (L2) uses modern web frameworks like Svelte, React, and Vue as client-side SPAs. Level 3 (L3) uses Astro Islands — each page splits data across four independent framework islands (React, Vue, Svelte, Solid), each using a distinct data-obfuscation technique. No unsolvable CAPTCHAs at any level."
-					}
-				},
-				{
-					"@type": "Question",
-					"name": "How does QScrape relate to Yosoi?",
-					"acceptedAnswer": {
-						"@type": "Answer",
-						"text": "QScrape provides the test sites that Yosoi uses for scraper evaluation. Yosoi is the scraping framework by Cascading Labs, and QScrape serves as its official benchmark suite."
-					}
-				}
-			]
-		})} />
 	</Fragment>
 
-	<!-- Hero -->
-	<header class="hero" role="banner">
-		<div class="hero-brand">
-			<img data-src-dark="/favicon.svg" data-src-light="/favicon-light.svg" alt="QScrape logo" class="hero-logo themed-img" width="64" height="64" />
-			<div>
-				<h1 class="hero-title">QScrape</h1>
-				<p class="hero-tagline">Open-source web scraper evaluation suite</p>
-			</div>
-		</div>
-		<p class="hero-description">
-			Benchmark your web scraper against realistic test sites across <strong>three difficulty levels</strong> — static HTML, modern frameworks, and anti-bot defences. Free and open-source from <a href="https://cascadinglabs.com" target="_blank" rel="noopener">Cascading Labs</a>.
-		</p>
-		<nav class="hero-links" aria-label="Quick links">
-			<a href="/l1/" class="hero-cta">Browse L1 Sites</a>
-			<a href="https://cascadinglabs.com/yosoi" target="_blank" rel="noopener" class="hero-link">Yosoi Docs</a>
-			<a href="https://github.com/CascadingLabs/QScrape" target="_blank" rel="noopener" class="hero-link">GitHub</a>
-		</nav>
-	</header>
+	<div class="home-page">
+		<section class="home-intro" aria-labelledby="home-title">
+			<p class="eyebrow">Scraper playground <span aria-hidden="true">·</span> beta</p>
+			<h1 id="home-title">Real sites.<br /><em>Better scrapers.</em></h1>
+			<p>
+				Objects is a realistic fictional eShop for testing product extraction, browsing, and cart workflows. Choose a version and put your scraper to work.
+			</p>
+		</section>
 
-	<!-- AEO: direct-answer block for AI/search engines -->
-	<section aria-label="What is QScrape">
-		<h2>What is QScrape?</h2>
-		<p>
-			QScrape is a free, open-source web scraper evaluation suite. It hosts fictional but realistic test websites so developers can benchmark scrapers before deploying them in production. Built with <a href="https://astro.build/" target="_blank" rel="noopener">Astro</a>, made by <a href="https://cascadinglabs.com" target="_blank" rel="noopener">Cascading Labs</a>, and used as the official benchmark for <a href="https://github.com/CascadingLabs/Yosoi" target="_blank" rel="noopener">Yosoi</a>.
-		</p>
-	</section>
-
-	<section>
-		<h2>Levels</h2>
-		<ul class="card-list">
-			<li>
-				<div class="card-item">
-					<div class="card-header">
-						<span class="card-label">L1</span>
-
-						<a class="card-arrow" href="/l1/" title="Go to L1">↗</a>
-					</div>
-					<span class="card-desc">
-						<strong>Standard HTML/CSS/JS.</strong> No dynamic data, no web frameworks. Built with <a href="https://astro.build/" target="_blank" rel="noopener">Astro</a> for multi-site management.
-					</span>
+		<section aria-labelledby="objects-title">
+				<a class="shop-feature" href="/eshop/" aria-labelledby="objects-title" aria-describedby="objects-description">
+				<div class="shop-feature-copy">
+						<p class="micro-label">Objects eShop</p>
+						<h2 id="objects-title" class="shop-feature-title" aria-label="Objects eShop">Objects</h2>
+					<p id="objects-description">Thoughtful things for everyday living. Take a look around.</p>
+						<span class="feature-cta">Explore eShop <span aria-hidden="true">↗</span></span>
 				</div>
-			</li>
-			<li>
-				<div class="card-item">
-					<div class="card-header">
-						<span class="card-label">L2</span>
-
-						<a class="card-arrow" href="/l2/" title="Go to L2">↗</a>
-					</div>
-					<span class="card-desc">
-						<strong>Modern Web Frameworks.</strong> <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>. Covers typical DOM-level changes in the wild.
-					</span>
+				<div class="shop-feature-art" aria-hidden="true">
+					<div class="shop-object shop-object-lamp"><img src="/products/lamp.svg" alt="" width="360" height="440" fetchpriority="high" /></div>
+					<div class="shop-object shop-object-mug"><img src="/products/mug.svg" alt="" width="220" height="220" /></div>
+					<div class="shop-object shop-object-notebook"><img src="/products/notebook.svg" alt="" width="290" height="250" /></div>
 				</div>
-			</li>
-			<li>
-				<div class="card-item">
-					<div class="card-header">
-						<span class="card-label">L3</span>
-
-						<a class="card-arrow" href="/l3/" title="Go to L3">↗</a>
-					</div>
-					<span class="card-desc">
-						<strong>Anti-Bot Islands.</strong> <a href="https://docs.astro.build/en/concepts/islands/" target="_blank" rel="noopener">Astro Islands</a> with <a href="https://react.dev/" target="_blank" rel="noopener">React</a>, <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue</a>, <a href="https://svelte.dev/" target="_blank" rel="noopener">Svelte</a>, and <a href="https://www.solidjs.com/" target="_blank" rel="noopener">Solid</a> — each island owns a different data slice and uses a distinct obfuscation technique. No unsolvable CAPTCHAs.
-					</span>
-				</div>
-			</li>
-		</ul>
-	</section>
-
-	<section>
-		<h2>VaultMart — e-shop</h2>
-		<ul class="nav-links">
-			<li><a class="nav-path" href="/l1/eshop/">Plain HTML</a><span class="nav-name">Products, filters, and cart data</span></li>
-			<li><a class="nav-path" href="/l2/eshop/">Modern Frameworks</a><span class="nav-name">React · Vue · Svelte · Solid</span></li>
-			<li><a class="nav-path" href="/l3/eshop/">Anti-bot</a><span class="nav-name">Obfuscated data and browser challenges</span></li>
-		</ul>
-	</section>
-
-	<section>
-		<h2>Resources</h2>
-		<div class="resources">
-			<div class="resource-row">
-				<span>docs</span>
-				<a
-					href="https://cascadinglabs.com/yosoi"
-					target="_blank"
-					rel="noopener">cascadinglabs.com/yosoi</a>
-			</div>
-			<div class="resource-row">
-				<span>sitemap</span>
-				<a
-					href="https://qscrape.dev/sitemap-0.xml"
-					target="_blank"
-					rel="noopener">qscrape.dev/sitemap-0.xml</a>
-			</div>
-			<div class="resource-row">
-				<span>github</span>
-				<a
-					href="https://github.com/CascadingLabs/QScrape"
-					target="_blank"
-					rel="noopener">github.com/CascadingLabs/QScrape</a>
-			</div>
-			<div class="resource-row">
-				<span>contact</span>
-				<a
-					href="mailto:contact@cascadinglabs.com">contact@cascadinglabs.com</a>
-			</div>
-		</div>
-	</section>
-</QScrapeLayout>
+			</a>
+		</section>
+	</div>
+</PlaygroundLayout>

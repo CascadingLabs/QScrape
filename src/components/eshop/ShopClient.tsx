@@ -1,0 +1,729 @@
+import {
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+	type ReactNode,
+} from 'react';
+import { createPortal } from 'react-dom';
+import shopStyles from '../../styles/shop.css?inline';
+import type { Product, ShopVersion } from '../../data/eshop/catalog';
+import { readCart, writeCart, type CartLine } from './cart-store';
+
+type ShopPage = 'catalog' | 'product' | 'cart';
+
+interface Props {
+	page: ShopPage;
+	version: ShopVersion;
+	productId?: string;
+}
+
+const versionLabels: Record<ShopVersion, string> = {
+	html: 'HTML eShop',
+	javascript: 'JavaScript eShop',
+	protected: 'Protected eShop',
+};
+const categories = ['All', 'Desk', 'Home', 'Carry'] as const;
+
+function ShopHeader({
+	version,
+	cartCount,
+	page,
+}: {
+	version: ShopVersion;
+	cartCount: number;
+	page: ShopPage;
+}) {
+	return (
+		<header className="shop-topline" data-shop-part="shop-header">
+			<a className="shop-wordmark" href={`/eshop/${version}/`}>
+				Objects
+			</a>
+			<nav className="shop-nav" aria-label="Objects shop">
+				<a
+					href={`/eshop/${version}/`}
+					aria-current={page === 'catalog' ? 'page' : undefined}
+				>
+					Shop
+				</a>
+				<a
+					href={`/eshop/${version}/cart/`}
+					aria-current={page === 'cart' ? 'page' : undefined}
+					data-shop-part="cart-nav"
+				>
+					Cart{' '}
+					<span className="shop-bag-count" data-shop-part="cart-count">
+						{cartCount}
+					</span>
+				</a>
+			</nav>
+		</header>
+	);
+}
+
+function ShopFooter() {
+	return (
+		<footer className="shop-footer">
+			<span>Objects · Thoughtful things for everyday living</span>
+			<span>Fictional shop · no real purchases</span>
+		</footer>
+	);
+}
+
+function ProtectedShadow({ children }: { children: ReactNode }) {
+	const [host, setHost] = useState<HTMLDivElement | null>(null);
+	const [root, setRoot] = useState<ShadowRoot | null>(null);
+	const [rootFailure, setRootFailure] = useState(false);
+	const [retry, setRetry] = useState(0);
+	const setHostRef = useCallback(
+		(node: HTMLDivElement | null) => setHost(node),
+		[],
+	);
+
+	useEffect(() => {
+		if (!host) return;
+		try {
+			setRootFailure(false);
+			setRoot(host.shadowRoot ?? host.attachShadow({ mode: 'open' }));
+		} catch {
+			setRootFailure(true);
+		}
+	}, [host, retry]);
+
+	return (
+		<div
+			className="protected-shadow-host"
+			data-shop-part="protected-shadow-host"
+			ref={setHostRef}
+		>
+			{root ? (
+				createPortal(
+					<>
+						<style>{shopStyles}</style>
+						{children}
+					</>,
+					root,
+				)
+			) : rootFailure ? (
+				<div
+					className="shop-error"
+					role="alert"
+					data-shop-part="protected-shadow-error"
+				>
+					<p>This browser could not open the protected view.</p>
+					<button
+						type="button"
+						onClick={() => setRetry((current) => current + 1)}
+					>
+						Try again
+					</button>
+				</div>
+			) : (
+				<p
+					className="shop-loading"
+					role="status"
+					data-shop-part="protected-shadow-status"
+				>
+					Opening the protected shelf…
+				</p>
+			)}
+		</div>
+	);
+}
+
+function ProductCard({
+	product,
+	version,
+	add,
+	quantityInCart,
+}: {
+	product: Product;
+	version: ShopVersion;
+	add: (product: Product) => void;
+	quantityInCart: number;
+}) {
+	return (
+		<article
+			className="shop-product-card"
+			data-shop-part="product-card"
+			data-product-id={product.id}
+		>
+			<a
+				className="shop-product-art"
+				href={`/eshop/${version}/product/${product.id}/`}
+				aria-label={`View ${product.name}`}
+			>
+				<img
+					src={product.image}
+					alt={`${product.name}, ${product.color}`}
+					width="600"
+					height="480"
+				/>
+				<span className="shop-stock-note">
+					{product.stock > 0
+						? `${product.stock} available`
+						: 'Currently unavailable'}
+				</span>
+			</a>
+			<div className="shop-product-info">
+				<div>
+					<h2 className="shop-product-name">
+						<a href={`/eshop/${version}/product/${product.id}/`}>
+							{product.name}
+						</a>
+					</h2>
+					<p className="shop-product-meta">
+						{product.category} · {product.color}
+					</p>
+				</div>
+				<span className="shop-price">{formatPrice(product.price)}</span>
+			</div>
+			<div className="shop-card-actions">
+				<a href={`/eshop/${version}/product/${product.id}/`}>Details</a>
+				<button
+					type="button"
+					onClick={() => add(product)}
+					disabled={product.stock <= quantityInCart}
+				>
+					{product.stock <= 0
+						? 'Sold out'
+						: product.stock <= quantityInCart
+							? 'All in bag'
+							: 'Add to cart'}
+				</button>
+			</div>
+		</article>
+	);
+}
+
+function ShopContent({
+	page,
+	version,
+	productId,
+	products,
+	cart,
+	add,
+	changeQuantity,
+	remove,
+	status,
+}: {
+	page: ShopPage;
+	version: ShopVersion;
+	productId?: string;
+	products: readonly Product[];
+	cart: readonly CartLine[];
+	add: (product: Product) => void;
+	changeQuantity: (product: Product, delta: number) => void;
+	remove: (product: Product) => void;
+	status: string;
+}) {
+	const [query, setQuery] = useState('');
+	const [category, setCategory] = useState('All');
+	const count = cart.reduce((sum, line) => sum + line.quantity, 0);
+	const cartProducts = cart.flatMap((line) => {
+		const product = products.find((entry) => entry.id === line.productId);
+		return product ? [{ product, quantity: line.quantity }] : [];
+	});
+
+	useEffect(() => {
+		setCategory(
+			categories.find(
+				(entry) =>
+					entry === new URLSearchParams(window.location.search).get('category'),
+			) ?? 'All',
+		);
+	}, []);
+
+	const visibleProducts = useMemo(
+		() =>
+			products.filter((product) => {
+				const matchesCategory =
+					category === 'All' || product.category === category;
+				const matchesQuery =
+					`${product.name} ${product.category} ${product.color} ${product.material}`
+						.toLowerCase()
+						.includes(query.trim().toLowerCase());
+				return matchesCategory && matchesQuery;
+			}),
+		[category, products, query],
+	);
+	const subtotal = cartProducts.reduce(
+		(sum, line) => sum + line.product.price * line.quantity,
+		0,
+	);
+
+	const catalog = (
+		<>
+			<section className="shop-heading" aria-labelledby="collection-title">
+				<h1 id="collection-title">A little more considered.</h1>
+				<p>
+					Useful things, made to feel at home. Meet the everyday pieces we keep
+					close, wherever the day takes us.
+				</p>
+			</section>
+			<div className="shop-controls">
+				<nav className="shop-categories" aria-label="Shop by category">
+					{categories.map((entry) => (
+						<a
+							key={entry}
+							href={
+								entry === 'All'
+									? `/eshop/${version}/`
+									: `/eshop/${version}/?category=${entry}`
+							}
+							aria-label={`Show ${entry === 'All' ? 'all' : entry} objects`}
+							aria-current={category === entry ? 'page' : undefined}
+						>
+							{entry === 'All' ? 'All objects' : `${entry} objects`}
+						</a>
+					))}
+				</nav>
+				<div className="shop-search">
+					<label htmlFor="objects-search">Search</label>
+					<input
+						id="objects-search"
+						type="search"
+						value={query}
+						onChange={(event) => setQuery(event.currentTarget.value)}
+						placeholder="Find an object"
+					/>
+				</div>
+			</div>
+			<div className="shop-product-grid" data-shop-part="product-grid">
+				{visibleProducts.length > 0 ? (
+					visibleProducts.map((product) => (
+						<ProductCard
+							key={product.id}
+							product={product}
+							version={version}
+							add={add}
+							quantityInCart={
+								cart.find((line) => line.productId === product.id)?.quantity ??
+								0
+							}
+						/>
+					))
+				) : (
+					<p className="shop-empty-results" role="status">
+						No objects match that search.
+					</p>
+				)}
+			</div>
+		</>
+	);
+
+	const selectedProduct = products.find((product) => product.id === productId);
+	const productDetail = selectedProduct ? (
+		<div
+			className="shop-product-layout"
+			data-shop-part="product-detail"
+			data-product-id={selectedProduct.id}
+		>
+			<div className="shop-product-photo">
+				<img
+					src={selectedProduct.image}
+					alt={`${selectedProduct.name}, ${selectedProduct.color}`}
+					width="600"
+					height="480"
+				/>
+			</div>
+			<section className="shop-product-copy" aria-labelledby="product-title">
+				<nav className="shop-breadcrumb" aria-label="Breadcrumb">
+					<a href={`/eshop/${version}/`}>All objects</a>
+					<span aria-hidden="true">/</span>
+					<a href={`/eshop/${version}/?category=${selectedProduct.category}`}>
+						{selectedProduct.category}
+					</a>
+					<span aria-hidden="true">/</span>
+					<span aria-current="page">{selectedProduct.name}</span>
+				</nav>
+				<p className="eyebrow">
+					{selectedProduct.category} · {selectedProduct.color}
+				</p>
+				<h1 id="product-title">{selectedProduct.name}</h1>
+				<p className="shop-detail-price">
+					{formatPrice(selectedProduct.price)}
+				</p>
+				<p className="shop-product-lede">{selectedProduct.description}</p>
+				<div className="shop-product-facts">
+					<div>
+						<span className="shop-fact-label">Material</span>
+						<span className="shop-fact-value">{selectedProduct.material}</span>
+					</div>
+					<div>
+						<span className="shop-fact-label">Color</span>
+						<span className="shop-fact-value">{selectedProduct.color}</span>
+					</div>
+				</div>
+				<p
+					className="shop-availability"
+					data-available={selectedProduct.stock > 0 ? 'true' : 'false'}
+				>
+					{selectedProduct.stock > 0
+						? `${selectedProduct.stock} in stock and ready to find a home.`
+						: 'Currently unavailable.'}
+				</p>
+				<button
+					className="shop-add-button"
+					type="button"
+					onClick={() => add(selectedProduct)}
+					disabled={
+						selectedProduct.stock <=
+						(cart.find((line) => line.productId === selectedProduct.id)
+							?.quantity ?? 0)
+					}
+				>
+					{selectedProduct.stock <= 0
+						? 'Sold out'
+						: selectedProduct.stock <=
+							  (cart.find((line) => line.productId === selectedProduct.id)
+									?.quantity ?? 0)
+							? 'All in bag'
+							: 'Add to cart'}
+				</button>
+			</section>
+		</div>
+	) : (
+		<div
+			className="shop-error"
+			role="status"
+			data-shop-part="product-not-found"
+		>
+			<p>We couldn’t find that object.</p>
+			<a href={`/eshop/${version}/`}>Back to the collection</a>
+		</div>
+	);
+
+	const cartView = (
+		<>
+			<section className="shop-cart-heading" aria-labelledby="cart-title">
+				<p className="eyebrow">Your Objects</p>
+				<h1 id="cart-title">A few good things.</h1>
+				<p>Take a look at what you’ve gathered.</p>
+			</section>
+			{cartProducts.length === 0 ? (
+				<div className="shop-empty-cart" data-shop-part="cart-empty">
+					<p>Your bag is empty for now.</p>
+					<a href={`/eshop/${version}/`}>Find something useful</a>
+				</div>
+			) : (
+				<div className="shop-cart-layout" data-shop-part="cart-content">
+					<ul className="shop-cart-list" aria-label="Items in your bag">
+						{cartProducts.map(({ product, quantity }) => (
+							<li
+								className="shop-cart-line"
+								key={product.id}
+								data-shop-part="cart-line"
+								data-product-id={product.id}
+							>
+								<img
+									className="shop-cart-thumb"
+									src={product.image}
+									alt={`${product.name}, ${product.color}`}
+									width="600"
+									height="480"
+								/>
+								<div>
+									<a
+										className="shop-cart-item-name"
+										href={`/eshop/${version}/product/${product.id}/`}
+									>
+										{product.name}
+									</a>
+									<p className="shop-cart-item-meta">
+										{product.category} · {product.color} ·{' '}
+										{formatPrice(product.price)} each
+									</p>
+									<div
+										className="shop-quantity"
+										aria-label={`${product.name} quantity controls`}
+									>
+										<button
+											type="button"
+											aria-label={`Decrease ${product.name} quantity`}
+											onClick={() => changeQuantity(product, -1)}
+											disabled={quantity <= 1}
+										>
+											−
+										</button>
+										<span aria-label={`${quantity} ${product.name} in cart`}>
+											{quantity}
+										</span>
+										<button
+											type="button"
+											aria-label={`Increase ${product.name} quantity`}
+											onClick={() => changeQuantity(product, 1)}
+											disabled={quantity >= product.stock}
+										>
+											+
+										</button>
+										<button
+											className="shop-remove-button"
+											type="button"
+											onClick={() => remove(product)}
+											aria-label={`Remove ${product.name}`}
+										>
+											Remove
+										</button>
+									</div>
+								</div>
+								<span className="shop-line-total">
+									{formatPrice(product.price * quantity)}
+								</span>
+							</li>
+						))}
+					</ul>
+					<aside className="shop-cart-summary" aria-label="Order summary">
+						<h2>Order summary</h2>
+						<p className="shop-summary-row">
+							<span>Items</span>
+							<span>{formatPrice(subtotal)}</span>
+						</p>
+						<p className="shop-summary-row">
+							<span>Shipping</span>
+							<span>On us</span>
+						</p>
+						<p className="shop-summary-row shop-summary-total">
+							<strong>Total</strong>
+							<strong>{formatPrice(subtotal)}</strong>
+						</p>
+						<p className="shop-checkout-note">
+							A little note: this is a fictional storefront. No payment or
+							delivery takes place.
+						</p>
+					</aside>
+				</div>
+			)}
+		</>
+	);
+
+	return (
+		<div
+			className="shop-root shop-frame"
+			data-shop-part="javascript-shop-content"
+			data-shop-version={version}
+		>
+			<ShopHeader version={version} cartCount={count} page={page} />
+			<div className="shop-version-line">
+				<span className="shop-version-pill">{versionLabels[version]}</span>
+				<span className="shop-subtitle">Good things for everyday living.</span>
+			</div>
+			{page === 'catalog'
+				? catalog
+				: page === 'product'
+					? productDetail
+					: cartView}
+			<ShopFooter />
+			{version === 'protected' && (
+				<div
+					className="protected-decoy"
+					aria-hidden="true"
+					data-shop-part="protected-decoy"
+				>
+					<span>Arc desk lamp · $0.99 · 999 available</span>
+					<span>Not a real product or offer.</span>
+				</div>
+			)}
+			<p
+				className="shop-added-message"
+				role="status"
+				aria-live="polite"
+				data-shop-part="cart-confirmation"
+			>
+				{status}
+			</p>
+		</div>
+	);
+}
+
+function formatPrice(cents: number): string {
+	return new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD',
+	}).format(cents / 100);
+}
+
+export default function ShopClient({ page, version, productId }: Props) {
+	const [products, setProducts] = useState<readonly Product[] | null>(null);
+	const [cart, setCart] = useState<CartLine[]>([]);
+	const [error, setError] = useState(false);
+	const [retryCount, setRetryCount] = useState(0);
+	const [status, setStatus] = useState('');
+
+	useEffect(() => {
+		let cancelled = false;
+		setProducts(null);
+		setError(false);
+		const timer = window.setTimeout(() => {
+			import('../../data/eshop/catalog')
+				.then((catalog) => {
+					if (cancelled) return;
+					setProducts(catalog.products);
+					setCart(readCart(version, catalog.products));
+				})
+				.catch(() => {
+					if (!cancelled) setError(true);
+				});
+		}, 700);
+		return () => {
+			cancelled = true;
+			window.clearTimeout(timer);
+		};
+	}, [retryCount, version]);
+
+	useEffect(() => {
+		if (!products) return;
+		const onStorage = (event: StorageEvent) => {
+			if (event.key === `objects:cart:${version}`) {
+				setCart(readCart(version, products));
+			}
+		};
+		window.addEventListener('storage', onStorage);
+		return () => window.removeEventListener('storage', onStorage);
+	}, [products, version]);
+
+	const commitCart = useCallback(
+		(next: readonly CartLine[]) => {
+			if (!products) return false;
+			const result = writeCart(version, next, products);
+			setCart(result.cart);
+			return result.persisted;
+		},
+		[products, version],
+	);
+
+	const add = useCallback(
+		(product: Product) => {
+			if (!products || product.stock <= 0) return;
+			const line = cart.find((entry) => entry.productId === product.id);
+			const current = line?.quantity ?? 0;
+			if (current >= product.stock) {
+				setStatus(
+					`You have all ${product.stock} available ${product.name.toLowerCase()} in your cart.`,
+				);
+				return;
+			}
+			const next = line
+				? cart.map((entry) =>
+						entry.productId === product.id
+							? { ...entry, quantity: current + 1 }
+							: entry,
+					)
+				: [...cart, { productId: product.id, quantity: 1 }];
+			const persisted = commitCart(next);
+			setStatus(
+				persisted
+					? `Added ${product.name} to cart.`
+					: `Added ${product.name} for this visit; browser storage is unavailable.`,
+			);
+		},
+		[cart, commitCart, products],
+	);
+
+	const changeQuantity = useCallback(
+		(product: Product, delta: number) => {
+			const line = cart.find((entry) => entry.productId === product.id);
+			if (!line) return;
+			const quantity = Math.min(product.stock, line.quantity + delta);
+			if (quantity < 1) {
+				const persisted = commitCart(
+					cart.filter((entry) => entry.productId !== product.id),
+				);
+				setStatus(
+					persisted
+						? `Removed ${product.name} from cart.`
+						: `Removed ${product.name} for this visit; browser storage is unavailable.`,
+				);
+				return;
+			}
+			const persisted = commitCart(
+				cart.map((entry) =>
+					entry.productId === product.id ? { ...entry, quantity } : entry,
+				),
+			);
+			setStatus(
+				persisted
+					? `Updated ${product.name} quantity to ${quantity}.`
+					: `Updated ${product.name} for this visit; browser storage is unavailable.`,
+			);
+		},
+		[cart, commitCart],
+	);
+
+	const remove = useCallback(
+		(product: Product) => {
+			const persisted = commitCart(
+				cart.filter((entry) => entry.productId !== product.id),
+			);
+			setStatus(
+				persisted
+					? `Removed ${product.name} from cart.`
+					: `Removed ${product.name} for this visit; browser storage is unavailable.`,
+			);
+		},
+		[cart, commitCart],
+	);
+
+	if (error) {
+		return (
+			<div
+				className="shop-root shop-error"
+				role="alert"
+				data-shop-part="shop-error-status"
+			>
+				<p>The collection could not be loaded.</p>
+				<button
+					type="button"
+					onClick={() => setRetryCount((current) => current + 1)}
+				>
+					Try again
+				</button>
+			</div>
+		);
+	}
+	if (!products) {
+		return (
+			<div
+				className="shop-root shop-loading"
+				role="status"
+				aria-live="polite"
+				data-shop-part="shop-loading-status"
+			>
+				<span className="shop-loading-mark" aria-hidden="true"></span>
+				<span>Taking a moment to set the table…</span>
+			</div>
+		);
+	}
+
+	const content = (
+		<ShopContent
+			page={page}
+			version={version}
+			productId={productId}
+			products={products}
+			cart={cart}
+			add={add}
+			changeQuantity={changeQuantity}
+			remove={remove}
+			status={status}
+		/>
+	);
+
+	if (version === 'protected') {
+		return (
+			<>
+				<p
+					className="shop-root shop-protection-note"
+					data-shop-part="protected-challenge-note"
+				>
+					The same collection, with deliberate extraction challenges. Compare
+					your results with the{' '}
+					<a href="/eshop/fixtures.json">published catalogue</a>.
+				</p>
+				<ProtectedShadow>{content}</ProtectedShadow>
+			</>
+		);
+	}
+
+	return content;
+}

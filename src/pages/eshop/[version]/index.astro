@@ -1,0 +1,41 @@
+---
+import PlaygroundLayout from '../../../layouts/PlaygroundLayout.astro';
+import StaticCatalog from '../../../components/eshop/StaticCatalog.astro';
+import ShopClient from '../../../components/eshop/ShopClient';
+import { versions, type ShopVersion } from '../../../data/eshop/catalog';
+import '../../../styles/shop.css';
+
+export function getStaticPaths() {
+	return versions.map((version) => ({ params: { version }, props: { version } }));
+}
+
+interface Props {
+	version: ShopVersion;
+}
+
+const { version } = Astro.props;
+const versionLabels: Record<ShopVersion, string> = {
+	html: 'HTML eShop',
+	javascript: 'JavaScript eShop',
+	protected: 'Protected eShop',
+};
+const title = `${versionLabels[version]} — Objects`;
+const description = 'Good things for everyday living. Explore thoughtful objects for your desk, home, and everyday carry.';
+---
+
+<PlaygroundLayout title={title} description={description} shopVersion={version}>
+	<Fragment slot="head">
+		<link rel="canonical" href={`https://qscrape.dev/eshop/${version}/`} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={`https://qscrape.dev/eshop/${version}/`} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:site_name" content="Objects" />
+	</Fragment>
+	{version === 'html'
+		? <StaticCatalog version={version} />
+		: <>
+			<noscript><p class="shop-protection-note">{versionLabels[version]} needs JavaScript enabled to load the collection.</p></noscript>
+			<ShopClient client:only="react" page="catalog" version={version} />
+		</>}
+</PlaygroundLayout>

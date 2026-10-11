@@ -1,14 +1,9 @@
 User-agent: *
-
-# Index / overview pages — allow for indexing
 Allow: /$
-Allow: /l1/$
-Allow: /l2/$
-Allow: /l3/$
-
-# Test-site content pages — fictional targets for scraper evaluation, not for indexing
-Disallow: /l1/eshop/
-Disallow: /l2/eshop/
-Disallow: /l3/eshop/
+Allow: /eshop/$
+Disallow: /eshop/html/
+Disallow: /eshop/javascript/
+Disallow: /eshop/protected/
+Disallow: /eshop/fixtures.json
 
 Sitemap: https://qscrape.dev/sitemap-0.xml

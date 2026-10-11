@@ -1,60 +1,68 @@
-<p align="center">
-  <a href="https://qscrape.dev">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="media/logo-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="media/logo-light.svg">
-      <img src="media/logo-dark.svg" alt="QScrape" width="200">
-    </picture>
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://discord.gg/5WZNzFZtgb"><img src="https://img.shields.io/badge/Discord-Join-ef6464?labelColor=1a0808&logo=discord&logoColor=white" alt="Discord"></a>
-  <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache_2.0-ef6464?labelColor=1a0808" alt="License"></a>
-</p>
+<p align="center"><a href="https://qscrape.dev"><img src="media/logo-light.svg" alt="QScrape" width="200"></a></p>
 
 # QScrape
 
-Web scraper evaluation suite focused on VaultMart, a fictional e-shop with plain HTML, modern framework, and anti-bot experiences.
+A small scraper playground by [Cascading Labs](https://cascadinglabs.com). Choose a site, choose a version, and test against a known collection of synthetic products.
+
+The first site is **Objects**, an eShop of everyday essentials. There are no real purchases, accounts, or payments.
 
 > [!WARNING]
-> QScrape is research tooling for API design and web reverse engineering. **You assume all legal risk for how you use it.** Respect `robots.txt`, rate limits, and IP bans; and please don't bypass them with Tor or a VPN. Read [DISCLAIMER.md](DISCLAIMER.md) before pointing it at anything.
+> QScrape is research tooling for API design and web reverse engineering. Respect the policies of any site you test. Read [DISCLAIMER.md](DISCLAIMER.md).
 
-Made by [Cascading Labs](https://cascadinglabs.com), used for [Yosoi](https://github.com/CascadingLabs/Yosoi).
+## Explore
 
-## E-shop experiences
+| Page               | Route                  | What to expect                                                  |
+| ------------------ | ---------------------- | --------------------------------------------------------------- |
+| Playground         | `/`                    | One eShop entry point                                           |
+| eShop versions     | `/eshop/`              | Choose HTML, JavaScript, or Protected                           |
+| HTML eShop         | `/eshop/html/`         | Core products and product details are in the HTML response      |
+| JavaScript eShop   | `/eshop/javascript/`   | A client-rendered shop with an observable loading state         |
+| Protected eShop    | `/eshop/protected/`    | Delayed content, a Shadow DOM catalogue, and an invisible decoy |
+| Catalogue fixtures | `/eshop/fixtures.json` | Expected IDs, prices in cents, stock, and product fields        |
 
-| Experience        | Route        |
-| ----------------- | ------------ |
-| Plain HTML        | `/l1/eshop/` |
-| Modern Frameworks | `/l2/eshop/` |
-| Anti-bot          | `/l3/eshop/` |
-
-Existing routes remain stable while the beta is simplified.
+Every version has product pages and a local sample cart. HTML catalogue extraction and navigation work with JavaScript disabled; cart interactions require JavaScript. Cart state stays in your browser and is separate for each version.
 
 ## Development
 
-Use Bun 1.4.3 and Node.js 24.11 or newer in the 24.x line (Node.js 24 is used in CI).
+Use Bun 1.4.3 and Node.js 24.11 or newer in the 24.x line.
 
 ```bash
 bun install --frozen-lockfile
-bun run dev       # http://localhost:4321
+bun run dev
+bun run check
 bun run build
 bun run preview
 ```
 
-## Lint and format
+Astro 7 builds with Vite+ core, Rolldown, and Oxc. The only client framework is React. Update `vite-plus` and the `vite` alias/override together. Formatting and lint configuration live in `vite.config.ts`.
 
 ```bash
-bun run check     # Oxfmt format check + Oxlint
-bun run lint      # Oxlint, warnings fail the check
-bun run format    # Oxfmt
+bun run format       # Oxfmt, one thread
+bun run lint         # Oxlint, one thread; warnings fail
+bun run check        # Read-only format and lint checks, sequentially
 ```
 
-## Community
+Oxfmt currently skips Astro templates. Oxlint checks their scripts; the Astro production build validates the templates.
 
-- **Responsible use:** see [DISCLAIMER.md](DISCLAIMER.md)
+## Content and contracts
 
-## Contact
+The canonical dataset is `src/data/eshop/catalog.ts`. Prices are integer USD cents. Product IDs, content, and inventory are identical across versions. One item is out of stock so extraction and cart availability can be checked independently.
 
-[contact@cascadinglabs.com](mailto:contact@cascadinglabs.com)
+| Product ID | Name               | Price  | Stock |
+| ---------- | ------------------ | ------ | ----- |
+| obj-001    | Arc desk lamp      | $68.00 | 12    |
+| obj-002    | Loop ceramic mug   | $24.00 | 8     |
+| obj-003    | Grid notebook      | $18.00 | 24    |
+| obj-004    | Daybreak tote      | $32.00 | 5     |
+| obj-005    | Pebble catchall    | $28.00 | 0     |
+| obj-006    | Still glass bottle | $36.00 | 9     |
+
+The Protected version is a controlled extraction exercise, not a claim of real provider-backed bot protection. Its expected catalogue is deliberately published for comparison. Real provider integrations are future work.
+
+## Restart and migration
+
+The old VaultMart implementation and numbered-level routes have been retired. Their product IDs and special URL encodings do not map to this new collection. External examples that relied on the retired shop must choose a new route and update their expected product IDs and values. No legacy compatibility layer is included.
+
+## Contact and license
+
+[contact@cascadinglabs.com](mailto:contact@cascadinglabs.com) · [GitHub](https://github.com/CascadingLabs/QScrape) · [Apache-2.0](LICENSE)

@@ -1,11 +1,13 @@
 # QScrape
 
-> A scraper evaluation e-shop by [Cascading Labs](https://cascadinglabs.com), used by [Yosoi](https://github.com/CascadingLabs/Yosoi).
+> A scraper playground by Cascading Labs. Site first, version second. All products and orders are synthetic.
 
-VaultMart products and orders are synthetic test data.
+## eShop
 
-## E-shop experiences
+- [Choose a version](/eshop/)
+- [HTML eShop](/eshop/html/): Products and product details appear in the HTML response. JavaScript is unnecessary for core extraction.
+- [JavaScript eShop](/eshop/javascript/): Products render in the browser after a loading state.
+- [Protected eShop](/eshop/protected/): Delayed hydration, Shadow DOM catalogue content, and a hidden decoy exercise extraction behavior. This is not live provider-backed protection.
+- [Expected catalogue](/eshop/fixtures.json): Ground-truth synthetic product data for comparing extraction results.
 
-- [Plain HTML](/l1/eshop/): HTML/CSS and ordinary JavaScript. Product catalogue, search, product details, and a sample cart.
-- [Modern Frameworks](/l2/eshop/): Client-only React, Vue, Svelte, and Solid islands. Framework assignment is shuffled per slot. Wait for asynchronous content to load.
-- [Anti-bot](/l3/eshop/): Product data split across framework islands with CSS-ordered text, pseudo-elements, decoy overlays, canvas text, and closed Shadow DOM.
+All three versions share the same six products and support a sample cart stored locally in the browser. No real purchases take place.
