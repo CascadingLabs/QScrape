@@ -2,11 +2,11 @@ import {
 	categories,
 	formatPrice,
 	type ShopCategory,
-	products,
 	type Product,
 	type ShopVersion,
 } from '../../data/eshop/catalog';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { loadCatalogue } from '../../lib/eshop/api-client';
 import {
 	cartStorageKey,
 	readCart,
@@ -445,7 +445,12 @@ function ShopContent({
 	);
 }
 
-export default function ShopClient({ page, version, productId }: ShopProps) {
+export function ShopApp({
+	page,
+	version,
+	productId,
+	products,
+}: ShopProps & { products: readonly Product[] }) {
 	const [cart, setCart] = useState<CartLine[]>(() =>
 		readCart(version, products),
 	);
@@ -459,7 +464,7 @@ export default function ShopClient({ page, version, productId }: ShopProps) {
 		};
 		window.addEventListener('storage', onStorage);
 		return () => window.removeEventListener('storage', onStorage);
-	}, [version]);
+	}, [version, products]);
 
 	const commitCart = useCallback(
 		(next: readonly CartLine[]) => {
@@ -467,7 +472,7 @@ export default function ShopClient({ page, version, productId }: ShopProps) {
 			setCart(result.cart);
 			return result.persisted;
 		},
-		[version],
+		[version, products],
 	);
 
 	const add = useCallback(
@@ -555,4 +560,40 @@ export default function ShopClient({ page, version, productId }: ShopProps) {
 			status={status}
 		/>
 	);
+}
+
+export default function ShopClient(props: ShopProps) {
+	const [products, setProducts] = useState<readonly Product[] | null>(null);
+	const [failed, setFailed] = useState(false);
+	const [attempt, setAttempt] = useState(0);
+	useEffect(() => {
+		const controller = new AbortController();
+		loadCatalogue(controller.signal)
+			.then(setProducts)
+			.catch(() => {
+				if (!controller.signal.aborted) setFailed(true);
+			});
+		return () => controller.abort();
+	}, [attempt, props.version]);
+	if (failed)
+		return (
+			<section className="shop-root shop-error" role="alert">
+				<p>We couldn’t load the collection.</p>
+				<button
+					type="button"
+					onClick={() => {
+						setProducts(null);
+						setFailed(false);
+						setAttempt((value) => value + 1);
+					}}
+				>
+					Try again
+				</button>
+			</section>
+		);
+	if (!products)
+		return (
+			<output className="shop-root shop-loading">Loading products…</output>
+		);
+	return <ShopApp {...props} products={products} />;
 }

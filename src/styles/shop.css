@@ -637,3 +637,16 @@ output.shop-empty-results,
 .shop-error output {
 	display: block;
 }
+
+.shop-access {
+	max-width: 420px;
+	padding: 64px 0;
+}
+.shop-access h1 {
+	margin: 24px 0;
+	font-size: 24px;
+	font-weight: 500;
+}
+.shop-access .shop-add-button {
+	margin-top: 24px;
+}

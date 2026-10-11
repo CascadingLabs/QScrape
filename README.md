@@ -14,9 +14,10 @@ The first site is **Objects**, an eShop of everyday essentials. There are no rea
 | Page               | Route                  | What to expect                                                   |
 | ------------------ | ---------------------- | ---------------------------------------------------------------- |
 | Playground         | `/`                    | One eShop entry point                                            |
-| eShop versions     | `/eshop/`              | Choose HTML or JavaScript                                        |
+| eShop versions     | `/eshop/`              | Choose HTML, JavaScript, or Turnstile JavaScript                 |
 | HTML eShop         | `/eshop/html/`         | Astro generates product content as static HTML at build time     |
 | JavaScript eShop   | `/eshop/javascript/`   | One client-only React island; JavaScript required for extraction |
+| Turnstile eShop    | `/eshop/turnstile/`    | React shop with server-verified Turnstile access                 |
 | Catalogue fixtures | `/eshop/fixtures.json` | Expected IDs, prices in cents, stock, and product fields         |
 
 Every version has product pages and a local sample cart. HTML catalogue extraction and navigation work with JavaScript disabled; cart interactions require JavaScript. Cart state stays in your browser and is separate for each version.
@@ -40,6 +41,10 @@ vp run preview
 ```
 
 Astro 7 builds with Vite+ core, Rolldown, and Oxc. The only client framework is React. Update `vite-plus` and the `vite` alias/override together. Formatting and lint configuration live in `vite.config.ts`.
+
+The JavaScript shop fetches `/api/eshop/products/` from the shared fixture-backed REST API. Cloudflare Pages Functions serve the API in deployment; `vp run dev` provides the same handlers locally. Static `vp run preview` does not run Pages Functions.
+
+For Turnstile development, copy `.env.example` to the ignored `.env` and configure `TURNSTILE_SECRET`. Production Pages bindings need that secret and `TURNSTILE_HOSTNAMES=qscrape.dev`; use `localhost,127.0.0.1` only for local development. The public site key is included in the Turnstile module. See its [README](src/modules/turnstile-eshop/README.md) for the verification contract.
 
 ```bash
 vp run format       # Oxfmt, one thread

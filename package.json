@@ -31,6 +31,9 @@
 		"vite-plus": "^1.1.0"
 	},
 	"overrides": {
+		"defu": "^6.1.5",
+		"http-cache-semantics": "^4.3.0",
+		"source-map-js": "^1.2.2",
 		"vite": "npm:@voidzero-dev/vite-plus-core@1.1.0"
 	},
 	"engines": {

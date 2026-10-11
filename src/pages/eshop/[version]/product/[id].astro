@@ -10,6 +10,7 @@ import type { GetStaticPaths } from 'astro';
 import ShopLayout from '../../../../layouts/ShopLayout.astro';
 import StaticProduct from '../../../../modules/html-eshop/StaticProduct.astro';
 import ShopClient from '../../../../modules/javascript-eshop/ShopClient';
+import TurnstileShop from '../../../../modules/turnstile-eshop/TurnstileShop';
 
 export const getStaticPaths = (() => {
 	return versions.flatMap((version) =>
@@ -63,7 +64,7 @@ const description =
 					This shop needs JavaScript enabled to load product details.
 				</p>
 			</noscript>
-			<ShopClient
+			{version === 'turnstile' ? <TurnstileShop
 				client:only="react"
 				page="product"
 				version={version}
@@ -72,7 +73,16 @@ const description =
 				<p slot="fallback" class="shop-root shop-loading" role="status">
 					Loading shop…
 				</p>
-			</ShopClient>
+			</TurnstileShop> : <ShopClient
+				client:only="react"
+				page="product"
+				version={version}
+				productId={productId}
+			>
+				<p slot="fallback" class="shop-root shop-loading" role="status">
+					Loading shop…
+				</p>
+			</ShopClient>}
 		</>
 	)}
 </ShopLayout>

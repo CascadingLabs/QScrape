@@ -4,6 +4,7 @@ import type { GetStaticPaths } from 'astro';
 import ShopLayout from '../../../../layouts/ShopLayout.astro';
 import StaticCart from '../../../../modules/html-eshop/StaticCart.astro';
 import ShopClient from '../../../../modules/javascript-eshop/ShopClient';
+import TurnstileShop from '../../../../modules/turnstile-eshop/TurnstileShop';
 
 export const getStaticPaths = (() => {
 	return versions.map((version) => ({
@@ -42,11 +43,15 @@ const description = 'Review the objects in your cart.';
 					This shop needs JavaScript enabled to view and update the local cart.
 				</p>
 			</noscript>
-			<ShopClient client:only="react" page="cart" version={version}>
+			{version === 'turnstile' ? <TurnstileShop client:only="react" page="cart" version={version}>
 				<p slot="fallback" class="shop-root shop-loading" role="status">
 					Loading shop…
 				</p>
-			</ShopClient>
+			</TurnstileShop> : <ShopClient client:only="react" page="cart" version={version}>
+				<p slot="fallback" class="shop-root shop-loading" role="status">
+					Loading shop…
+				</p>
+			</ShopClient>}
 		</>
 	)}
 </ShopLayout>

@@ -1,6 +1,5 @@
-# Dependency CVE gate — be proactive instead of waiting on Dependabot.
-# Scanners live in CascadingLabs/.github (reusable workflows); update them once,
-# every repo inherits the change. See that repo's .github/workflows/cve-*.yml.
+# Public repositories cannot call the private organization workflow.
+# Keep the equivalent Bun dependency audit local to this repository.
 
 name: Security (CVE)
 
@@ -20,6 +19,16 @@ concurrency:
 
 jobs:
   js:
-    uses: CascadingLabs/.github/.github/workflows/cve-js.yml@main
-    with:
-      package-manager: bun
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.3
+
+      - name: Audit dependencies
+        run: bun audit --audit-level=moderate

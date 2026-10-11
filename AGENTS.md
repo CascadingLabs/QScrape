@@ -1,6 +1,6 @@
 # QScrape
 
-QScrape is Cascading Labs’ web scraper playground. It provides realistic, self-contained example sites with known data so people and agents can compare extraction and interaction behavior. The current scope is one eShop, Objects, with HTML and JavaScript versions backed by the same catalogue. Protection scenarios and additional site types are future work.
+QScrape is Cascading Labs’ web scraper playground. It provides realistic, self-contained example sites with known data so people and agents can compare extraction and interaction behavior. The current scope is one eShop, Objects, with HTML, JavaScript, and Turnstile JavaScript versions backed by the same catalogue.
 
 ## Style and experience
 
@@ -15,6 +15,8 @@ The eShop is its own app. It has its own layout, styling, branding, and shopping
 - `src/pages/eshop/[version]/`: thin Astro route wrappers.
 - `src/modules/html-eshop/`: static HTML implementation and README.
 - `src/modules/javascript-eshop/`: one React island and README.
+- `src/modules/turnstile-eshop/`: Turnstile access gate around the shared React shop and README.
+- `functions/api/eshop/`: Cloudflare Pages REST handlers; local development uses the same handlers through Vite middleware.
 - `src/data/eshop/catalog.ts`: shared products, prices, categories, and version definitions.
 - `src/lib/eshop/`: shared cart validation and persistence.
 - `src/layouts/PlaygroundLayout.astro` and `src/styles/playground.css`: project navigation shell.
@@ -25,6 +27,7 @@ The eShop is its own app. It has its own layout, styling, branding, and shopping
 - Organize by site type and implementation module. Do not reintroduce numbered levels or duplicate hidden framework implementations.
 - Keep route files thin. Put implementation behavior and a concise README together in the module; share data and genuinely common helpers.
 - Preserve HTML extraction without JavaScript. The JavaScript version uses one client-only React island. Describe actual rendering and navigation behavior accurately.
+- Keep Turnstile scoped to its own shop. Validate tokens on the server, including action and hostname, and fail closed when configuration is missing. Keep secrets out of client code and source control.
 - Keep shared product IDs and expected values consistent. Prices are integer USD cents. Validate stored cart data and bound quantities by stock; unavailable products cannot be added.
 - Keep project and shop styles independent. Do not import the index stylesheet or theme controls into the storefront.
 - Reuse existing components and tokens before introducing new patterns. Prefer clear, accessible links, labelled controls, visible status messages, and responsive layouts.

@@ -85,11 +85,16 @@ export const products: readonly Product[] = [
 	},
 ];
 
-export type ShopVersion = 'html' | 'javascript';
-export const versions: readonly ShopVersion[] = ['html', 'javascript'];
+export type ShopVersion = 'html' | 'javascript' | 'turnstile';
+export const versions: readonly ShopVersion[] = [
+	'html',
+	'javascript',
+	'turnstile',
+];
 export const versionLabels = {
 	html: 'HTML eShop',
 	javascript: 'JavaScript eShop',
+	turnstile: 'Turnstile JavaScript eShop',
 } satisfies Record<ShopVersion, string>;
 export const categories = ['All', 'Desk', 'Home', 'Carry'] as const;
 export type ShopCategory = (typeof categories)[number];

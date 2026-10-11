@@ -4,6 +4,7 @@ import type { GetStaticPaths } from 'astro';
 import ShopLayout from '../../../layouts/ShopLayout.astro';
 import StaticCatalog from '../../../modules/html-eshop/StaticCatalog.astro';
 import ShopClient from '../../../modules/javascript-eshop/ShopClient';
+import TurnstileShop from '../../../modules/turnstile-eshop/TurnstileShop';
 
 export const getStaticPaths = (() => {
 	return versions.map((version) => ({
@@ -40,11 +41,15 @@ const description =
 					This shop needs JavaScript enabled to load the collection.
 				</p>
 			</noscript>
-			<ShopClient client:only="react" page="catalog" version={version}>
+			{version === 'turnstile' ? <TurnstileShop client:only="react" page="catalog" version={version}>
 				<p slot="fallback" class="shop-root shop-loading" role="status">
 					Loading shop…
 				</p>
-			</ShopClient>
+			</TurnstileShop> : <ShopClient client:only="react" page="catalog" version={version}>
+				<p slot="fallback" class="shop-root shop-loading" role="status">
+					Loading shop…
+				</p>
+			</ShopClient>}
 		</>
 	)}
 </ShopLayout>
