@@ -17,7 +17,6 @@ export interface ShopProps {
 const versionLabels: Record<ShopVersion, string> = {
 	html: 'HTML eShop',
 	javascript: 'JavaScript eShop',
-	protected: 'Protected eShop',
 };
 const categories = ['All', 'Desk', 'Home', 'Carry'] as const;
 

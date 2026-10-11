@@ -1,21 +1,54 @@
 ---
 import PlaygroundLayout from '../../layouts/PlaygroundLayout.astro';
+const repository = 'https://github.com/CascadingLabs/QScrape';
+const revision = import.meta.env.PUBLIC_SOURCE_REVISION ?? process.env.CF_PAGES_COMMIT_SHA ?? process.env.GITHUB_SHA;
+const publishedRevision = typeof revision === 'string' && /^[a-f0-9]{40}$/i.test(revision) ? revision : undefined;
+const sourceURL = (path: string) => publishedRevision ? `${repository}/blob/${publishedRevision}/${path.split('/').map(encodeURIComponent).join('/')}` : undefined;
 const options = [
-	{ slug: 'html', name: 'HTML eShop', description: 'Product content is in the HTML response. No JavaScript needed for extraction.' },
-	{ slug: 'javascript', name: 'JavaScript eShop', description: 'Product content loads in the browser. Let the page render before extracting.' },
-	{ slug: 'protected', name: 'Protected eShop', description: 'The same shop with deliberate extraction challenges.' },
+	{
+		slug: 'html', name: 'HTML eShop',
+		description: 'Astro generates the catalogue and product pages as static HTML at build time. Read product data directly from the response.',
+		renderer: 'Astro-rendered HTML', extraction: 'No JavaScript required',
+		interactions: 'Ordinary JavaScript for filters and the sample cart',
+		implementation: 'src/components/eshop/StaticCatalog.astro',
+	},
+	{
+		slug: 'javascript', name: 'JavaScript eShop',
+		description: 'Astro hosts one client-only React island. Product content appears when the island renders in the browser.',
+		renderer: 'Astro + React island', extraction: 'JavaScript required',
+		interactions: 'React handles search, filtering, and the sample cart',
+		implementation: 'src/components/eshop/ShopClient.tsx',
+	},
 ];
+const pageSource = 'src/pages/eshop/[version]/index.astro';
+const layoutSource = 'src/layouts/ShopLayout.astro';
 ---
-<PlaygroundLayout title="eShop — QScrape" description="Choose the HTML, JavaScript, or Protected version of the eShop.">
+<PlaygroundLayout title="eShop — QScrape" description="Compare the HTML and JavaScript versions of the same synthetic eShop.">
 	<h1 slot="heading" class="home-title">eShop</h1>
-	<div class="home-copy"><p>Choose a version. Each one uses the same six products.</p></div>
-	<nav class="version-list" aria-label="eShop versions">
+	<div class="home-copy">
+		<p>Two implementations of the same six-product shop. Choose what you want your scraper to handle.</p>
+		<p><a href="/eshop/fixtures.json">Catalogue fixtures</a> provide the expected product IDs, prices, and stock.</p>
+	</div>
+	<section class="version-list" aria-label="eShop versions">
 		{options.map((option) => (
-			<a class="version-link" href={`/eshop/${option.slug}/`}>
-				<div class="version-heading"><h2>{option.name}</h2><span class="project-arrow" aria-hidden="true">→</span></div>
+			<article class="version-link">
+				<div class="version-heading"><h2>{option.name}</h2></div>
 				<p>{option.description}</p>
-			</a>
+				<dl class="version-details">
+					<div><dt>Rendering</dt><dd>{option.renderer}</dd></div>
+					<div><dt>Extraction</dt><dd>{option.extraction}</dd></div>
+					<div><dt>Interactions</dt><dd>{option.interactions}</dd></div>
+					<div><dt>Navigation</dt><dd>Separate pages with ordinary links</dd></div>
+				</dl>
+				<a class="project-card version-open" href={`/eshop/${option.slug}/`}>Open {option.name}<span class="project-arrow" aria-hidden="true">→</span></a>
+				<nav class="version-sources" aria-label={`${option.name} source`}>
+					{[{label:'Page',path:pageSource},{label:'Layout',path:layoutSource},{label:'Implementation',path:option.implementation}].map((source) => (
+						<div>{sourceURL(source.path) ? <a href={sourceURL(source.path)} target="_blank" rel="noopener noreferrer">{source.label} source ↗</a> : <><span>{source.label}: </span><code>{source.path}</code></>}</div>
+					))}
+				</nav>
+			</article>
 		))}
-	</nav>
+	</section>
+	{!publishedRevision && <p class="source-note">Source links will point to the matching commit on published builds. <a href={repository}>GitHub repository ↗</a></p>}
 	<div class="home-footer"><a href="/">← QScrape</a></div>
 </PlaygroundLayout>

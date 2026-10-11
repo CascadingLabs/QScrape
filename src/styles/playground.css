@@ -193,3 +193,42 @@
 		height: 36px;
 	}
 }
+
+.version-details {
+	margin: 16px 0;
+	font-size: 12px;
+}
+.version-details > div {
+	display: grid;
+	grid-template-columns: 104px minmax(0, 1fr);
+	gap: 12px;
+	margin-top: 8px;
+}
+.version-details dt {
+	color: var(--qs-text-dim);
+}
+.version-details dd {
+	margin: 0;
+	color: var(--qs-text-muted);
+}
+.version-open {
+	font-size: 12px;
+}
+.version-sources {
+	border-top: 1px solid var(--qs-border);
+	padding-top: 12px;
+	margin-top: 16px;
+	font-size: 11px;
+	color: var(--qs-text-dim);
+}
+.version-sources > div + div {
+	margin-top: 6px;
+}
+.version-sources code {
+	overflow-wrap: anywhere;
+}
+.source-note {
+	margin-top: 20px;
+	font-size: 11px;
+	color: var(--qs-text-dim);
+}

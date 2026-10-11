@@ -13,7 +13,6 @@ Focus on:
 - Shared catalogue and expected product values in `src/data/eshop/catalog.ts`
 - HTML extraction without JavaScript
 - Client rendering and loading states
-- Documented Protected eShop challenges
 - Cart state and code review
 
 Output: task-relevant repo summary, relevant files, commands, hazards, and open questions.

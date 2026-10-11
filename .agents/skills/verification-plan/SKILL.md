@@ -11,6 +11,6 @@ Consider:
 - `bun run build`
 - generated HTML, route, asset, and fixture verification
 - version-specific behavior checks, especially hydration/async/anti-bot expectations
-- consistency across HTML, JavaScript, and Protected versions
+- consistency across HTML and JavaScript versions
 
 Report behavior to prove, exact commands, manual checks, and remaining gaps.

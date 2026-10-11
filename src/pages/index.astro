@@ -1,10 +1,11 @@
 ---
 import PlaygroundLayout from "../layouts/PlaygroundLayout.astro";
-const description = "A small playground for testing web scrapers.";
+const description =
+	"An open-source playground for testing web scrapers and browser automation.";
 ---
 
 <PlaygroundLayout
-	title="QScrape — Scraper playground"
+	title="QScrape — Web scraping and browser automation playground"
 	description={description}
 >
 	<h1 slot="heading" class="home-title home-brand">
@@ -15,18 +16,105 @@ const description = "A small playground for testing web scrapers.";
 		<link rel="canonical" href="https://qscrape.dev/" />
 	</Fragment>
 	<div class="home-copy">
-		<p class="home-lead">
-			{description} By <a href="https://cascadinglabs.com">Cascading Labs</a>.
-		</p>
+		<p class="home-lead">{description}</p>
 	</div>
-	<div class="home-footer">
+	<section class="home-section" aria-labelledby="test-sites-heading">
+		<h2 id="test-sites-heading">Explore the test sites</h2>
 		<nav class="project-list" aria-label="Test sites">
-			<a class="project-card" href="/eshop/">
-				<span>eShop</span>
-				<span class="project-arrow" aria-hidden="true">
-					→
-				</span>
-			</a>
+			<div class="site-entry">
+				<a
+					class="project-card"
+					href="/eshop/"
+					aria-describedby="eshop-description"
+				>
+					<span>eShop</span>
+					<span class="project-arrow" aria-hidden="true">
+						→
+					</span>
+				</a>
+				<div class="site-tooltip" id="eshop-description" role="tooltip">
+					<p>
+						A fictional online store for testing product extraction and shopping
+						flows. HTML and JavaScript versions of the same shop.
+					</p>
+				</div>
+			</div>
 		</nav>
-	</div>
+	</section>
+	<section class="home-section home-copy" aria-labelledby="about-heading">
+		<h2 id="about-heading">What can you test here?</h2>
+		<p>
+			QScrape hosts realistic websites to practice extracting data and
+			automating interactions. Use them to build a web scraper, try a new tool,
+			or check how your existing approach handles different page structures and
+			behaviours.
+		</p>
+		<p>
+			Qscrape focuses on three levels to scraping one might see in the wild:
+		</p>
+		<ol class="scraping-types">
+			<li>Pure HTML web pages, that can be fetched only w/ HTTP</li>
+			<li>
+				Javascript heavy sites, using frameworks like react, vue, and svelte
+			</li>
+			<li>Anti-bot sites, with managed captchas and turnstiles</li>
+		</ol>
+	</section>
+	<footer class="project-footer">
+		By <a href="https://cascadinglabs.com">Cascading Labs</a>.
+	</footer>
 </PlaygroundLayout>
+
+<style>
+	.home-section {
+		margin-top: 28px;
+		border-top: 1px solid var(--qs-border);
+		padding-top: 24px;
+	}
+	.home-section h2 {
+		margin: 0 0 16px;
+		padding: 0;
+		border: 0;
+		font-size: 16px;
+		font-weight: 500;
+		color: var(--qs-text);
+	}
+	.site-entry {
+		position: relative;
+	}
+	.scraping-types {
+		display: grid;
+		gap: 14px;
+		margin: 20px 0 0;
+		padding-left: 28px;
+		list-style: decimal;
+	}
+	.scraping-types li {
+		padding-left: 8px;
+	}
+	.scraping-types li::marker {
+		color: var(--qs-accent-text);
+		font-weight: 500;
+	}
+	.site-tooltip {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		z-index: 2;
+		width: min(320px, calc(100vw - 64px));
+		padding-top: 8px;
+		visibility: hidden;
+	}
+	.site-tooltip p {
+		margin: 0;
+		padding: 12px 14px;
+		border: 1px solid var(--qs-border);
+		background: var(--qs-bg);
+		font-size: 13px;
+		color: var(--qs-text-muted);
+	}
+	.site-entry:hover .site-tooltip,
+	.site-entry:focus-within .site-tooltip {
+		visibility: visible;
+	}
+</style>

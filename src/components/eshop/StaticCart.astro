@@ -9,7 +9,6 @@ const { version } = Astro.props;
 const versionLabels = {
 	html: 'HTML eShop',
 	javascript: 'JavaScript eShop',
-	protected: 'Protected eShop',
 } satisfies Record<ShopVersion, string>;
 ---
 
@@ -44,7 +43,7 @@ const versionLabels = {
 			<p class="shop-checkout-note">A little note: this is a fictional storefront. No payment or delivery takes place.</p>
 		</aside>
 	</div>
-	<noscript><p class="shop-protection-note">Turn on JavaScript to view and update items saved in this browser’s demo cart.</p></noscript>
+	<noscript><p class="shop-notice">Turn on JavaScript to view and update items saved in this browser’s demo cart.</p></noscript>
 	<p class="shop-html-live-message" data-html-cart-status role="status" aria-live="polite"></p>
 	<footer class="shop-footer"><span>Objects · Thoughtful things for everyday living</span><span>Fictional shop · no real purchases</span></footer>
 </div>

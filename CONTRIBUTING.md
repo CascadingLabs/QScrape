@@ -88,7 +88,7 @@ Blank issues are disabled -please use a template so we have the context we need 
    - **GenAI usage** -check the box and describe how AI was used, if applicable. All AI-generated code must be reviewed line-by-line.
    - **Risks** -any risks or side effects this PR might introduce.
 5. **Link an issue** -reference the issue your PR addresses with `Closes #<number>`.
-6. **Shared catalogue** -all versions use the same product data. Verify HTML extraction without JavaScript, browser navigation and cart behavior, and the documented protected challenges.
+6. **Shared catalogue** -all versions use the same product data. Verify HTML extraction without JavaScript, browser navigation and cart behavior.
 
 ### Commit Conventions
 

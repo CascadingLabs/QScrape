@@ -3,7 +3,6 @@ Allow: /$
 Allow: /eshop/$
 Disallow: /eshop/html/
 Disallow: /eshop/javascript/
-Disallow: /eshop/protected/
 Disallow: /eshop/fixtures.json
 
 Sitemap: https://qscrape.dev/sitemap-0.xml

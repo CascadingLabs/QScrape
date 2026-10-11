@@ -2,7 +2,6 @@
 import ShopLayout from '../../../layouts/ShopLayout.astro';
 import StaticCatalog from '../../../components/eshop/StaticCatalog.astro';
 import ShopClient from '../../../components/eshop/ShopClient';
-import ProtectedShop from '../../../components/eshop/ProtectedShop';
 import { versions, type ShopVersion } from '../../../data/eshop/catalog';
 
 export function getStaticPaths() {
@@ -17,7 +16,6 @@ const { version } = Astro.props;
 const versionLabels: Record<ShopVersion, string> = {
 	html: 'HTML eShop',
 	javascript: 'JavaScript eShop',
-	protected: 'Protected eShop',
 };
 const title = `${versionLabels[version]} — Objects`;
 const description = 'Good things for everyday living. Explore thoughtful objects for your desk, home, and everyday carry.';
@@ -35,7 +33,7 @@ const description = 'Good things for everyday living. Explore thoughtful objects
 	{version === 'html'
 		? <StaticCatalog version={version} />
 		: <>
-			<noscript><p class="shop-protection-note">{versionLabels[version]} needs JavaScript enabled to load the collection.</p></noscript>
-			{version === 'protected' ? <ProtectedShop client:only="react" page="catalog" version={version}><p slot="fallback" class="shop-root shop-loading" role="status">Loading shop…</p></ProtectedShop> : <ShopClient client:only="react" page="catalog" version={version}><p slot="fallback" class="shop-root shop-loading" role="status">Loading shop…</p></ShopClient>}
+			<noscript><p class="shop-notice">{versionLabels[version]} needs JavaScript enabled to load the collection.</p></noscript>
+			<ShopClient client:only="react" page="catalog" version={version}><p slot="fallback" class="shop-root shop-loading" role="status">Loading shop…</p></ShopClient>
 		</>}
 </ShopLayout>

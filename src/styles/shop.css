@@ -577,27 +577,13 @@ body.shop-app {
 	color: var(--muted);
 	font-size: 9px;
 }
-.shop-protection-note {
+.shop-notice {
 	margin: 19px 0 0;
 	padding: 12px 14px;
 	border-left: 2px solid var(--moss);
 	background: rgb(98 116 92 / 6%);
 	color: var(--muted);
 	font-size: 10px;
-}
-.protected-shadow-host {
-	display: block;
-}
-.protected-decoy {
-	position: absolute !important;
-	width: 1px !important;
-	height: 1px !important;
-	padding: 0 !important;
-	margin: -1px !important;
-	overflow: hidden !important;
-	clip: rect(0, 0, 0, 0) !important;
-	white-space: nowrap !important;
-	border: 0 !important;
 }
 .shop-html-live-message {
 	min-height: 20px;

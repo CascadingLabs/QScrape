@@ -85,12 +85,8 @@ export const products: readonly Product[] = [
 	},
 ];
 
-export type ShopVersion = 'html' | 'javascript' | 'protected';
-export const versions: readonly ShopVersion[] = [
-	'html',
-	'javascript',
-	'protected',
-];
+export type ShopVersion = 'html' | 'javascript';
+export const versions: readonly ShopVersion[] = ['html', 'javascript'];
 export function getProduct(id: string): Product | undefined {
 	return products.find((product) => product.id === id);
 }

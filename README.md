@@ -11,16 +11,17 @@ The first site is **Objects**, an eShop of everyday essentials. There are no rea
 
 ## Explore
 
-| Page               | Route                  | What to expect                                                  |
-| ------------------ | ---------------------- | --------------------------------------------------------------- |
-| Playground         | `/`                    | One eShop entry point                                           |
-| eShop versions     | `/eshop/`              | Choose HTML, JavaScript, or Protected                           |
-| HTML eShop         | `/eshop/html/`         | Core products and product details are in the HTML response      |
-| JavaScript eShop   | `/eshop/javascript/`   | A client-rendered shop with an observable loading state         |
-| Protected eShop    | `/eshop/protected/`    | Delayed content, a Shadow DOM catalogue, and an invisible decoy |
-| Catalogue fixtures | `/eshop/fixtures.json` | Expected IDs, prices in cents, stock, and product fields        |
+| Page               | Route                  | What to expect                                                   |
+| ------------------ | ---------------------- | ---------------------------------------------------------------- |
+| Playground         | `/`                    | One eShop entry point                                            |
+| eShop versions     | `/eshop/`              | Choose HTML or JavaScript                                        |
+| HTML eShop         | `/eshop/html/`         | Astro generates product content as static HTML at build time     |
+| JavaScript eShop   | `/eshop/javascript/`   | One client-only React island; JavaScript required for extraction |
+| Catalogue fixtures | `/eshop/fixtures.json` | Expected IDs, prices in cents, stock, and product fields         |
 
 Every version has product pages and a local sample cart. HTML catalogue extraction and navigation work with JavaScript disabled; cart interactions require JavaScript. Cart state stays in your browser and is separate for each version.
+
+Source references on the version picker use a published commit when `PUBLIC_SOURCE_REVISION`, `CF_PAGES_COMMIT_SHA`, or `GITHUB_SHA` is available. Local builds show the source paths and repository link until the code is published.
 
 ## Styling
 
@@ -60,8 +61,6 @@ The canonical dataset is `src/data/eshop/catalog.ts`. Prices are integer USD cen
 | obj-004    | Daybreak tote      | $32.00 | 5     |
 | obj-005    | Pebble catchall    | $28.00 | 0     |
 | obj-006    | Still glass bottle | $36.00 | 9     |
-
-The Protected version is a controlled extraction exercise, not a claim of real provider-backed bot protection. Its expected catalogue is deliberately published for comparison. Real provider integrations are future work.
 
 ## Restart and migration
 
