@@ -2,8 +2,11 @@
 name: verification-plan
 description: Use when deciding how to validate a QScrape change across build, lint, and scraper-visible behavior.
 ---
+
 # QScrape Verification Plan
+
 Consider:
+
 - `bun run check`
 - `bun run build`
 - manual browser review for changed routes

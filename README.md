@@ -15,50 +15,40 @@
 
 # QScrape
 
-Web scraper evaluation suite. Fictional test sites across three difficulty levels for benchmarking scraper capabilities.
+Web scraper evaluation suite focused on VaultMart, a fictional e-shop with plain HTML, modern framework, and anti-bot experiences.
 
 > [!WARNING]
 > QScrape is research tooling for API design and web reverse engineering. **You assume all legal risk for how you use it.** Respect `robots.txt`, rate limits, and IP bans; and please don't bypass them with Tor or a VPN. Read [DISCLAIMER.md](DISCLAIMER.md) before pointing it at anything.
 
 Made by [Cascading Labs](https://cascadinglabs.com), used for [Yosoi](https://github.com/CascadingLabs/Yosoi).
 
-## Sites
+## E-shop experiences
 
-| Level | Route | Site | Status |
-|-------|-------|------|--------|
-| L1 | `/l1/news/` | Mountainhome Herald — news portal | live |
-| L1 | `/l1/scoretap/` | ScoreTap — esports scores | live |
-| L1 | `/l1/taxes/` | Eldoria Registry of Deeds — tax records | live |
-| L1 | `/l1/eshop/` | VaultMart — e-commerce catalogue | live |
-| L2 | `/l2/react/news/` | Mountainhome Herald — React | live |
-| L2 | `/l2/react/eshop/` | VaultMart — React | live |
-| L2 | `/l2/react/scoretap/` | ScoreTap — React | live |
-| L2 | `/l2/react/taxes/` | Eldoria Registry of Deeds — React | live |
-| L2 | `/l2/vue/news/` | Mountainhome Herald — Vue | live |
-| L2 | `/l2/vue/eshop/` | VaultMart — Vue | live |
-| L2 | `/l2/vue/scoretap/` | ScoreTap — Vue | live |
-| L2 | `/l2/vue/taxes/` | Eldoria Registry of Deeds — Vue | live |
-| L2 | `/l2/svelte/news/` | Mountainhome Herald — Svelte | live |
-| L2 | `/l2/svelte/eshop/` | VaultMart — Svelte | live |
-| L2 | `/l2/svelte/scoretap/` | ScoreTap — Svelte | live |
-| L2 | `/l2/svelte/taxes/` | Eldoria Registry of Deeds — Svelte | live |
-| L3 | `/l3/` | Anti-bot sites | planned |
+| Experience        | Route        |
+| ----------------- | ------------ |
+| Plain HTML        | `/l1/eshop/` |
+| Modern Frameworks | `/l2/eshop/` |
+| Anti-bot          | `/l3/eshop/` |
 
-## Dev
+Existing routes remain stable while the beta is simplified.
+
+## Development
+
+Use Bun 1.4.3 and Node.js 24.11 or newer in the 24.x line (Node.js 24 is used in CI).
 
 ```bash
-pnpm install
-pnpm dev       # http://localhost:4321
-pnpm build
-pnpm preview
+bun install --frozen-lockfile
+bun run dev       # http://localhost:4321
+bun run build
+bun run preview
 ```
 
-## Lint
+## Lint and format
 
 ```bash
-pnpm check     # biome check + autofix
-pnpm lint      # biome lint only
-pnpm format    # biome format
+bun run check     # Oxfmt format check + Oxlint
+bun run lint      # Oxlint, warnings fail the check
+bun run format    # Oxfmt
 ```
 
 ## Community

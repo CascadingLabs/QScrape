@@ -1,7 +1,6 @@
 import { defineMiddleware } from 'astro:middleware';
 
 const aliases: Record<string, string> = {
-	news: 'l1/news',
 	eshop: 'l1/eshop',
 	level1: 'l1',
 	'level-1': 'l1',
@@ -12,9 +11,6 @@ const aliases: Record<string, string> = {
 	level3: 'l3',
 	'level-3': 'l3',
 	'3': 'l3',
-	level4: 'l4',
-	'level-4': 'l4',
-	'4': 'l4',
 };
 
 export const onRequest = defineMiddleware((context, next) => {

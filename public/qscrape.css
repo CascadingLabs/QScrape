@@ -150,7 +150,7 @@ body::after {
 body {
 	background: var(--qs-bg);
 	color: var(--qs-text);
-	font-family: "DM Mono", monospace;
+	font-family: 'DM Mono', monospace;
 	font-size: 16px;
 	line-height: 1.6;
 	padding: 3rem 1.5rem;
@@ -168,7 +168,7 @@ header {
 }
 
 .logo {
-	font-family: "DM Mono", monospace;
+	font-family: 'DM Mono', monospace;
 	font-size: 2.5rem;
 	font-weight: 700;
 	color: var(--qs-text);
@@ -200,7 +200,7 @@ header {
 }
 
 .hero-title {
-	font-family: "DM Mono", monospace;
+	font-family: 'DM Mono', monospace;
 	font-size: 2.5rem;
 	font-weight: 700;
 	color: var(--qs-text);
@@ -289,7 +289,7 @@ a:hover {
 /* ── Breadcrumb ──────────────────────────────────────── */
 
 .breadcrumb {
-	font-family: "DM Mono", monospace;
+	font-family: 'DM Mono', monospace;
 	font-size: 0.85rem;
 	color: var(--qs-text-marker);
 	margin-bottom: 0.75rem;
@@ -351,7 +351,7 @@ a:hover {
 }
 
 .card-label {
-	font-family: "DM Mono", monospace;
+	font-family: 'DM Mono', monospace;
 	font-size: 0.8rem;
 	font-weight: 600;
 	color: var(--qs-text);
@@ -427,7 +427,7 @@ a:hover {
 }
 
 .nav-path {
-	font-family: "DM Mono", monospace;
+	font-family: 'DM Mono', monospace;
 	font-size: 0.85rem;
 	color: var(--qs-accent-text);
 	min-width: 14ch;
@@ -471,7 +471,7 @@ a:hover {
 }
 
 .resource-row span {
-	font-family: "DM Mono", monospace;
+	font-family: 'DM Mono', monospace;
 	color: var(--qs-text-marker);
 	margin-right: 0.5rem;
 }

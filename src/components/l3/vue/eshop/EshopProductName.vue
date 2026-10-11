@@ -19,14 +19,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <div v-if="!product" class="a">Loading…</div>
-    <div v-else class="b" :data-0="product.sku">
-      <span class="c" :data-1="product.category"></span>
-      <h2 class="d e" :data-2="product.name"></h2>
-      <p class="f e" :data-2="product.excerpt"></p>
-    </div>
-  </div>
+	<div>
+		<div v-if="!product" class="a">Loading…</div>
+		<div v-else class="b" :data-0="product.sku">
+			<span class="c" :data-1="product.category"></span>
+			<h2 class="d e" :data-2="product.name"></h2>
+			<p class="f e" :data-2="product.excerpt"></p>
+		</div>
+	</div>
 </template>
 
 <style>

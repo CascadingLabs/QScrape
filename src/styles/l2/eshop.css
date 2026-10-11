@@ -1,5 +1,5 @@
 /* @qscrape L2 / design-tokens / eshop — VaultMart */
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 
 :root {
 	--vm-bg: #ffffff;
@@ -12,7 +12,7 @@
 	--vm-cta-hover: #15803d;
 	--vm-border: #e4e4e7;
 	--vm-sale: #dc2626;
-	--vm-font: "DM Sans", system-ui, -apple-system, sans-serif;
+	--vm-font: 'DM Sans', system-ui, -apple-system, sans-serif;
 	--vm-radius: 6px;
 	--vm-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 	--vm-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
@@ -49,7 +49,7 @@ img {
 }
 
 /* ── Dark mode token overrides ───────────────────────── */
-[data-theme="dark"] {
+[data-theme='dark'] {
 	--vm-bg: #111111;
 	--vm-surface: #1a1a1a;
 	--vm-text: #f0f0f0;

@@ -97,12 +97,14 @@ export default function EshopFeaturedBanner() {
 	const [items, setItems] = createSignal<BannerItem[] | null>(null);
 
 	onMount(() => {
-		const featured = getFeatured().map(
-			(p): BannerItem => ({ ...p, section: 'featured' }),
-		);
-		const promoted = getPromoted().map(
-			(p): BannerItem => ({ ...p, section: 'promoted' }),
-		);
+		const featured = getFeatured().map((p): BannerItem => ({
+			...p,
+			section: 'featured',
+		}));
+		const promoted = getPromoted().map((p): BannerItem => ({
+			...p,
+			section: 'promoted',
+		}));
 		fakeGetMs([...featured, ...promoted], 300, 200).then(setItems);
 	});
 
