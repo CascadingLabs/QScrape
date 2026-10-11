@@ -1,8 +1,12 @@
 ---
-import '../styles/playground.css';
-interface Props { title: string; description?: string; }
+import "../styles/playground.css";
+interface Props {
+	title: string;
+	description?: string;
+}
 const { title, description } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -15,16 +19,20 @@ const { title, description } = Astro.props;
 		<slot name="head" />
 	</head>
 	<body>
-		<a class="skip-link" href="#main">Skip to content</a>
+		<a class="skip-link" href="#main">
+			Skip to content
+		</a>
 		<div class="site-shell">
 			<main id="main">
-				<header class="site-header"><slot name="heading"><a class="wordmark" href="/">QScrape</a></slot></header>
+				<header class="site-header">
+					<slot name="heading">
+						<a class="wordmark" href="/">
+							QScrape
+						</a>
+					</slot>
+				</header>
 				<slot />
 			</main>
-			<footer class="project-footer">
-				<nav aria-label="Resources"><a href="https://github.com/CascadingLabs/QScrape">GitHub</a><a href="https://cascadinglabs.com/yosoi">Yosoi docs</a><a href="https://cascadinglabs.com">Cascading Labs</a></nav>
-				<p>Synthetic sites for scraper evaluation.</p>
-			</footer>
 		</div>
 	</body>
 </html>

@@ -1,16 +1,29 @@
 ---
-import PlaygroundLayout from '../layouts/PlaygroundLayout.astro';
-const description = 'A small playground for testing web scrapers.';
+import PlaygroundLayout from "../layouts/PlaygroundLayout.astro";
+const description = "A small playground for testing web scrapers.";
 ---
-<PlaygroundLayout title="QScrape — Scraper playground" description={description}>
-	<h1 slot="heading" class="home-title">QScrape</h1>
-	<Fragment slot="head"><link rel="canonical" href="https://qscrape.dev/" /></Fragment>
+
+<PlaygroundLayout
+	title="QScrape — Scraper playground"
+	description={description}
+>
+	<h1 slot="heading" class="home-title">
+		QScrape
+	</h1>
+	<Fragment slot="head">
+		<link rel="canonical" href="https://qscrape.dev/" />
+	</Fragment>
 	<div class="home-copy">
 		<p class="home-lead">{description}</p>
-		<p>Start with the eShop. Browse a fictional catalogue, open product pages, and build a sample cart.</p>
-		<p>Choose HTML, JavaScript, or Protected. Each version uses the same products.</p>
 	</div>
 	<div class="home-footer">
-		<nav class="project-list" aria-label="Test sites"><a class="project-card" href="/eshop/"><span>eShop</span><span class="project-arrow" aria-hidden="true">→</span></a></nav>
+		<nav class="project-list" aria-label="Test sites">
+			<a class="project-card" href="/eshop/">
+				<span>eShop</span>
+				<span class="project-arrow" aria-hidden="true">
+					→
+				</span>
+			</a>
+		</nav>
 	</div>
 </PlaygroundLayout>
