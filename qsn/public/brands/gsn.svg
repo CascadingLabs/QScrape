@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 96" fill="none">
+	<rect x="8" y="10" width="76" height="76" rx="3" fill="#252B21"/>
+	<path d="M25 25h43v48H25z" stroke="#B8D62B" stroke-width="3"/>
+	<path d="M33 36h26M33 45h26M33 54h16" stroke="#F0F1E9" stroke-width="3" stroke-linecap="square"/>
+	<path d="M54 63h12M60 57v12" stroke="#B8D62B" stroke-width="3" stroke-linecap="square"/>
+	<text x="101" y="57" fill="#20261D" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="-.7">THE CINDER LEDGER</text>
+</svg>

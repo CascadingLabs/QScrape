@@ -1,0 +1,50 @@
+---
+import { publication } from '../data/publications';
+import NewsLayout from '../layouts/NewsLayout.astro';
+import NewsCard from './NewsCard.astro';
+import Pagination from './Pagination.astro';
+import type { Article, Series } from '../data/news';
+import { formatDate, LIST_PAGE_SIZE } from './paths';
+
+interface Props {
+	series: Series;
+	articles: Article[];
+	total: number;
+	page: number;
+	pageCount: number;
+}
+
+const { series, articles, total, page, pageCount } = Astro.props;
+const basePath = `/series/${encodeURIComponent(series.id)}/`;
+const firstChapter = total === 0 ? 0 : (page - 1) * LIST_PAGE_SIZE + 1;
+const lastChapter = Math.min(page * LIST_PAGE_SIZE, total);
+---
+
+<NewsLayout title={page === 1 ? series.title : `${series.title} · Page ${page}`} description={series.description}>
+	<div class="series-page">
+		<header class="series-page__heading">
+			<p class="eyebrow">A {publication.shortName} investigation</p>
+			<h1>{series.title}</h1>
+			<p>{series.description}</p>
+			<p class="series-page__count">{total.toLocaleString('en-US')} {total === 1 ? 'chapter' : 'chapters'} · Follow the reporting in order</p>
+		</header>
+		<div class="series-page__stories">
+			{articles.length ? articles.map((article, index) => (
+				<div class="series-chapter">
+					<span class="series-chapter__number">{String((page - 1) * LIST_PAGE_SIZE + index + 1).padStart(2, '0')}</span>
+					<div class="series-chapter__copy">
+						<p class="eyebrow">Filed {formatDate(article.publishedAt)} <span>·</span> {article.section}</p>
+						<NewsCard article={article} compact />
+					</div>
+				</div>
+			)) : <p class="empty-state">Reporting for this series is being assembled.</p>}
+		</div>
+		<Pagination
+			page={page}
+			pageCount={pageCount}
+			basePath={basePath}
+			label={`${series.title}, chapter pages`}
+			caption={`Page ${page} of ${pageCount}. Showing chapters ${firstChapter} to ${lastChapter} of ${total.toLocaleString('en-US')}.`}
+		/>
+	</div>
+</NewsLayout>

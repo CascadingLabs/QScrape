@@ -1,0 +1,86 @@
+---
+import type { Article } from '../data/news';
+import { articlePath, formatDate } from './paths';
+
+interface Props {
+	articles: Article[];
+	limit?: number;
+	label?: string;
+}
+
+const { articles, limit = 5, label = 'Latest headlines' } = Astro.props;
+const initial = articles.slice(0, limit);
+---
+
+<section class="latest-widget" aria-labelledby="latest-widget-title" data-latest-widget data-limit={limit}>
+	<div class="section-heading section-heading--small">
+		<h2 id="latest-widget-title">{label}</h2>
+		<a href="/archive/">All stories <span aria-hidden="true">→</span></a>
+	</div>
+	<p class="latest-widget__status" data-latest-status aria-live="polite"></p>
+	<ol class="latest-list" data-latest-list>
+		{initial.map((article, index) => (
+			<li>
+				<span class="latest-list__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+				<div>
+					<a href={articlePath(article.id)}>{article.title}</a>
+					<time datetime={article.publishedAt}>{formatDate(article.publishedAt, { month: 'short', day: 'numeric', year: undefined })}</time>
+				</div>
+			</li>
+		))}
+	</ol>
+</section>
+
+<script>
+	interface LatestArticle {
+		id: string;
+		title: string;
+		publishedAt: string;
+	}
+
+	const dateLabel = (value: string) => {
+		const date = new Date(value);
+		return Number.isNaN(date.valueOf())
+			? value
+			: new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(date);
+	};
+
+	for (const widget of document.querySelectorAll<HTMLElement>('[data-latest-widget]')) {
+		const list = widget.querySelector<HTMLOListElement>('[data-latest-list]');
+		const status = widget.querySelector<HTMLElement>('[data-latest-status]');
+		const limit = Number(widget.dataset.limit) || 5;
+		if (!list) continue;
+
+		fetch('/api/latest.json')
+			.then((response) => {
+				if (!response.ok) throw new Error('Headlines could not be refreshed.');
+				return response.json() as Promise<{ articles: LatestArticle[] }>;
+			})
+			.then(({ articles }) => {
+				if (!Array.isArray(articles) || !articles.every((article) => typeof article.id === 'string' && typeof article.title === 'string' && typeof article.publishedAt === 'string')) {
+					throw new Error('Invalid headlines response.');
+				}
+				list.replaceChildren();
+				for (const [index, article] of articles.slice(0, limit).entries()) {
+					const item = document.createElement('li');
+					const number = document.createElement('span');
+					const copy = document.createElement('div');
+					const link = document.createElement('a');
+					const time = document.createElement('time');
+					number.className = 'latest-list__number';
+					number.setAttribute('aria-hidden', 'true');
+					number.textContent = String(index + 1).padStart(2, '0');
+					link.href = `/article/${encodeURIComponent(article.id)}/`;
+					link.textContent = article.title;
+					time.dateTime = article.publishedAt;
+					time.textContent = dateLabel(article.publishedAt);
+					copy.append(link, time);
+					item.append(number, copy);
+					list.append(item);
+				}
+			})
+			.catch(() => {
+				if (status) status.textContent = 'Showing the latest edition available.';
+			});
+	}
+</script>

@@ -1,0 +1,98 @@
+---
+import '../styles/news.css';
+import '../styles/publications.css';
+import { Image } from 'astro:assets';
+import AccountDialog from '../components/AccountDialog.astro';
+import CookiePreferences from '../components/CookiePreferences.astro';
+import ExploreHalls from '../components/ExploreHalls.astro';
+import SisterPublications from '../components/SisterPublications.astro';
+import { sections } from '../data/news';
+import { publication } from '../data/publications';
+
+interface Props {
+	title: string;
+	description?: string;
+	section?: string;
+}
+
+const { title, description, section } = Astro.props;
+const sectionSlug = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const canonicalPath = Astro.url.pathname;
+const logo = publication.id === 'dwarves' ? '/qsn-logo' : `/brands/${publication.key}`;
+---
+
+<!doctype html>
+<html lang="en" data-publication={publication.id}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#2116f5" />
+		<title>{title} | {publication.shortName} · {publication.name}</title>
+		{description && <meta name="description" content={description} />}
+		<link rel="canonical" href={`${publication.origin}${canonicalPath}`} />
+		<link rel="icon" href={publication.id === 'dwarves' ? '/favicon.svg' : `/brands/favicon-${publication.key}.svg`} type="image/svg+xml" />
+		<slot name="head" />
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Skip to the news</a>
+		<div class="site-wrap">
+			<header class="masthead">
+				<a class="masthead__brand" href="/" aria-label={`${publication.shortName} home`}>
+					<Image class="masthead__logo" src={`${logo}-light.svg`} alt={`${publication.shortName}, ${publication.name}`} width="256" height="64" loading="eager" />
+				</a>
+				<p class="masthead__slogan">{publication.tagline}</p>
+				<div class="masthead__actions">
+					<form class="header-search" action="/search/" method="get" role="search">
+						<label for="header-search">Search</label>
+						<input id="header-search" name="q" type="search" placeholder="Search the paper" />
+						<button aria-label={`Search ${publication.shortName}`} type="submit">⌕</button>
+					</form>
+					<button class="sign-in-button" type="button" data-dialog-open>Sign in</button>
+					<button class="button button--dark masthead__subscribe" type="button" data-dialog-open>Subscribe</button>
+				</div>
+			</header>
+			<nav class="primary-nav" aria-label="Sections">
+				<a href="/" class:list={['primary-nav__home', !section && 'is-current']} aria-current={!section ? 'page' : undefined}>Latest</a>
+				{sections.map((item) => (
+					<a href={`/section/${sectionSlug(item)}/`} class:is-current={section === item} aria-current={section === item ? 'page' : undefined}>{item}</a>
+				))}
+				<a href="/archive/">Archive</a>
+			</nav>
+			<ExploreHalls />
+			<main id="main"><slot /></main>
+			<SisterPublications />
+			<footer class="site-footer">
+				<div class="site-footer__brand">
+					<a href="/" aria-label={`${publication.shortName} home`}><Image src={`${logo}.svg`} alt={`${publication.shortName}, ${publication.name}`} width="180" height="45" loading="lazy" /></a>
+					<p>{publication.description}</p>
+				</div>
+				<div class="site-footer__links">
+					<a href="/archive/">All stories</a>
+					<a href="/search/">Search</a>
+					<button type="button" data-cookie-reopen>Privacy choices</button>
+				</div>
+				<p class="site-footer__note">{publication.name} records the lives, decisions and discoveries of a changing world.</p>
+			</footer>
+		</div>
+		<AccountDialog />
+		<CookiePreferences />
+		<script>
+			// Eager-load visible editorial photos; keep lower content lazy at each viewport size.
+			const updateImageLoading = () => {
+				for (const image of document.images) {
+					const rect = image.getBoundingClientRect();
+					if (rect.width && rect.height) image.loading = rect.top < innerHeight ? 'eager' : 'lazy';
+				}
+			};
+			updateImageLoading();
+			window.addEventListener('resize', updateImageLoading, { passive: true });
+			document.querySelector('[data-cookie-reopen]')?.addEventListener('click', () => {
+				const banner = document.querySelector<HTMLElement>('[data-cookie-banner]');
+				if (banner) {
+					banner.hidden = false;
+					banner.querySelector<HTMLButtonElement>('[data-cookie-settings-toggle]')?.focus();
+				}
+			});
+		</script>
+	</body>
+</html>

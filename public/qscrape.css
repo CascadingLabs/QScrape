@@ -1,4 +1,4 @@
-/* QScrape Index Pages — CL Design System */
+/* QScrape Index Pages: CL Design System */
 
 /* ── Theme transition (View Transitions API) ──────────
    GPU-composited fade between two page snapshots. The new
@@ -56,7 +56,7 @@
 	--qs-link-hover-bg: color-mix(in srgb, #3d1414 15%, transparent);
 	--qs-edge-shadow: none;
 
-	/* CascadingLabs accent — dark blue */
+	/* CascadingLabs accent: dark blue */
 	--cl-accent: #1e3a5f;
 	--cl-accent-text: #5ba4cf;
 	--cl-accent-pale: #90b8e0;
@@ -78,14 +78,14 @@
 	--qs-link-hover-bg: color-mix(in srgb, #3d1414 10%, transparent);
 	--qs-edge-shadow: none;
 
-	/* CascadingLabs accent — dark blue */
+	/* CascadingLabs accent: dark blue */
 	--cl-accent: #1e3a5f;
 	--cl-accent-text: #2c5282;
 	--cl-accent-pale: #d4e5f7;
 	--cl-link-hover-bg: color-mix(in srgb, #1e3a5f 10%, transparent);
 }
 
-/* Light mode — no-JS fallback */
+/* Light mode: no-JS fallback */
 @media (prefers-color-scheme: light) {
 	:root:not([data-theme]) {
 		--qs-bg: #ffffff;
@@ -101,7 +101,7 @@
 		--qs-link-hover-bg: color-mix(in srgb, #3d1414 10%, transparent);
 		--qs-edge-shadow: none;
 
-		/* CascadingLabs accent — dark blue */
+		/* CascadingLabs accent: dark blue */
 		--cl-accent: #1e3a5f;
 		--cl-accent-text: #2c5282;
 		--cl-accent-pale: #d4e5f7;

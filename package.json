@@ -5,14 +5,24 @@
 	"type": "module",
 	"scripts": {
 		"dev": "astro dev",
+		"news:dev": "cd qsn && astro dev",
+		"publication:build": "cd qsn && astro build",
+		"news:index:build": "cd news-index && astro build",
+		"news:build": "bun scripts/build-news-network.ts",
+		"news:preview": "node scripts/preview-news-network.mjs",
+		"news:check": "cd qsn && astro check && cd ../news-index && astro check",
+		"news:verify": "bun scripts/verify-news-network.ts",
+		"news:audit-output": "bun scripts/audit-news-network.ts",
+		"news:smoke": "bun scripts/smoke-news-network.ts && bun scripts/smoke-news-network.ts --ports",
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"lint": "vp lint --threads=1 --deny-warnings",
+		"lint": "vp lint --threads=1 --deny-warnings && bun scripts/lint-copy.ts",
+		"lint:copy": "bun scripts/lint-copy.ts",
 		"format": "vp fmt --threads=1",
 		"check:format": "vp fmt --check --threads=1",
 		"check:types": "astro check",
-		"check": "vp fmt --check --threads=1 && vp lint --threads=1 --deny-warnings && astro check"
+		"check": "vp fmt --check --threads=1 && vp lint --threads=1 --deny-warnings && bun scripts/lint-copy.ts && astro check"
 	},
 	"dependencies": {
 		"@astrojs/react": "^7.0.1",
@@ -27,18 +37,21 @@
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
 		"typescript": "^6.0.3",
-		"vite": "npm:@voidzero-dev/vite-plus-core@1.1.0",
-		"vite-plus": "^1.1.0"
+		"vite": "npm:@voidzero-dev/vite-plus-core@1.3.0",
+		"vite-plus": "1.3.0"
 	},
 	"overrides": {
 		"defu": "^6.1.5",
+		"fast-uri": "^3.1.9",
 		"http-cache-semantics": "^4.3.0",
 		"source-map-js": "^1.2.2",
-		"vite": "npm:@voidzero-dev/vite-plus-core@1.1.0"
+		"undici": "^8.12.2",
+		"vite": "npm:@voidzero-dev/vite-plus-core@1.3.0",
+		"zod": "^4.6.6"
 	},
 	"engines": {
 		"bun": ">=1.4.3",
-		"node": "^22.18.0 || ^24.11.0 || >=26.0.0"
+		"node": "^22.19.0 || ^24.11.0 || >=26.0.0"
 	},
 	"packageManager": "bun@1.4.3"
 }

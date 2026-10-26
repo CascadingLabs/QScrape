@@ -1,0 +1,50 @@
+---
+import { publication } from '../data/publications';
+---
+<aside class="cookie-banner" data-cookie-banner data-consent-key={`${publication.key}-consent`} aria-labelledby="cookie-title">
+	<div class="cookie-banner__copy">
+		<p class="eyebrow">Your choices</p>
+		<h2 id="cookie-title">A little room for preferences</h2>
+		<p>We use essential storage to remember your choices. Your audience measurement preference is saved locally; this preview does not send analytics.</p>
+		<div class="cookie-settings" data-cookie-settings hidden>
+			<label><input type="checkbox" data-analytics-choice /> Remember my preference for anonymous audience measurement</label>
+		</div>
+	</div>
+	<div class="cookie-banner__actions">
+		<button class="button button--text" type="button" data-cookie-settings-toggle>Settings</button>
+		<button class="button button--outline" type="button" data-cookie-essential>Essential only</button>
+		<button class="button button--dark" type="button" data-cookie-accept>Allow all</button>
+		<button class="button button--dark" type="button" data-cookie-save hidden>Save choices</button>
+	</div>
+</aside>
+
+<script>
+	const banner = document.querySelector<HTMLElement>('[data-cookie-banner]');
+	if (banner) {
+		const cookieName = banner.dataset.consentKey ?? 'qsn-consent';
+		const readConsent = () => document.cookie.split('; ').find((part) => part.startsWith(`${cookieName}=`))?.split('=')[1];
+		const hasConsent = Boolean(readConsent());
+		if (hasConsent) banner.hidden = true;
+
+		const settings = banner.querySelector<HTMLElement>('[data-cookie-settings]');
+		const analytics = banner.querySelector<HTMLInputElement>('[data-analytics-choice]');
+		const settingsToggle = banner.querySelector<HTMLButtonElement>('[data-cookie-settings-toggle]');
+		const saveButton = banner.querySelector<HTMLButtonElement>('[data-cookie-save]');
+		const persist = (allowAnalytics: boolean) => {
+			const secure = location.protocol === 'https:' ? '; Secure' : '';
+			document.cookie = `${cookieName}=v1-${allowAnalytics ? 'all' : 'essential'}; Max-Age=15552000; Path=/; SameSite=Lax${secure}`;
+			banner.hidden = true;
+		};
+
+		settingsToggle?.addEventListener('click', () => {
+			if (!settings) return;
+			settings.hidden = !settings.hidden;
+			if (saveButton) saveButton.hidden = settings.hidden;
+			settingsToggle.textContent = settings.hidden ? 'Settings' : 'Close settings';
+			if (!settings.hidden && analytics) analytics.checked = readConsent()?.includes('all') ?? false;
+		});
+		banner.querySelector('[data-cookie-essential]')?.addEventListener('click', () => persist(false));
+		banner.querySelector('[data-cookie-accept]')?.addEventListener('click', () => persist(true));
+		saveButton?.addEventListener('click', () => persist(Boolean(analytics?.checked)));
+	}
+</script>

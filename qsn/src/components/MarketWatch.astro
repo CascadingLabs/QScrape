@@ -1,0 +1,240 @@
+---
+import { marketSnapshot as initialSnapshot, marketLocation } from '../data/market';
+---
+
+<section class="market-watch" aria-label="Market and weather watch" data-market-watch aria-busy="false">
+	<header class="market-watch__header">
+		<p class="market-watch__eyebrow">Markets &amp; weather</p>
+		<h2>Market watch</h2>
+		<p>{marketLocation} · <span data-market-as-of>{initialSnapshot.asOf}</span></p>
+	</header>
+
+	<div class="market-watch__grid">
+		<section class="market-watch__market" aria-label="Market prices">
+			<h3>At the market</h3>
+			<table class="market-watch__table">
+				<caption>Indicative local exchange prices</caption>
+				<thead>
+					<tr>
+						<th scope="col">Commodity</th>
+						<th scope="col">Price</th>
+						<th scope="col">Board note</th>
+					</tr>
+				</thead>
+				<tbody data-market-rows>
+					{initialSnapshot.markets.map((item) => (
+						<tr>
+							<th scope="row">{item.commodity}</th>
+							<td>{item.price}</td>
+							<td>{item.note}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</section>
+
+		<section class="market-watch__weather" aria-label={`Weather around ${marketLocation}`}>
+			<h3>Weather by region</h3>
+			<dl data-weather-rows>
+				{initialSnapshot.weather.map((item) => (
+					<>
+						<dt>{item.region}</dt>
+						<dd>{item.conditions}</dd>
+					</>
+				))}
+			</dl>
+		</section>
+	</div>
+
+	<p class="market-watch__status" data-market-status role="status" aria-live="polite" aria-atomic="true">
+		Showing figures from {initialSnapshot.asOf}.
+	</p>
+</section>
+
+<script>
+	interface MarketRow {
+		commodity: string;
+		price: string;
+		note: string;
+	}
+
+	interface WeatherRow {
+		region: string;
+		conditions: string;
+	}
+
+	interface MarketSnapshot {
+		asOf: string;
+		markets: MarketRow[];
+		weather: WeatherRow[];
+	}
+
+	function isMarketRow(value: unknown): value is MarketRow {
+		if (typeof value !== 'object' || value === null) return false;
+		const row = value as Partial<MarketRow>;
+		return (
+			typeof row.commodity === 'string' &&
+			typeof row.price === 'string' &&
+			typeof row.note === 'string'
+		);
+	}
+
+	function isWeatherRow(value: unknown): value is WeatherRow {
+		if (typeof value !== 'object' || value === null) return false;
+		const row = value as Partial<WeatherRow>;
+		return typeof row.region === 'string' && typeof row.conditions === 'string';
+	}
+
+	function isMarketSnapshot(value: unknown): value is MarketSnapshot {
+		if (typeof value !== 'object' || value === null) return false;
+		const snapshot = value as Partial<MarketSnapshot>;
+		return (
+			typeof snapshot.asOf === 'string' &&
+			Array.isArray(snapshot.markets) &&
+			snapshot.markets.every(isMarketRow) &&
+			Array.isArray(snapshot.weather) &&
+			snapshot.weather.every(isWeatherRow)
+		);
+	}
+
+	for (const widget of document.querySelectorAll<HTMLElement>('[data-market-watch]')) {
+		const marketRows = widget.querySelector<HTMLTableSectionElement>('[data-market-rows]');
+		const weatherRows = widget.querySelector<HTMLDListElement>('[data-weather-rows]');
+		const asOf = widget.querySelector<HTMLElement>('[data-market-as-of]');
+		const status = widget.querySelector<HTMLElement>('[data-market-status]');
+		if (!marketRows || !weatherRows || !asOf || !status) continue;
+
+		widget.setAttribute('aria-busy', 'true');
+		status.textContent = 'Checking the latest market and weather figures.';
+		fetch('/api/markets.json')
+			.then((response) => {
+				if (!response.ok) throw new Error('Market feed unavailable.');
+				return response.json() as Promise<unknown>;
+			})
+			.then((value) => {
+				if (!isMarketSnapshot(value)) throw new Error('Market feed has an unexpected shape.');
+
+				const nextMarkets = value.markets.map((item) => {
+					const row = document.createElement('tr');
+					const commodity = document.createElement('th');
+					const price = document.createElement('td');
+					const note = document.createElement('td');
+					commodity.scope = 'row';
+					commodity.textContent = item.commodity;
+					price.textContent = item.price;
+					note.textContent = item.note;
+					row.append(commodity, price, note);
+					return row;
+				});
+				const nextWeather = value.weather.flatMap((item) => {
+					const region = document.createElement('dt');
+					const conditions = document.createElement('dd');
+					region.textContent = item.region;
+					conditions.textContent = item.conditions;
+					return [region, conditions];
+				});
+
+				marketRows.replaceChildren(...nextMarkets);
+				weatherRows.replaceChildren(...nextWeather);
+				asOf.textContent = value.asOf;
+				status.textContent = 'Market and weather figures updated.';
+			})
+			.catch(() => {
+				status.textContent = 'Update unavailable; the latest available figures remain shown.';
+			})
+			.finally(() => {
+				widget.setAttribute('aria-busy', 'false');
+			});
+	}
+</script>
+
+<style>
+	.market-watch {
+		border-block: 1px solid var(--rule);
+		padding: 18px 0;
+	}
+
+	.market-watch__header h2 {
+		margin: 0;
+		font-family: var(--serif);
+		font-size: 23px;
+		font-weight: 400;
+	}
+
+	.market-watch__header > p:last-child,
+	.market-watch__status {
+		margin: 5px 0 0;
+		color: var(--muted);
+		font-size: 11px;
+	}
+
+	.market-watch__eyebrow {
+		margin: 0 0 3px;
+		color: var(--brand);
+		font-size: 9px;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	.market-watch__grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1.5fr) minmax(180px, 0.7fr);
+		gap: 22px;
+		margin-top: 15px;
+	}
+
+	.market-watch__grid h3 {
+		margin: 0 0 7px;
+		font-family: var(--serif);
+		font-size: 16px;
+		font-weight: 400;
+	}
+
+	:global(.market-watch__table) {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 11px;
+		text-align: left;
+	}
+
+	:global(.market-watch__table caption) {
+		padding-bottom: 5px;
+		color: var(--muted);
+		font-size: 10px;
+		text-align: left;
+	}
+
+	:global(.market-watch__table th),
+	:global(.market-watch__table td) {
+		border-bottom: 1px solid var(--rule);
+		padding: 6px 7px 6px 0;
+		vertical-align: top;
+	}
+
+	:global(.market-watch__table th) {
+		font-weight: 600;
+	}
+
+	:global(.market-watch__weather dl) {
+		margin: 0;
+	}
+
+	:global(.market-watch__weather dt) {
+		margin-top: 8px;
+		font-size: 11px;
+		font-weight: 600;
+	}
+
+	:global(.market-watch__weather dd) {
+		margin: 2px 0 0;
+		color: var(--muted);
+		font-size: 11px;
+	}
+
+	@media (max-width: 700px) {
+		.market-watch__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

@@ -1,0 +1,172 @@
+---
+import { publication } from '../../data/publications';
+import NewsLayout from '../../layouts/NewsLayout.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { articles } from '../../data/news';
+import { orderedArticles } from '../../components/news-index';
+
+const ordered = orderedArticles;
+const initial = ordered.slice(0, 10);
+const sectionNames = [...new Set(articles.map((article) => article.section))].sort((a, b) => a.localeCompare(b));
+---
+
+<NewsLayout title="Search" description={`Search all ${publication.shortName} reporting.`}>
+	<div class="search-page" data-search-page>
+		<header class="page-heading page-heading--wide">
+			<p class="eyebrow">Find a report</p>
+			<h1>Search the paper</h1>
+			<p>Search headlines, summaries, sections and topics across the full {publication.shortName} archive.</p>
+		</header>
+		<form class="archive-search" action="/search/" method="get" role="search" data-archive-search>
+			<div class="archive-search__query">
+				<label for="archive-query">Words or names</label>
+				<input id="archive-query" name="q" type="search" placeholder="Try a place, person or subject" />
+			</div>
+			<div>
+				<label for="archive-section">Section</label>
+				<select id="archive-section" name="section">
+					<option value="">All sections</option>
+					{sectionNames.map((section) => <option value={section}>{section}</option>)}
+				</select>
+			</div>
+			<button class="button button--dark" type="submit">Search stories</button>
+		</form>
+		<p class="search-results__status" data-search-status aria-live="polite">Showing the most recent reports.</p>
+		<div class="search-results" data-search-results>
+			{initial.map((article) => <NewsCard article={article} compact />)}
+		</div>
+		<nav class="pagination search-pagination" aria-label="Search result pages" data-search-pagination hidden></nav>
+		<noscript><p class="noscript-note">Search controls require JavaScript. The latest reports are listed above; browse the <a href="/archive/">full paginated archive</a> without scripts.</p></noscript>
+	</div>
+</NewsLayout>
+
+<script>
+	interface SearchArticle {
+		id: string;
+		title: string;
+		summary: string;
+		section: string;
+		authorId: string;
+		authorName: string;
+		publishedAt: string;
+		topic: string;
+	}
+	const root = document.querySelector<HTMLElement>('[data-search-page]');
+	const form = root?.querySelector<HTMLFormElement>('[data-archive-search]');
+	const input = root?.querySelector<HTMLInputElement>('#archive-query');
+	const section = root?.querySelector<HTMLSelectElement>('#archive-section');
+	const results = root?.querySelector<HTMLElement>('[data-search-results]');
+	const status = root?.querySelector<HTMLElement>('[data-search-status]');
+	const pagination = root?.querySelector<HTMLElement>('[data-search-pagination]');
+	const resultPageSize = 25;
+	let index: SearchArticle[] = [];
+	let currentPage = 1;
+
+	const dateLabel = (value: string) => {
+		const date = new Date(value);
+		return Number.isNaN(date.valueOf()) ? value : new Intl.DateTimeFormat('en', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(date);
+	};
+	const readFilters = () => {
+		const params = new URLSearchParams(location.search);
+		if (input) input.value = params.get('q') ?? '';
+		if (section) section.value = params.get('section') ?? '';
+		currentPage = Math.max(1, Number(params.get('page')) || 1);
+	};
+	const makeStory = (article: SearchArticle) => {
+		const item = document.createElement('article');
+		item.className = 'news-card news-card--compact';
+		const copy = document.createElement('div');
+		copy.className = 'news-card__copy';
+		const sectionLink = document.createElement('a');
+		sectionLink.className = 'section-link';
+		sectionLink.href = `/section/${article.section.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}/`;
+		sectionLink.textContent = article.section;
+		const heading = document.createElement('h3');
+		const link = document.createElement('a');
+		link.href = `/article/${encodeURIComponent(article.id)}/`;
+		link.textContent = article.title;
+		heading.append(link);
+		const summary = document.createElement('p');
+		summary.className = 'news-card__summary';
+		summary.textContent = article.summary;
+		const meta = document.createElement('p');
+		meta.className = 'byline';
+		const author = document.createElement('a');
+		author.href = `/author/${encodeURIComponent(article.authorId)}/`;
+		author.textContent = article.authorName;
+		const time = document.createElement('time');
+		time.dateTime = article.publishedAt;
+		time.textContent = dateLabel(article.publishedAt);
+		meta.append(author, document.createTextNode(' · '), time);
+		copy.append(sectionLink, heading, summary, meta);
+		item.append(copy);
+		return item;
+	};
+	const render = (writeUrl: boolean) => {
+		if (!results || !status || !pagination || !input || !section) return;
+		const query = input.value.trim().toLocaleLowerCase();
+		const selectedSection = section.value.toLocaleLowerCase();
+		const matches = index.filter((article) => {
+			const text = `${article.title} ${article.summary} ${article.section} ${article.topic} ${article.authorName}`.toLocaleLowerCase();
+			return (!query || text.includes(query)) && (!selectedSection || article.section.toLocaleLowerCase() === selectedSection);
+		});
+		const pageCount = Math.max(1, Math.ceil(matches.length / resultPageSize));
+		currentPage = Math.min(currentPage, pageCount);
+		results.replaceChildren(...matches.slice((currentPage - 1) * resultPageSize, currentPage * resultPageSize).map(makeStory));
+		status.textContent = `${matches.length.toLocaleString('en')} ${matches.length === 1 ? 'story' : 'stories'} found${query ? ` for “${input.value.trim()}”` : ''}${selectedSection ? ` in ${section.value}` : ''}.`;
+		pagination.replaceChildren();
+		pagination.hidden = pageCount < 2;
+		if (pageCount > 1) {
+			const previous = document.createElement('a');
+			previous.className = 'pagination__step';
+			previous.textContent = '← Previous';
+			previous.href = `?q=${encodeURIComponent(input.value)}&section=${encodeURIComponent(section.value)}&page=${Math.max(1, currentPage - 1)}`;
+			if (currentPage === 1) previous.setAttribute('aria-disabled', 'true');
+			const next = document.createElement('a');
+			next.className = 'pagination__step';
+			next.textContent = 'Next →';
+			next.href = `?q=${encodeURIComponent(input.value)}&section=${encodeURIComponent(section.value)}&page=${Math.min(pageCount, currentPage + 1)}`;
+			if (currentPage === pageCount) next.setAttribute('aria-disabled', 'true');
+			const pageLabel = document.createElement('span');
+			pageLabel.textContent = `Page ${currentPage} of ${pageCount}`;
+			pagination.append(previous, pageLabel, next);
+		}
+		if (writeUrl) {
+			const params = new URLSearchParams();
+			if (input.value.trim()) params.set('q', input.value.trim());
+			if (section.value) params.set('section', section.value);
+			if (currentPage > 1) params.set('page', String(currentPage));
+			history.replaceState(null, '', `${location.pathname}${params.size ? `?${params}` : ''}`);
+		}
+	};
+	const start = async () => {
+		if (!form || !input || !section || !results || !status || !pagination) return;
+		readFilters();
+		try {
+			const response = await fetch('/api/archive.json');
+			if (!response.ok) throw new Error('The index could not be loaded.');
+			const payload = (await response.json()) as { articles: SearchArticle[] };
+			index = payload.articles;
+			render(false);
+		} catch {
+			status.textContent = 'Search is temporarily unavailable. You can still browse the paginated archive.';
+		}
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			currentPage = 1;
+			render(true);
+		});
+		pagination.addEventListener('click', (event) => {
+			const target = event.target;
+			if (!(target instanceof HTMLAnchorElement) || target.getAttribute('aria-disabled') === 'true') {
+				event.preventDefault();
+				return;
+			}
+			event.preventDefault();
+			currentPage = Number(new URL(target.href).searchParams.get('page')) || 1;
+			render(true);
+			results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		});
+	};
+	void start();
+</script>

@@ -5,7 +5,7 @@
     </style>
   </defs>
   <title id="logo-title">QScrape Logo</title>
-  <desc id="logo-desc">QScrape logo — periodic table tile with symbol Qs on a light red background</desc>
+  <desc id="logo-desc">QScrape logo: periodic table tile with symbol Qs on a light red background</desc>
 
   <!-- Background -->
   <rect x="0" y="0" width="500" height="500" fill="#faf0f0"/>

@@ -1,0 +1,35 @@
+---
+import AuthorPage from '../../../components/AuthorPage.astro';
+import { authors } from '../../../data/news';
+import { articlesByAuthorId } from '../../../components/news-index';
+import { LIST_PAGE_SIZE } from '../../../components/paths';
+
+export function getStaticPaths() {
+	return authors.map((author) => {
+		const stories = articlesByAuthorId.get(author.id) ?? [];
+		const total = stories.length;
+		return {
+			params: { id: author.id },
+			props: {
+				author,
+				articles: stories.slice(0, LIST_PAGE_SIZE),
+				total,
+				page: 1,
+				pageCount: Math.max(1, Math.ceil(total / LIST_PAGE_SIZE)),
+				latestPublishedAt: stories[0]?.publishedAt,
+			},
+		};
+	});
+}
+
+const { author, articles, total, page, pageCount, latestPublishedAt } = Astro.props;
+---
+
+<AuthorPage
+	author={author}
+	articles={articles}
+	total={total}
+	page={page}
+	pageCount={pageCount}
+	latestPublishedAt={latestPublishedAt}
+/>

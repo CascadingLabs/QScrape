@@ -1,0 +1,182 @@
+---
+import { Image } from 'astro:assets';
+import humanCity from '../../../qsn/src/assets/editorial/human-city.png';
+import elvenCity from '../../../qsn/src/assets/editorial/elven-city.png';
+import goblinCity from '../../../qsn/src/assets/editorial/goblin-city.png';
+import koboldCity from '../../../qsn/src/assets/editorial/kobold-city.png';
+import vampireCity from '../../../qsn/src/assets/editorial/vampire-city.png';
+import dwarfCity from '../../../qsn/src/assets/editorial/mountain-city.png';
+import { publications } from '../../../qsn/src/data/publications';
+import '../styles/newsstand.css';
+
+const heroById = {
+	dwarves: {
+		image: dwarfCity,
+		alt: 'Mountain-cut halls and stone bridges climb the cliffside of Kharad Venn.',
+	},
+	humans: {
+		image: humanCity,
+		alt: 'Human residents work along a broad river quay beneath stone bridges and a civic hall.',
+	},
+	elves: {
+		image: elvenCity,
+		alt: 'A forest city links living tree halls and public walkways above a market garden.',
+	},
+	goblins: {
+		image: goblinCity,
+		alt: 'Goblin residents cross an industrial neighborhood with foundries, iron bridges and a street market.',
+	},
+	kobolds: {
+		image: koboldCity,
+		alt: 'Kobold families and traders use arched passages around a tunnel-village market and cistern.',
+	},
+	vampires: {
+		image: vampireCity,
+		alt: 'Residents gather in a lantern-lit vampire city square beneath the moon and dark stone towers.',
+	},
+} as const;
+
+const editions = publications.map((publication) => ({
+	...publication,
+	host: new URL(publication.origin).host,
+	art: heroById[publication.id as keyof typeof heroById],
+	sisters: publications.filter((sister) => sister.id !== publication.id),
+}));
+const totalArticles = publications.reduce((total, publication) => total + publication.articleCount, 0);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#171d2c" />
+		<meta name="description" content="Six fictional newspapers in one shared world, connected across six publication hosts for cross-origin crawling research." />
+		<link rel="canonical" href="https://news.qscrape.dev/" />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<title>QScrape News Network | Six papers, one shared world</title>
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Skip to the publications</a>
+		<div class="site-shell">
+			<header class="topbar">
+				<a class="root-link" href="https://qscrape.dev/" aria-label="QScrape home">
+					<span class="root-link__mark" aria-hidden="true">Q</span>
+					<span>QScrape</span>
+				</a>
+				<nav class="topbar__nav" aria-label="News network">
+					<a href="#editions">Publications</a>
+					<a href="/network-manifest.json">Network manifest</a>
+				</nav>
+			</header>
+
+			<main id="main">
+				<section class="intro" aria-labelledby="intro-title">
+					<div class="intro__copy">
+						<p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Six publications · one invented world</p>
+						<h1 id="intro-title">Six papers.<br /><em>One shared world.</em></h1>
+						<p class="intro__lede">Independent newsrooms follow the same world from different streets, halls and histories. Their reporting shares places and events while keeping each publication on its own host.</p>
+						<div class="intro__actions">
+							<a class="button button--light" href="#editions">Explore the papers <span aria-hidden="true">↓</span></a>
+							<a class="intro__manifest" href="/network-manifest.json">Read the network manifest <span aria-hidden="true">↗</span></a>
+						</div>
+					</div>
+					<aside class="network-summary" aria-label="Network scale and purpose">
+						<div class="network-summary__top">
+							<p class="eyebrow">Network index</p>
+							<span class="network-summary__signal" aria-label="Six publication hosts">6 hosts</span>
+						</div>
+						<p class="network-summary__count">{totalArticles.toLocaleString('en-US')}</p>
+						<p class="network-summary__label">synthetic article records</p>
+						<div class="network-summary__rule"></div>
+						<p class="network-summary__text">A known starting point for observing discovery across host boundaries, with linked editions and a machine-readable map of the network.</p>
+						<div class="network-summary__hosts" aria-hidden="true">
+							{editions.map((edition) => <span title={edition.shortName}>{edition.key.toUpperCase()}</span>)}
+						</div>
+					</aside>
+				</section>
+
+				<section id="editions" class="editions" aria-labelledby="editions-title">
+					<div class="section-intro">
+						<div>
+							<p class="eyebrow eyebrow--ink">The newsstand</p>
+							<h2 id="editions-title">Six distinct perspectives</h2>
+							<p class="section-intro__copy">Each paper has its own cultural lens and editorial beat. Follow the masthead to its production host, or use the sibling links to move between related publications.</p>
+						</div>
+						<p class="section-intro__note"><strong>Shared geography.</strong> Different communities decide what deserves the front page.</p>
+					</div>
+
+					<div class="edition-grid">
+						{editions.map((edition, index) => (
+							<article class="edition-card" aria-labelledby={`edition-${edition.id}`}>
+								<div class="edition-card__topline">
+									<span class="edition-card__species">{edition.species}</span>
+									<span class="edition-card__code">{edition.shortName}</span>
+								</div>
+								<a class="edition-card__image-link" href={`${edition.origin}/`} aria-label={`Visit ${edition.name} at ${edition.host}`}>
+									<Image
+										src={edition.art.image}
+										alt={edition.art.alt}
+										widths={[420, 640, 800, 1100, 1440]}
+										sizes="(max-width: 620px) calc(100vw - 36px), (max-width: 960px) calc(50vw - 32px), (max-width: 1440px) calc(33vw - 30px), 440px"
+										format="webp"
+										loading={index === 0 ? 'eager' : 'lazy'}
+										fetchpriority={index === 0 ? 'high' : 'auto'}
+									/>
+									<span class="edition-card__open" aria-hidden="true">↗</span>
+								</a>
+								<div class="edition-card__body">
+									<div class="edition-card__identity">
+										<span class="edition-card__issue">{edition.key.toUpperCase()} · {edition.host}</span>
+										<h3 id={`edition-${edition.id}`}><a href={`${edition.origin}/`}>{edition.name}</a></h3>
+										<p class="edition-card__tagline">{edition.tagline}</p>
+									</div>
+									<p class="edition-card__description">{edition.description}</p>
+									<div class="edition-card__meta">
+										<span>Article inventory</span>
+										<strong>{edition.articleCount.toLocaleString('en-US')}</strong>
+									</div>
+									<footer class="edition-card__footer">
+										<a class="edition-card__visit" href={`${edition.origin}/`}>Visit publication <span aria-hidden="true">↗</span></a>
+										<a class="edition-card__manifest" href={`${edition.origin}/benchmark-manifest.json`}>Site manifest</a>
+										<details class="sister-links">
+											<summary>Related editions <span aria-hidden="true">+</span></summary>
+											<ul>
+												{edition.sisters.map((sister) => <li><a href={`${sister.origin}/`} aria-label={`Visit ${sister.name}`} title={sister.name}>{sister.shortName}</a></li>)}
+											</ul>
+										</details>
+									</footer>
+								</div>
+							</article>
+						))}
+					</div>
+				</section>
+
+				<section class="boundary-note" aria-labelledby="boundary-title">
+					<div class="boundary-note__index" aria-hidden="true">01 / 06</div>
+					<div>
+						<p class="eyebrow eyebrow--ink">Designed for boundary-aware discovery</p>
+						<h2 id="boundary-title">A hub, six origins, a connected world.</h2>
+					</div>
+					<p>The index is a stable starting URL. Each edition link crosses to its own publication host, while sibling relationships expose additional routes through the network. The manifest records origins, article counts, hub links and sister edges without duplicating every article.</p>
+				</section>
+			</main>
+
+			<footer class="site-footer">
+				<div class="site-footer__brand"><span class="root-link__mark" aria-hidden="true">Q</span><span>QScrape News Network</span></div>
+				<p>Fictional publications and synthetic article inventories for controlled discovery work.</p>
+				<div class="site-footer__links"><a href="/network-manifest.json">Network manifest</a><a href="https://qscrape.dev/">QScrape home</a></div>
+			</footer>
+		</div>
+		<script>
+			const updateImages = () => {
+				for (const image of document.images) {
+					const rect = image.getBoundingClientRect();
+					if (rect.width && rect.height) image.loading = rect.top < innerHeight ? 'eager' : 'lazy';
+				}
+			};
+			updateImages();
+			window.addEventListener('resize', updateImages, { passive: true });
+		</script>
+	</body>
+</html>

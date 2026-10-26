@@ -1,0 +1,35 @@
+---
+import type { Article } from '../data/news';
+import { authorById } from './news-index';
+import { Image } from 'astro:assets';
+import { editorialImage } from '../lib/images';
+import AuthorPortrait from './AuthorPortrait.astro';
+import { articlePath, authorPath, formatDate, sectionPath } from './paths';
+
+interface Props {
+	article: Article;
+	compact?: boolean;
+	eager?: boolean;
+}
+
+const { article, compact = false, eager = false } = Astro.props;
+const author = authorById.get(article.authorId);
+---
+
+<article class:list={['news-card', compact && 'news-card--compact']}>
+	{article.image && !compact && (
+		<a class="news-card__image" href={articlePath(article.id)} tabindex="-1" aria-hidden="true">
+			<Image src={editorialImage(article.image.src)} alt="" width={640} widths={[320, 640]} sizes="(min-width: 1100px) 300px, 50vw" format="webp" loading={eager ? 'eager' : 'lazy'} />
+		</a>
+	)}
+	<div class="news-card__copy">
+		<a class="section-link" href={sectionPath(article.section)}>{article.section}</a>
+		<h3><a href={articlePath(article.id)}>{article.title}</a></h3>
+		<p class="news-card__summary">{article.summary}</p>
+		<p class="byline">
+			{author && <a class="byline__author" href={authorPath(author.id)}><AuthorPortrait author={author} compact /><span>{author.name}</span></a>}
+			<span aria-hidden="true"> · </span>
+			<time datetime={article.publishedAt}>{formatDate(article.publishedAt, { year: undefined })}</time>
+		</p>
+	</div>
+</article>

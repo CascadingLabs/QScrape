@@ -1,0 +1,33 @@
+---
+import SeriesPage from '../../../components/SeriesPage.astro';
+import { series } from '../../../data/news';
+import { articlesBySeriesId } from '../../../components/news-index';
+import { LIST_PAGE_SIZE } from '../../../components/paths';
+
+export function getStaticPaths() {
+	return series.map((item) => {
+		const stories = articlesBySeriesId.get(item.id) ?? [];
+		const total = stories.length;
+		return {
+			params: { id: item.id },
+			props: {
+				series: item,
+				articles: stories.slice(0, LIST_PAGE_SIZE),
+				total,
+				page: 1,
+				pageCount: Math.max(1, Math.ceil(total / LIST_PAGE_SIZE)),
+			},
+		};
+	});
+}
+
+const { series: collection, articles, total, page, pageCount } = Astro.props;
+---
+
+<SeriesPage
+	series={collection}
+	articles={articles}
+	total={total}
+	page={page}
+	pageCount={pageCount}
+/>
