@@ -14,6 +14,13 @@
 		"news:verify": "bun scripts/verify-news-network.ts",
 		"news:audit-output": "bun scripts/audit-news-network.ts",
 		"news:smoke": "bun scripts/smoke-news-network.ts && bun scripts/smoke-news-network.ts --ports",
+		"cloudflare:validate": "bun scripts/cloudflare-gitops.ts --validate",
+		"cloudflare:check": "bun scripts/cloudflare-gitops.ts --check",
+		"cloudflare:apply": "bun scripts/cloudflare-gitops.ts --apply",
+		"cloudflare:bootstrap-secret": "bun scripts/bootstrap-news-deploy-token.ts --apply",
+		"news:verify-hosted": "bun scripts/verify-hosted-news.ts",
+		"news:deploy": "bun scripts/deploy-news-network.ts",
+		"cloudflare:test": "bun scripts/cloudflare-config.test.ts",
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
@@ -38,7 +45,8 @@
 		"@types/react-dom": "^19.3.0",
 		"typescript": "^6.0.3",
 		"vite": "npm:@voidzero-dev/vite-plus-core@1.3.0",
-		"vite-plus": "1.3.0"
+		"vite-plus": "1.3.0",
+		"wrangler": "4.153.0"
 	},
 	"overrides": {
 		"defu": "^6.1.5",

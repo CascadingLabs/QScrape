@@ -71,17 +71,23 @@ The hub's `/network-manifest.json` describes the six-host network. It does not d
 
 ## Validation, preview artifact, and delivery
 
-CI checks the main QScrape app, checks both news apps, verifies all six fixture contracts, builds all seven static sites, and audits generated output. A successful build or audit is not a crawler benchmark, browser QA, or proof that a production host is live.
+The CI `check` job runs main-site checks, validates GitOps target configuration and guardrails, typechecks both news apps, verifies all six fixture contracts, builds all seven static sites, and audits and smoke-tests generated output. A successful build or audit is not a crawler benchmark, browser QA, or proof that a production host is live.
 
-On pull requests, CI uploads a `news-network-preview` artifact containing `news-network-preview.tar.gz`. Extract both archive layers, then run `node preview.mjs` from the extracted directory. It contains all seven static sites and a dependency-free Node server. This is a downloadable artifact, not a hosted deployment.
+CI creates `news-network-preview.tar.gz` from the seven sites produced in the same check run. On a push to protected `main`, the `deploy-news` job runs only after the check job succeeds, downloads that run's artifact, and compares its `network-preview.json` source SHA to `GITHUB_SHA`. It then uploads the seven sites sequentially as Direct Upload Pages projects with Wrangler 4.153.0. The deployment script checks each project is main-branch Direct Upload, rejects Functions, verifies the remote production deployment against the exact SHA through the Cloudflare API, and records a receipt.
 
-The local integration audit found 106,718 linked publication HTML pages, including all 100,000 article pages. Generated file counts were QSN 11,078; HSN 19,543; ESN 19,542; GSN 19,546; KSN 19,542; VSN 19,544; newsstand 43. All were below the planned 20,000-file per-site limit and 25 MiB asset limit. The raw seven-site output occupies approximately 4.0 GiB locally. Builds run serially on one CPU; these are local measurements, not hosting or crawl-performance evidence.
+After all uploads, the workflow runs `news:verify-hosted` against the seven production origins. This native-fetch check writes `.astro/hosted-news-report.json`; deployment receipts are saved at `.astro/cloudflare-deployment-receipts.json`. The workflow uploads both as `news-production-evidence` even if a later step fails. A configured deployment workflow is not proof that domains are ready or that CI has passed. The owner records current hosted status after reviewing production evidence.
+
+The source record counts are 100,000 across the network, but generated file counts and output size remain provisional until the owner records results from the current output audit. Do not repeat metrics from an earlier single-publication build.
 
 The production image audit checks optimized WebP/SVG URLs, dimensions, loading attributes and alternative-text markup. Astro's component marker exists only in development, so it is not used as a production assertion. Browser-toolbar interactions and viewport layout remain separate from these checks.
 
 The custom copy linter rejects literal and encoded em dashes in authored repository text. `vp run lint` and `vp run check` include the linter, and CI runs it. Keep new authored copy free of em dashes.
 
-QSN and the sister publications are intended for separate Cloudflare Pages projects. No project, domain binding, DNS change, or deployment is authorized by this documentation. For authorized follow-up pushes, start the commit message with the required `CF-Pages-Skip` prefix.
+The existing `qscrape.dev` Pages project remains on its native Git integration. The seven news sites use Direct Upload from GitHub Actions because Cloudflare limits each repository to five Git-connected Pages projects. The new targets are listed in `deployment/cloudflare-pages.json`. See [deployment/README.md](../deployment/README.md) for the release design.
+
+`cloudflare:validate` checks the local target registry. `cloudflare:check` reads the Cloudflare account and reports drift. The owner manages `cloudflare:apply`, which can create projects, domains, and DNS records, plus `cloudflare:bootstrap-secret`, which creates the main-only `news-production` GitHub environment and stores the account-scoped Pages Write token as `CLOUDFLARE_API_TOKEN`. Secret values are never logged or written to the repository. The ordinary main push workflow performs the uploads; there is no manual upload procedure.
+
+No hosted result is claimed until the owner verifies the current deployment receipts and hosted report. Use `CF-Pages-Skip` only on review-branch commits when a native root preview is unwanted. Production merge and main commit messages must omit that prefix so the existing root site also deploys.
 
 ### One localhost port per paper
 

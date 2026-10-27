@@ -45,8 +45,12 @@ The Astro sitemap integration generates a sitemap index for the hub. The hub's `
 
 `news:check` runs Astro diagnostics for this site and the shared publication app. `news:verify` checks the six fixture contracts and global IDs. `news:audit-output` audits the built publications and hub, file budgets, links and network graph. `news:smoke` requests all seven hosts through the portable preview server. These checks do not measure crawler performance, prove browser layout, or confirm that a production host is live.
 
-On pull requests, CI uploads `news-network-preview.tar.gz`, containing the static network and portable preview server. This is a downloadable artifact, not a hosted preview. Build file counts and output sizes are recorded after the final output audit; source counts alone are not a build metric.
+CI uploads `news-network-preview.tar.gz` with the static network and portable preview server. This is a downloadable artifact, not a hosted preview. Build file counts and output sizes are recorded after the final output audit; source counts alone are not a build metric.
 
-No Cloudflare Pages projects, domain bindings, DNS changes, or deployments are part of this local app documentation.
+The existing `qscrape.dev` Pages project remains on its native Git integration. The seven news sites use separate Direct Upload Pages projects because Cloudflare limits a repository to five Git-connected Pages projects. See [deployment/README.md](../deployment/README.md) for the release topology.
+
+On a push to protected `main`, the GitHub Actions deploy job runs after the check job. It downloads the artifact from that same run, verifies `network-preview.json` against the source commit, and uploads the seven sites sequentially with Wrangler 4.153.0. The workflow checks Cloudflare's canonical production deployment for the exact commit SHA, then runs hosted HTTP verification. The configured workflow is not proof that domains are ready or that CI has passed. The owner records current production status from deployment receipts and the hosted report.
+
+The owner manages Cloudflare project and DNS mutations. The `cloudflare:apply` and `cloudflare:bootstrap-secret` commands are setup operations, not ordinary build steps. The deployment workflow uses the protected `news-production` environment and account-scoped `CLOUDFLARE_API_TOKEN`; secret values are not logged or stored in the repository. There is no manual upload procedure.
 
 For a separate localhost port per paper, use `vp run news:preview --ports`. The hub stays on 4329 and publication ports run from 4330 through 4335 in registry order. The portable server rewrites the hub and sister links to those ports. Both this mode and the subdomain mode are covered by `news:smoke`.

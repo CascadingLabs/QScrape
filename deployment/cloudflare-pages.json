@@ -1,0 +1,122 @@
+{
+	"schemaVersion": 1,
+	"accountId": "e5f2c442436fa3e4c6a66d44ebf28eb5",
+	"zone": "qscrape.dev",
+	"zoneId": "b7dc0cb3ce333513e76e6fbe05e856bb",
+	"repository": {
+		"owner": "CascadingLabs",
+		"ownerId": "258956650",
+		"name": "QScrape",
+		"id": "1178415317",
+		"branch": "main"
+	},
+	"projects": [
+		{
+			"key": "news",
+			"project": "qscrape-news",
+			"domain": "news.qscrape.dev",
+			"root": "news-index",
+			"output": "dist/news",
+			"task": "news:index:build",
+			"env": {
+				"NODE_VERSION": "24.11.0",
+				"BUN_VERSION": "1.4.3",
+				"UV_THREADPOOL_SIZE": "1",
+				"QSN_PUBLICATION": "dwarves",
+				"QSN_BUILD_ROOT": "./dist"
+			}
+		},
+		{
+			"key": "qsn",
+			"project": "qscrape-qsn",
+			"domain": "qsn.qscrape.dev",
+			"root": "qsn",
+			"output": "dist/qsn",
+			"task": "publication:build",
+			"env": {
+				"NODE_VERSION": "24.11.0",
+				"BUN_VERSION": "1.4.3",
+				"UV_THREADPOOL_SIZE": "1",
+				"QSN_PUBLICATION": "dwarves",
+				"QSN_BUILD_ROOT": "./dist"
+			}
+		},
+		{
+			"key": "hsn",
+			"project": "qscrape-hsn",
+			"domain": "hsn.qscrape.dev",
+			"root": "qsn",
+			"output": "dist/hsn",
+			"task": "publication:build",
+			"env": {
+				"NODE_VERSION": "24.11.0",
+				"BUN_VERSION": "1.4.3",
+				"UV_THREADPOOL_SIZE": "1",
+				"QSN_PUBLICATION": "humans",
+				"QSN_BUILD_ROOT": "./dist"
+			}
+		},
+		{
+			"key": "esn",
+			"project": "qscrape-esn",
+			"domain": "esn.qscrape.dev",
+			"root": "qsn",
+			"output": "dist/esn",
+			"task": "publication:build",
+			"env": {
+				"NODE_VERSION": "24.11.0",
+				"BUN_VERSION": "1.4.3",
+				"UV_THREADPOOL_SIZE": "1",
+				"QSN_PUBLICATION": "elves",
+				"QSN_BUILD_ROOT": "./dist"
+			}
+		},
+		{
+			"key": "gsn",
+			"project": "qscrape-gsn",
+			"domain": "gsn.qscrape.dev",
+			"root": "qsn",
+			"output": "dist/gsn",
+			"task": "publication:build",
+			"env": {
+				"NODE_VERSION": "24.11.0",
+				"BUN_VERSION": "1.4.3",
+				"UV_THREADPOOL_SIZE": "1",
+				"QSN_PUBLICATION": "goblins",
+				"QSN_BUILD_ROOT": "./dist"
+			}
+		},
+		{
+			"key": "ksn",
+			"project": "qscrape-ksn",
+			"domain": "ksn.qscrape.dev",
+			"root": "qsn",
+			"output": "dist/ksn",
+			"task": "publication:build",
+			"env": {
+				"NODE_VERSION": "24.11.0",
+				"BUN_VERSION": "1.4.3",
+				"UV_THREADPOOL_SIZE": "1",
+				"QSN_PUBLICATION": "kobolds",
+				"QSN_BUILD_ROOT": "./dist"
+			}
+		},
+		{
+			"key": "vsn",
+			"project": "qscrape-vsn",
+			"domain": "vsn.qscrape.dev",
+			"root": "qsn",
+			"output": "dist/vsn",
+			"task": "publication:build",
+			"env": {
+				"NODE_VERSION": "24.11.0",
+				"BUN_VERSION": "1.4.3",
+				"UV_THREADPOOL_SIZE": "1",
+				"QSN_PUBLICATION": "vampires",
+				"QSN_BUILD_ROOT": "./dist"
+			}
+		}
+	],
+	"delivery": "github-actions",
+	"githubEnvironment": "news-production"
+}
