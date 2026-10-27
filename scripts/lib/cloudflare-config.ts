@@ -25,6 +25,18 @@ export interface GitOpsConfig {
 	projects: PagesTarget[];
 	delivery: string;
 	githubEnvironment: string;
+	zoneRouting: {
+		canonicalRedirect: {
+			rulesetId: string;
+			ruleId: string;
+			baseExpression: string;
+			excludeHosts: string[];
+		};
+		robots: {
+			preservedRoute: { pattern: string; script: string };
+			passThrough: { pattern: string; script: null }[];
+		};
+	};
 }
 export function loadConfig(): GitOpsConfig {
 	const config = JSON.parse(
@@ -88,6 +100,34 @@ export function validateConfig(config: GitOpsConfig): GitOpsConfig {
 		if (target.env.QSN_PUBLICATION !== selected)
 			throw new Error(`Publication selection differs: ${target.key}`);
 	}
+	const routing = config.zoneRouting;
+	const hosts = config.projects.map((target) => target.domain).sort();
+	if (
+		!routing ||
+		JSON.stringify([...routing.canonicalRedirect.excludeHosts].sort()) !==
+			JSON.stringify(hosts)
+	)
+		throw new Error(
+			'Redirect exceptions must contain exactly the seven news hosts',
+		);
+	const bypasses = routing.robots.passThrough;
+	if (
+		bypasses.length !== hosts.length ||
+		new Set(bypasses.map((route) => route.pattern)).size !== hosts.length ||
+		bypasses.some(
+			(route) =>
+				route.script !== null ||
+				!hosts.some((host) => route.pattern === `${host}/robots.txt`),
+		)
+	)
+		throw new Error(
+			'Robots pass-through routes must cover only the seven exact news robots paths',
+		);
+	if (
+		routing.robots.preservedRoute.pattern !== `*.${config.zone}/robots.txt` ||
+		routing.robots.preservedRoute.script !== 'robots-disallow'
+	)
+		throw new Error('The legacy robots Worker must remain unchanged');
 	return config;
 }
 export interface PagesProject {

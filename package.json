@@ -20,7 +20,7 @@
 		"cloudflare:bootstrap-secret": "bun scripts/bootstrap-news-deploy-token.ts --apply",
 		"news:verify-hosted": "bun scripts/verify-hosted-news.ts",
 		"news:deploy": "bun scripts/deploy-news-network.ts",
-		"cloudflare:test": "bun scripts/cloudflare-config.test.ts",
+		"cloudflare:test": "bun scripts/cloudflare-config.test.ts && bun scripts/hosted-links.test.ts",
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
