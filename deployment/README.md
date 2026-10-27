@@ -55,3 +55,14 @@ The checked-in workflow and scripts define the automated release contract. They 
 Local fixture verification, generated-output audits, local preview smoke tests, deployment receipts, and hosted HTTP checks answer different questions. They are reported separately. Browser QA and crawler performance benchmarks are not inferred from a deployment or a hosted HTTP verification run.
 
 Use `CF-Pages-Skip` only on review-branch commits when a native root preview is unwanted. Production merge and main commit messages must omit that prefix so the existing root site also deploys.
+
+## Zone routing prerequisites
+
+`zoneRouting` in `cloudflare-pages.json` records two existing zone-wide overrides that must exempt the news hosts:
+
+- The `Subdomain to Root (Qs)` redirect keeps its original action and target, but excludes exactly the seven news hostnames. Other subdomains retain their existing canonical redirect.
+- The wildcard `*.qscrape.dev/robots.txt` Worker, `robots-disallow`, remains unchanged. Seven more-specific routes matching `{news-host}/robots.txt` have no Worker script, allowing each Pages origin to serve its own robots policy and sitemap.
+
+These routing prerequisites are operator-managed Cloudflare configuration, separate from routine artifact deployment. The release credential deliberately has no zone-rule or Worker-route permissions. The local target validator checks the declared exception scope; the hosted verifier checks the resulting HTTP behavior on every release. `cloudflare:apply` manages Pages projects, custom domains and DNS, not these legacy routing rules.
+
+The redirect is managed through Cloudflare's zone ruleset rule API. The pass-through routes use `POST /zones/{zone_id}/workers/routes` with `{ "pattern": "{news-host}/robots.txt", "script": null }`. Use an authorized operator context when restoring these prerequisites. Do not disable the wildcard Worker or redirect globally.

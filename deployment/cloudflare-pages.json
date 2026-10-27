@@ -118,5 +118,57 @@
 		}
 	],
 	"delivery": "github-actions",
-	"githubEnvironment": "news-production"
+	"githubEnvironment": "news-production",
+	"zoneRouting": {
+		"canonicalRedirect": {
+			"rulesetId": "3b9e74e9e8474311aba40b70184cd2cb",
+			"ruleId": "788c05d929d6461d94b0496767e287bd",
+			"baseExpression": "(http.request.full_uri wildcard r\"https://*.qscrape.dev/\")",
+			"excludeHosts": [
+				"news.qscrape.dev",
+				"qsn.qscrape.dev",
+				"hsn.qscrape.dev",
+				"esn.qscrape.dev",
+				"gsn.qscrape.dev",
+				"ksn.qscrape.dev",
+				"vsn.qscrape.dev"
+			]
+		},
+		"robots": {
+			"preservedRoute": {
+				"pattern": "*.qscrape.dev/robots.txt",
+				"script": "robots-disallow"
+			},
+			"passThrough": [
+				{
+					"pattern": "news.qscrape.dev/robots.txt",
+					"script": null
+				},
+				{
+					"pattern": "qsn.qscrape.dev/robots.txt",
+					"script": null
+				},
+				{
+					"pattern": "hsn.qscrape.dev/robots.txt",
+					"script": null
+				},
+				{
+					"pattern": "esn.qscrape.dev/robots.txt",
+					"script": null
+				},
+				{
+					"pattern": "gsn.qscrape.dev/robots.txt",
+					"script": null
+				},
+				{
+					"pattern": "ksn.qscrape.dev/robots.txt",
+					"script": null
+				},
+				{
+					"pattern": "vsn.qscrape.dev/robots.txt",
+					"script": null
+				}
+			]
+		}
+	}
 }

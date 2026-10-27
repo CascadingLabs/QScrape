@@ -43,6 +43,12 @@ for (const mutate of [
 	(value: typeof config) => {
 		value.projects[1].root = '';
 	},
+	(value: typeof config) => {
+		value.zoneRouting.canonicalRedirect.excludeHosts.pop();
+	},
+	(value: typeof config) => {
+		value.zoneRouting.robots.passThrough[0].pattern = '*.qscrape.dev/*';
+	},
 ]) {
 	const invalid = structuredClone(config);
 	mutate(invalid);

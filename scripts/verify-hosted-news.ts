@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { publications, type Publication } from '../qsn/src/data/publications';
+import { linksInclude } from './lib/hosted-links';
 
 const HUB_ORIGIN = 'https://news.qscrape.dev';
 const REPORT_PATH = join(process.cwd(), '.astro', 'hosted-news-report.json');
@@ -361,8 +362,8 @@ function extractLinks(html: string): string[] {
 		.filter((href): href is string => Boolean(href));
 }
 
-function hasLink(html: string, href: string): boolean {
-	return extractLinks(html).includes(href);
+function hasLink(html: string, href: string, pageUrl: string): boolean {
+	return linksInclude(extractLinks(html), href, pageUrl);
 }
 
 function hasHtmlAttribute(
@@ -520,17 +521,17 @@ async function verifyHub(): Promise<void> {
 	if (html !== undefined) {
 		checkCanonical(html, hubOrigin, 'hub home');
 		check(
-			hasLink(html, `${HUB_ORIGIN}/network-manifest.json`),
+			hasLink(html, `${HUB_ORIGIN}/network-manifest.json`, hubOrigin),
 			'hub home: network manifest link is missing',
 		);
 		for (const publication of publications) {
 			const origin = `${publication.origin.replace(/\/+$/, '')}/`;
 			check(
-				hasLink(html, origin),
+				hasLink(html, origin, hubOrigin),
 				`hub home: publication link is missing for ${publication.key}`,
 			);
 			check(
-				hasLink(html, `${origin}benchmark-manifest.json`),
+				hasLink(html, `${origin}benchmark-manifest.json`, hubOrigin),
 				`hub home: benchmark manifest link is missing for ${publication.key}`,
 			);
 		}
@@ -665,7 +666,7 @@ async function verifyRootSite(): Promise<void> {
 	const html = await fetchText('QScrape root index', 'https://qscrape.dev/');
 	if (html !== undefined)
 		check(
-			hasLink(html, `${HUB_ORIGIN}/`),
+			hasLink(html, `${HUB_ORIGIN}/`, 'https://qscrape.dev/'),
 			'QScrape root index: newsstand link is missing',
 		);
 	const shop = await fetchText(
@@ -707,12 +708,12 @@ async function verifyPublication(publication: Publication): Promise<void> {
 			if (sister.id === publication.id) continue;
 			const sisterOrigin = `${sister.origin.replace(/\/+$/, '')}/`;
 			check(
-				hasLink(homepage, sisterOrigin),
+				hasLink(homepage, sisterOrigin, homepageUrl),
 				`${publication.key} home: sister publication link is missing for ${sister.key}`,
 			);
 		}
 		check(
-			hasLink(homepage, `${HUB_ORIGIN}/`),
+			hasLink(homepage, `${HUB_ORIGIN}/`, homepageUrl),
 			`${publication.key} home: newsstand return link is missing`,
 		);
 	}
@@ -955,7 +956,7 @@ async function verifyPublication(publication: Publication): Promise<void> {
 			);
 			for (const relatedUrl of relatedUrls) {
 				check(
-					hasLink(articleHtml, relatedUrl),
+					hasLink(articleHtml, relatedUrl, articleUrl),
 					`${publication.key} article ${articleEntry.id}: declared related link is missing: ${relatedUrl}`,
 				);
 			}
