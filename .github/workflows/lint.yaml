@@ -30,8 +30,17 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Dependency security release gate
+        run: bun audit --audit-level=moderate
+
       - name: Vite+ and Astro checks
         run: ./node_modules/.bin/vp run check
+
+      - name: Validate GitOps target configuration
+        run: ./node_modules/.bin/vp run cloudflare:validate
+
+      - name: Test GitOps guardrails
+        run: ./node_modules/.bin/vp run cloudflare:test
 
       - name: Build
         run: ./node_modules/.bin/vp run build
@@ -52,11 +61,9 @@ jobs:
         run: ./node_modules/.bin/vp run news:smoke
 
       - name: Pack news network preview
-        if: github.event_name == 'pull_request'
         run: tar -czf news-network-preview.tar.gz -C qsn/dist .
 
       - name: Upload news network preview
-        if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: news-network-preview
@@ -64,3 +71,55 @@ jobs:
           compression-level: 0
           if-no-files-found: error
           retention-days: 7
+
+  deploy-news:
+    name: Deploy news network from main
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: news-production
+      url: https://news.qscrape.dev
+    permissions:
+      contents: read
+    concurrency:
+      group: news-production
+      cancel-in-progress: false
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.3
+      - name: Setup Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+      - name: Install locked deployment tools
+        run: bun install --frozen-lockfile
+      - name: Download this run's verified sites
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: news-network-preview
+          path: .astro/release
+      - name: Extract verified sites
+        run: |
+          mkdir -p .astro/release/sites
+          tar -xzf .astro/release/news-network-preview.tar.gz -C .astro/release/sites
+      - name: Deploy static sites sequentially
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: ./node_modules/.bin/vp run news:deploy --root .astro/release/sites
+      - name: Verify production news sites
+        run: ./node_modules/.bin/vp run news:verify-hosted
+      - name: Save deployment evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: news-production-evidence
+          path: |
+            .astro/cloudflare-deployment-receipts.json
+            .astro/hosted-news-report.json
+          if-no-files-found: warn
+          retention-days: 30

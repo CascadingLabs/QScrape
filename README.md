@@ -38,6 +38,8 @@ The main QScrape index links to the newsstand hub at `https://news.qscrape.dev/`
 
 These are configured production origins, not confirmation that DNS or hosting is live. A successful build does not prove benchmark coverage or deployed behavior.
 
+The existing `qscrape.dev` Pages site remains on its current native Git integration. The seven news sites use Direct Upload from GitHub Actions. Cloudflare documents a maximum of five Pages projects connected to one Git repository, so the news network is deployed from its verified workflow artifact instead of adding seven more Git connections. See the [news deployment guide](deployment/README.md) and [Cloudflare monorepo limits](https://developers.cloudflare.com/pages/configuration/monorepos/).
+
 Each version links to its implementation module on GitHub. Build metadata (`PUBLIC_SOURCE_REVISION`, `CF_PAGES_COMMIT_SHA`, or `GITHUB_SHA`) pins that link to a commit; otherwise it uses `main`. Module READMEs describe behavior and link to the implementation.
 
 ## Styling
@@ -84,13 +86,15 @@ vp run check        # Read-only formatting, lint, and type checks, sequentially
 
 Oxfmt is the only formatter and Oxlint is the code linter, both provided by Vite+. Oxfmt currently skips Astro templates; keep those consistent manually. Oxlint checks their scripts, and `astro check` validates templates and TypeScript. CI runs these checks before the production build.
 
-The repository CI runs root checks, checks both news apps, verifies six fixtures, builds the network, and audits generated output. The audit checks per-publication article reachability, API identifiers, the hub graph, and site file budgets. These checks are not crawler performance measurements, browser QA, or deployed-host verification. On pull requests, CI uploads `news-network-preview.tar.gz` with the generated static network and portable preview server. This is a downloadable artifact, not a hosted preview. Do not claim a hosted result until the owner records it.
+The repository CI runs root checks, checks both news apps, verifies six fixtures, builds the network, and audits generated output. The audit checks per-publication article reachability, API identifiers, the hub graph, and site file budgets. These checks are not crawler performance measurements, browser QA, or deployed-host verification. The workflow uploads `news-network-preview.tar.gz` with the generated static network and portable preview server. This is a downloadable artifact, not a hosted preview.
 
-The copy linter rejects literal and encoded em dashes in authored repository text. `vp run lint` and `vp run check` include this linter, and CI runs it. Keep new source and documentation copy free of em dashes. For authorized follow-up pushes, start the commit message with the required `CF-Pages-Skip` prefix.
+On a push to `main`, the protected `news-production` job runs after the checks. It downloads the artifact from the same workflow run, verifies its source SHA, then uploads all seven sites sequentially with Wrangler 4.153.0. Cloudflare deployment receipts must match that SHA and report successful production deployments before the workflow runs hosted HTTP verification. The hosted result is not claimed until the owner verifies the current deployment evidence.
+
+The copy linter rejects literal and encoded em dashes in authored repository text. `vp run lint` and `vp run check` include this linter, and CI runs it. Keep new source and documentation copy free of em dashes. Use `CF-Pages-Skip` only on review-branch commits when a native root preview is unwanted. Production merge and main commit messages must omit that prefix so the existing root site also deploys.
 
 ## Hosting boundary
 
-Each publication origin and the newsstand hub are intended for separate Cloudflare Pages hosting. `vp run news:build` creates seven static site folders under `qsn/dist/`. The Pages projects, domain bindings, DNS changes, and deployments have not been authorized or performed. Do not report a configured origin as live without owner verification.
+Each publication origin and the newsstand hub has a dedicated Pages project described in `deployment/cloudflare-pages.json`. `vp run news:build` creates seven static site folders under `qsn/dist/`. Project creation, domain binding, DNS, and secret bootstrap are owner-managed Cloudflare and GitHub environment operations documented in [deployment/README.md](deployment/README.md). The workflow is configured for main-branch deployment, but no domain or hosted result is claimed without current owner verification. Do not use manual upload procedures.
 
 ## Content and contracts
 

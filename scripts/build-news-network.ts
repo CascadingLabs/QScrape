@@ -63,6 +63,7 @@ writeFileSync(
 	JSON.stringify(
 		{
 			version: 1,
+			sourceSha: process.env.GITHUB_SHA ?? null,
 			hub: { key: 'news', origin: 'https://news.qscrape.dev' },
 			publications: publications.map(({ id, key, origin, articleCount }) => ({
 				id,

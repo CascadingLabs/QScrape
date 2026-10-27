@@ -46,7 +46,10 @@ The dwarven QSN publication is one of the six sites built from the shared `qsn/`
 - `qsn/src/assets/editorial/` is the optimized source for article and city imagery. Matching originals under `qsn/public/images/qsn/` are stable public API aliases and must remain byte-identical. Author portraits stay in `qsn/src/assets/authors/` and are optimized by Astro into WebP output.
 - Use `news-index/` for the network hub, `network-manifest.json`, robots file, and sitemap. The manifest records publication origins and counts plus hub and sister edges; it does not duplicate article records.
 - The network preview uses one portable Node server at `http://localhost:4329/` for the hub and `http://{key}.localhost:4329/` for each publication. Preview output and the downloadable CI archive are local artifacts, not a hosted preview.
-- QSN and its sister hosts are intended for separate Cloudflare Pages projects. No deployment, project creation, DNS change, or domain binding is authorized by local documentation or build work. For authorized follow-up pushes, start the commit message with the required `CF-Pages-Skip` prefix.
+- The existing `qscrape.dev` Cloudflare Pages site retains its native Git integration. The seven news sites use separate Direct Upload Pages projects managed by the GitHub Actions workflow because Pages limits a repository to five Git-connected projects. See `deployment/README.md` and `deployment/cloudflare-pages.json`.
+- A push to protected `main` automatically deploys the seven news sites only after the `check` job passes. The deploy job runs in the main-only `news-production` environment, downloads the artifact from that same workflow run, verifies the source SHA, and uploads each static root sequentially with locked Wrangler 4.153.0. The account-scoped `CLOUDFLARE_API_TOKEN` secret is never logged or written to the repository.
+- `cloudflare:validate` is a local registry check. `cloudflare:check` reads Cloudflare state. `cloudflare:apply` can create or update projects, domains, and DNS records; `cloudflare:bootstrap-secret` can create the protected GitHub environment and deployment secret. These commands are owner-managed operations. Do not run them unless explicitly authorized.
+- Do not claim production readiness or hosted success until the owner verifies current deployment receipts and hosted HTTP evidence. Avoid manual upload procedures. Use `CF-Pages-Skip` only on review-branch commits when a native root preview is unwanted. Production merge and main commit messages must omit that prefix so the existing root site also deploys.
 - Add new site types, frameworks, protection mechanisms, dependencies, or infrastructure only when they serve the requested scope. Do not publish unfinished options as available.
 - Preserve unrelated local work. Use WTF for isolated JJ workspaces and JJ for revisions and delivery. Push or deploy only within the user’s authorized scope.
 
@@ -68,11 +71,18 @@ vp run news:verify
 vp run news:build
 vp run news:audit-output
 vp run news:preview
+vp run news:verify-hosted
+vp run cloudflare:validate
+vp run cloudflare:check
+vp run cloudflare:apply
+vp run cloudflare:bootstrap-secret
 ```
 
 Run these commands from the repository root. `vp run dev`, `vp run check`, and `vp run build` cover the original QScrape app. `news:dev` starts the shared publication app, defaulting to dwarves; set `QSN_PUBLICATION` to an ID or key to select another publication. `publication:build` builds only that selected publication. `news:index:build` builds only the hub. `news:check` typechecks the shared app and hub. `news:verify` verifies all six fixtures. `news:build` builds six publications and the hub sequentially with one worker each, then creates preview routing metadata. `news:audit-output` audits each generated publication, per-site file budgets, hub links and the host graph. Run `news:build` before the output audit or preview. Bare `vp dev` and `vp build` invoke Vite's built-in commands.
 
-`news:preview` serves the generated network over HTTP at `http://localhost:4329/` and routes publication hosts through `http://qsn.localhost:4329/`, `http://hsn.localhost:4329/`, `http://esn.localhost:4329/`, `http://gsn.localhost:4329/`, `http://ksn.localhost:4329/`, and `http://vsn.localhost:4329/`. On pull requests, CI uploads `news-network-preview.tar.gz` with the static network and portable preview server. It is not a hosted preview. Do not claim a hosted check or deployment passed until the owner records that evidence.
+`news:preview` serves the generated network over HTTP at `http://localhost:4329/` and routes publication hosts through `http://qsn.localhost:4329/`, `http://hsn.localhost:4329/`, `http://esn.localhost:4329/`, `http://gsn.localhost:4329/`, `http://ksn.localhost:4329/`, and `http://vsn.localhost:4329/`. CI packages `news-network-preview.tar.gz` with the static sites and portable preview server. Pull requests upload it as a review artifact; the main-branch deployment job consumes the artifact from the same run after checks pass. It is not a hosted preview. Do not claim hosted readiness or success until the owner records production evidence.
+
+`news:verify-hosted` is run by the main-only production workflow after all seven uploads. It uses native fetch against configured production origins, writes `.astro/hosted-news-report.json`, and fails the release if assertions fail. Do not run it locally until the owner confirms the production domains are ready. The production workflow saves deployment receipts and the hosted report as `news-production-evidence`.
 
 The CI workflow checks both Astro roots, verifies all six fixtures, builds all seven sites, and audits the generated network. A passing check, fixture verification, or build proves only the contract each command checks; it does not prove browser behavior, a crawler benchmark result, or a deployed host. The custom copy linter rejects literal and encoded em dashes in authored repository text. `vp run lint` and `vp run check` include this linter, and CI runs the same gate. Keep new authored copy free of literal and encoded em dashes.
 
