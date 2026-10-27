@@ -1,0 +1,95 @@
+---
+import NewsLayout from '../layouts/NewsLayout.astro';
+import LatestHeadlines from '../components/LatestHeadlines.astro';
+import NewsCard from '../components/NewsCard.astro';
+import MarketWatch from '../components/MarketWatch.astro';
+import { sections, series } from '../data/news';
+import { publication } from '../data/publications';
+import { Image } from 'astro:assets';
+import { editorialImage } from '../lib/images';
+import { sectionArtwork } from '../data/visuals';
+import { authorById, latestArticles, orderedArticles } from '../components/news-index';
+import { articlePath, authorPath, formatDate, sectionPath, seriesPath } from '../components/paths';
+
+const ordered = orderedArticles;
+const lead = (publication.id === 'dwarves' ? ordered.find((article) => article.id === 'qsn-curated-east-seam-limited-return') : ordered.find((article) => article.id.includes('-spotlight-') && article.image)) ?? ordered[0];
+const leadAuthor = lead ? authorById.get(lead.authorId) : undefined;
+const featured = ordered.filter((article) => article.id !== lead?.id && (article.id.includes('-spotlight-') || article.id.startsWith('qsn-curated-') || article.id.startsWith('qsn-trade-')));
+const seenImages = new Set([lead?.image?.src]);
+const photoStories = ordered.filter((article) => {
+	if (!article.image || seenImages.has(article.image.src)) return false;
+	seenImages.add(article.image.src);
+	return true;
+});
+const leftStories = [...photoStories.slice(0, 1), ...featured.slice(0, 2)];
+const rightStories = photoStories.length > 1 ? photoStories.slice(1, 3) : featured.slice(4, 7);
+const underLead = featured.slice(2, 4);
+const deskArticles = sections.slice(0, 4).map((section) => ({
+	section,
+	stories: ordered.filter((article) => article.section === section).slice(0, 3),
+}));
+const deepShift = (publication.id === 'dwarves' ? series.find((item) => item.id === 'deep-shift') : series[0]) ?? series[0];
+const dwarvenRealms = [
+	{ title: 'The forge floor', subtitle: 'Labor & Industry', image: 'forge', section: 'Labor & Industry' },
+	{ title: 'Inside the chamber', subtitle: 'Council & Public Life', image: 'council', section: 'Council & Public Life' },
+	{ title: 'Along the caravan road', subtitle: 'Markets & Trade', image: 'market', section: 'Markets & Trade' },
+	{ title: 'What the stone remembers', subtitle: 'Memory & Arts', image: 'library', section: 'Memory & Arts' },
+];
+const realms = publication.id === 'dwarves' ? dwarvenRealms : sections.slice(0, 4).map((section) => ({ title: section, subtitle: publication.name, section, image: sectionArtwork(publication, section).name }));
+const promoImage = publication.id === 'dwarves' ? 'forge' : publication.hero;
+---
+
+<NewsLayout title="Latest News" description={publication.description}>
+	<nav class="docket-nav" aria-label="Stories to follow">
+		<strong>ON THE DOCKET</strong>
+		{series.slice(0, 4).map((item) => <a href={seriesPath(item.id)}>{item.title}</a>)}
+		<a class="docket-nav__edition" href="/archive/">{publication.species} edition <span aria-hidden="true">→</span></a>
+	</nav>
+
+	<div class="newsroom-front">
+		<aside class="newsroom-front__left" aria-label="More top stories">
+			{leftStories.map((article, index) => <NewsCard article={article} compact={index > 0} eager={index === 0} />)}
+		</aside>
+		<div class="newsroom-front__center">
+			{lead && (
+				<article class="lead-story">
+					{lead.image && <a class="lead-story__image" href={articlePath(lead.id)} tabindex="-1" aria-hidden="true"><Image src={editorialImage(lead.image.src)} alt="" width={1000} widths={[480, 720, 1000]} sizes="(min-width: 1100px) 650px, (min-width: 700px) 65vw, calc(100vw - 32px)" format="webp" loading="eager" fetchpriority="high" /></a>}
+					<p class="eyebrow"><span class="forge-label">{publication.id === 'dwarves' ? 'The East Face investigation' : deepShift?.title ?? 'Special report'}</span></p>
+					<h1><a href={articlePath(lead.id)}>{lead.title}</a></h1>
+					<p class="byline"><a href={sectionPath(lead.section)}>{lead.section}</a><span> | </span>{leadAuthor && <a href={authorPath(leadAuthor.id)}>{leadAuthor.name}</a>}<span> · </span><time datetime={lead.publishedAt}>{formatDate(lead.publishedAt, { year: undefined })}</time></p>
+					<p class="lead-story__summary">{lead.summary}</p>
+				</article>
+			)}
+			<div class="under-lead">{underLead.map((article) => <NewsCard article={article} compact />)}</div>
+			<a class="archive-ribbon" href="/archive/"><span>THE FULL RECORD</span> Dispatches from across the realm <strong aria-hidden="true">→</strong></a>
+		</div>
+		<aside class="newsroom-front__right" aria-label="In depth and more news">
+			{deepShift && <a class="series-promo" href={seriesPath(deepShift.id)}>
+				<div class="series-promo__image"><Image src={editorialImage(`/images/qsn/${promoImage}.png`)} alt="" width={600} widths={[320, 600]} sizes="(min-width: 1100px) 300px, (min-width: 700px) 33vw, calc(100vw - 32px)" format="webp" loading="eager" /><span>{publication.shortName} SPECIAL REPORT</span></div>
+				<div><span class="forge-label">In depth</span><h2>{deepShift.title}</h2><p>{deepShift.description}</p><strong>Follow the reporting <span aria-hidden="true">→</span></strong></div>
+			</a>}
+			{rightStories.map((article) => <NewsCard article={article} />)}
+		</aside>
+	</div>
+
+	<section class="realm-section" aria-labelledby="realm-title">
+		<div class="section-heading"><h2 id="realm-title">A world beneath the headlines</h2><span>Explore the halls</span></div>
+		<nav class="realm-grid" aria-label="Explore news by place and beat">
+			{realms.map((realm) => <a class="realm-card" href={sectionPath(realm.section)}>
+				<Image src={editorialImage(`/images/qsn/${realm.image}.png`)} alt="" width={640} widths={[320, 640]} sizes="(min-width: 700px) 25vw, 50vw" format="webp" loading="lazy" />
+				<div><small>{realm.subtitle}</small><h3>{realm.title}</h3><span aria-hidden="true">↗</span></div>
+			</a>)}
+		</nav>
+	</section>
+
+	<div class="newsroom-lower">
+		<div>{deskArticles.map(({ section, stories }) => (
+			<section class="desk-section" aria-labelledby={`desk-${section.replace(/\W+/g, '-').toLowerCase()}`}>
+				<div class="section-heading"><h2 id={`desk-${section.replace(/\W+/g, '-').toLowerCase()}`}>{section}</h2><a href={sectionPath(section)}>All reporting <span aria-hidden="true">→</span></a></div>
+				<div class="desk-section__grid">{stories.map((article) => <NewsCard article={article} compact />)}</div>
+			</section>
+		))}</div>
+		<aside class="newsroom-lower__rail"><LatestHeadlines articles={latestArticles.slice(0, 8)} /><div class="dispatch-promo"><span class="eyebrow">The evening dispatch</span><h2>Know what moves your world.</h2><p>Our editors bring the day's reporting together in one thoughtful briefing.</p><button class="button button--dark" type="button" data-dialog-open>Get the briefing <span aria-hidden="true">→</span></button></div></aside>
+	</div>
+	<MarketWatch />
+</NewsLayout>

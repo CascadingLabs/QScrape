@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 64" role="img" aria-labelledby="title">
+	<title id="title">QSN, QScrape News</title>
+	<path fill="#ff7044" d="M4 23 30 0l26 23H43L30 11 17 23Z"/>
+	<g fill="#fff">
+		<path d="M4 27h11v-8h8v8h14v-8h8v8h11v30H37V40H23v17H4Z"/>
+		<path fill-rule="evenodd" d="M86 8h32l8 8v27l-6 6 10 11h-16l-7-8H86l-8-8V16Zm5 13v18h22V21Z"/>
+		<path d="M140 8h44v13h-31v5h24l8 8v10l-8 8h-37V39h32v-5h-24l-8-8Zm59 44V8h13l22 24V8h13v44h-13l-22-24v24Z"/>
+	</g>
+	<path fill="#ff7044" d="M4 61h52v3H4Z"/>
+</svg>

@@ -1,0 +1,49 @@
+---
+import NewsLayout from '../layouts/NewsLayout.astro';
+import AuthorPortrait from './AuthorPortrait.astro';
+import NewsCard from './NewsCard.astro';
+import Pagination from './Pagination.astro';
+import type { Article, Author } from '../data/news';
+import { formatDate, LIST_PAGE_SIZE } from './paths';
+
+interface Props {
+	author: Author;
+	articles: Article[];
+	total: number;
+	page: number;
+	pageCount: number;
+	latestPublishedAt?: string;
+}
+
+const { author, articles, total, page, pageCount, latestPublishedAt } = Astro.props;
+const basePath = `/author/${encodeURIComponent(author.id)}/`;
+const firstResult = total === 0 ? 0 : (page - 1) * LIST_PAGE_SIZE + 1;
+const lastResult = Math.min(page * LIST_PAGE_SIZE, total);
+---
+
+<NewsLayout title={page === 1 ? author.name : `${author.name} · Page ${page}`} description={`${author.name} reports on ${author.beat}.`}>
+	<div class="author-page">
+		<header class="author-page__heading">
+			<AuthorPortrait author={author} large />
+			<div>
+				<p class="eyebrow">Correspondent · {author.beat}</p>
+				<h1>{author.name}</h1>
+				<p>{author.bio}</p>
+			</div>
+		</header>
+		<div class="section-heading"><h2>Latest reporting</h2><span>{total.toLocaleString('en-US')} {total === 1 ? 'story' : 'stories'}</span></div>
+		{latestPublishedAt && <p class="author-page__latest">Latest report filed {formatDate(latestPublishedAt)}</p>}
+		{articles.length ? (
+			<div class="story-list" aria-label={`Reports by ${author.name}`}>
+				{articles.map((article) => <NewsCard article={article} compact />)}
+			</div>
+		) : <p class="empty-state">No stories have been filed by this correspondent yet.</p>}
+		<Pagination
+			page={page}
+			pageCount={pageCount}
+			basePath={basePath}
+			label={`Reports by ${author.name}, pages`}
+			caption={`Page ${page} of ${pageCount}. Showing ${firstResult} to ${lastResult} of ${total.toLocaleString('en-US')} stories.`}
+		/>
+	</div>
+</NewsLayout>

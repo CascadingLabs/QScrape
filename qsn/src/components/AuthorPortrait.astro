@@ -1,0 +1,10 @@
+---
+import { Image } from 'astro:assets';
+import type { Author } from '../data/news';
+import { authorPortrait } from '../lib/images';
+interface Props { author: Author; large?: boolean; compact?: boolean; }
+const { author, large = false, compact = false } = Astro.props;
+const portrait = authorPortrait(author.id);
+const size = large ? 160 : compact ? 24 : 40;
+---
+{portrait ? <Image class:list={['author-portrait', large && 'author-portrait--large', compact && 'author-portrait--compact']} src={portrait} alt={large ? `Portrait of ${author.name}` : ''} width={size} height={size} widths={[size, size * 2]} sizes={`${size}px`} format="webp" loading={compact ? 'lazy' : 'eager'} /> : <span class:list={['author-mark', large && 'author-mark--large']} aria-hidden="true">{author.name.slice(0, 1)}</span>}

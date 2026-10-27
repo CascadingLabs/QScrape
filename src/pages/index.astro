@@ -5,7 +5,7 @@ const description =
 ---
 
 <PlaygroundLayout
-	title="QScrape — Web scraping and browser automation playground"
+	title="QScrape: Web scraping and browser automation playground"
 	description={description}
 >
 	<h1 slot="heading" class="home-title home-brand">
@@ -21,6 +21,15 @@ const description =
 	<section class="home-section" aria-labelledby="test-sites-heading">
 		<h2 id="test-sites-heading">Explore the test sites</h2>
 		<nav class="project-list" aria-label="Test sites">
+			<div class="site-entry">
+				<a class="project-card" href="https://news.qscrape.dev/" aria-describedby="qsn-description">
+					<span>News Network</span>
+					<span class="project-arrow" aria-hidden="true">→</span>
+				</a>
+				<div class="site-tooltip" id="qsn-description" role="tooltip">
+					<p>Six fictional newspapers with distinct voices, authors, and archives from across the realms.</p>
+				</div>
+			</div>
 			<div class="site-entry">
 				<a
 					class="project-card"

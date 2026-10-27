@@ -1,0 +1,86 @@
+---
+import NewsLayout from '../../../layouts/NewsLayout.astro';
+import NewsCard from '../../../components/NewsCard.astro';
+import LatestHeadlines from '../../../components/LatestHeadlines.astro';
+import AuthorPortrait from '../../../components/AuthorPortrait.astro';
+import { Image } from 'astro:assets';
+import { editorialImage } from '../../../lib/images';
+import { publication } from '../../../data/publications';
+import { articles } from '../../../data/news';
+import { articleById, authorById, latestArticles, seriesById } from '../../../components/news-index';
+import type { Article } from '../../../data/news';
+import { authorPath, formatDate, sectionPath, seriesPath } from '../../../components/paths';
+
+export function getStaticPaths() {
+	return articles.map((article) => ({ params: { id: article.id }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const author = authorById.get(article.authorId);
+const related = article.relatedIds.map((id) => articleById.get(id)).filter((item): item is Article => Boolean(item && item.id !== article.id));
+const relatedSeries = article.seriesId ? seriesById.get(article.seriesId) : undefined;
+const latest = latestArticles.slice(0, 5);
+---
+
+<NewsLayout title={article.title} description={article.summary} section={article.section}>
+	<Fragment slot="head">
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content={article.title} />
+		<meta property="og:description" content={article.summary} />
+		{article.image && <meta property="og:image" content={`${publication.origin}${article.image.src}`} />}
+	</Fragment>
+	<article class="article-page">
+		<header class="article-header">
+			<p class="eyebrow"><a href={sectionPath(article.section)}>{article.section}</a> <span>·</span> {article.format}</p>
+			<h1>{article.title}</h1>
+			<p class="article-header__summary">{article.summary}</p>
+			<div class="article-meta">
+				{author && (
+					<a class="article-meta__author" href={authorPath(author.id)}>
+						<AuthorPortrait author={author} />
+						<span><strong>{author.name}</strong><small>{author.beat}</small></span>
+					</a>
+				)}
+				<div class="article-meta__dates">
+					<span>Published <time datetime={article.publishedAt}>{formatDate(article.publishedAt, { hour: 'numeric', minute: '2-digit' })}</time></span>
+					{article.updatedAt && <span>Updated <time datetime={article.updatedAt}>{formatDate(article.updatedAt, { hour: 'numeric', minute: '2-digit' })}</time></span>}
+				</div>
+			</div>
+		</header>
+		{article.image && (
+			<figure class="article-figure">
+				<Image src={editorialImage(article.image.src)} alt={article.image.alt} width={1200} widths={[480, 800, 1200]} sizes="(min-width: 1100px) 1000px, calc(100vw - 32px)" format="webp" loading="eager" fetchpriority="high" />
+				{article.image.caption && <figcaption>{article.image.caption}</figcaption>}
+			</figure>
+		)}
+		<div class="article-layout">
+			<div class="article-body">
+				{article.body.map((paragraph) => <p>{paragraph.split('\n').map((line, index) => <Fragment>{index > 0 && <br />}{line}</Fragment>)}</p>)}
+				{relatedSeries && (
+					<aside class="article-series">
+						<p class="eyebrow">Part of a series</p>
+					<h2><a href={seriesPath(relatedSeries.id)}>{relatedSeries.title}</a></h2>
+					<p>{relatedSeries.description}</p>
+				</aside>
+				)}
+				{author && (
+					<aside class="author-note">
+						<p class="eyebrow">About the correspondent</p>
+						<h2><a href={authorPath(author.id)}>{author.name}</a></h2>
+						<p>{author.bio}</p>
+					</aside>
+				)}
+			</div>
+			<aside class="article-rail">
+				<LatestHeadlines articles={latest} limit={5} label="More from the newsroom" />
+				<a class="article-rail__archive" href="/archive/">Explore the full archive <span aria-hidden="true">→</span></a>
+			</aside>
+		</div>
+		{related.length > 0 && (
+			<section class="related-stories" aria-labelledby="related-title">
+				<div class="section-heading"><h2 id="related-title">Related reporting</h2></div>
+				<div class="related-stories__grid">{related.map((item) => <NewsCard article={item} compact />)}</div>
+			</section>
+		)}
+	</article>
+</NewsLayout>

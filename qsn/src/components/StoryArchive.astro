@@ -1,0 +1,34 @@
+---
+import type { Article } from '../data/news';
+import NewsCard from './NewsCard.astro';
+import Pagination from './Pagination.astro';
+
+interface Props {
+	articles: Article[];
+	page: number;
+	pageCount: number;
+	basePath?: string;
+	paginationLabel?: string;
+}
+
+const {
+	articles,
+	page,
+	pageCount,
+	basePath = '/archive/',
+	paginationLabel = 'Archive pages',
+} = Astro.props;
+---
+
+<section class="story-archive" aria-label="Stories">
+	<div class="story-archive__list">
+		{articles.map((article) => <NewsCard article={article} compact />)}
+	</div>
+	<Pagination
+		page={page}
+		pageCount={pageCount}
+		basePath={basePath}
+		label={paginationLabel}
+		caption={`Page ${page} of ${pageCount}. Every story in the edition is listed here.`}
+	/>
+</section>

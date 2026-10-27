@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 96" fill="none">
+	<rect x="8" y="10" width="76" height="76" rx="18" fill="#FCF8F2"/>
+	<path d="M22 69V48c0-15 9-25 26-25s26 10 26 25v21M32 69V49c0-9 6-15 16-15s16 6 16 15v20M42 69V52c0-4 2-7 6-7s6 3 6 7v17" stroke="#8A452C" stroke-width="3.5" stroke-linecap="round"/>
+	<path d="M26 75h40" stroke="#D38A4B" stroke-width="3" stroke-linecap="round"/>
+	<text x="101" y="57" fill="#FCF8F2" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="-.6">THE BURROW BULLETIN</text>
+</svg>

@@ -1,0 +1,73 @@
+<dialog class="account-dialog" data-account-dialog aria-labelledby="account-dialog-title">
+	<div class="account-dialog__top">
+		<div>
+			<p class="eyebrow">Reader services</p>
+			<h2 id="account-dialog-title">Stay close to the story</h2>
+		</div>
+		<button class="icon-button" type="button" data-dialog-close aria-label="Close reader services">×</button>
+	</div>
+	<p class="account-dialog__intro">A considered briefing from across the realm, delivered when the day’s reporting is complete.</p>
+	<div class="account-dialog__forms">
+		<form data-subscribe-form>
+			<h3>Subscribe to the evening letter</h3>
+			<label for="reader-email">Email address</label>
+			<div class="account-dialog__input-row">
+				<input id="reader-email" name="email" type="email" autocomplete="email" required />
+				<button class="button button--dark" type="submit">Subscribe</button>
+			</div>
+			<p class="form-status" data-subscribe-status aria-live="polite"></p>
+		</form>
+		<form data-signin-form>
+			<h3>Sign in to your account</h3>
+			<label for="signin-email">Email address</label>
+			<div class="account-dialog__input-row">
+				<input id="signin-email" name="email" type="email" autocomplete="email" required />
+				<button class="button button--outline" type="submit">Continue</button>
+			</div>
+			<p class="form-status" data-signin-status aria-live="polite"></p>
+		</form>
+	</div>
+</dialog>
+
+<script>
+	const dialog = document.querySelector<HTMLDialogElement>('[data-account-dialog]');
+	if (dialog) {
+		for (const opener of document.querySelectorAll<HTMLButtonElement>('[data-dialog-open]')) {
+			opener.addEventListener('click', () => dialog.showModal());
+		}
+		dialog.querySelector('[data-dialog-close]')?.addEventListener('click', () => dialog.close());
+		dialog.addEventListener('click', (event) => {
+			if (event.target === dialog) dialog.close();
+		});
+	}
+
+	const submitMockForm = (formSelector: string, statusSelector: string, storageKey: string, message: (email: string) => string) => {
+		const form = document.querySelector<HTMLFormElement>(formSelector);
+		const status = document.querySelector<HTMLElement>(statusSelector);
+		form?.addEventListener('submit', (event) => {
+			event.preventDefault();
+			const email = new FormData(form).get('email')?.toString().trim();
+			if (!email || !status) return;
+			try {
+				localStorage.setItem(storageKey, email);
+				status.textContent = message(email);
+			} catch {
+				status.textContent = 'This browser blocked local storage. No account request was sent.';
+			}
+			form.reset();
+		});
+	};
+
+	submitMockForm(
+		'[data-subscribe-form]',
+		'[data-subscribe-status]',
+		'qsn-subscription',
+		(email) => `Preview subscription saved for ${email}. The address stays in this browser.`,
+	);
+	submitMockForm(
+		'[data-signin-form]',
+		'[data-signin-status]',
+		'qsn-reader',
+		(email) => `Preview sign-in is ready for ${email}. No email was sent; the address stays in this browser.`,
+	);
+</script>

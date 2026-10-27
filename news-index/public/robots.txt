@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://news.qscrape.dev/sitemap-index.xml

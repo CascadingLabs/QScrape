@@ -1,0 +1,263 @@
+/* Publication-level tokens and art direction for the shared QSN newsroom. */
+:root[data-publication='humans'] {
+	--brand: #263d66;
+	--brand-dark: #172643;
+	--forge: #b8423e;
+	--paper: #f4f2ed;
+	--paper-bright: #fbfaf7;
+	--ink: #1c2737;
+	--muted: #5e6875;
+	--rule: #d5d6dc;
+	--rule-dark: #a9afba;
+	--link-accent: #a33335;
+}
+
+:root[data-publication='elves'] {
+	--brand: #31523e;
+	--brand-dark: #1f3629;
+	--forge: #b18a56;
+	--forge-ink: #172416;
+	--paper: #f1f3e9;
+	--paper-bright: #fafbf4;
+	--ink: #23332a;
+	--muted: #5d6d60;
+	--rule: #d3d9ce;
+	--rule-dark: #a6b19f;
+	--link-accent: #416a48;
+}
+
+:root[data-publication='goblins'] {
+	--brand: #252b21;
+	--brand-dark: #171c15;
+	--forge: #b8d62b;
+	--forge-ink: #171c15;
+	--paper: #f0f1e9;
+	--paper-bright: #fbfcf4;
+	--ink: #20261d;
+	--muted: #5a6551;
+	--rule: #d4d8ca;
+	--rule-dark: #a7b094;
+	--link-accent: #60751b;
+}
+
+:root[data-publication='kobolds'] {
+	--brand: #8a452c;
+	--brand-dark: #5a2d20;
+	--forge: #d38a4b;
+	--forge-ink: #30190d;
+	--paper: #f5eee5;
+	--paper-bright: #fcf8f2;
+	--ink: #30231b;
+	--muted: #706052;
+	--rule: #dfd1c1;
+	--rule-dark: #b9a58f;
+	--link-accent: #9b4e2b;
+}
+
+:root[data-publication='vampires'] {
+	--brand: #4b182d;
+	--brand-dark: #29101d;
+	--forge: #c5bdcb;
+	--forge-ink: #29101d;
+	--paper: #f2eff2;
+	--paper-bright: #faf8fa;
+	--ink: #2b2029;
+	--muted: #695f69;
+	--rule: #d8d1da;
+	--rule-dark: #b0a5b3;
+	--link-accent: #6b2845;
+}
+
+/* Humans: civic navy, red rules and compact newspaper framing. */
+[data-publication='humans'] .masthead {
+	border-bottom: 4px solid var(--forge);
+}
+
+[data-publication='humans'] .primary-nav {
+	border-bottom-color: var(--rule-dark);
+}
+
+[data-publication='humans'] .edition-bar {
+	letter-spacing: 0.055em;
+}
+
+[data-publication='humans'] .front-lead {
+	border-top: 1px solid var(--brand);
+}
+
+[data-publication='humans'] .news-card--compact {
+	border-bottom-color: var(--rule-dark);
+}
+
+[data-publication='humans'] .section-heading {
+	border-bottom: 2px solid var(--brand);
+}
+
+[data-publication='humans'] .section-link {
+	color: var(--forge);
+}
+
+/* Elves: quiet forest tones with arched image windows and fine dividers. */
+[data-publication='elves'] .masthead {
+	border-bottom: 2px solid var(--forge);
+}
+
+[data-publication='elves'] .primary-nav a.is-current::after {
+	height: 2px;
+	background: var(--forge);
+}
+
+[data-publication='elves'] .front-lead__image,
+[data-publication='elves'] .front-lead__image img {
+	border-radius: 92px 92px 2px 2px;
+}
+
+[data-publication='elves'] .news-card__image,
+[data-publication='elves'] .news-card__image img {
+	border-radius: 52px 52px 1px 1px;
+}
+
+[data-publication='elves'] .section-heading {
+	border-bottom-color: var(--forge);
+}
+
+[data-publication='elves'] .series-spotlight {
+	border-top: 2px solid var(--forge);
+	background: #f7f8f0;
+}
+
+/* Goblins: charcoal masthead, acid-lime signals and a squared industrial grid. */
+[data-publication='goblins'] .masthead {
+	border-bottom: 5px solid var(--forge);
+}
+
+[data-publication='goblins'] .masthead__slogan strong {
+	color: var(--forge);
+}
+
+[data-publication='goblins'] .primary-nav a.is-current::after {
+	height: 4px;
+	background: var(--forge);
+}
+
+[data-publication='goblins'] .section-heading {
+	border-bottom: 2px solid var(--forge);
+}
+
+[data-publication='goblins'] .news-card--compact {
+	padding-left: 14px;
+	border-left: 3px solid var(--rule-dark);
+}
+
+[data-publication='goblins'] .news-card--compact:hover {
+	border-left-color: var(--forge);
+}
+
+[data-publication='goblins'] .section-link {
+	padding: 3px 7px;
+	background: var(--brand-dark);
+	color: var(--forge);
+}
+
+[data-publication='goblins'] .latest-list__number {
+	font-family: var(--sans);
+	font-weight: 700;
+}
+
+/* Kobolds: clay and lantern orange with modest tunnel-arch card corners. */
+[data-publication='kobolds'] .masthead {
+	border-bottom: 3px solid var(--forge);
+}
+
+[data-publication='kobolds'] .front-lead__image,
+[data-publication='kobolds'] .front-lead__image img {
+	border-radius: 28px 3px 3px 3px;
+}
+
+[data-publication='kobolds'] .news-card__image,
+[data-publication='kobolds'] .news-card__image img {
+	border-radius: 15px 2px 2px 2px;
+}
+
+[data-publication='kobolds'] .news-card--compact {
+	padding: 17px 18px;
+	border: 1px solid var(--rule);
+	border-top: 2px solid var(--forge);
+	background: var(--paper-bright);
+}
+
+[data-publication='kobolds'] .section-heading {
+	border-bottom: 2px solid var(--forge);
+}
+
+[data-publication='kobolds'] .series-spotlight {
+	border-radius: 16px 2px 16px 2px;
+	background: #fbf5ec;
+}
+
+/* Vampires: ink, burgundy and silver, with formal double-rule framing. */
+[data-publication='vampires'] .masthead {
+	border-bottom: 4px double var(--forge);
+}
+
+[data-publication='vampires'] .edition-bar {
+	border-bottom-color: var(--forge);
+}
+
+[data-publication='vampires'] .front-lead {
+	border-bottom: 3px double var(--rule-dark);
+}
+
+[data-publication='vampires'] .section-heading {
+	border-bottom: 1px solid var(--forge);
+}
+
+[data-publication='vampires'] .article-header {
+	border-bottom: 1px solid var(--rule);
+}
+
+[data-publication='vampires'] .news-card--compact {
+	border-bottom: 1px solid var(--forge);
+}
+
+[data-publication='vampires'] .author-mark {
+	border-color: var(--forge);
+	background: #ebe5eb;
+}
+
+/* Current shared front-page components keep each edition visibly distinct. */
+[data-publication='elves'] .lead-story__image {
+	border-radius: 90px 90px 0 0;
+}
+[data-publication='elves'] .series-promo {
+	background: #e3ead9;
+}
+[data-publication='goblins'] .lead-story h1 {
+	font-family: var(--sans);
+	font-size: clamp(32px, 3.2vw, 46px);
+	font-weight: 850;
+	letter-spacing: -0.045em;
+}
+[data-publication='goblins'] .series-promo {
+	background: #e3e8d2;
+}
+[data-publication='kobolds'] .lead-story__image {
+	border-radius: 36px 4px 4px 4px;
+}
+[data-publication='kobolds'] .series-promo {
+	background: #ead6be;
+}
+[data-publication='vampires'] .lead-story {
+	border-bottom: 3px double var(--rule-dark);
+	padding-bottom: 16px;
+}
+[data-publication='vampires'] .series-promo {
+	background: #e5dce4;
+}
+[data-publication='humans'] .lead-story .eyebrow {
+	border-bottom: 2px solid var(--forge);
+	padding-bottom: 8px;
+}
+[data-publication] .dispatch-promo {
+	background: var(--brand-dark);
+}

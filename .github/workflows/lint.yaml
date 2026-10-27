@@ -1,4 +1,4 @@
-# Cascading Labs — Vite+ validation
+# Cascading Labs: Vite+ validation
 
 name: Check (Vite+)
 
@@ -35,3 +35,32 @@ jobs:
 
       - name: Build
         run: ./node_modules/.bin/vp run build
+
+      - name: Check QSN
+        run: ./node_modules/.bin/vp run news:check
+
+      - name: Verify QSN fixture
+        run: ./node_modules/.bin/vp run news:verify
+
+      - name: Build QSN
+        run: ./node_modules/.bin/vp run news:build
+
+      - name: Audit generated QSN routes
+        run: ./node_modules/.bin/vp run news:audit-output
+
+      - name: Smoke test news network HTTP
+        run: ./node_modules/.bin/vp run news:smoke
+
+      - name: Pack news network preview
+        if: github.event_name == 'pull_request'
+        run: tar -czf news-network-preview.tar.gz -C qsn/dist .
+
+      - name: Upload news network preview
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: news-network-preview
+          path: news-network-preview.tar.gz
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 7

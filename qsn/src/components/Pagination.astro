@@ -1,0 +1,29 @@
+---
+interface Props {
+	page: number;
+	pageCount: number;
+	basePath: string;
+	label: string;
+	caption?: string;
+}
+
+const { page, pageCount, basePath, label, caption } = Astro.props;
+const pageUrl = (number: number) => `${basePath}${number === 1 ? '' : `page/${number}/`}`;
+const visiblePages = Array.from(
+	new Set([1, page - 2, page - 1, page, page + 1, page + 2, pageCount].filter((number) => number >= 1 && number <= pageCount)),
+).sort((a, b) => a - b);
+---
+
+<nav class="pagination" aria-label={label}>
+	{page > 1 ? <a class="pagination__step" href={pageUrl(page - 1)}>← Previous</a> : <span class="pagination__step is-disabled">← Previous</span>}
+	<div class="pagination__pages">
+		{visiblePages.map((number, index) => (
+			<Fragment>
+				{index > 0 && number - visiblePages[index - 1] > 1 && <span aria-hidden="true">…</span>}
+				<a href={pageUrl(number)} aria-current={number === page ? 'page' : undefined} class:is-current={number === page}>{number}</a>
+			</Fragment>
+		))}
+	</div>
+	{page < pageCount ? <a class="pagination__step" href={pageUrl(page + 1)}>Next →</a> : <span class="pagination__step is-disabled">Next →</span>}
+	{caption && <p class="pagination__caption">{caption}</p>}
+</nav>

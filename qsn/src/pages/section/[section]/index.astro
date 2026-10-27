@@ -1,0 +1,44 @@
+---
+import { LIST_PAGE_SIZE } from '../../../components/paths';
+import { publication } from '../../../data/publications';
+import NewsLayout from '../../../layouts/NewsLayout.astro';
+import StoryArchive from '../../../components/StoryArchive.astro';
+import LatestHeadlines from '../../../components/LatestHeadlines.astro';
+import { sections } from '../../../data/news';
+import { latestArticles, orderedArticles } from '../../../components/news-index';
+import { sectionPath, formatDate } from '../../../components/paths';
+
+export function getStaticPaths() {
+	return sections.map((section) => ({ params: { section: sectionPath(section).split('/')[2] }, props: { section } }));
+}
+
+const { section } = Astro.props;
+const stories = orderedArticles.filter((article) => article.section.toLowerCase() === section.toLowerCase());
+const lead = stories[0];
+const pageSize = LIST_PAGE_SIZE;
+const pageCount = Math.max(1, Math.ceil(stories.length / pageSize));
+const latest = latestArticles.slice(0, 5);
+---
+
+<NewsLayout title={section} description={`The latest reporting from ${section}.`} section={section}>
+	<div class="section-page">
+		<header class="page-heading">
+			<p class="eyebrow">{publication.shortName} desk</p>
+			<h1>{section}</h1>
+			<p>Dispatches, investigation and analysis from the {section.toLowerCase()} desk.</p>
+		</header>
+		{lead ? (
+			<div class="section-page__layout">
+				<div>
+					<div class="section-page__lead">
+						<p class="eyebrow">Latest report <span>·</span> {formatDate(lead.publishedAt)}</p>
+						<h2><a href={`/article/${encodeURIComponent(lead.id)}/`}>{lead.title}</a></h2>
+						<p>{lead.summary}</p>
+					</div>
+					<StoryArchive articles={stories.slice(1, pageSize)} page={1} pageCount={pageCount} basePath={sectionPath(section)} />
+				</div>
+				<aside><LatestHeadlines articles={latest} /></aside>
+			</div>
+		) : <p class="empty-state">No dispatches are filed under this section yet.</p>}
+	</div>
+</NewsLayout>

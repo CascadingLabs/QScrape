@@ -1,0 +1,9 @@
+---
+import { publication, publications } from '../data/publications';
+---
+<section class="sister-publications" aria-labelledby="sister-title">
+	<header><h2 id="sister-title">Across the realms</h2><a href="https://news.qscrape.dev/">Visit the newsstand <span aria-hidden="true">↗</span></a></header>
+	<nav aria-label="Sister publications">
+		{publications.filter((paper) => paper.id !== publication.id).map((paper) => <a href={`${paper.origin}/`}><span>{paper.species}</span><strong>{paper.name}</strong><small>{paper.shortName} <span aria-hidden="true">↗</span></small></a>)}
+	</nav>
+</section>
